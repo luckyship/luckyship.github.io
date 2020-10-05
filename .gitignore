@@ -4,3 +4,4 @@ _site/
 public/
 themes/
 node_modules/
+.deploy_git/
