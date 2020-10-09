@@ -6,22 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://luckyship.github.io">
-  <title>hexo 添加文章导航 | Hexo</title>
+  <title>整理面试相关 | Hexo</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="利用hexo 原生api添加文章目录">
+  <meta name="description" content="主要是一些关于web的知识, 记录一些要点">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo 添加文章导航">
-<meta property="og:url" content="http://luckyship.github.io/2020/09/30/2020-09-30-hexo-add-article-nav/index.html">
+<meta property="og:title" content="整理面试相关">
+<meta property="og:url" content="http://luckyship.github.io/2020/09/06/2020-09-06-interview-css/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="利用hexo 原生api添加文章目录">
+<meta property="og:description" content="主要是一些关于web的知识, 记录一些要点">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-09-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-09T02:55:47.338Z">
+<meta property="article:published_time" content="2020-09-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-04T08:23:55.042Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="web">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="html">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -106,7 +108,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="toc-text">javascript事件机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%9C%BA%E5%88%B6"><span class="toc-text">冒泡机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E6%9C%BA%E5%88%B6"><span class="toc-text">捕获机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E7%9C%81%E7%95%A5%E6%96%87%E5%AD%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">css省略文字的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#settimeout-setinterval%EF%BC%8Ceval%E5%9C%A8%E8%B5%8B%E5%80%BC%E6%97%B6%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">settimeout, setinterval，eval在赋值时有什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决跨域问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-text">什么是跨域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3xss%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决xss注入问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-axios%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="toc-text">vue axios的几种请求方式</span></a></li></ol>
   </div>
 
 
@@ -176,14 +178,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2020-09-30-hexo-add-article-nav" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2020-09-06-interview-css" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      hexo 添加文章导航
+      整理面试相关
     </h1>
   
 
@@ -195,8 +197,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/09/30/2020-09-30-hexo-add-article-nav/" class="archive-article-date">
-        <time datetime="2020-09-29T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-30</time>
+<a href="/2020/09/06/2020-09-06-interview-css/" class="archive-article-date">
+        <time datetime="2020-09-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-06</time>
 </a>
 
   
@@ -209,7 +211,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">175字</span>
+      <span class="post-count">1.7k字</span>
     </span>
   </span>
 
@@ -218,7 +220,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -229,13 +231,49 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>在Hexo官网 文档&gt;自定义&gt;辅助函数&gt;最下面，可以找到<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/helpers#toc">toc</a>这个函数，看其介绍能知道它就是来实现文章目录的。  </p>
-<p>使用toc函数，不显示标题前数字，item为页面中传过去的参数post</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">toc.ejs</span><br><span class="line"><span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">item</span>) &#123; %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;toc&quot;</span> <span class="attr">class</span>=<span class="string">&quot;toc-article&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">%-</span> <span class="attr">toc</span>(<span class="attr">item.content</span>, &#123;<span class="attr">list_number:</span> <span class="attr">false</span>&#125;) %&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br></pre></td></tr></table></figure>
-<p>在左侧栏插入代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">left-col.ejs</span><br><span class="line">&lt;nav&gt;</span><br><span class="line">  &lt;%- partial(&#39;_partial&#x2F;post&#x2F;toc&#39;, &#123;item: page&#125;) %&gt;</span><br><span class="line">&lt;&#x2F;nav&gt;</span><br></pre></td></tr></table></figure>
-<p>修改layout代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%- partial(&#39;_partial&#x2F;left-col&#39;, null, &#123;cache: !config.relative_link, post: page&#125;) %&gt;</span><br><span class="line"></span><br><span class="line">&lt;%- partial(&#39;_partial&#x2F;left-col&#39;, &#123;cache: !config.relative_link, post: page&#125;) %&gt;</span><br></pre></td></tr></table></figure>
+    <p>简单记录一下面试的一些要点</p>
+<h2 id="javascript事件机制"><a href="#javascript事件机制" class="headerlink" title="javascript事件机制"></a>javascript事件机制</h2><p>先捕获，后冒泡，捕获从上到下，冒泡从下到上</p>
+<h3 id="冒泡机制"><a href="#冒泡机制" class="headerlink" title="冒泡机制"></a>冒泡机制</h3><p>IE提出的事件流叫做事件冒泡，即事件开始时由最具体的元素接收，然后逐级向上传播到较为不具体的节点，看一下以下示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body onclick&#x3D;&quot;bodyClick()&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div onclick&#x3D;&quot;divClick()&quot;&gt;</span><br><span class="line">        &lt;button onclick&#x3D;&quot;btn()&quot;&gt;</span><br><span class="line">            &lt;p onclick&#x3D;&quot;p()&quot;&gt;点击冒泡&lt;&#x2F;p&gt;</span><br><span class="line">        &lt;&#x2F;button&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">       </span><br><span class="line">       function p()&#123;</span><br><span class="line">          console.log(&#39;p标签被点击&#39;)</span><br><span class="line">       &#125;</span><br><span class="line">        function btn()&#123;</span><br><span class="line">            console.log(&quot;button被点击&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">         function divClick(event)&#123;</span><br><span class="line">             console.log(&#39;div被点击&#39;);</span><br><span class="line">         &#125;</span><br><span class="line">        function bodyClick()&#123;</span><br><span class="line">            console.log(&#39;body被点击&#39;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
+<p>结果显而易见</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p标签被点击</span><br><span class="line">button被点击</span><br><span class="line">div被点击</span><br><span class="line">body被点击</span><br></pre></td></tr></table></figure>
+<h3 id="捕获机制"><a href="#捕获机制" class="headerlink" title="捕获机制"></a>捕获机制</h3><p> 事件捕获流的思想是不太具体的DOM节点应该更早接收到事件，而最具体的节点应该最后接收到事件，针对上面同样的例子，点击按钮，那么此时click事件会按照这样传播：（下面我们就借用addEventListener的第三个参数来模拟事件捕获流）<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> &lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;button&gt;</span><br><span class="line">        &lt;p&gt;点击捕获&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var oP&#x3D;document.querySelector(&#39;p&#39;);</span><br><span class="line">    var oB&#x3D;document.querySelector(&#39;button&#39;);</span><br><span class="line">    var oD&#x3D;document.querySelector(&#39;div&#39;);</span><br><span class="line">    var oBody&#x3D;document.querySelector(&#39;body&#39;);</span><br><span class="line"></span><br><span class="line">    oP.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&#39;p标签被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oB.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&quot;button被点击&quot;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oD.addEventListener(&#39;click&#39;,  function()&#123;</span><br><span class="line">        console.log(&#39;div被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oBody.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&#39;body被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure><br> 与冒泡相反的结果<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body被点击</span><br><span class="line">div被点击</span><br><span class="line">button被点击</span><br><span class="line">p标签被点击</span><br></pre></td></tr></table></figure></p>
+<h2 id="css省略文字的实现"><a href="#css省略文字的实现" class="headerlink" title="css省略文字的实现"></a>css省略文字的实现</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">overflow: hidden;</span><br><span class="line">white-space: nowrap;</span><br><span class="line">text-overflow: allipsis</span><br></pre></td></tr></table></figure>
+
+<h2 id="settimeout-setinterval，eval在赋值时有什么问题？"><a href="#settimeout-setinterval，eval在赋值时有什么问题？" class="headerlink" title="settimeout, setinterval，eval在赋值时有什么问题？"></a>settimeout, setinterval，eval在赋值时有什么问题？</h2><h2 id="vue解决跨域问题"><a href="#vue解决跨域问题" class="headerlink" title="vue解决跨域问题"></a>vue解决跨域问题</h2><h3 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h3><p>跨域：由于浏览器同源策略，凡是发送请求url的协议、域名、端口三者之间任意一个与当前页面地址不同即为跨域。存在跨域的情况：</p>
+<ul>
+<li>网络协议不同，如http协议访问https协议。</li>
+<li>端口不同，如80端口访问8080端口。</li>
+<li>域名不同，如qianduanblog.com访问baidu.com。</li>
+<li>子域名不同，如abc.qianduanblog.com访问def.qianduanblog.com。</li>
+<li>域名和域名对应ip,如<a target="_blank" rel="noopener" href="http://www.a.com访问20.205.28.90/">www.a.com访问20.205.28.90</a>.</li>
+</ul>
+<p>下面是项目使用vue-cli脚手架搭建<br>使用http-proxy-middleware 代理解决跨域问题<br>例如请求的url:“<a target="_blank" rel="noopener" href="http://f.apiplus.cn/bj11x5.json%E2%80%9D">http://f.apiplus.cn/bj11x5.json”</a><br>1、打开config/index.js,在proxyTable中添写如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">proxyTable: &#123;</span><br><span class="line">  &#39;&#x2F;api&#39;: &#123;  &#x2F;&#x2F;使用&quot;&#x2F;api&quot;来代替&quot;http:&#x2F;&#x2F;f.apiplus.c&quot;</span><br><span class="line">    target: &#39;http:&#x2F;&#x2F;f.apiplus.cn&#39;, &#x2F;&#x2F;源地址</span><br><span class="line">    changeOrigin: true, &#x2F;&#x2F;是否跨域</span><br><span class="line">    pathRewrite: &#123;</span><br><span class="line">      &#39;^&#x2F;api&#39;: &#39;http:&#x2F;&#x2F;f.apiplus.cn&#39; &#x2F;&#x2F;路径重写</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2、使用axios请求数据时直接使用“/api”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">getData () &#123;</span><br><span class="line">axios.get(&#39;&#x2F;api&#x2F;bj11x5.json&#39;, function (res) &#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>通过这中方法去解决跨域，打包部署时还按这种方法会出问题。解决方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let serverUrl &#x3D; &#39;&#x2F;api&#x2F;&#39;  &#x2F;&#x2F;本地调试时</span><br><span class="line">&#x2F;&#x2F; let serverUrl &#x3D; &#39;http:&#x2F;&#x2F;f.apiplus.cn&#x2F;&#39;  &#x2F;&#x2F;打包部署上线时</span><br></pre></td></tr></table></figure>
+<h2 id="vue解决xss注入问题"><a href="#vue解决xss注入问题" class="headerlink" title="vue解决xss注入问题"></a>vue解决xss注入问题</h2><p>1.在终端引入xss,命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install xss --save</span><br></pre></td></tr></table></figure>
+<p>2.在vue的页面进行引入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import xss from &#39;xss&#39;</span><br></pre></td></tr></table></figure>
+<p>3.定义一个变量进行测试<br>首先测试一个没有进行防止xss攻击的测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-html&#x3D;&quot;test&quot;&gt;&lt;&#x2F;p&gt;</span><br><span class="line"> </span><br><span class="line">export default &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      test: &#96;&lt;a onclick&#x3D;&#39;alert(&quot;xss攻击&quot;)&#39;&gt;链接&lt;&#x2F;a&gt;&#96;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>结果，js事件直接被翻译了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xss攻击</span><br></pre></td></tr></table></figure>
+<p>因此应该杜绝这些情况，解决方法如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;p v-html&#x3D;&quot;$xss(test)&quot;&gt;&lt;&#x2F;p&gt;</span><br><span class="line">import xss from &#39;xss&#39;</span><br><span class="line">export default &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      test: &#96;&lt;a onclick&#x3D;&#39;alert(&quot;xss攻击&quot;)&#39;&gt;链接&lt;&#x2F;a&gt;&#96;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">Object.defineProperty(Vue.prototype, &#39;$xss&#39;, &#123;</span><br><span class="line">  value: xss</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>此时a标签会保留，但是onclick事件被拦截了</p>
+<h2 id="vue-axios的几种请求方式"><a href="#vue-axios的几种请求方式" class="headerlink" title="vue axios的几种请求方式"></a>vue axios的几种请求方式</h2><p>axios的请求方法：get、post、put、patch、delete</p>
+<ul>
+<li>get：获取数据</li>
+<li>post：提交数据（表单提交+文件上传）</li>
+<li>put：更新数据（所有数据推送到后端）</li>
+<li>patch：更新数据（只将更改的数据推送到后端）</li>
+<li>delete：删除数据<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;axios的get请求第一种写法不带参数</span><br><span class="line">axios.get(&#39;&#x2F;data.json&#39;).then((res)&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios的get请求第一种写法带参数</span><br><span class="line">axios.get(&#39;&#x2F;data.json&#39;,&#123;</span><br><span class="line">  params:&#123;</span><br><span class="line">    id:12</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).then((res)&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios的get请求第二种写法不带参数</span><br><span class="line">axios(&#123;</span><br><span class="line">  method:&#39;get&#39;,</span><br><span class="line">  url:&#39;&#x2F;data.json&#39;,</span><br><span class="line">&#125;).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios的get请求第二种写法带参数</span><br><span class="line">axios(&#123;</span><br><span class="line">  method:&#39;get&#39;,</span><br><span class="line">  url:&#39;&#x2F;data.json&#39;,</span><br><span class="line">  params:&#123;</span><br><span class="line">    id:12</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios的post请求第一种写法</span><br><span class="line">let data &#x3D; &#123;</span><br><span class="line">  id:12</span><br><span class="line">&#125;</span><br><span class="line">axios.post(&#39;&#x2F;post&#39;,data).then((res)&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios的post请求第二种写法</span><br><span class="line">axios(&#123;</span><br><span class="line">  method:&#39;post&#39;,</span><br><span class="line">  url:&#39;&#x2F;post&#39;,</span><br><span class="line">  data:data</span><br><span class="line">&#125;).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;form-data请求,图片上传、文件上传，文件格式为：multipart&#x2F;form-data，其他请求为application&#x2F;json</span><br><span class="line"></span><br><span class="line">let formData &#x3D; new formData()</span><br><span class="line">for(let key in data)&#123;</span><br><span class="line">  formData.append(key,data[key])</span><br><span class="line">&#125;,</span><br><span class="line">axios.post(&#39;&#x2F;post&#39;,formData).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios之put请求</span><br><span class="line">axios.put(&#39;&#x2F;put&#39;,data).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios之patch请求</span><br><span class="line">axios.patch(&#39;&#x2F;patch&#39;,data).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;),</span><br><span class="line"></span><br><span class="line">  &#x2F;&#x2F;axios之delete请求的第一种写法</span><br><span class="line">  axios.delete(&#39;&#x2F;delete&#39;,&#123;</span><br><span class="line">    params:&#123;</span><br><span class="line">      id:12</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;).then(res&#x3D;&gt;&#123;</span><br><span class="line">    console.log(res)</span><br><span class="line">  &#125;)</span><br><span class="line">&#x2F;&#x2F;说明:当使用第一种写法参数为params时，请求接口时参数是放在URL里面的。</span><br><span class="line">&#x2F;&#x2F; 例：http:&#x2F;&#x2F;localhost:8080&#x2F;delete?id&#x3D;12,而写成第二种方法data就不会，根据实际情况使用</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;axios之delete请求的第二种写法</span><br><span class="line">axios.delete(&#39;&#x2F;delete&#39;,&#123;</span><br><span class="line">  data:&#123;</span><br><span class="line">    id:12</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).then(res&#x3D;&gt;&#123;</span><br><span class="line">  console.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 
     
 
@@ -250,7 +288,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://luckyship.github.io/2020/09/30/2020-09-30-hexo-add-article-nav/" title="hexo 添加文章导航" target="_blank">http://luckyship.github.io/2020/09/30/2020-09-30-hexo-add-article-nav/</a>
+          <a href="http://luckyship.github.io/2020/09/06/2020-09-06-interview-css/" title="整理面试相关" target="_blank">http://luckyship.github.io/2020/09/06/2020-09-06-interview-css/</a>
         </li>
         
         <li>
@@ -276,7 +314,15 @@
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">html</a>
         		</li>
       		
 		</ul>
@@ -332,7 +378,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/09/30/2020-09-30-hexo-add-article-nav/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/09/06/2020-09-06-interview-css/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -347,18 +393,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/10/07/2020-10-07-deploy-hexo/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/09/10/2020-09-10-debian-install-k8s/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          使用hexo在github上搭建博客
+          在debian上使用kubeadm搭建 v1.16.3版本Kubernetes集群
         
       </div>
     </a>
   
   
-    <a href="/2020/09/27/2020-09-27-debian-install-k8s-offline/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">在debian上离线使用kubeadm搭建 v1.16.3版本Kubernetes集群</div>
+    <a href="/2020/09/04/2020-09-04-centos-install-k8s/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在centos7上使用kubeadm搭建 v1.16.9版本Kubernetes集群</div>
       <i class="icon-circle-right"></i>
     </a>
   
