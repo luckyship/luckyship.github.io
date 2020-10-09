@@ -1,7 +1,7 @@
 ---
 title: "使用hexo在github上搭建博客"
 date: 2020-10-07
-excerpt: "hexo搭建博客流程，开发过程介绍"
+excerpt: "hexo搭建博客流程，开发过程介绍."
 tags: [hexo, web]
 ---
 
@@ -50,4 +50,22 @@ $ hexo s // 本地环境
 添加的文件可以实时显现到web上
 ```
 $ hexo s -g --debug
+```
+### 上传至github
+安装包
+```
+npm install hexo-deployer-git --save
+```
+在`_config.yml`中添加
+```
+deploy:
+  type: git
+  repo: git@github.com:luckyship/luckyship.github.io.git
+  branch: main
+  message: 'collect new post'
+```
+执行命令，`deploy`上传的每次`generate`过后的文件，所以上传之前需要`generate`
+```
+$ hexo g
+$ hexo deploy
 ```
