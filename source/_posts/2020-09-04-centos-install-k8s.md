@@ -2,8 +2,8 @@
 layout: post
 title: "在centos7上使用kubeadm搭建 v1.16.9版本Kubernetes集群"
 date: 2020-09-04
-excerpt: "在centos系列的linux机器上都适用，因为从头开始慢慢搭建比较慢，官方提供了一种可以快速搭建k8s环境的工具kubeadm"
-tags: [linux, kubernetes]
+excerpt: "在centos上使用一键安装工具kubeadm安装kubernete环境，摆脱繁琐的k8s配置"
+tags: [linux, kubernetes, centos]
 comments: true
 ---
 

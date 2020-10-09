@@ -31,7 +31,7 @@ $('#example').dataTable( {
 如果我们在输入框中输入: `^a  c  d`  
 即可匹配到第一行
 
->如果想要更多的验证DataTable的正则匹配规则，可以点击连接验证[https://datatables.net/examples/api/regex.html](https://datatables.net/examples/api/regex.html)
+>如果想要更多的验证DataTable的正则匹配规则，[可以点击连接验证](https://datatables.net/examples/api/regex.html)
 
 
 

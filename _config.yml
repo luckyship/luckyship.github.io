@@ -104,6 +104,7 @@ theme: lucky
 deploy:
   type: git
   repo: git@github.com:luckyship/luckyship.github.io.git #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
+  # repo: git@gitee.com:luckyship/luckyship.git # gitee
   branch: main
   message: 'add new post'
 

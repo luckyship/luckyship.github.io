@@ -2,7 +2,7 @@
 layout: post
 title: "docker的http代理"
 date: 2019-10-29
-excerpt: "docker无法上网时，需要配置http代理"
+excerpt: "docker无法访问网络，在需要网络代理的情况下，配置docker http代理"
 tags: [docker]
 comments: true
 ---

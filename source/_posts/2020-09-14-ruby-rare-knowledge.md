@@ -2,7 +2,7 @@
 layout: post
 title: "ruby的小技巧"
 date: 2020-09-14
-excerpt: "ruby中一些常见的可以简化逻辑的用法，可用于装X"
+excerpt: "ruby中一些常见的可以简化逻辑的用法"
 tags: [ruby]
 comments: true
 ---
@@ -157,7 +157,6 @@ irb(main):008:0> JSON.parse(JSON.generate(a))
 => {"b"=>1, "c"=>2}
 irb(main):009:0> JSON.parse(JSON.generate(a), symbolize_names: true)
 => {:b=>1, :c=>2}
-
 ```
 
 ## send的用法
@@ -170,5 +169,4 @@ irb(main):003:1> end
 irb(main):004:0> send('test', '2')
 2
 => nil
-
 ```

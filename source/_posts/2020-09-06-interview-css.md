@@ -1,11 +1,4 @@
----
-layout: post
-title: "整理面试相关"
-date: 2020-09-06
-excerpt: "主要是一些关于web的知识, 记录一些要点"
-tags: [web, javascript, html, css]
-comments: true
----
+# 整理面试相关
 
 简单记录一下面试的一些要点
 

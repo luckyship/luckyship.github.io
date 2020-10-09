@@ -10,7 +10,7 @@ comments: true
 一般来说有三种方法可以实现添加外部域名
 * 通过hostalias在deployment里面修改hosts文件
 * 通过coredns修改hosts文件
-* 通过coredns添加域名服务器
+* 通过kube-dns添加域名服务器
 ## 通过hostalias添加域名和ip
 创建nginx pod
 ```
@@ -98,7 +98,7 @@ data:
             ttl 30
         }
         hosts {
-           193.160.57.121 harbor.com
+           193.160.57.121 harbor.com           //添加域名
            fallthrough
         }
         prometheus :9153
@@ -120,8 +120,6 @@ metadata:
   uid: 10a8e6df-d3d6-49a6-98b9-57640fdb6011
 ```
 ## 通过coredns添加域名服务器
-
-使用edit命令修改coredns configmap资源，添加 `proxy . xxx.xxx.xxx.xxx`
 ```
 apiVersion: v1
 data:
@@ -135,7 +133,7 @@ data:
             fallthrough in-addr.arpa ip6.arpa
             ttl 30
         }
-        proxy . 10.167.129.6
+        proxy . 10.167.129.6             //添加域名服务器
         prometheus :9153
         forward . /etc/resolv.conf
         cache 30
@@ -155,3 +153,25 @@ metadata:
   uid: 10a8e6df-d3d6-49a6-98b9-57640fdb6011
 
 ```
+
+## 通过kube-dns添加域名服务器
+修改kube-dns的使用的ConfigMap。
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-dns
+  namespace: kube-system
+data:
+  stubDomains: |
+    {"k8s.com": ["192.168.10.10"]}
+  upstreamNameservers: |
+    ["8.8.8.8", "8.8.4.4"]
+```
+`upstreamNameservers` 即使用的外部DNS。
+
+## 参考
+[add-entries-to-pod-etc-hosts-with-host-aliases](https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/)  
+[kubernetes 集群DNS配置及容器内CoreDNS解析外部域名配置问题](https://www.cnblogs.com/lbjstill/p/13298826.html)  
+[配置Pod使用外部DNS](https://jimmysong.io/kubernetes-handbook/appendix/tricks.html)
+[]
