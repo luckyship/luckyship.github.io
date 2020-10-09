@@ -2240,7 +2240,7 @@ pre .css ~ * .id {
     height: 2em;
     top: 50%;
     margin: -1em 0 0;
-    background: url(./fonts/tooltip.d04149.svg) no-repeat center center;
+    background: url(./fonts/tooltip.4004ff.svg) no-repeat center center;
     background-size: 100%; }
   .tooltip-left .tooltip-west .tooltip-content::before,
   .tooltip-left .tooltip-west .tooltip-content::after {
