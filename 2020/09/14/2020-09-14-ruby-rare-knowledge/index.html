@@ -10,15 +10,15 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="ruby中一些常见的可以简化逻辑的用法，可用于装X">
+  <meta name="description" content="ruby中一些常见的可以简化逻辑的用法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ruby的小技巧">
 <meta property="og:url" content="http://luckyship.github.io/2020/09/14/2020-09-14-ruby-rare-knowledge/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="ruby中一些常见的可以简化逻辑的用法，可用于装X">
+<meta property="og:description" content="ruby中一些常见的可以简化逻辑的用法">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-04T08:24:06.126Z">
+<meta property="article:modified_time" content="2020-10-09T02:42:43.458Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="ruby">
 <meta name="twitter:card" content="summary">
@@ -258,10 +258,11 @@
 <h2 id="数组可以运算"><a href="#数组可以运算" class="headerlink" title="数组可以运算"></a>数组可以运算</h2><p>ruby中数组可以进行<code>+</code>和<code>-</code>的操作，主要说一下<code>-</code>的作用：减去2个数组共有的元素</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">irb(main):001:0&gt; a &#x3D; [1,2,3]</span><br><span class="line">&#x3D;&gt; [1, 2, 3]</span><br><span class="line">irb(main):002:0&gt; b &#x3D; [2,3,4]</span><br><span class="line">&#x3D;&gt; [2, 3, 4]</span><br><span class="line">irb(main):003:0&gt; a - b</span><br><span class="line">&#x3D;&gt; [1]</span><br><span class="line">irb(main):004:0&gt; a + b</span><br><span class="line">&#x3D;&gt; [1, 2, 3, 2, 3, 4]</span><br></pre></td></tr></table></figure>
 
-<h2 id="json数据格式化为symbol类型"><a href="#json数据格式化为symbol类型" class="headerlink" title="json数据格式化为symbol类型"></a>json数据格式化为symbol类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">irb(main):005:0&gt; require &#39;json&#39;</span><br><span class="line">&#x3D;&gt; true</span><br><span class="line">irb(main):006:0&gt; a &#x3D; &#123;b:1, c:2&#125;</span><br><span class="line">&#x3D;&gt; &#123;:b&#x3D;&gt;1, :c&#x3D;&gt;2&#125;</span><br><span class="line">irb(main):007:0&gt; JSON.generate(a)                       # symbol类型的key被转为字符串</span><br><span class="line">&#x3D;&gt; &quot;&#123;\&quot;b\&quot;:1,\&quot;c\&quot;:2&#125;&quot;</span><br><span class="line">irb(main):008:0&gt; JSON.parse(JSON.generate(a))</span><br><span class="line">&#x3D;&gt; &#123;&quot;b&quot;&#x3D;&gt;1, &quot;c&quot;&#x3D;&gt;2&#125;</span><br><span class="line">irb(main):009:0&gt; JSON.parse(JSON.generate(a), symbolize_names: true)</span><br><span class="line">&#x3D;&gt; &#123;:b&#x3D;&gt;1, :c&#x3D;&gt;2&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="json数据格式化为symbol类型"><a href="#json数据格式化为symbol类型" class="headerlink" title="json数据格式化为symbol类型"></a>json数据格式化为symbol类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">irb(main):005:0&gt; require &#39;json&#39;</span><br><span class="line">&#x3D;&gt; true</span><br><span class="line">irb(main):006:0&gt; a &#x3D; &#123;b:1, c:2&#125;</span><br><span class="line">&#x3D;&gt; &#123;:b&#x3D;&gt;1, :c&#x3D;&gt;2&#125;</span><br><span class="line">irb(main):007:0&gt; JSON.generate(a)                       # symbol类型的key被转为字符串</span><br><span class="line">&#x3D;&gt; &quot;&#123;\&quot;b\&quot;:1,\&quot;c\&quot;:2&#125;&quot;</span><br><span class="line">irb(main):008:0&gt; JSON.parse(JSON.generate(a))</span><br><span class="line">&#x3D;&gt; &#123;&quot;b&quot;&#x3D;&gt;1, &quot;c&quot;&#x3D;&gt;2&#125;</span><br><span class="line">irb(main):009:0&gt; JSON.parse(JSON.generate(a), symbolize_names: true)</span><br><span class="line">&#x3D;&gt; &#123;:b&#x3D;&gt;1, :c&#x3D;&gt;2&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="send的用法"><a href="#send的用法" class="headerlink" title="send的用法"></a>send的用法</h2><p>send用来调用不确定的函数名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">irb(main):001:0&gt; def test(a)</span><br><span class="line">irb(main):002:1&gt; puts a</span><br><span class="line">irb(main):003:1&gt; end</span><br><span class="line">&#x3D;&gt; :test</span><br><span class="line">irb(main):004:0&gt; send(&#39;test&#39;, &#39;2&#39;)</span><br><span class="line">2</span><br><span class="line">&#x3D;&gt; nil</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">irb(main):001:0&gt; def test(a)</span><br><span class="line">irb(main):002:1&gt; puts a</span><br><span class="line">irb(main):003:1&gt; end</span><br><span class="line">&#x3D;&gt; :test</span><br><span class="line">irb(main):004:0&gt; send(&#39;test&#39;, &#39;2&#39;)</span><br><span class="line">2</span><br><span class="line">&#x3D;&gt; nil</span><br></pre></td></tr></table></figure>
+
     
 
     
@@ -378,8 +379,8 @@
     </a>
   
   
-    <a href="/2020/09/10/2020-09-10-k8s-debian/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">在debian上使用kubeadm搭建 v1.16.9版本Kubernetes集群</div>
+    <a href="/2020/09/10/2020-09-10-debian-install-k8s/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">在debian上使用kubeadm搭建 v1.16.3版本Kubernetes集群</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -609,11 +610,27 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">html</a>
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
               </li>
             
             <div class="clearfix"></div>
