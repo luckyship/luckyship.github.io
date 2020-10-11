@@ -6,16 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://luckyship.github.io">
-  <title>Archives: 2020/10 | luckyship</title>
+  <title>gitee pages 自动更新 | luckyship</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="luckyship">
-<meta property="og:url" content="http://luckyship.github.io/archives/2020/10/index.html">
+  <meta name="description" content="gitee个人版目前不提供pages自动更新服务，只有付费才能自动更新，创建一个可以自动更新page的脚本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitee pages 自动更新">
+<meta property="og:url" content="http://luckyship.github.io/2020/10/11/2020-10-11-gitee-update-pages-auto/index.html">
 <meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="gitee个人版目前不提供pages自动更新服务，只有付费才能自动更新，创建一个可以自动更新page的脚本">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-11T12:34:10.343Z">
 <meta property="article:author" content="luckyship">
+<meta property="article:tag" content="hexo">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
@@ -118,6 +123,11 @@
 
 		<nav>
 			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E8%84%9A%E6%9C%AC"><span class="toc-text">自动化脚本</span></a></li></ol>
+  </div>
+
 
 		  </nav>
 	</header>
@@ -193,41 +203,96 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-2020-10-11-gitee-update-pages-auto" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
   
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
+    <h1 class="article-title" itemprop="name">
+      gitee pages 自动更新
+    </h1>
+  
+
+
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/10/11/2020-10-11-gitee-update-pages-auto/" class="archive-article-date">
         <time datetime="2020-10-10T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-11</time>
 </a>
 
-        </div>
-    	 
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/10/11/2020-10-11-gitee-update-pages-auto/">gitee pages 自动更新</a>
-	
-    </h1>
   
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">573字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">3分</span>
+    </span>
+  </span>
+</div>
 
 
-        <div class="article-info info-on-right">
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul>
+<li>node &gt;= 14.13.1</li>
+<li>npm &gt;= 6.14.8<br>安装<code>puppeteer</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install puppeteer --save</span><br></pre></td></tr></table></figure>
+<code>puppeteer</code>是谷歌提供的一个无界面的浏览器程序，相当于用代码实现浏览器的功能</li>
+</ul>
+<h2 id="自动化脚本"><a href="#自动化脚本" class="headerlink" title="自动化脚本"></a>自动化脚本</h2><p>需要填入gitee账号和pages的地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; npm &gt;&#x3D; 10.18</span><br><span class="line">const puppeteer &#x3D; require(&#39;puppeteer&#39;);</span><br><span class="line">const username &#x3D; &#39;luckyship&#39;;                                            &#x2F;&#x2F; 账号</span><br><span class="line">const giteePageUrl &#x3D; &#39;https:&#x2F;&#x2F;gitee.com&#x2F;luckyship&#x2F;luckyship&#x2F;pages&#39;;      &#x2F;&#x2F; gitee page地址</span><br><span class="line"></span><br><span class="line">async function giteeUpdate(username, giteePageUrl, passwd) &#123;</span><br><span class="line">    const browser &#x3D; await puppeteer.launch(&#123;</span><br><span class="line">        &#x2F;&#x2F; 此处可以使用 false 有头模式进行调试, 调试完注释即可</span><br><span class="line">          headless: false,</span><br><span class="line">    &#125;);</span><br><span class="line">    const page &#x3D; await browser.newPage();</span><br><span class="line">    await page.goto(&#39;https:&#x2F;&#x2F;gitee.com&#x2F;login&#39;);</span><br><span class="line">    &#x2F;&#x2F; 1. 选中账号控件</span><br><span class="line">    let accountElements &#x3D; await page.$x(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;user_login&quot;]&#39;) &#x2F;&#x2F; 此处使用 xpath 寻找控件，下同</span><br><span class="line">    &#x2F;&#x2F; 2. 填入账号</span><br><span class="line">    await accountElements[0].type(username)</span><br><span class="line">    &#x2F;&#x2F; 3. 选中密码控件</span><br><span class="line">    let pwdElements &#x3D; await page.$x(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;user_password&quot;]&#39;)</span><br><span class="line">    &#x2F;&#x2F; 4. 填入密码</span><br><span class="line">    await pwdElements[0].type(passwd)</span><br><span class="line">    &#x2F;&#x2F; 5. 点击登录</span><br><span class="line">    let loginButtons &#x3D; await page.$x(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;new_user&quot;]&#x2F;div[2]&#x2F;div&#x2F;div&#x2F;div[4]&#x2F;input&#39;)</span><br><span class="line">    await loginButtons[0].click()</span><br><span class="line">    &#x2F;&#x2F; 6. 等待登录成功</span><br><span class="line">    await page.waitFor(1000)</span><br><span class="line">    await page.goto(giteePageUrl); &#x2F;&#x2F; 比如： https:&#x2F;&#x2F;gitee.com&#x2F;yang0033&#x2F;hexo-blog&#x2F;pages</span><br><span class="line">    &#x2F;&#x2F; 7.1. 监听步骤 7 中触发的确认弹框，并点击确认</span><br><span class="line">    await page.on(&#39;dialog&#39;, async dialog &#x3D;&gt; &#123;</span><br><span class="line">        console.log(&#39;确认更新&#39;)</span><br><span class="line">        dialog.accept();</span><br><span class="line">    &#125;)</span><br><span class="line">    &#x2F;&#x2F; 7. 点击更新按钮，并弹出确认弹窗</span><br><span class="line">    let updateButtons &#x3D; await page.$x(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;pages-branch&quot;]&#x2F;div[7]&#39;)</span><br><span class="line">    await updateButtons[0].click()</span><br><span class="line">    &#x2F;&#x2F; 8. 轮询并确认是否更新完毕</span><br><span class="line">    while (true) &#123;</span><br><span class="line">        await page.waitFor(2000)</span><br><span class="line">        try &#123;</span><br><span class="line">            &#x2F;&#x2F; 8.1 获取更新状态标签</span><br><span class="line">            deploying &#x3D; await page.$x(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;pages_deploying&quot;]&#39;)</span><br><span class="line">            if (deploying.length &gt; 0) &#123;</span><br><span class="line">                console.log(&#39;更新中...&#39;)</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                console.log(&#39;更新完毕&#39;)</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (error) &#123;</span><br><span class="line">            break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    await page.waitFor(500);</span><br><span class="line">    &#x2F;&#x2F; 10.更新完毕，关闭浏览器</span><br><span class="line">    browser.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">process.stdin.resume();</span><br><span class="line">process.stdin.setEncoding(&#39;utf-8&#39;);</span><br><span class="line">process.stdout.write(&#96;请输入$&#123;username&#125;密码:&#96;);</span><br><span class="line">process.stdin.on(&#39;data&#39;, function (data) &#123;</span><br><span class="line">    var str &#x3D; data.slice(0, -2);</span><br><span class="line">    process.stdin.emit(&#39;end&#39;);</span><br><span class="line">   </span><br><span class="line">    giteeUpdate(username, giteePageUrl, str);</span><br><span class="line">&#125;);</span><br><span class="line">process.stdin.on(&#39;end&#39;, function () &#123;</span><br><span class="line">     process.stdin.pause();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="http://luckyship.github.io/2020/10/11/2020-10-11-gitee-update-pages-auto/" title="gitee pages 自动更新" target="_blank">http://luckyship.github.io/2020/10/11/2020-10-11-gitee-update-pages-auto/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -239,66 +304,131 @@
 		</ul>
 	</div>
 
-          
+    
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/10/11/2020-10-11-gitee-update-pages-auto/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/10/07/2020-10-07-deploy-hexo/" class="archive-article-date">
-        <time datetime="2020-10-06T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-07</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/07/2020-10-07-deploy-hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">使用hexo在github上搭建博客</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/10/07/2020-10-07-deploy-hexo/">使用hexo在github上搭建博客</a>
-	
-    </h1>
-  
+        
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
+            app_key: "fstd3ABXC89jc5VDSe6ANGV6",
+            placeholder: "Just go go",
+            avatar:"mm"
+        });
+    }
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
 
 
           </div>
@@ -339,8 +469,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
