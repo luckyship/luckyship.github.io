@@ -1,7 +1,26 @@
+---
+title: "gitee pages 自动更新"
+date: 2020-10-07
+excerpt: "gitee个人版目前不提供pages自动更新服务，只有付费才能自动更新，创建一个可以自动更新page的脚本"
+tags: [hexo]
+---
+
+## 环境准备
+* node >= 14.13.1
+* npm >= 6.14.8
+安装`puppeteer`
+```
+npm install puppeteer --save
+```
+`puppeteer`是谷歌提供的一个无界面的浏览器程序，相当于用代码实现浏览器的功能
+
+## 自动化脚本
+需要填入gitee账号和pages的地址
+```
 // npm >= 10.18
 const puppeteer = require('puppeteer');
-const username = 'luckyship';
-const giteePageUrl = 'https://gitee.com/luckyship/luckyship/pages';
+const username = 'luckyship';                                            // 账号
+const giteePageUrl = 'https://gitee.com/luckyship/luckyship/pages';      // gitee page地址
 
 async function giteeUpdate(username, giteePageUrl, passwd) {
     const browser = await puppeteer.launch({
@@ -55,7 +74,7 @@ async function giteeUpdate(username, giteePageUrl, passwd) {
 
 process.stdin.resume();
 process.stdin.setEncoding('utf-8');
-process.stdout.write(`请输入${username}密码:`); //标准输出
+process.stdout.write(`请输入${username}密码:`);
 process.stdin.on('data', function (data) {
     var str = data.slice(0, -2);
     process.stdin.emit('end');
@@ -65,3 +84,5 @@ process.stdin.on('data', function (data) {
 process.stdin.on('end', function () {
      process.stdin.pause();
 });
+
+```
