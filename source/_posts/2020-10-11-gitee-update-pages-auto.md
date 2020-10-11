@@ -1,6 +1,6 @@
 ---
 title: "gitee pages 自动更新"
-date: 2020-10-07
+date: 2020-10-11
 excerpt: "gitee个人版目前不提供pages自动更新服务，只有付费才能自动更新，创建一个可以自动更新page的脚本"
 tags: [hexo]
 ---
