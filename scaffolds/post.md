@@ -1,5 +1,8 @@
 ---
+layout: post
 title: {{ title }}
 date: {{ date }}
-tags:
+excerpt: ""
+tags: []
+comments: true
 ---
