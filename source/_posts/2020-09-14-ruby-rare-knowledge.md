@@ -170,3 +170,21 @@ irb(main):004:0> send('test', '2')
 2
 => nil
 ```
+
+## 函数的返回值
+可以不写`return`，默认返回最后一行的值
+
+## 查看类有哪些方法
+可以用`.methods`方法
+```
+irb(main):010:0> class A
+irb(main):011:1> class << self
+irb(main):012:2> def b
+irb(main):013:3> puts 'test'
+irb(main):014:3> end
+irb(main):015:2> end
+irb(main):016:1> end
+ 
+irb(main):021:0> A.methods.include?(:b)
+=> true
+```
