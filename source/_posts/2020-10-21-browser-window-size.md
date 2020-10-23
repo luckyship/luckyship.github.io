@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2020-10-21-browser-window-size
+title: 各种js、jquery浏览器高度、宽度
 excerpt: '各种js、jquery浏览器高度、宽度'
 tags: []
 comments: true
@@ -55,5 +55,4 @@ alert($(document.body).outerWidth(true));  //浏览器当前窗口文档body的�
 ```
 
 ## 转载
-[
-Javascript、Jquery获取浏览器和屏幕各种高度宽度](https://www.cnblogs.com/EricaMIN1987_IT/p/3593431.html)
+[Javascript、Jquery获取浏览器和屏幕各种高度宽度](https://www.cnblogs.com/EricaMIN1987_IT/p/3593431.html)
