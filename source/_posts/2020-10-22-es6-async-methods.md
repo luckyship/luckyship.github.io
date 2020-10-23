@@ -2,7 +2,7 @@
 layout: post
 title: es6异步的写法
 excerpt: '由于有些业务逻辑的有序性，代码需要按顺序执行，这就需要用到异步的操作，es6中提供多种异步操作的方法，例如：promise函数，Generator函数，async函数'
-tags: []
+tags: [javascript, web]
 comments: true
 date: 2020-10-22 15:21:00
 ---

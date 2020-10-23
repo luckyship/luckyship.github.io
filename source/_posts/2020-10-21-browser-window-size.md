@@ -2,7 +2,7 @@
 layout: post
 title: 各种js、jquery浏览器高度、宽度
 excerpt: '各种js、jquery浏览器高度、宽度'
-tags: []
+tags: [javascript, jquery, web]
 comments: true
 date: 2020-10-21 17:29:48
 ---
