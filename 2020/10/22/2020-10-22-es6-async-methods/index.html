@@ -6,21 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://luckyship.github.io">
-  <title>css 居中 | luckyship</title>
+  <title>es6异步的写法 | luckyship</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="利用各种css的特性实现居中">
+  <meta name="description" content="由于有些业务逻辑的有序性，代码需要按顺序执行，这就需要用到异步的操作，es6中提供多种异步操作的方法，例如：promise函数，Generator函数，async函数">
 <meta property="og:type" content="article">
-<meta property="og:title" content="css 居中">
-<meta property="og:url" content="http://luckyship.github.io/2019/05/22/2019-05-22-css%E5%B1%85%E4%B8%AD%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="es6异步的写法">
+<meta property="og:url" content="http://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/index.html">
 <meta property="og:site_name" content="luckyship">
-<meta property="og:description" content="利用各种css的特性实现居中">
+<meta property="og:description" content="由于有些业务逻辑的有序性，代码需要按顺序执行，这就需要用到异步的操作，es6中提供多种异步操作的方法，例如：promise函数，Generator函数，async函数">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-05-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-09T02:42:43.453Z">
+<meta property="article:published_time" content="2020-10-22T07:21:00.000Z">
+<meta property="article:modified_time" content="2020-10-22T08:19:43.407Z">
 <meta property="article:author" content="luckyship">
-<meta property="article:tag" content="css">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
@@ -126,7 +125,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%87%E5%AD%97%E5%B1%85%E4%B8%AD-%E8%BE%B9%E8%B7%9D%E5%B1%85%E4%B8%AD"><span class="toc-text">1. 文字居中,边距居中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E5%B1%85%E4%B8%AD"><span class="toc-text">2. 绝对定位居中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-table-cell"><span class="toc-text">3. table-cell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E5%92%8C%E8%B4%9F%E8%BE%B9%E8%B7%9D"><span class="toc-text">4. 绝对定位和负边距</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-css3-translate"><span class="toc-text">5. css3 translate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-display-flex"><span class="toc-text">6. display:flex</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%80%9A%E8%BF%87%E4%BC%AA%E5%85%83%E7%B4%A0-after%E5%8D%A0%E4%BD%8D"><span class="toc-text">7. 通过伪元素:after占位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-display-webkit-box"><span class="toc-text">8. display:-webkit-box</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise"><span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-text">注意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator%E5%87%BD%E6%95%B0"><span class="toc-text">Generator函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async%E5%87%BD%E6%95%B0"><span class="toc-text">async函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%86%85%E7%BD%AE%E6%89%A7%E8%A1%8C%E5%99%A8%E3%80%82"><span class="toc-text">（1）内置执行器。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%AD%E4%B9%89%E3%80%82"><span class="toc-text">（2）更好的语义。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%9B%B4%E5%B9%BF%E7%9A%84%E9%80%82%E7%94%A8%E6%80%A7%E3%80%82"><span class="toc-text">（3）更广的适用性。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF-Promise%E3%80%82"><span class="toc-text">（4）返回值是 Promise。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96"><span class="toc-text">Promise对象的状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#await-%E5%91%BD%E4%BB%A4"><span class="toc-text">await 命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 
 
@@ -205,14 +204,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2019-05-22-css居中详解" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2020-10-22-es6-async-methods" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      css 居中
+      es6异步的写法
     </h1>
   
 
@@ -224,8 +223,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/05/22/2019-05-22-css%E5%B1%85%E4%B8%AD%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-        <time datetime="2019-05-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+<a href="/2020/10/22/2020-10-22-es6-async-methods/" class="archive-article-date">
+        <time datetime="2020-10-22T07:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-22</time>
 </a>
 
   
@@ -238,7 +237,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.2k字</span>
+      <span class="post-count">2k字</span>
     </span>
   </span>
 
@@ -247,7 +246,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -258,185 +257,53 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>css中有很多不同的居中方法，适应不同的情况，下面简单介绍几种常见的：</p>
-<h2 id="1-文字居中-边距居中"><a href="#1-文字居中-边距居中" class="headerlink" title="1. 文字居中,边距居中"></a>1. 文字居中,边距居中</h2><p>这种居中方法一般使用较多。<code>text-align: center</code> 规定文字居中，<code>margin: 0 auto</code> 规定水平居中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .wrap &#123;</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">    .div &#123;</span><br><span class="line">      margin: 0 auto;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">      width: 200px;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="100px" srcdoc="
-<style type='text/css'>
-  .wrap { text-align: center; }
-  .div { margin: 0 auto; border: 1px solid red; width: 200px; }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
+    <h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>新界<code>promise</code>对象，在其中写入需要异步的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var p1 &#x3D; new Promise(function(resolve, reject)&#123;</span><br><span class="line">	&#x2F;&#x2F;做一些异步操作</span><br><span class="line">	setTimeout(function()&#123;</span><br><span class="line">		console.log(&#39;执行完成Promise&#39;);</span><br><span class="line">		resolve(&#39;要返回的数据可以任何数据例如接口返回数据&#39;);</span><br><span class="line">	&#125;, 2000);</span><br><span class="line">&#125;);</span><br><span class="line">p1.then(function(data)&#123;console.log(data)&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">执行完成Promise</span><br><span class="line">要返回的数据可以任何数据例如接口返回数据</span><br></pre></td></tr></table></figure>
 
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">  resolve(1);</span><br><span class="line">  console.log(2);</span><br><span class="line">&#125;).then(r &#x3D;&gt; &#123;</span><br><span class="line">  console.log(r);</span><br><span class="line">&#125;);</span><br><span class="line">&#x2F;&#x2F; 2</span><br><span class="line">&#x2F;&#x2F; 1</span><br></pre></td></tr></table></figure>
+<p>上面代码中，调用<code>resolve(1)</code>以后，后面的<code>console.log(2)</code>还是会执行，并且会首先打印出来。这是因为立即<code>resolved</code>的<code>Promise</code>是在本轮事件循环的末尾执行，总是晚于本轮循环的同步任务。<br>一般来说，调用<code>resolve</code>或<code>reject</code>以后，<code>Promise</code>的使命就完成了，后继操作应该放到<code>then</code>方法里面，而不应该直接写在<code>resolve</code>或<code>reject</code>的后面。所以，最好在它们前面加上<code>return</code>语句，这样就不会有意外。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">new Promise((resolve, reject) &#x3D;&gt; &#123;</span><br><span class="line">  return resolve(1);</span><br><span class="line">  &#x2F;&#x2F; 后面的语句不会执行</span><br><span class="line">  console.log(2);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h2 id="2-绝对定位居中"><a href="#2-绝对定位居中" class="headerlink" title="2. 绝对定位居中"></a>2. 绝对定位居中</h2><p>用于没有父元素包裹，需要居中的元素是绝对定位。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .wrap .div&#123;</span><br><span class="line">      width: 10%; </span><br><span class="line">      height: 60%; </span><br><span class="line">      border: 1px solid red;</span><br><span class="line">      margin: auto; </span><br><span class="line">      position: absolute;</span><br><span class="line">      top: 0; left: 0; bottom: 0; right: 0;</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="100px" srcdoc="
-<style type='text/css'>
-    .wrap .div{
-      width: 10%; 
-      height: 60%; 
-      border: 1px solid red;
-      margin: auto; 
-      position: absolute;
-      top: 0; left: 0; bottom: 0; right: 0;
-      text-align: center;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
+<h2 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h2><p>Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function* helloWorldGenerator() &#123;</span><br><span class="line">  yield &#39;hello&#39;;</span><br><span class="line">  yield &#39;world&#39;;</span><br><span class="line">  return &#39;ending&#39;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>上述都需要<code>margin:auto</code>，这是利用了<code>margin</code>把元素在页面上的剩余位置用边距填满，为边距赋统一值<code>auto</code>，这样就可以使元素2边相等。<br>如果元素的<code>width:100%</code>，那么这个元素就相当于居中，如果<code>width</code>不等于100%，就可以用<code>margin</code>把剩下的位置填满, 因为<code>margin</code>也是盒子模型中的成员，所以它在盒子中占据空间和<code>width:100%</code>一样。</p>
-<h2 id="3-table-cell"><a href="#3-table-cell" class="headerlink" title="3. table-cell"></a>3. table-cell</h2><p>利用表格中<code>vertical-align: middle</code>可以垂直居中的特性，使用方便。不过这种方法的水平居中有局限性，内部元素不可以设置宽度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">  .wrap &#123;</span><br><span class="line">    display: table-cell;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">    text-align: center;</span><br><span class="line">    width: 100px;</span><br><span class="line">    height: 100px;</span><br><span class="line">    border: 1px solid red;</span><br><span class="line">  &#125;</span><br><span class="line">  .div &#123;</span><br><span class="line">    border: 1px solid red;</span><br><span class="line">  &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-        .wrap {
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-      width: 100px;
-      height: 100px;
-      border: 1px solid red;
-        }
-    .div {
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
+<p>上面代码定义了一个 Generator 函数helloWorldGenerator，它内部有两个yield表达式（hello和world），即该函数有三个状态：hello，world 和 return 语句（结束执行）。</p>
+<p>然后，Generator 函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象，也就是上一章介绍的遍历器对象（Iterator Object）。</p>
+<p>下一步，必须调用遍历器对象的next方法，使得指针移向下一个状态。也就是说，每次调用next方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个yield表达式（或return语句）为止。换言之，Generator 函数是分段执行的，yield表达式是暂停执行的标记，而next方法可以恢复执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hw.next()</span><br><span class="line">&#x2F;&#x2F; &#123; value: &#39;hello&#39;, done: false &#125;</span><br><span class="line"></span><br><span class="line">hw.next()</span><br><span class="line">&#x2F;&#x2F; &#123; value: &#39;world&#39;, done: false &#125;</span><br><span class="line"></span><br><span class="line">hw.next()</span><br><span class="line">&#x2F;&#x2F; &#123; value: &#39;ending&#39;, done: true &#125;</span><br><span class="line"></span><br><span class="line">hw.next()</span><br><span class="line">&#x2F;&#x2F; &#123; value: undefined, done: true &#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码一共调用了四次next方法。</p>
+<p>第一次调用，<code>Generator</code> 函数开始执行，直到遇到第一个<code>yield</code>表达式为止。<code>next</code>方法返回一个对象，它的<code>value</code>属性就是当前<code>yield</code>表达式的值<code>hello</code>，<code>done</code>属性的值<code>false</code>，表示遍历还没有结束。</p>
+<p>第二次调用，<code>Generator</code> 函数从上次<code>yield</code>表达式停下的地方，一直执行到下一个<code>yield</code>表达式。<code>next</code>方法返回的对象的<code>value</code>属性就是当前<code>yield</code>表达式的值<code>world</code>，<code>done</code>属性的值<code>false</code>，表示遍历还没有结束。</p>
+<p>第三次调用，<code>Generator</code> 函数从上次<code>yield</code>表达式停下的地方，一直执行到<code>return</code>语句（如果没有<code>return</code>语句，就执行到函数结束）。<code>next</code>方法返回的对象的<code>value</code>属性，就是紧跟在<code>return</code>语句后面的表达式的值（如果没有<code>return</code>语句，则<code>value</code>属性的值为<code>undefined</code>），<code>done</code>属性的值<code>true</code>，表示遍历已经结束。</p>
+<p>第四次调用，此时 <code>Generator</code> 函数已经运行完毕，<code>next</code>方法返回对象的<code>value</code>属性为<code>undefined</code>，<code>done</code>属性为<code>true</code>。以后再调用<code>next</code>方法，返回的都是这个值。</p>
+<p>总结一下，调用<code>Generator</code>函数，返回一个遍历器对象，代表 <code>Generator </code>函数的内部指针。以后，每次调用遍历器对象的<code>next</code>方法，就会返回一个有着<code>value</code>和<code>done</code>两个属性的对象。<code>value</code>属性表示当前的内部状态的值，是<code>yield</code>表达式后面那个表达式的值；<code>done</code>属性是一个布尔值，表示是否遍历结束。</p>
+<h2 id="async函数"><a href="#async函数" class="headerlink" title="async函数"></a>async函数</h2><p>async 函数是什么？一句话，它就是 Generator 函数的语法糖。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const fs &#x3D; require(&#39;fs&#39;);</span><br><span class="line"></span><br><span class="line">const readFile &#x3D; function (fileName) &#123;</span><br><span class="line">  return new Promise(function (resolve, reject) &#123;</span><br><span class="line">    fs.readFile(fileName, function(error, data) &#123;</span><br><span class="line">      if (error) return reject(error);</span><br><span class="line">      resolve(data);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const gen &#x3D; function* () &#123;</span><br><span class="line">  const f1 &#x3D; yield readFile(&#39;&#x2F;etc&#x2F;fstab&#39;);</span><br><span class="line">  const f2 &#x3D; yield readFile(&#39;&#x2F;etc&#x2F;shells&#39;);</span><br><span class="line">  console.log(f1.toString());</span><br><span class="line">  console.log(f2.toString());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="4-绝对定位和负边距"><a href="#4-绝对定位和负边距" class="headerlink" title="4. 绝对定位和负边距"></a>4. 绝对定位和负边距</h2><p>这种方法本质上是使用计算解决偏离的问题，但只能用于居中元素确定宽度和高度。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .div &#123;</span><br><span class="line">      position: absolute;</span><br><span class="line">      width:100px;</span><br><span class="line">      height: 50px;</span><br><span class="line">      top:50%;</span><br><span class="line">      left:50%;</span><br><span class="line">      margin-left:-50px;</span><br><span class="line">      margin-top:-25px;</span><br><span class="line">      text-align: center;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-    .div {
-      position: absolute;
-      width:100px;
-      height: 50px;
-      top:50%;
-      left:50%;
-      margin-left:-50px;
-      margin-top:-25px;
-      text-align: center;
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
+<p>上面代码的函数<code>gen</code>可以写成<code>async</code>函数，就是下面这样。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const asyncReadFile &#x3D; async function () &#123;</span><br><span class="line">  const f1 &#x3D; await readFile(&#39;&#x2F;etc&#x2F;fstab&#39;);</span><br><span class="line">  const f2 &#x3D; await readFile(&#39;&#x2F;etc&#x2F;shells&#39;);</span><br><span class="line">  console.log(f1.toString());</span><br><span class="line">  console.log(f2.toString());</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>一比较就会发现，<code>async</code>函数就是将<code>Generator</code>函数的星号<code>（*）</code>替换成<code>async</code>，将<code>yield</code>替换成<code>await</code>，仅此而已。<br><code>async</code>函数对<code>Generator</code>函数的改进，体现在以下四点。  </p>
+<h3 id="（1）内置执行器。"><a href="#（1）内置执行器。" class="headerlink" title="（1）内置执行器。"></a>（1）内置执行器。</h3><p>Generator 函数的执行必须靠执行器，所以才有了co模块，而async函数自带执行器。也就是说，async函数的执行，与普通函数一模一样，只要一行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">asyncReadFile();</span><br></pre></td></tr></table></figure>
+<p>上面的代码调用了<code>asyncReadFile</code>函数，然后它就会自动执行，输出最后结果。这完全不像<code>Generator</code>函数，需要调用<code>next</code>方法，或者用<code>co</code>模块，才能真正执行，得到最后结果。</p>
+<h3 id="（2）更好的语义。"><a href="#（2）更好的语义。" class="headerlink" title="（2）更好的语义。"></a>（2）更好的语义。</h3><p><code>async</code>和<code>await</code>，比起星号和<code>yield</code>，语义更清楚了。<code>async</code>表示函数里有异步操作，<code>await</code>表示紧跟在后面的表达式需要等待结果。</p>
+<h3 id="（3）更广的适用性。"><a href="#（3）更广的适用性。" class="headerlink" title="（3）更广的适用性。"></a>（3）更广的适用性。</h3><p><code>co</code>模块约定，<code>yield</code>命令后面只能是 <code>Thunk </code>函数或 <code>Promise</code>对象，而<code>async</code>函数的<code>await</code>命令后面，可以是 <code>Promise </code>对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 <code>resolved </code>的<code> Promise</code> 对象）。</p>
+<h3 id="（4）返回值是-Promise。"><a href="#（4）返回值是-Promise。" class="headerlink" title="（4）返回值是 Promise。"></a>（4）返回值是 Promise。</h3><p><code>async</code>函数的返回值是<code> Promise</code> 对象，这比<code> Generator</code> 函数的返回值是<code>Iterator</code>对象方便多了。你可以用<code>then</code>方法指定下一步的操作。</p>
+<p>进一步说，<code>async</code>函数完全可以看作多个异步操作，包装成的一个 <code>Promise </code>对象，而<code>await</code>命令就是内部then命令的语法糖。</p>
+<p>下面是一个例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">async function getStockPriceByName(name) &#123;</span><br><span class="line">  const symbol &#x3D; await getStockSymbol(name);</span><br><span class="line">  const stockPrice &#x3D; await getStockPrice(symbol);</span><br><span class="line">  return stockPrice;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getStockPriceByName(&#39;goog&#39;).then(function (result) &#123;</span><br><span class="line">  console.log(result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Promise对象的状态变化"><a href="#Promise对象的状态变化" class="headerlink" title="Promise对象的状态变化"></a>Promise对象的状态变化</h3><p><code>async</code>函数返回的 <code>Promise </code>对象，必须等到内部所有<code>await</code>命令后面的 <code>Promise</code> 对象执行完，才会发生状态改变，除非遇到<code>return</code>语句或者抛出错误。也就是说，只有<code>async</code>函数内部的异步操作执行完，才会执行<code>then</code>方法指定的回调函数。</p>
+<p>下面是一个例子。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">async function getTitle(url) &#123;</span><br><span class="line">  let response &#x3D; await fetch(url);</span><br><span class="line">  let html &#x3D; await response.text();</span><br><span class="line">  return html.match(&#x2F;&lt;title&gt;([\s\S]+)&lt;\&#x2F;title&gt;&#x2F;i)[1];</span><br><span class="line">&#125;</span><br><span class="line">getTitle(&#39;https:&#x2F;&#x2F;tc39.github.io&#x2F;ecma262&#x2F;&#39;).then(console.log)</span><br><span class="line">&#x2F;&#x2F; &quot;ECMAScript 2017 Language Specification&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h2 id="5-css3-translate"><a href="#5-css3-translate" class="headerlink" title="5. css3 translate"></a>5. css3 translate</h2><p>原理和上一种方法一样，但是没有宽度的限制。不过与其他css3技术一样，可能需要解决兼容问题。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .div &#123;</span><br><span class="line">      position: absolute;</span><br><span class="line">      top:50%;</span><br><span class="line">      left:50%;</span><br><span class="line">      width:100px;</span><br><span class="line">      transform:translate(-50%,-50%);</span><br><span class="line">      text-align: center;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">    &#125;</span><br><span class="line">	&lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">  	&lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-    .div {
-      position: absolute;
-      top:50%;
-      left:50%;
-      width:100px;
-      transform:translate(-50%,-50%);
-      text-align: center;
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
-
-<h2 id="6-display-flex"><a href="#6-display-flex" class="headerlink" title="6. display:flex"></a>6. display:flex</h2><p>代码量最少的方法，不过父元素宽、高需要确定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">	&lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .wrap &#123;</span><br><span class="line">      height: 100px;</span><br><span class="line">      width: 100px;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">      display: flex;</span><br><span class="line">      justify-content:center;</span><br><span class="line">      align-items:center;</span><br><span class="line">    &#125;</span><br><span class="line">    .div &#123;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">    &#125;</span><br><span class="line">	&lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">  	&lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-    .wrap {
-      height: 100px;
-      width: 100px;
-      border: 1px solid red;
-      display: flex;
-      justify-content:center;
-      align-items:center;
-    }
-    .div {
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
-
-<hr>
-<p>下面是一些不常见的方法，用于拓展</p>
-<hr>
-<h2 id="7-通过伪元素-after占位"><a href="#7-通过伪元素-after占位" class="headerlink" title="7. 通过伪元素:after占位"></a>7. 通过伪元素:after占位</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .wrap &#123;</span><br><span class="line">      text-align:center;</span><br><span class="line">      font-size:0;</span><br><span class="line">    &#125;</span><br><span class="line">    .wrap:after &#123;</span><br><span class="line">      content:&#39;&#39;;</span><br><span class="line">      width:0;</span><br><span class="line">      height:100%;</span><br><span class="line">      display:inline-block;</span><br><span class="line">      vertical-align:middle;</span><br><span class="line">    &#125;</span><br><span class="line">    .div &#123;</span><br><span class="line">      vertical-align:middle;</span><br><span class="line">      display:inline-block;</span><br><span class="line">      font-size:16px;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">  	&lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-    .wrap {
-      text-align:center;
-      font-size:0;
-    }
-    .wrap:after {
-      content:'';
-      width:0;
-      height:100%;
-      display:inline-block;
-      vertical-align:middle;
-    }
-    .div {
-      vertical-align:middle;
-      display:inline-block;
-      font-size:16px;
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
-
-<h2 id="8-display-webkit-box"><a href="#8-display-webkit-box" class="headerlink" title="8. display:-webkit-box"></a>8. display:-webkit-box</h2><p>利用了css3的属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;title&gt;center&lt;&#x2F;title&gt;</span><br><span class="line">  &lt;style type&#x3D;&quot;text&#x2F;css&quot;&gt;</span><br><span class="line">    .wrap &#123;</span><br><span class="line">      display: -webkit-box;</span><br><span class="line">      -webkit-box-pack:center;</span><br><span class="line">      -webkit-box-align:center;</span><br><span class="line">      -webkit-box-orient: vertical;</span><br><span class="line">      text-align: center;</span><br><span class="line">    &#125;</span><br><span class="line">    .div &#123;</span><br><span class="line">      border: 1px solid red;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div class&#x3D;&quot;wrap&quot;&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;div&quot;&gt;test&lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;html&gt;</span><br></pre></td></tr></table></figure>
-<iframe width="100%" height="150px" srcdoc="
-<style type='text/css'>
-    .wrap {
-      text-align:center;
-      font-size:0;
-    }
-    .wrap:after {
-      content:'';
-      width:0;
-      height:100%;
-      display:inline-block;
-      vertical-align:middle;
-    }
-    .div {
-      vertical-align:middle;
-      display:inline-block;
-      font-size:16px;
-      border: 1px solid red;
-    }
-</style>
-<div class='wrap'>
-  <div class='div'>test</div>
-</div>
-">
-</iframe>
+<p>上面代码中，函数<code>getTitle</code>内部有三个操作：抓取网页、取出文本、匹配页面标题。只有这三个操作全部完成，才会执行<code>then</code>方法里面的<code>console.log</code>。</p>
+<h3 id="await-命令"><a href="#await-命令" class="headerlink" title="await 命令"></a>await 命令</h3><p>正常情况下，<code>await</code>命令后面是一个 <code>Promise </code>对象，返回该对象的结果。如果不是 <code>Promise </code>对象，就直接返回对应的值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">async function f() &#123;</span><br><span class="line">  &#x2F;&#x2F; 等同于</span><br><span class="line">  &#x2F;&#x2F; return 123;</span><br><span class="line">  return await 123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f().then(v &#x3D;&gt; console.log(v))</span><br><span class="line">&#x2F;&#x2F; 123</span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>await</code>命令的参数是数值<code>123</code>，这时等同于<code>return 123</code>。</p>
+<p>另一种情况是，<code>await</code>命令后面是一个<code>thenable</code>对象（即定义了<code>then</code>方法的对象），那么<code>await</code>会将其等同于 <code>Promise</code> 对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Sleep &#123;</span><br><span class="line">  constructor(timeout) &#123;</span><br><span class="line">    this.timeout &#x3D; timeout;</span><br><span class="line">  &#125;</span><br><span class="line">  then(resolve, reject) &#123;</span><br><span class="line">    const startTime &#x3D; Date.now();</span><br><span class="line">    setTimeout(</span><br><span class="line">      () &#x3D;&gt; resolve(Date.now() - startTime),</span><br><span class="line">      this.timeout</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">(async () &#x3D;&gt; &#123;</span><br><span class="line">  const sleepTime &#x3D; await new Sleep(1000);</span><br><span class="line">  console.log(sleepTime);</span><br><span class="line">&#125;)();</span><br><span class="line">&#x2F;&#x2F; 1000</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面代码中，<code>await</code>命令后面是一个<code>Sleep</code>对象的实例。这个实例不是 <code>Promise</code> 对象，但是因为定义了<code>then</code>方法，<code>await</code>会将其视为<code>Promise</code>处理。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/promise">Promise 对象</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/generator">Generator 函数的语法</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/async">async函数</a></p>
 
     
 
@@ -451,7 +318,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://luckyship.github.io/2019/05/22/2019-05-22-css居中详解/" title="css 居中" target="_blank">http://luckyship.github.io/2019/05/22/2019-05-22-css居中详解/</a>
+          <a href="http://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/" title="es6异步的写法" target="_blank">http://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/</a>
         </li>
         
         <li>
@@ -468,17 +335,6 @@
   <div class="article-info article-info-index">
     
     
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
     
 
     
@@ -529,7 +385,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2019/05/22/2019-05-22-css%E5%B1%85%E4%B8%AD%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -544,18 +400,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/05/27/2019-05-27-flex%E5%B8%83%E5%B1%80/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          flex布局
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/05/08/2019-05-08-js%E4%BA%8B%E4%BB%B6%E5%A7%94%E6%89%98%E6%9C%BA%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">js 事件委托机制</div>
+    <a href="/2020/10/21/2020-10-21-browser-window-size/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">各种js、jquery浏览器高度、宽度</div>
       <i class="icon-circle-right"></i>
     </a>
   
