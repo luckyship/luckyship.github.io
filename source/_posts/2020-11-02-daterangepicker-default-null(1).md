@@ -4,7 +4,7 @@ title: daterangepicker默认显示为空
 excerpt: 'jquery 日期插件daterangepicker，在不选择的情况，输入框显示为空'
 tags: [javascript, es6]
 comments: true
-date: 2020-10-23 16:14:11
+date: 2020-11-02 16:14:11
 ---
 
 ## daterangepicker 默认显示为空
