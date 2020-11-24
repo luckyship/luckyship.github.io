@@ -2,7 +2,7 @@
 layout: post
 title: dataTable介绍
 excerpt: 'dataTable是一款表格插件，具有分页，搜索，定制列的功能'
-tags: []
+tags: [javascript, dataTable, web]
 comments: true
 date: 2020-11-21 09:48:04
 ---
@@ -74,3 +74,26 @@ DataTable搜索结果以行显示，那么每一行是怎么匹配正则的？
 即可匹配到第一行
 
 >如果想要更多的验证DataTable的正则匹配规则，[可以点击连接验证](https://datatables.net/examples/api/regex.html)
+
+## DataTable多列使用搜索
+
+很多人想到用`.columns()`，但是`.columns()`表示的是与`&&`, 例如`.columns([1,2]).search('')`表示的是第2，3列都有匹配的项
+
+有一种替代方法，如下：
+```
+$('table').dataTable().api().column(1).search('李').column(0).search('1').draw();
+```
+
+## Datatable 添加外部html
+可以在`dom`选项中添加类名为`toolbar`的`div`，再往其中加入代码即可
+```
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "dom": '<"toolbar">frtip'
+    } );
+ 
+    $("div.toolbar").html('<b>Custom tool bar! Text/images etc.</b>');
+} );
+```
+### 参考
+[dom_toolbar](https://datatables.net/examples/advanced_init/dom_toolbar.html)
