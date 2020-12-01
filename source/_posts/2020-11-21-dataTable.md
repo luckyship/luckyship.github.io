@@ -25,7 +25,7 @@ require('datatables.net-dt/css/jquery.dataTables.css')
 [dataTable](https://datatables.net/download/)
 
 
-## dataTable 获取api的三种方法
+## 获取api的三种方法
 
 > $(selector).DataTable();  
 > $(selector).dataTable().api();  
@@ -49,7 +49,7 @@ $.fn.dataTable.Api(selector);
 ### 参考
 [dataTable api](http://datatables.club/manual/api.html)
 
-## dataTable搜索匹配正则的问题
+## 搜索匹配正则的问题
 `DataTable`中的`search`搜索框功能非常强大，可以匹配表格中的任意数据。不仅如此`DataTable`还提供了`regex`选项可以使用正则表达式。
 ```
 $('#example').dataTable( {
@@ -75,7 +75,7 @@ DataTable搜索结果以行显示，那么每一行是怎么匹配正则的？
 
 >如果想要更多的验证DataTable的正则匹配规则，[可以点击连接验证](https://datatables.net/examples/api/regex.html)
 
-## DataTable多列使用搜索
+## 多列使用搜索
 
 很多人想到用`.columns()`，但是`.columns()`表示的是与`&&`, 例如`.columns([1,2]).search('')`表示的是第2，3列都有匹配的项
 
@@ -84,7 +84,7 @@ DataTable搜索结果以行显示，那么每一行是怎么匹配正则的？
 $('table').dataTable().api().column(1).search('李').column(0).search('1').draw();
 ```
 
-## Datatable 添加外部html
+## 添加外部html
 可以在`dom`选项中添加类名为`toolbar`的`div`，再往其中加入代码即可
 ```
 $(document).ready(function() {
