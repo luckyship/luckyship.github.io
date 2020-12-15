@@ -1,13 +1,11 @@
 ---
 layout: post
 title: js小技巧
-excerpt: ''
-tags: []
+excerpt: '源于网络和平常的积累'
+tags: [web, javascript]
 comments: true
 date: 2020-12-14 16:22:02
 ---
-
-源于网络和平常的积累
 
 ## 查找字符串中某个字符出现的次数
 ```
