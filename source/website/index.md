@@ -11,3 +11,4 @@ date: 2020-12-01 16:40:53
 [阿里镜像](https://developer.aliyun.com/mirror/)  
 [淘宝镜像](https://npm.taobao.org/mirrors/)  
 [友链](http://mydearest.cn/)
+[chrome插件](https://www.extfans.com/)
