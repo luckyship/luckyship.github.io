@@ -7,6 +7,25 @@ comments: true
 date: 2020-12-01 16:49:16
 ---
 
+## 查看npm配置
+```
+npm config list
+```
+
+## 代理设置
+```
+npm config set proxy=http://127.0.0.1:8087
+npm config set https-proxy http://127.0.0.1:8087
+
+// 需要用户名和密码
+npm config set proxy http://username:password@server:port
+npm confit set https-proxy http://username:password@server:port
+
+// 取消代理
+npm config delete proxy
+npm config delete https-proxy
+```
+
 ## npm安装设置
 ```
 npm config set strict-ssl false // SSL错误
