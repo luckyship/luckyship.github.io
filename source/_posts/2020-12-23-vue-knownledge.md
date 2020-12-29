@@ -12,6 +12,7 @@ photos:
 
 ### vue 双向绑定的原理
 采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调，实现视图刷新。
+<!-- more -->
 
 具体流程：
 Vue中先遍历data选项中所有的属性（发布者）用Object.defineProperty劫持这些属性将其转为getter/setter。读取数据时候会触发getter。修改数据时会触发setter。
@@ -28,8 +29,6 @@ Vue中先遍历data选项中所有的属性（发布者）用Object.defineProper
 3. 不能监听数组，需要重写数组方法进行特异性操作
 4. 会污染原对象
 
----
-<!--more-->
 
 ### v-show和v-if有什么区别
 

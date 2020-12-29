@@ -2,7 +2,7 @@
 layout: post
 title: nginx安装配置
 excerpt: 'nginx功能非常强大，可以转发http请求，很多用它来解决各种跨域问题'
-tags: []
+tags: [nginx]
 comments: true
 date: 2020-12-16 17:42:39
 ---
