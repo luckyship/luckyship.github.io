@@ -36,5 +36,16 @@ sudo systemctl restart docker
 ```
 $ systemctl show --property=Environment docker
 ```
+
+## docker换源、设置私有镜像仓库
+
+```
+[root@k8s-master ~]# cat /etc/docker/daemon.json
+{
+  "registry-mirrors": ["https://gqk8w9va.mirror.aliyuncs.com"],
+  "insecure-registries":["193.160.60.94"]
+}
+```
+
 ## 转载
 [配置Docker的HTTP代理](https://blog.csdn.net/talang376763947/article/details/79281009)
