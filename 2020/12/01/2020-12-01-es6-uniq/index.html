@@ -6,20 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://luckyship.github.io">
-  <title>daterangepicker默认显示为空 | luckyship</title>
+  <title>使用es6-set数组去重 | luckyship</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="jquery 日期插件daterangepicker，在不选择的情况，输入框显示为空">
+  <meta name="description" content="es6-set类似数组，不过元素不能重复，利用这一特性，可以快速让数组去重">
 <meta property="og:type" content="article">
-<meta property="og:title" content="daterangepicker默认显示为空">
-<meta property="og:url" content="http://luckyship.github.io/2020/10/23/2020-11-02-daterangepicker-default-null(1)/index.html">
+<meta property="og:title" content="使用es6-set数组去重">
+<meta property="og:url" content="http://luckyship.github.io/2020/12/01/2020-12-01-es6-uniq/index.html">
 <meta property="og:site_name" content="luckyship">
-<meta property="og:description" content="jquery 日期插件daterangepicker，在不选择的情况，输入框显示为空">
+<meta property="og:description" content="es6-set类似数组，不过元素不能重复，利用这一特性，可以快速让数组去重">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-10-23T08:14:11.000Z">
-<meta property="article:modified_time" content="2020-11-09T14:01:26.273Z">
+<meta property="article:published_time" content="2020-12-01T01:48:04.000Z">
+<meta property="article:modified_time" content="2020-12-06T02:48:07.845Z">
 <meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="es6">
 <meta name="twitter:card" content="summary">
@@ -97,6 +98,8 @@
 			
 				<li><a href="/comment/" >留言板</a></li>
 			
+				<li><a href="/website/" >知识库</a></li>
+			
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -127,7 +130,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#daterangepicker-%E9%BB%98%E8%AE%A4%E6%98%BE%E7%A4%BA%E4%B8%BA%E7%A9%BA"><span class="toc-text">daterangepicker 默认显示为空</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8set%E5%8E%BB%E9%87%8D"><span class="toc-text">使用set去重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E5%8E%BB%E9%87%8D%E6%96%B9%E6%B3%95"><span class="toc-text">一般去重方法</span></a></li></ol>
   </div>
 
 
@@ -170,6 +173,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -186,11 +191,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
+					<li style="width: 25%"><a href="/archives">归档</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/comment/">留言板</a></li>
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
 		        
 				</ul>
 			</nav>
@@ -206,14 +213,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2020-11-02-daterangepicker-default-null(1)" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2020-12-01-es6-uniq" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      daterangepicker默认显示为空
+      使用es6-set数组去重
     </h1>
   
 
@@ -225,8 +232,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/10/23/2020-11-02-daterangepicker-default-null(1)/" class="archive-article-date">
-        <time datetime="2020-10-23T08:14:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-23</time>
+<a href="/2020/12/01/2020-12-01-es6-uniq/" class="archive-article-date">
+        <time datetime="2020-12-01T01:48:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-01</time>
 </a>
 
   
@@ -239,7 +246,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">120字</span>
+      <span class="post-count">118字</span>
     </span>
   </span>
 
@@ -259,10 +266,11 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h2 id="daterangepicker-默认显示为空"><a href="#daterangepicker-默认显示为空" class="headerlink" title="daterangepicker 默认显示为空"></a>daterangepicker 默认显示为空</h2><p>目前官网提供属性<code>autoUpdateInput: false</code>，输入框就可以显示为空，但是再次选择日期的时候不会发生变化<br>我们对组件进行一些修改，让它可以显示为空值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;.date&#39;).daterangepicker(&#123;</span><br><span class="line">    singleDatePicker:true,</span><br><span class="line">    autoUpdateInput: false,</span><br><span class="line">    showDropdowns:true,</span><br><span class="line">    locale: &#123;</span><br><span class="line">        format: &quot;YYYY-MM-DD&quot;,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#125;, function(start, end, label) &#123;</span><br><span class="line">        $(el).val(start.format(&#39;YYYY-MM-DD&#39;));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>利用回调函数，为输入框赋值我们选择的日期</p>
+    <h2 id="使用set去重"><a href="#使用set去重" class="headerlink" title="使用set去重"></a>使用set去重</h2><p><code>Array.from</code>是<code>es6</code>用法，将类数组转换为数组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; let a &#x3D; [1,1,2,3,3,4,4]</span><br><span class="line">&lt; undefined</span><br><span class="line">&gt; Array.from(new Set(a))</span><br><span class="line">&lt; (4) [1, 2, 3, 4]</span><br></pre></td></tr></table></figure>
 
+<h2 id="一般去重方法"><a href="#一般去重方法" class="headerlink" title="一般去重方法"></a>一般去重方法</h2><p>兼容性好，可不用支持<code>es6</code>语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function unique(arr)&#123;</span><br><span class="line">    var newArr &#x3D; [];</span><br><span class="line">    for(var i &#x3D; 0; i &lt; arr.length; i++)&#123;</span><br><span class="line">        if(newArr.indexOf(arr[i]) &#x3D;&#x3D; -1)&#123;</span><br><span class="line">            newArr.push(arr[i])</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return newArr;</span><br><span class="line">&#125;       </span><br><span class="line"></span><br><span class="line">var arr &#x3D; [1,2,2,3,4,4,5,1,3];</span><br><span class="line">var newArr &#x3D; unique(arr);</span><br><span class="line">console.log(newArr);</span><br></pre></td></tr></table></figure>
     
 
     
@@ -276,7 +284,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://luckyship.github.io/2020/10/23/2020-11-02-daterangepicker-default-null(1)/" title="daterangepicker默认显示为空" target="_blank">http://luckyship.github.io/2020/10/23/2020-11-02-daterangepicker-default-null(1)/</a>
+          <a href="http://luckyship.github.io/2020/12/01/2020-12-01-es6-uniq/" title="使用es6-set数组去重" target="_blank">http://luckyship.github.io/2020/12/01/2020-12-01-es6-uniq/</a>
         </li>
         
         <li>
@@ -297,6 +305,10 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
         		</li>
@@ -358,7 +370,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/10/23/2020-11-02-daterangepicker-default-null(1)/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/12/01/2020-12-01-es6-uniq/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -373,18 +385,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/10/23/2020-10-23-forEach-sync-execute/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/12/01/2020-12-01-jquery-subscribe-ajax-event-md/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          js forEach函数有什么缺陷
+          jquery监听ajax事件
         
       </div>
     </a>
   
   
-    <a href="/2020/10/22/2020-10-22-es6-async-methods/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">es6异步的写法</div>
+    <a href="/2020/12/01/2020-12-01-js-float-calculate/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">js浮点数计算</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -428,8 +440,7 @@
             app_id: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
             app_key: "fstd3ABXC89jc5VDSe6ANGV6",
             placeholder: "Just go go",
-            avatar:"mm",
-            enableQQ: true
+            avatar:"mm"
         });
     }
 </script>
@@ -452,7 +463,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
+    		&copy; 2020-2021 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
     	</div>
       	<div class="footer-right">
 			
@@ -563,6 +574,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DataTable</a>
               </li>
              
@@ -575,14 +594,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -591,11 +602,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,7 +658,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>

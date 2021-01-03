@@ -18,7 +18,7 @@
 <meta property="og:description" content="主要是一些关于web的知识, 记录一些要点">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-09-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-13T15:10:23.811Z">
+<meta property="article:modified_time" content="2020-12-20T03:08:53.366Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="web">
 <meta property="article:tag" content="javascript">
@@ -99,6 +99,8 @@
 			
 				<li><a href="/comment/" >留言板</a></li>
 			
+				<li><a href="/website/" >知识库</a></li>
+			
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -129,7 +131,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="toc-text">javascript事件机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%9C%BA%E5%88%B6"><span class="toc-text">冒泡机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E6%9C%BA%E5%88%B6"><span class="toc-text">捕获机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E7%9C%81%E7%95%A5%E6%96%87%E5%AD%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">css省略文字的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#settimeout-setinterval%EF%BC%8Ceval%E5%9C%A8%E8%B5%8B%E5%80%BC%E6%97%B6%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">settimeout, setinterval，eval在赋值时有什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决跨域问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-text">什么是跨域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3xss%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决xss注入问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-axios%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="toc-text">vue axios的几种请求方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E5%A6%82%E4%BD%95%E6%AF%94%E8%BE%83%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">js如何比较浮点数</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript%E4%BA%8B%E4%BB%B6%E6%9C%BA%E5%88%B6"><span class="toc-text">javascript事件机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%9C%BA%E5%88%B6"><span class="toc-text">冒泡机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E6%9C%BA%E5%88%B6"><span class="toc-text">捕获机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM-2%E7%BA%A7%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">DOM 2级事件处理程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#css%E7%9C%81%E7%95%A5%E6%96%87%E5%AD%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">css省略文字的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#settimeout-setinterval%EF%BC%8Ceval%E5%9C%A8%E8%B5%8B%E5%80%BC%E6%97%B6%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">settimeout, setinterval，eval在赋值时有什么问题？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决跨域问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F"><span class="toc-text">什么是跨域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue%E8%A7%A3%E5%86%B3xss%E6%B3%A8%E5%85%A5%E9%97%AE%E9%A2%98"><span class="toc-text">vue解决xss注入问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vue-axios%E7%9A%84%E5%87%A0%E7%A7%8D%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F"><span class="toc-text">vue axios的几种请求方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E5%A6%82%E4%BD%95%E6%AF%94%E8%BE%83%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">js如何比较浮点数</span></a></li></ol>
   </div>
 
 
@@ -172,6 +174,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -188,11 +192,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
+					<li style="width: 25%"><a href="/archives">归档</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/comment/">留言板</a></li>
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
 		        
 				</ul>
 			</nav>
@@ -241,7 +247,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.8k字</span>
+      <span class="post-count">2.2k字</span>
     </span>
   </span>
 
@@ -250,7 +256,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">8分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -268,6 +274,15 @@
 <p>结果显而易见</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p标签被点击</span><br><span class="line">button被点击</span><br><span class="line">div被点击</span><br><span class="line">body被点击</span><br></pre></td></tr></table></figure>
 <h3 id="捕获机制"><a href="#捕获机制" class="headerlink" title="捕获机制"></a>捕获机制</h3><p> 事件捕获流的思想是不太具体的DOM节点应该更早接收到事件，而最具体的节点应该最后接收到事件，针对上面同样的例子，点击按钮，那么此时click事件会按照这样传播：（下面我们就借用addEventListener的第三个参数来模拟事件捕获流）<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"> &lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;&#x2F;title&gt;</span><br><span class="line">&lt;&#x2F;head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;button&gt;</span><br><span class="line">        &lt;p&gt;点击捕获&lt;&#x2F;p&gt;</span><br><span class="line">    &lt;&#x2F;button&gt;</span><br><span class="line">&lt;&#x2F;div&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    var oP&#x3D;document.querySelector(&#39;p&#39;);</span><br><span class="line">    var oB&#x3D;document.querySelector(&#39;button&#39;);</span><br><span class="line">    var oD&#x3D;document.querySelector(&#39;div&#39;);</span><br><span class="line">    var oBody&#x3D;document.querySelector(&#39;body&#39;);</span><br><span class="line"></span><br><span class="line">    oP.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&#39;p标签被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oB.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&quot;button被点击&quot;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oD.addEventListener(&#39;click&#39;,  function()&#123;</span><br><span class="line">        console.log(&#39;div被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">    oBody.addEventListener(&#39;click&#39;,function()&#123;</span><br><span class="line">        console.log(&#39;body被点击&#39;)</span><br><span class="line">    &#125;,true);</span><br><span class="line"></span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure><br> 与冒泡相反的结果<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">body被点击</span><br><span class="line">div被点击</span><br><span class="line">button被点击</span><br><span class="line">p标签被点击</span><br></pre></td></tr></table></figure></p>
+<h3 id="DOM-2级事件处理程序"><a href="#DOM-2级事件处理程序" class="headerlink" title="DOM 2级事件处理程序"></a>DOM 2级事件处理程序</h3><p><code>DOM 2</code>级事件定义了两方法：用于处理添加事件和删除事件的操作： </p>
+<blockquote>
+<p>添加事件 addEventListener()<br>删除事件  removeEventListener()</p>
+</blockquote>
+<p>　　 所有DOM节点中都包含这两个方法，并且他们都包含3个参数： （1） 要处理的事件方式（例如：<code>click，mouseover,dbclick.....</code>） （2）事件处理的函数，可以为匿名函数，也可以为命名函数（但如果需要删除事件，必须是命名函数） （3）<strong>一个布尔值，代表是处于事件冒泡阶段处理还是事件捕获阶段（true：表示在捕获阶段调用事件处理程序；false:表示在冒泡阶段调用事件处理程序）</strong></p>
+<p>　　使用<code>DOM 2</code>级事件处理程序的主要好处是可以添加多个事件处理程序，事件处理会按照他们的顺序触发，通过<code>addEventListener</code>添加的事件只能用<code>removeEventListener</code>来移除，移除时传入的参数与添加时使用的参数必须相同，这也意味着添加的匿名函数将无法移除，</p>
+<blockquote>
+<p>（注意：我们默认的第三个参数都是默认<code>false</code>,是指在冒泡阶段添加，大多数情况下，都是将事件处理程序添加到事件的冒泡阶段，这样可以最大限度的兼容各个浏览器）</p>
+</blockquote>
 <h2 id="css省略文字的实现"><a href="#css省略文字的实现" class="headerlink" title="css省略文字的实现"></a>css省略文字的实现</h2> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">overflow: hidden;</span><br><span class="line">white-space: nowrap;</span><br><span class="line">text-overflow: allipsis</span><br></pre></td></tr></table></figure>
 
 <h2 id="settimeout-setinterval，eval在赋值时有什么问题？"><a href="#settimeout-setinterval，eval在赋值时有什么问题？" class="headerlink" title="settimeout, setinterval，eval在赋值时有什么问题？"></a>settimeout, setinterval，eval在赋值时有什么问题？</h2><h2 id="vue解决跨域问题"><a href="#vue解决跨域问题" class="headerlink" title="vue解决跨域问题"></a>vue解决跨域问题</h2><h3 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h3><p>跨域：由于浏览器同源策略，凡是发送请求url的协议、域名、端口三者之间任意一个与当前页面地址不同即为跨域。存在跨域的情况：</p>
@@ -486,8 +501,7 @@
             app_id: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
             app_key: "fstd3ABXC89jc5VDSe6ANGV6",
             placeholder: "Just go go",
-            avatar:"mm",
-            enableQQ: true
+            avatar:"mm"
         });
     }
 </script>
@@ -510,7 +524,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
+    		&copy; 2020-2021 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
     	</div>
       	<div class="footer-right">
 			
@@ -621,6 +635,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DataTable</a>
               </li>
              
@@ -633,14 +655,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -649,11 +663,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -705,7 +719,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>

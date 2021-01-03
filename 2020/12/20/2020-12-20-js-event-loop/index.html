@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://luckyship.github.io">
-  <title>调用DataTable api | luckyship</title>
+  <title>js事件运行机制event loop | luckyship</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="初始化DataTable后，不用记录返回值,调用dataTable api">
+  <meta name="description" content="我们都知道javascript是单线程运行的，那么javascript在执行一些异步操作时，是如何调度分配任务的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="调用DataTable api">
-<meta property="og:url" content="http://luckyship.github.io/2019/03/12/2019-03-12-DataTable/index.html">
+<meta property="og:title" content="js事件运行机制event loop">
+<meta property="og:url" content="http://luckyship.github.io/2020/12/20/2020-12-20-js-event-loop/index.html">
 <meta property="og:site_name" content="luckyship">
-<meta property="og:description" content="初始化DataTable后，不用记录返回值,调用dataTable api">
+<meta property="og:description" content="我们都知道javascript是单线程运行的，那么javascript在执行一些异步操作时，是如何调度分配任务的">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2019-03-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-05T03:06:43.079Z">
+<meta property="article:published_time" content="2020-12-20T03:06:21.000Z">
+<meta property="article:modified_time" content="2021-01-01T03:16:18.592Z">
 <meta property="article:author" content="luckyship">
-<meta property="article:tag" content="DataTable">
-<meta property="article:tag" content="web">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
   
@@ -98,6 +96,8 @@
 			
 				<li><a href="/comment/" >留言板</a></li>
 			
+				<li><a href="/website/" >知识库</a></li>
+			
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -128,7 +128,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89event-loop"><span class="toc-text">为什么会有event loop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-text">执行过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8F%E4%BB%BB%E5%8A%A1"><span class="toc-text">宏任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="toc-text">微任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
   </div>
 
 
@@ -171,6 +171,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -187,11 +189,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
+					<li style="width: 25%"><a href="/archives">归档</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/comment/">留言板</a></li>
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
 		        
 				</ul>
 			</nav>
@@ -207,14 +211,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2019-03-12-DataTable" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-2020-12-20-js-event-loop" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      调用DataTable api
+      js事件运行机制event loop
     </h1>
   
 
@@ -226,8 +230,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2019/03/12/2019-03-12-DataTable/" class="archive-article-date">
-        <time datetime="2019-03-11T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-03-12</time>
+<a href="/2020/12/20/2020-12-20-js-event-loop/" class="archive-article-date">
+        <time datetime="2020-12-20T03:06:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-20</time>
 </a>
 
   
@@ -240,7 +244,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">122字</span>
+      <span class="post-count">753字</span>
     </span>
   </span>
 
@@ -249,7 +253,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -260,11 +264,34 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>当我们要使用dataTable方法时，一般如下调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var table &#x3D; $(&#39;#example&#39;).DataTable();</span><br><span class="line">table.clear().draw();</span><br></pre></td></tr></table></figure>
-<p>然而当在另一个函数中想用调用DataTable方法的话，就需要把<code>table</code>当作参数传值。<br>当dataTable 已经初始化完毕后，也可以用<code>.dataTable()</code>方法来取得返回值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(&#39;#example&#39;).DataTable();</span><br><span class="line">var table &#x3D; $(&#39;#example&#39;).dataTable().api();</span><br><span class="line">table.clear().draw();</span><br></pre></td></tr></table></figure>
-<p>这样就不需要再把<code>table</code>当作参数传值，这样可以简化函数的复杂度</p>
+    <h2 id="为什么会有event-loop"><a href="#为什么会有event-loop" class="headerlink" title="为什么会有event loop"></a>为什么会有event loop</h2><p>js是一种单线程运行机制，可以预见的是，由于浏览器运行机制的特殊性，js以后将一直会是一种单线程语言，因为有dom操作的时候，如果可以多线程操作，就会让浏览器渲染变得混乱。<br>单线程运行，意味着在同一时间，只能执行一个进程，对于某些会阻塞的服务，像http请求、I/O设备，js会挂起这些任务，让他们进入计划任务里面，等待所有主进程的任务运行完毕后，再执行被挂起的任务。</p>
+<h2 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h2><p>任务队列存在多个，同一个任务队列中，按队列顺序被主线程取走；不同的任务队列中，存在着优先级，优先级高的现获取  </p>
+<blockquote>
+<p>step1:主线程读取JS代码，此时为同步环境，形成相应的堆和执行栈；<br>step2:主线程遇到异步任务，指给对应的异步进程进行处理（WEB API）；<br>step3:异步进程处理完毕（Ajax返回，DOM事件处理，Timer定时器等），将对应的异步任务推入异步队列中；<br>step4:主线程查询任务队列，执行microtask(宏任务) queue，将其按序执行，全部执行完毕；<br>step5:主线程查询任务队列，执行macrotask(微任务) queue，将其按序执行，全部执行完毕；<br>step6:重复step4，5；  </p>
+</blockquote>
+<h3 id="宏任务"><a href="#宏任务" class="headerlink" title="宏任务"></a>宏任务</h3><blockquote>
+<p>setTimeout、setInterval和setImmediate<br>I/O操作、UI渲染、script脚本执行<br>MessageChannel(Vue的nexttick有使用)  </p>
+</blockquote>
+<h3 id="微任务"><a href="#微任务" class="headerlink" title="微任务"></a>微任务</h3><blockquote>
+<p>promise<br>MutationObserver<br>process.nextTick (Node)  </p>
+</blockquote>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>事件循环的顺序，决定js代码的执行顺序。进入整体代码(宏任务)后，开始第一次循环。接着执行所有的微任务。然后再次从宏任务开始，找到其中一个任务队列执行完毕，再执行所有的微任务。听起来有点绕，我们用一段代码说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function() &#123;</span><br><span class="line">    console.log(&#39;setTimeout&#39;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">new Promise(function(resolve) &#123;</span><br><span class="line">    console.log(&#39;promise&#39;);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">    console.log(&#39;then&#39;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">console.log(&#39;console&#39;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>这段代码作为宏任务，进入主线程。  </li>
+<li>先遇到setTimeout，那么将其回调函数注册后分发到宏任务Event Queue。(注册过程与上同，下文不再描述)  </li>
+<li>接下来遇到了Promise，new Promise立即执行，then函数分发到微任务Event Queue。  </li>
+<li>遇到console.log()，立即执行。  </li>
+<li>好啦，整体代码script作为第一个宏任务执行结束，看看有哪些微任务？我们发现了then在微任务Event Queue里面，执行。  </li>
+<li>ok，第一轮事件循环结束了，我们开始第二轮循环，当然要从宏任务Event Queue开始。我们发现了宏任务Event Queue中setTimeout对应的回调函数，立即执行。  </li>
+<li>结束。</li>
+</ul>
+<blockquote>
+<p>注意promise的异步是指<code>then</code>和<code>catch</code>,运行在<code>promise</code>中的代码会被当作同步任务</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903512845860872">这一次，彻底弄懂 JavaScript 执行机制
+</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_26443535/article/details/106785350">js面试——eventLoop
+</a><br><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019494012">面试题之Event Loop终极篇</a></p>
 
     
 
@@ -279,7 +306,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://luckyship.github.io/2019/03/12/2019-03-12-DataTable/" title="调用DataTable api" target="_blank">http://luckyship.github.io/2019/03/12/2019-03-12-DataTable/</a>
+          <a href="http://luckyship.github.io/2020/12/20/2020-12-20-js-event-loop/" title="js事件运行机制event loop" target="_blank">http://luckyship.github.io/2020/12/20/2020-12-20-js-event-loop/</a>
         </li>
         
         <li>
@@ -300,14 +327,6 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">DataTable</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
         		</li>
@@ -365,7 +384,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2019/03/12/2019-03-12-DataTable/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://luckyship.github.io/2020/12/20/2020-12-20-js-event-loop/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -380,18 +399,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/03/15/2019-03-12-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/12/20/2020-12-20-vue-life-hook-function/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          使用privoxy搭建代理服务器
+          vue生命周期钩子函数
         
       </div>
     </a>
   
   
-    <a href="/2019/03/12/2019-03-12-DataTable%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">DataTable搜索框，正则匹配规则</div>
+    <a href="/2020/12/16/2020-12-16-nginx-config/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">nginx安装配置</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -435,8 +454,7 @@
             app_id: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
             app_key: "fstd3ABXC89jc5VDSe6ANGV6",
             placeholder: "Just go go",
-            avatar:"mm",
-            enableQQ: true
+            avatar:"mm"
         });
     }
 </script>
@@ -459,7 +477,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
+    		&copy; 2020-2021 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
     	</div>
       	<div class="footer-right">
 			
@@ -570,6 +588,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DataTable</a>
               </li>
              
@@ -582,14 +608,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -598,11 +616,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -654,7 +672,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>

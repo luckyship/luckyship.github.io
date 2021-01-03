@@ -18,7 +18,7 @@
 <meta property="og:description" content="docker无法访问网络，在需要网络代理的情况下，配置docker http代理">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-10-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-10-09T03:02:05.078Z">
+<meta property="article:modified_time" content="2021-01-01T03:16:17.785Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -96,6 +96,8 @@
 			
 				<li><a href="/comment/" >留言板</a></li>
 			
+				<li><a href="/website/" >知识库</a></li>
+			
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -126,7 +128,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">创建文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">创建配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8http-proxy-conf%E4%B8%AD%E6%B7%BB%E5%8A%A0http%E4%BB%A3%E7%90%86"><span class="toc-text">在http-proxy.conf中添加http代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%EF%BC%8C%E4%BD%BF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%94%9F%E6%95%88"><span class="toc-text">更新，使配置文件生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AFdocker%E6%9C%8D%E5%8A%A1"><span class="toc-text">重启docker服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-text">检查配置是否生效</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-text">转载</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-text">步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">创建文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">创建配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8http-proxy-conf%E4%B8%AD%E6%B7%BB%E5%8A%A0http%E4%BB%A3%E7%90%86"><span class="toc-text">在http-proxy.conf中添加http代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0%EF%BC%8C%E4%BD%BF%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%94%9F%E6%95%88"><span class="toc-text">更新，使配置文件生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E5%90%AFdocker%E6%9C%8D%E5%8A%A1"><span class="toc-text">重启docker服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E9%85%8D%E7%BD%AE%E6%98%AF%E5%90%A6%E7%94%9F%E6%95%88"><span class="toc-text">检查配置是否生效</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E6%8D%A2%E6%BA%90%E3%80%81%E8%AE%BE%E7%BD%AE%E7%A7%81%E6%9C%89%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="toc-text">docker换源、设置私有镜像仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-text">转载</span></a></li></ol>
   </div>
 
 
@@ -169,6 +171,8 @@
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -185,11 +189,13 @@
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/archives">归档</a></li>
+					<li style="width: 25%"><a href="/archives">归档</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/comment/">留言板</a></li>
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
 		        
 				</ul>
 			</nav>
@@ -238,7 +244,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">139字</span>
+      <span class="post-count">187字</span>
     </span>
   </span>
 
@@ -265,6 +271,9 @@
 <h3 id="更新，使配置文件生效"><a href="#更新，使配置文件生效" class="headerlink" title="更新，使配置文件生效"></a>更新，使配置文件生效</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
 <h3 id="重启docker服务"><a href="#重启docker服务" class="headerlink" title="重启docker服务"></a>重启docker服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 <h3 id="检查配置是否生效"><a href="#检查配置是否生效" class="headerlink" title="检查配置是否生效"></a>检查配置是否生效</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl show --property&#x3D;Environment docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="docker换源、设置私有镜像仓库"><a href="#docker换源、设置私有镜像仓库" class="headerlink" title="docker换源、设置私有镜像仓库"></a>docker换源、设置私有镜像仓库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-master ~]# cat &#x2F;etc&#x2F;docker&#x2F;daemon.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https:&#x2F;&#x2F;gqk8w9va.mirror.aliyuncs.com&quot;],</span><br><span class="line">  &quot;insecure-registries&quot;:[&quot;193.160.60.94&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/talang376763947/article/details/79281009">配置Docker的HTTP代理</a></p>
 
     
@@ -428,8 +437,7 @@
             app_id: "3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz",
             app_key: "fstd3ABXC89jc5VDSe6ANGV6",
             placeholder: "Just go go",
-            avatar:"mm",
-            enableQQ: true
+            avatar:"mm"
         });
     }
 </script>
@@ -452,7 +460,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2020 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
+    		&copy; 2020-2021 <a href="http://luckyship.github.io/" target="_blank">luckyship</a>
     	</div>
       	<div class="footer-right">
 			
@@ -563,6 +571,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">DataTable</a>
               </li>
              
@@ -575,14 +591,6 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
@@ -591,11 +599,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -647,7 +655,31 @@
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">面试</a>
               </li>
             
             <div class="clearfix"></div>
