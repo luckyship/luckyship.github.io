@@ -1,15 +1,14 @@
 ---
 layout: post
 title: js数据类型判断
-excerpt: ''
 tags: [javascript]
 comments: true
 date: 2021-01-01 11:19:20
 ---
 
-javascrip中有几种判断数据类型的办法，不同的场景使用不同的方法
+javascrip中有几种判断数据类型的办法，不同的场景使用不同的方法`typeof`、`Object.prototype.toString.call`、`instance of`
 
-<!-- morme -->
+<!-- more -->
 
 ## typeof
 typeof 是一个一元运算，放在一个运算数之前，运算数可以是任意类型。
