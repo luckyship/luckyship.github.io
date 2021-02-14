@@ -18,7 +18,7 @@
 <meta property="og:description" content="源于网络和平常的积累">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-12-14T08:22:02.000Z">
-<meta property="article:modified_time" content="2020-12-20T02:04:49.322Z">
+<meta property="article:modified_time" content="2021-02-14T07:04:45.410Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="web">
 <meta property="article:tag" content="javascript">
@@ -129,7 +129,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-text">查找字符串中某个字符出现的次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8%E5%8C%B9%E9%85%8D%E9%A1%B9"><span class="toc-text">js正则匹配快速使用匹配项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0"><span class="toc-text">最大公约数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%95%E4%BD%8D"><span class="toc-text">自适应单位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blur%E5%92%8Cclick%E5%86%B2%E7%AA%81"><span class="toc-text">blur和click冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="toc-text">随机数</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E6%89%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%9F%90%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0"><span class="toc-text">查找字符串中某个字符出现的次数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8%E5%8C%B9%E9%85%8D%E9%A1%B9"><span class="toc-text">js正则匹配快速使用匹配项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0"><span class="toc-text">最大公约数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E5%8D%95%E4%BD%8D"><span class="toc-text">自适应单位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blur%E5%92%8Cclick%E5%86%B2%E7%AA%81"><span class="toc-text">blur和click冲突</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="toc-text">随机数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#base64%E5%8A%A0%E5%AF%86"><span class="toc-text">base64加密</span></a></li></ol>
   </div>
 
 
@@ -245,7 +245,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">412字</span>
+      <span class="post-count">543字</span>
     </span>
   </span>
 
@@ -254,7 +254,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">2分</span>
     </span>
   </span>
 </div>
@@ -280,7 +280,11 @@
 <p>给失去焦点的时间加上延迟时间，让blur时间在click事件后执行，这个方法固然能够解决问题，但是本人并不是很推荐，因为影响性能，不到最后不用这个方法；<br>event.relatedTarget.id事件属性返回与事件的目标节点相关的节点。（非IE）<br>mousedown事件替代处理click事件</p>
 <h2 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; [0,1) 左闭右开 min-max </span><br><span class="line">Math.floor(min+Math.random()*(max-min+1))</span><br><span class="line">&#x2F;&#x2F; toString() this is object方法 toString() valueOf</span><br><span class="line">&#x2F;&#x2F; 随机颜色</span><br><span class="line">item.style.backgroundColor &#x3D; &#39;#&#39; + Math.random().toString(16).slice(2, 8);</span><br><span class="line">&#x2F;&#x2F; &quot;#&quot; + (&quot;00000&quot; + ((Math.random() * 0x1000000) &lt;&lt; 0).toString(16)).slice(-6)</span><br></pre></td></tr></table></figure>
 
-
+<h2 id="base64加密"><a href="#base64加密" class="headerlink" title="base64加密"></a>base64加密</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let encodedData &#x3D; window.btoa(&quot;Hello, world&quot;); &#x2F;&#x2F; 编码</span><br><span class="line">let decodedData &#x3D; window.atob(encodedData);    &#x2F;&#x2F; 解码</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果字符串是unicode字符串，则需要对其转码，通常使用escape和unescape</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; ucs-2 string to base64 encoded ascii</span><br><span class="line">function utoa(str) &#123;</span><br><span class="line">    return window.btoa(unescape(encodeURIComponent(str)));</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; base64 encoded ascii to ucs-2 string</span><br><span class="line">function atou(str) &#123;</span><br><span class="line">    return decodeURIComponent(escape(window.atob(str)));</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F; Usage:</span><br><span class="line">utoa(&#39;✓ à la mode&#39;); &#x2F;&#x2F; 4pyTIMOgIGxhIG1vZGU&#x3D;</span><br><span class="line">atou(&#39;4pyTIMOgIGxhIG1vZGU&#x3D;&#39;); &#x2F;&#x2F; &quot;✓ à la mode&quot;</span><br><span class="line"></span><br><span class="line">utoa(&#39;I \u2661 Unicode!&#39;); &#x2F;&#x2F; SSDimaEgVW5pY29kZSE&#x3D;</span><br><span class="line">atou(&#39;SSDimaEgVW5pY29kZSE&#x3D;&#39;); &#x2F;&#x2F; &quot;I ♡ Unicode!&quot;</span><br></pre></td></tr></table></figure>
     
 
     
@@ -600,15 +604,15 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">linux</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -648,11 +652,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -672,11 +676,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">video</a>
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
               </li>
              
               <li class="article-tag-list-item">
