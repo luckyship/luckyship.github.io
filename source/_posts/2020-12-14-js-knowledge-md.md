@@ -89,4 +89,25 @@ const compact = arr => arr.filter(Boolean)
 compact([0, 1, false, 2, '', 3, 'a', 'e' * 23, NaN, 's', 34]) // // [ 1, 2, 3, 'a', 's', 34 ]
 ```
 
+## base64加密
+```
+let encodedData = window.btoa("Hello, world"); // 编码
+let decodedData = window.atob(encodedData);    // 解码
+```
+> 如果字符串是unicode字符串，则需要对其转码，通常使用escape和unescape
+```
+// ucs-2 string to base64 encoded ascii
+function utoa(str) {
+    return window.btoa(unescape(encodeURIComponent(str)));
+}
+// base64 encoded ascii to ucs-2 string
+function atou(str) {
+    return decodeURIComponent(escape(window.atob(str)));
+}
+// Usage:
+utoa('✓ à la mode'); // 4pyTIMOgIGxhIG1vZGU=
+atou('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
 
+utoa('I \u2661 Unicode!'); // SSDimaEgVW5pY29kZSE=
+atou('SSDimaEgVW5pY29kZSE='); // "I ♡ Unicode!"
+```
