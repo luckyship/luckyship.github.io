@@ -57,3 +57,36 @@ item.style.backgroundColor = '#' + Math.random().toString(16).slice(2, 8);
 // "#" + ("00000" + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6)
 ```
 
+## 交换两个数的值
+
+```
+// 加减运算 缺点也很明显，整型数据溢出，对于32位字符最大表示数字是2147483647，如果是2147483645和2147483646交换就失败了。
+var a=1,b=2;
+a += b;
+b = a - b;
+a -= b;
+
+// 第三个临时变量
+var a=1,b=2;
+var temp = a;
+a = b;
+b= temp;
+
+// 位运算
+let a=3,b=4;
+a^=b;
+b^=a;
+a^=b;
+
+// es6
+let a = 1, b = 2;
+[a, b] = [b, a];
+```
+
+## 使用Boolean过滤数组中的假值
+```
+const compact = arr => arr.filter(Boolean)
+compact([0, 1, false, 2, '', 3, 'a', 'e' * 23, NaN, 's', 34]) // // [ 1, 2, 3, 'a', 's', 34 ]
+```
+
+
