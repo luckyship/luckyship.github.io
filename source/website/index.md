@@ -14,3 +14,7 @@ date: 2020-12-01 16:40:53
 [友链2](https://blog.ihoey.com/)  
 [chrome插件](https://www.extfans.com/)  
 [ssr](https://github.com/Alvin9999/new-pac/wiki/ss%E5%85%8D%E8%B4%B9%E8%B4%A6%E5%8F%B7)  
+[友链](http://mydearest.cn/)
+[chrome插件](https://www.extfans.com/)
+[webpack阮一峰](https://blog.csdn.net/userkang/article/details/83504048)
+[webpack官方文档](https://webpack.docschina.org/)
