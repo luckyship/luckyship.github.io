@@ -7,6 +7,14 @@ comments: true
 date: 2020-12-01 16:49:16
 ---
 
+## linux安装
+```
+tar -zvxf node-v14.tar.gz
+
+ln -s /node-v14/bin/npm /usr/bin/npm
+ln -s /node-v14/bin/npm /usr/local/bin/npm
+```
+
 ## 查看npm配置
 ```
 npm config list
