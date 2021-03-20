@@ -18,3 +18,4 @@ date: 2020-12-01 16:40:53
 [chrome插件](https://www.extfans.com/)
 [webpack阮一峰](https://blog.csdn.net/userkang/article/details/83504048)
 [webpack官方文档](https://webpack.docschina.org/)
+[jquery api文档大全](https://oscarotero.com/jquery/)
