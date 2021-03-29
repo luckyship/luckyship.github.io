@@ -33,7 +33,7 @@ var str = '374829348791';
 
 ## search
 在字符串搜索符合正则的内容，搜索到就返回出现的位置（从0开始，如果匹配的不只是一个字母，那只会返回第一个字母的位置）， 如果搜索失败就返回 -1  
-用法: str.search(reg)
+用法: `str.search(reg)`
 ```
 var str = 'abcdef';
 
@@ -46,7 +46,7 @@ var str = 'abcdef';
 
 ## match
 在字符串中搜索复合规则的内容，搜索成功就返回内容，格式为数组，失败就返回null。
-用法：str.match(reg)，
+用法：`str.match(reg)`
 ```
 var str = 'haj123sdk54hask33dkhalsd879';
    var re = /\d+/g;   
@@ -58,7 +58,7 @@ var str = 'haj123sdk54hask33dkhalsd879';
 
 ## replace
 查找符合正则的字符串，就替换成对应的字符串。返回替换后的内容。
-用法： str.replace(//,新的字符串/回调函数)
+用法： `str.replace(//,新的字符串/回调函数)`
 第一个参数也可以是字符串
 
 ```
@@ -85,6 +85,7 @@ replace()的第二个参数replacement是一个字符串，表示替换的文本
 
 ## exec
 和match方法一样，搜索符合规则的内容，并返回内容，格式为数组，失败就返回null。
+用法： `reg.exec(str)`
 ```
     var testStr = "now test001 test002";
     var re = /test(\d+)/; //只匹配一次
