@@ -76,6 +76,27 @@ style也可以通过对象语法和数组语法进行动态绑定
 
 - methods: 每次渲染时都需要重新执行。
 
+简单的说：
+* 1.methods里面定义的是函数，你显然需要像"fuc()"这样去调用它（假设函数为fuc）。
+
+* 2.computed是计算属性，事实上和和data对象里的数据属性是同一类的（使用上）。
+
+* 3.watch:类似于监听机制+事件机制。
+
+watch和computed的对比
+
+首先它们都是以Vue的依赖追踪机制为基础的，它们的共同点是：都是希望在依赖数据发生改变的时候，被依赖的数据根据预先定义好的函数，发生“自动”的变化。我们当然可以自己写代码完成这一切，但却很可能造成写法混乱，代码冗余的情况。
+
+但watch和computed也有明显不同的地方：
+
+watch和computed各自处理的数据关系场景不同
+
+* 1.watch擅长处理的场景：一个数据影响多个数据
+
+* 2.computed擅长处理的场景：一个数据受多个数据影响
+
+相比于watch/computed，methods不处理数据逻辑关系，只提供可调用的函数
+
 运用场景：
 
 - 当我们需要进行数值计算，并依赖于其他数据时，应该使用computed，因为可以利用computed的缓存特性，避免每次获取值时都要重新计算。
@@ -571,7 +592,7 @@ const router = new VueRouter({
 ### params和query的区别
 query需要path引入，params需要name引入
 this.$route.query.name、this.$route.params.query
-注意点：query刷新不会丢失query数据，params刷新会丢失数据
+> 注意点：query刷新不会丢失query数据，params刷新会丢失数据
 
 ### 组件内监听路由的变化
 只能用在包含<router-view />的组件内

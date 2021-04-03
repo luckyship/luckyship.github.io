@@ -111,3 +111,29 @@ atou('4pyTIMOgIGxhIG1vZGU='); // "✓ à la mode"
 utoa('I \u2661 Unicode!'); // SSDimaEgVW5pY29kZSE=
 atou('SSDimaEgVW5pY29kZSE='); // "I ♡ Unicode!"
 ```
+
+## 数组合并的几种方法
+```
+// 四种方法。
+var arr1=[1,2,3];
+var arr2=[4,5,6];
+arr1 = arr1.concat(arr2);
+console.log(arr1); 
+
+var arr1=[1,2,3];
+var arr2=[4,5,6];
+Array.prototype.push.apply(arr1,arr2);
+console.log(arr1);
+
+var arr1=[1,2,3];
+var arr2=[4,5,6];
+for (var i=0; i < arr2.length; i++) {
+arr1.push( arr2[i] );
+}
+console.log(arr1); 
+
+var arr1=[1,2,3];
+var arr2=[4,5,6];
+
+arr1.push(...arr2)
+```
