@@ -137,3 +137,9 @@ var arr2=[4,5,6];
 
 arr1.push(...arr2)
 ```
+## 进制转换
+`parseInt`转换为10进制，`toString()`作进制转换
+```
+// eg. 8-bit hexadecimal => Binary  FFFFFFFF => 11111111111111111111111111111111
+const chars = parseInt(char, 16).toString(2).padStart(32, '0');
+```
