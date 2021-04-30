@@ -1,7 +1,7 @@
 ---
 layout: post
 title: node-sass安装失败问题汇总
-tags: [npm, nodejs, scss]
+tags: [npm, nodejs, sass]
 comments: true
 date: 2021-03-20 17:17:45
 ---

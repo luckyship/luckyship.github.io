@@ -6,7 +6,7 @@ comments: true
 date: 2021-02-14 15:08:27
 ---
 
-js有很多正则方法：`test、search、match、replace、exec`，他们之间的区别时候什么呢
+js有很多正则方法：`test、search、match、replace、exec`，他们之间的区别是什么呢
 
 <!-- more -->
 
