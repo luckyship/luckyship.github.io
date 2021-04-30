@@ -83,6 +83,9 @@ replace()的第二个参数replacement是一个字符串，表示替换的文本
 * $n：匹配成功的第n组内容，n是从1开始的自然数。这个参数生效的前提是，第一个参数必须是正则* 表达式。
 * $$：指代美元符号$。
 
+### 参考
+[replace](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+
 ## exec
 和match方法一样，搜索符合规则的内容，并返回内容，格式为数组，失败就返回null。
 用法： `reg.exec(str)`

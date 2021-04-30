@@ -143,3 +143,9 @@ arr1.push(...arr2)
 // eg. 8-bit hexadecimal => Binary  FFFFFFFF => 11111111111111111111111111111111
 const chars = parseInt(char, 16).toString(2).padStart(32, '0');
 ```
+
+## 驼峰转换
+```
+const regExp = /_(\w)/g;
+'operation_status_graph_file_download'.replace(regExp, ($0, $1) => $1.toUpperCase());
+```
