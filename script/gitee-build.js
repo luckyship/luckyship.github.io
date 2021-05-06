@@ -53,15 +53,16 @@ async function giteeUpdate(username, giteePageUrl, passwd) {
     browser.close();
 }
 
-process.stdin.resume();
-process.stdin.setEncoding('utf-8');
-process.stdout.write(`请输入${username}密码:`); //标准输出
-process.stdin.on('data', function (data) {
-    var str = data.slice(0, -2);
-    process.stdin.emit('end');
+// process.stdin.resume();
+// process.stdin.setEncoding('utf-8');
+// process.stdout.write(`请输入${username}密码:`); //标准输出
+// process.stdin.on('data', function (data) {
+//     var str = data.slice(0, -2);
+//     process.stdin.emit('end');
    
-    giteeUpdate(username, giteePageUrl, str);
-});
-process.stdin.on('end', function () {
-     process.stdin.pause();
-});
+//     giteeUpdate(username, giteePageUrl, str);
+// });
+// process.stdin.on('end', function () {
+//      process.stdin.pause();
+// });
+giteeUpdate(username, giteePageUrl, 'Xuchao?123');
