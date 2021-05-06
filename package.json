@@ -6,6 +6,7 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo clean && hexo generate && hexo deploy",
+    "gitee": "hexo clean && hexo generate && hexo deploy && node script/gitee-build.js",
     "server": "hexo server"
   },
   "hexo": {

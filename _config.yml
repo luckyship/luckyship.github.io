@@ -102,9 +102,12 @@ theme: lucky
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: git
-  repo: git@github.com:luckyship/luckyship.github.io.git #https://bitbucket.org/JohnSmith/johnsmith.bitbucket.io
-  # repo: git@gitee.com:luckyship/luckyship.git # gitee
+- type: git
+  repo: git@gitee.com:luckyship/luckyship.git # gitee
+  branch: main
+  message: 'collect new post'
+- type: git
+  repo: git@github.com:luckyship/luckyship.github.io.git
   branch: main
   message: 'collect new post'
 
