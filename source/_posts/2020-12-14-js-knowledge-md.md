@@ -149,3 +149,11 @@ const chars = parseInt(char, 16).toString(2).padStart(32, '0');
 const regExp = /_(\w)/g;
 'operation_status_graph_file_download'.replace(regExp, ($0, $1) => $1.toUpperCase());
 ```
+
+## 判断2个对象相等
+利用`JSON`方法转换为字符串
+```
+JSON.stringify(obj)==JSON.stringify(obj2);//true
+JSON.stringify(obj)==JSON.stringify(obj3);//false
+```
+

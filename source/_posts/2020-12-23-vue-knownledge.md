@@ -570,11 +570,11 @@ const router = new VueRouter({
 
 ### 组件内导航守卫
 - beforeRouteLeave：在失活的组件里调用离开守卫。
-- beforeRouteUpdate：在重用的组件里调用,比如包含<router-view />的组件。
+- beforeRouteUpdate：在重用的组件里调用,比如包含`<router-view />`的组件。
 - beforeRouteEnter：在进入对应路由的组件创建前调用。
 
 ### router-link
-<router-link>是Vue-Router的内置组件，在具有路由功能的应用中作为声明式的导航使用。类似react的Link标签
+`<router-link>`是Vue-Router的内置组件，在具有路由功能的应用中作为声明式的导航使用。类似react的Link标签
 ```html
 <router-link to="home">Home</router-link>
 <router-link :to="'home'">Home</router-link>
@@ -588,6 +588,27 @@ const router = new VueRouter({
 在ie和firefox无效：
 1. 使用a标签不用Button
 2. 使用Button和Router.navigate方法
+
+
+### vue-router
+- mode
+  - hash
+  - history
+- 跳转
+  - this.$router.push()
+  - `<router-link to=""></router-link>`
+- 占位
+  - `<router-view></router-view>`
+
+### Vue router 跳转和 location.href 有什么区别？
+`router` 是 `hash` 改变
+`location.href` 是页面跳转，刷新页面
+
+### Vue router 除了 router-link 怎么实现跳转?
+```
+router.go(1)
+router.push('/')
+```
 
 ### params和query的区别
 query需要path引入，params需要name引入
@@ -1214,16 +1235,6 @@ let reactiveData = new Proxy(data, {
 	// ...
 })
 ```
-
-### vue-router
-- mode
-  - hash
-  - history
-- 跳转
-  - this.$router.push()
-  - <router-link to=""></router-link>
-- 占位
-  - <router-view></router-view>
 
 ### 为什么在v-for中使用key？
 为了标识每个唯一的节点，方便比较，v-for中加key可以减少渲染次数，提升渲染性能。
