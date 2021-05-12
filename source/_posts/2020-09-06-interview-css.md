@@ -365,4 +365,58 @@ console.log( Math.abs(0.1 + 0.2 - 0.3) <= Number.EPSILON);
 * ETag（表示资源内容的唯一标识，随服务器response返回）
 * If-None-Match（服务器通过比较请求头部的If-None-Match与当前资源的ETag是否一致来判断资源是否在两次请求之间有过修改，如果没有修改，则命中协商缓存）
 
+### new 操作符具体干了什么
+1. 创建空对象，并且this变量引用该对象同时继承该函数的原型
+2. 属性和方法加入到this引用的对象中
+3. 新创建的对象用this引用，并且隐式地返回this
 
+1. 创建一个新对象(\_\_proto\_\_ 指向构造函数的prototype)
+2. 把作用域（this）指给这个对象
+3. 执行构造函数的代码
+4. 如果构造函数中没有返回其它对象，那么返回 this，即创建的这个的新对象，否则，返回构造函数中返回的对象
+
+```javascript
+function Base(){
+  this.id = "base";
+}
+var obj = new Base();
+```
+
+**new干了什么？** 
+
+1. var obj = {};
+
+2. obj.\_\_proto\_\_ = Base.protptype;
+
+3. Base.call(obj);
+
+- es5使用Object.create()来创建对象 new Object() 字面量写法{}
+使用Object.create()是将对象继承到__proto__属性上，
+Object.create(null)没有继承任何原型方法，也就是说它的原型链没有上一层。
+- es6使用class关键字
+
+- 构造器就是普通的函数,new来作用称为构造方法(构造函数)
+
+- 访问原型链会损耗性能,不存在的属性会遍历原型链直到最后一层
+
+- hasOwnProperty 是 JavaScript 中唯一处理属性并且不会遍历原型链的方法。通常在for in循环中使用。
+
+### 实现 new 函数
+```js
+function _new(func) {
+    // 第一步 创建新对象
+    let obj= {}; 
+    // 第二步 空对象的_proto_指向了构造函数的prototype成员对象
+    obj.__proto__ = func.prototype;//
+    // 一二步合并就相当于 let obj=Object.create(func.prototype)
+
+    // 第三步 使用apply调用构造器函数，属性和方法被添加到 this 引用的对象中
+    let result = func.apply(obj);
+    if (result && (typeof (result) == "object" || typeof (result) == "function")) {
+    // 如果构造函数执行的结果返回的是一个对象，那么返回这个对象
+        return result;
+    }
+    // 如果构造函数返回的不是一个对象，返回创建的新对象
+    return obj;
+}
+```

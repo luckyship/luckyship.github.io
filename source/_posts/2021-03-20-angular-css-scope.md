@@ -66,5 +66,13 @@ import { ViewEncapsulation } from "@angular/core";
 })
 ```
 
+## ::ng-deep
+`::ng-deep`会跳过中间的步骤，直接找到对应的选择器，使用这个不会受`angular`作用域的影响
+```
+::ng-deep .class {
+    color: white;
+}
+```
+
 ## 参考
 [在Angular组件中引入外部样式](https://blog.csdn.net/u011135260/article/details/78196516)
