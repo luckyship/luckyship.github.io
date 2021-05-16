@@ -183,3 +183,101 @@ Hexo 语法高亮部分的源码可参见：
 [PrismJS 工具函数](https://github.com/hexojs/hexo-util/blob/master/lib/prism.js)  
 [代码块标签插件](https://github.com/hexojs/hexo/blob/master/lib/plugins/tag/code.js)  
 [反引号代码块标签插件](https://github.com/hexojs/hexo/blob/master/lib/plugins/filter/before_post_render/backtick_code_block.js)
+
+## 实现搜索功能
+hexo在deploy生成文章的时候，会生成一个content.json的文件，里面保存着所有的文章信息，我们可以在网页加载完毕后，利用ajax请求获得该文件的信息，实现搜索功能
+
+### 配置生成`content.json`文件
+在`_config.yaml`中加入`jsonContent`
+```
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: true
+    raw: false
+    content: true
+    slug: false
+    updated: true
+    comments: false
+    link: false
+    permalink: false
+    excerpt: true
+    categories: false
+    tags: true
+```
+参数意义可以[参考](https://github.com/alexbruno/hexo-generator-json-content)
+```
+meta: {
+  title: hexo.config.title,
+  subtitle: hexo.config.subtitle,
+  description: hexo.config.description,
+  author: hexo.config.author,
+  url: hexo.config.url
+},
+pages: [{ //-> all pages
+  title: page.title,
+  slug: page.slug,
+  date: page.date,
+  updated: page.updated,
+  comments: page.comments,
+  permalink: page.permalink,
+  path: page.path,
+  excerpt: page.excerpt, //-> only text ;)
+  keywords: null, //-> it needs settings
+  text: page.content, //-> only text minified ;)
+  raw: page.raw, //-> original MD content
+  content: page.content, //-> final HTML content
+  author: page.author,
+  categories: [{
+    name: category.name,
+    slug: category.slug,
+    permalink: category.permalink
+  }],
+  tags: [{
+    name: tag.name,
+    slug: tag.slug,
+    permalink: tag.permalink
+  }]
+}],
+posts: [{ //-> only published posts
+  title: post.title,
+  slug: post.slug,
+  date: post.date,
+  updated: post.updated,
+  comments: post.comments,
+  permalink: post.permalink,
+  path: post.path,
+  excerpt: post.excerpt, //-> only text minified ;)
+  description: post.description, //-> only text minified ;)
+  keywords: null, //-> it needs settings
+  text: post.content, //-> only text minified ;)
+  raw: post.raw, //-> original MD content
+  content: post.content, //-> final HTML content
+  author: post.author,
+  categories: [{
+    name: category.name,
+    slug: category.slug,
+    permalink: category.permalink
+  }],
+  tags: [{
+    name: tag.name,
+    slug: tag.slug,
+    permalink: tag.permalink
+  }]
+}],
+categories: [{ //-> Posts categories index ;)
+  name: category.name,
+  slug: category.slug,
+  permalink: category.permalink
+}],
+tags: [{ //-> Posts tags index ;)
+  name: tag.name,
+  slug: tag.slug,
+  permalink: tag.permalink
+}]
+```
+

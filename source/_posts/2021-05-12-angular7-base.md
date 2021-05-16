@@ -218,9 +218,8 @@ const routes: Routes = [{
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-``` 
 
-```
+
 <!--RouterOutlet 相当于一个占位符,在Angular中根据路由状态动态插入视图。-->
 <a [routerLink]="['/']">child</a><br/>
 <a [routerLink]="['/brother']">brother</a>
@@ -251,3 +250,6 @@ this.httpClient.request(UserService.METHOD_POST, url, options).subscribe((data)=
 // 这个配置适用于打包文件限制 ng build --prod 
 // 打包生成生产环境时如果包大于2MB,那么CLI工具会提示waning,如果大于5MB,中断打包。
 ```
+
+## 参考
+[angular7](https://mydearest.cn/)
