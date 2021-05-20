@@ -133,7 +133,6 @@ public title:string =""
 public follow = new EventEmitter();
 this.follow.emit("子组件传来的数据");
 ```
-### localsStorage
 
 ### 服务总线
 1. 注册服务
