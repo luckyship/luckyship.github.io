@@ -234,7 +234,7 @@ import { Headers } from '@angular/http';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 this.httpClient.request(UserService.METHOD_POST, url, options).subscribe((data)=>{});
-``` 
+```
 
 ## ng7的新特性
 ```

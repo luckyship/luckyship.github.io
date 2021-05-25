@@ -1,8 +1,7 @@
 ---
-title: (转)vue面试题记录
+title: VUE基础知识
 tags:
   - vue
-  - 面试
 copyright: true
 comments: true
 date: 2020-12-23
