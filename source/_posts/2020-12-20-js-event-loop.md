@@ -21,10 +21,17 @@ js是一种单线程运行机制，可以预见的是，由于浏览器运行机
 >step6:重复step4，5；  
 
 ### 宏任务
+浏览器为了能够使得JS内部task与DOM任务能够有序的执行，会在一个task执行结束后，在下一个 task 执行开始前，对页面进行重新渲染 （task->渲染->task->...）
+鼠标点击会触发一个事件回调，需要执行一个宏任务，然后解析HTMl。
+
+*`setTimeout`的作用是等待给定的时间后为它的回调产生一个新的宏任务*。这就是为什么打印‘setTimeout’在‘script end’之后。因为打印‘script end’是第一个宏任务里面的事情，而‘setTimeout’是另一个独立的任务里面打印的。
+
 >setTimeout、setInterval和setImmediate  
 >I/O操作、UI渲染、script脚本执行  
 >MessageChannel(Vue的nexttick有使用)  
 ### 微任务
+微任务通常来说就是需要在当前 task 执行结束后立即执行的任务，比如对一系列动作做出反馈，或或者是需要异步的执行任务而又不需要分配一个新的 task，这样便可以减小一点性能的开销。只要执行栈中没有其他的js代码正在执行且每个宏任务执行完，微任务队列会立即执行。如果在微任务执行期间微任务队列加入了新的微任务，会将新的微任务加入队列尾部，之后也会被执行。微任务包括了`mutation observe`的回调还有接下来的例子`promise`的回调。
+
 >promise  
 >MutationObserver  
 >process.nextTick (Node)  

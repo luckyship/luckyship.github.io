@@ -687,7 +687,7 @@ this.$router.push({ name: 'home', params: { userId } })
 // this.$route.params
 ```
 
-### 实现动态加载路由
+### 实现动态加载路由(路由懒加载)
 - 使用Router的实例方法addRoutes来实现动态加载路由，一般用来实现菜单权限。
 
 - 使用时要注意，静态路由文件中不能有404路由，而要通过addRoutes一起动态添加进去。
@@ -705,6 +705,25 @@ webpack> 2.4 时
     name:'home', 
     components:()=>import('@/components/home')
 }
+```
+非懒加载路由配置
+```
+import Vue from 'vue'
+import Router from 'vue-router'
+import Hello from '@/components/Hello'
+
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Hello',
+      component: Hello
+    }
+  ]
+})
+
 ```
 
 ### 路由之间跳转
