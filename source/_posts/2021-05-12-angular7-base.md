@@ -133,7 +133,6 @@ public title:string =""
 public follow = new EventEmitter();
 this.follow.emit("子组件传来的数据");
 ```
-### localsStorage
 
 ### 服务总线
 1. 注册服务
@@ -235,7 +234,7 @@ import { Headers } from '@angular/http';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 this.httpClient.request(UserService.METHOD_POST, url, options).subscribe((data)=>{});
-``` 
+```
 
 ## ng7的新特性
 ```
