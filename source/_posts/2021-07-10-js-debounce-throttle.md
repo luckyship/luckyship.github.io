@@ -24,6 +24,7 @@ function debounce(fn,delay){
     }
 }
 ```
+<!-- more -->
 
 ## 节流(throttle)
 
