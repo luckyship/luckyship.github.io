@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2021-07-10-js-debounce-throttle
+title: js防抖和节流
 tags: [javascript]
 comments: true
 date: 2021-07-10 12:09:42
