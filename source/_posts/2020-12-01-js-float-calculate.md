@@ -3,6 +3,7 @@ layout: post
 title: js浮点数计算
 excerpt: '因为计算机的特性，浮点数计算很多时候不会等于我们想要的值'
 tags: [javascript]
+categories: review
 comments: true
 date: 2020-12-01 09:48:04
 ---

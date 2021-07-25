@@ -2,6 +2,7 @@
 layout: post
 title: 浏览器渲染方式
 tags: [web]
+categories: review
 comments: true
 date: 2021-05-12 22:13:17
 ---

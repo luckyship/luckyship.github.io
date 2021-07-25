@@ -2,6 +2,7 @@
 layout: post
 title: import和require的区别
 tags: [javascript]
+categories: review
 comments: true
 date: 2021-01-02 15:43:34
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: js防抖和节流
 tags: [javascript]
+categories: review
 comments: true
 date: 2021-07-10 12:09:42
 ---

@@ -2,6 +2,7 @@
 layout: post
 title: react基础知识
 tags: [react, javascript]
+categories: review
 comments: true
 date: 2021-07-18 22:28:03
 ---

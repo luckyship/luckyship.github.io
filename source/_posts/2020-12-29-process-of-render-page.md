@@ -2,6 +2,7 @@
 layout: post
 title: 浏览器从输入URL到渲染完页面的整个过程
 tags: [web]
+categories: review
 comments: true
 date: 2020-12-29 10:22:02
 ---

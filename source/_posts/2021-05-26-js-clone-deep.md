@@ -2,7 +2,7 @@
 layout: post
 title: js深拷贝和浅拷贝
 tags: [javascript]
-categories: interview
+categories: review
 comments: true
 date: 2021-05-26 22:29:56
 ---

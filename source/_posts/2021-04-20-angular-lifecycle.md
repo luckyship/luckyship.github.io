@@ -2,6 +2,7 @@
 layout: post
 title: angular生命周期函数
 tags: [angualr, javascript]
+categories: review
 comments: true
 date: 2021-04-20 11:04:16
 ---

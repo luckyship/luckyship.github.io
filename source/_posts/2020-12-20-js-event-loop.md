@@ -3,6 +3,7 @@ layout: post
 title: js事件运行机制event loop
 excerpt: '我们都知道javascript是单线程运行的，那么javascript在执行一些异步操作时，是如何调度分配任务的'
 tags: [javascript]
+categories: review
 comments: true
 date: 2020-12-20 11:06:21
 ---

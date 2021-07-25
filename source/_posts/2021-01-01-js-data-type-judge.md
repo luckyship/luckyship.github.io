@@ -2,6 +2,7 @@
 layout: post
 title: js数据类型判断
 tags: [javascript]
+categories: review
 comments: true
 date: 2021-01-01 11:19:20
 ---

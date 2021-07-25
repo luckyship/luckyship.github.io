@@ -1,6 +1,7 @@
 ---
 layout: post
 title: js箭头函数和普通函数区别
+categories: review
 tags: [javascript]
 comments: true
 date: 2021-01-16 17:51:10

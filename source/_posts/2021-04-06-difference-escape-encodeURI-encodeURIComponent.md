@@ -2,6 +2,7 @@
 layout: post
 title: escape,encodeURI,encodeURIComponent有什么区别
 tags: [javascript]
+categories: review
 comments: true
 date: 2021-04-06 14:27:26
 ---

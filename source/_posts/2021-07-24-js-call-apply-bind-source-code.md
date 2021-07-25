@@ -2,6 +2,7 @@
 layout: post
 title: js call、apply、bind源码实现
 tags: [javascript]
+categories: review
 comments: true
 date: 2021-07-24 19:10:37
 ---

@@ -2,10 +2,9 @@
 title: VUE基础知识
 tags:
   - vue
-copyright: true
 comments: true
 date: 2020-12-23
-categories: Vue
+categories: review
 photos:
 ---
 

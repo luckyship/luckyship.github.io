@@ -3,6 +3,7 @@ layout: post
 title: vue生命周期钩子函数
 excerpt: 'vue在渲染页面时，各个阶段都做了些什么，dom在哪里产生'
 tags: [vue, javascript]
+categories: review
 comments: true
 date: 2020-12-20 17:25:12
 ---
