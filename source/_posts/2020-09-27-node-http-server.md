@@ -8,7 +8,8 @@ comments: true
 ---
 
 需要node环境
-```
+
+```bash
 $ npm install http-server -g
 
 //默认为8080

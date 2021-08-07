@@ -11,14 +11,19 @@ comments: true
 * 通过hostalias在deployment里面修改hosts文件
 * 通过coredns修改hosts文件
 * 通过kube-dns添加域名服务器
+
 ## 通过hostalias添加域名和ip
+
 创建nginx pod
-```
+
+```bash
 kubectl run nginx --image nginx
 pod/nginx created
 ```
+
 查看pod
-```
+
+```bash
 $ kubectl get pods --output=wide
 NAME     READY     STATUS    RESTARTS   AGE    IP           NODE
 nginx    1/1       Running   0          13s    10.200.0.4   worker0
@@ -32,8 +37,10 @@ fe00::1	ip6-allnodes
 fe00::2	ip6-allrouters
 10.200.0.4	nginx
 ```
+
 添加额外的域名和ip
-```
+
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -57,13 +64,17 @@ spec:
     args:
     - "/etc/hosts"
 ```
+
 运行这个pod
-```
+
+```bash
 kubectl apply -f https://k8s.io/examples/service/networking/hostaliases-pod.yaml
 pod/hostaliases-pod created
 ```
+
 它的hostfile
-```
+
+```bash
 $ kubectl exec hostaliases-pod -- cat /etc/hosts
 127.0.0.1	localhost
 ::1	localhost ip6-localhost ip6-loopback
@@ -79,11 +90,14 @@ fe00::2	ip6-allrouters
 ```
 
 ## 通过coredns修改hosts文件
-使用edit命令修改coredns configmap资源, 添加域名`193.160.57.121 harbor.com`
-```
+
+使用edit命令修改coredns configmap资源, 添加域名 `193.160.57.121 harbor.com`
+
+```bash
 kubectl edit configmap coredns -n kube-system
 ```
-```
+
+```bash
 [root@node-2 test]# kubectl get configmap coredns -n kube-system -o yaml
 apiVersion: v1
 data:
@@ -119,8 +133,10 @@ metadata:
   selfLink: /api/v1/namespaces/kube-system/configmaps/coredns
   uid: 10a8e6df-d3d6-49a6-98b9-57640fdb6011
 ```
+
 ## 通过coredns添加域名服务器
-```
+
+```yaml
 apiVersion: v1
 data:
   Corefile: |
@@ -155,8 +171,10 @@ metadata:
 ```
 
 ## 通过kube-dns添加域名服务器
+
 修改kube-dns的使用的ConfigMap。
-```
+
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -168,9 +186,11 @@ data:
   upstreamNameservers: |
     ["8.8.8.8", "8.8.4.4"]
 ```
+
 `upstreamNameservers` 即使用的外部DNS。
 
 ## 参考
+
 [add-entries-to-pod-etc-hosts-with-host-aliases](https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/)  
 [kubernetes 集群DNS配置及容器内CoreDNS解析外部域名配置问题](https://www.cnblogs.com/lbjstill/p/13298826.html)  
 [配置Pod使用外部DNS](https://jimmysong.io/kubernetes-handbook/appendix/tricks.html)

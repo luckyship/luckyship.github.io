@@ -8,22 +8,28 @@ comments: true
 ---
 
 # 环境准备
+
 ## 实验环境
-|角色|IP地址|主机名|docker版本|硬件配置|系统|内核|
-|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
-|master|192.168.9.10|k8s-master|18.09.9|2c4g|CentOS7.7|3.10.0-1062.el7.x86_64|
-node1|192.168.9.13|k8s-node1|18.09.9|2c6g|CentOS7.7|3.10.0-1062.el7.x86_64
-node2|192.168.9.14|k8s-node2|18.09.9|2c6g|CentOS7.7|3.10.0-1062.el7.x86_64
+
+|  角色  |    IP地址    |   主机名   | docker版本 | 硬件配置 |   系统    |          内核          |
+| :----: | :----------: | :--------: | :--------: | :------: | :-------: | :--------------------: |
+| master | 192.168.9.10 | k8s-master |  18.09.9   |   2c4g   | CentOS7.7 | 3.10.0-1062.el7.x86_64 |
+| node1  | 192.168.9.13 | k8s-node1  |  18.09.9   |   2c6g   | CentOS7.7 | 3.10.0-1062.el7.x86_64 |
+| node2  | 192.168.9.14 | k8s-node2  |  18.09.9   |   2c6g   | CentOS7.7 | 3.10.0-1062.el7.x86_64 |
+
 ## 每个节点配置host信息
-```
+
+```bash
 cat >> /etc/hosts <<EOF
 192.168.9.10 k8s-master
 192.168.9.13 k8s-node1
 192.168.9.14 k8s-node2
 EOF
 ```
+
 ## 禁用防火墙和selinux
-```
+
+```bash
 //禁用防火墙
 systemctl stop firewalld && systemctl disable firewalld
 
@@ -34,8 +40,10 @@ setenforce 0
 #永久修改，重启服务器后生效
 sed -i '7s/enforcing/disabled/' /etc/selinux/config
 ```
-## 创建```/etc/sysctl.d/k8s.conf```文件，添加如下内容
-```
+
+## 创建` ` ` /etc/sysctl.d/k8s.conf ` ` `文件，添加如下内容
+
+```bash
 //向文件中写入以下内容
 cat >/etc/sysctl.d/k8s.conf <<EOF
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -46,9 +54,12 @@ EOF
 //执行以下命令生效
 modprobe br_netfilter && sysctl -p /etc/sysctl.d/k8s.conf
 ```
+
 ## 安装ipvs
-脚本创建了的```/etc/sysconfig/modules/ipvs.modules```文件，保证在节点重启后能自动加载所需模块。使用```lsmod | grep -e ip_vs -e nf_conntrack_ipv4```命令查看是否已经正确加载所需的内核模块
-```
+
+脚本创建了的` ` ` /etc/sysconfig/modules/ipvs.modules ` `  `文件，保证在节点重启后能自动加载所需模块。使用`  ` ` lsmod | grep -e ip_vs -e nf_conntrack_ipv4 ` ` `命令查看是否已经正确加载所需的内核模块
+
+```bash
 //向文件中写入以下内容
 cat > /etc/sysconfig/modules/ipvs.modules <<EOF
 #!/bin/bash
@@ -71,13 +82,18 @@ ip_vs                 145497  6 ip_vs_rr,ip_vs_sh,ip_vs_wrr
 nf_conntrack          133095  2 ip_vs,nf_conntrack_ipv4
 libcrc32c              12644  3 xfs,ip_vs,nf_conntrack
 ```
+
 安装ipset和ipvsadm(便于查看 ipvs 的代理规则)
-```
+
+```bash
 yum -y install ipset ipvsadm
 ```
+
 ## 关闭swap分区
-修改```/etc/fstab```文件，注释掉 SWAP 的自动挂载，使用```free -m```确认 swap 已经关闭
-```
+
+修改` ` ` /etc/fstab ` `  `文件，注释掉 SWAP 的自动挂载，使用`  ` ` free -m ` ` `确认 swap 已经关闭
+
+```bash
 //手动关闭swap
 swapoff -a
 
@@ -91,7 +107,9 @@ total        used        free      shared  buff/cache   available
 Mem:           1994         682         612           9         699        1086
 Swap:             0           0           0
 ```
-swappiness 参数调整，修改```/etc/sysctl.d/k8s.conf```添加下面一行
+
+swappiness 参数调整，修改` ` ` /etc/sysctl.d/k8s.conf ` ` `添加下面一行
+
 ```
 cat >>/etc/sysctl.d/k8s.conf <<EOF
 vm.swappiness=0
@@ -105,13 +123,18 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 vm.swappiness = 0
 ```
+
 ## 安装docker18.09.9
-1.添加阿里云yum源
-```
+
+1. 添加阿里云yum源
+
+```bash
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 ```
-2.查看可用版本
-```
+
+2. 查看可用版本
+
+```bash
 yum list docker-ce --showduplicates | sort -r
 
 已加载插件：fastestmirror, langpacks
@@ -128,29 +151,40 @@ docker-ce.x86_64            3:18.09.7-3.el7                     docker-ce-stable
 docker-ce.x86_64            3:18.09.6-3.el7                     docker-ce-stable
 。。。。。。
 ```
+
     
-3.安装docker18.09.9
-```
+
+3. 安装docker18.09.9
+
+```bash
 yum -y install docker-ce-18.09.9-3.el7 docker-ce-cli-18.09.9
 ```
-4.启动docker并设置开机自启
-```
+
+4. 启动docker并设置开机自启
+
+```bash
 systemctl enable docker && systemctl start docker
 ```
-5.配置阿里云docker镜像加速
-```
+
+5. 配置阿里云docker镜像加速
+
+```bash
 cat > /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://gqk8w9va.mirror.aliyuncs.com"]
 }
 EOF
 ```
-6.配置完后重启docker
-```
+
+6. 配置完后重启docker
+
+```bash
 systemctl restart docker
 ```
-7.查看加速
-```
+
+7. 查看加速
+
+```bash
 docker info
 
 找到Registry Mirrors一行
@@ -158,9 +192,10 @@ Registry Mirrors:
  https://gqk8w9va.mirror.aliyuncs.com/
 ```
 
-8.查看docker版本
+8. 查看docker版本
 docker version
-```
+
+```bash
 Client:
  Version:           18.09.9
  API version:       1.39
@@ -180,9 +215,12 @@ Server: Docker Engine - Community
   OS/Arch:          linux/amd64
   Experimental:     false
 ```
+
 * 若有需要网络代理的，请在docker中配置网络代理，否则docker无法下载镜像
+
 ## 修改docker Cgroup Driver为systemd
-```
+
+```bash
 #修改docker Cgroup Driver为systemd
 将/usr/lib/systemd/system/docker.service文件中的这一行 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 
@@ -192,16 +230,18 @@ Server: Docker Engine - Community
 [WARNING IsDockerSystemdCheck]: detected "cgroupfs" as the Docker cgroup driver. The recommended driver is "systemd". 
 Please follow the guide at https://kubernetes.io/docs/setup/cri/
 
-
 //使用如下命令修改  
 sed -i.bak "s#^ExecStart=/usr/bin/dockerd.*#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd#g" /usr/lib/systemd/system/docker.service
 
 //重启docker
 systemctl daemon-reload && systemctl restart docker
 ```
+
 ## 安装Kubeadm
+
 需要科学上网
-```
+
+```bash
 cat >/etc/yum.repos.d/kubernetes.repo<<EOF
 [kubernetes]
 name=Kubernetes
@@ -213,8 +253,10 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
         https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 EOF
 ```
+
 使用阿里云yum源
-```
+
+```bash
 cat >/etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]
 name=Kubernetes
@@ -226,8 +268,10 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
         http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 ```
+
 安装 kubeadm、kubelet、kubectl(阿里云yum源会随官方更新最新版，因此指定版本)
-```
+
+```bash
 //安装1.16.9版本
 yum -y install kubelet-1.16.9 kubeadm-1.16.9 kubectl-1.16.9
 
@@ -236,20 +280,27 @@ kubeadm version
 
 kubeadm version: &version.Info{Major:"1", Minor:"16", GitVersion:"v1.16.9", GitCommit:"a17149e1a189050796ced469dbd78d380f2ed5ef", GitTreeState:"clean", BuildDate:"2020-04-16T11:42:30Z", GoVersion:"go1.13.9", Compiler:"gc", Platform:"linux/amd64"}
 ```
+
 设置kubelet开机自启
-```
+
+```bash
 systemctl enable kubelet
 ```
+
 设置k8s命令自动补全
-```
+
+```bash
 yum -y install bash-completion
 source /usr/share/bash-completion/bash_completion
 source <(kubectl completion bash)
 echo "source <(kubectl completion bash)" >> ~/.bashrc
 ```
+
 # 初始化集群
+
 ## master节点操作，配置 kubeadm 初始化文件
-```
+
+```bash
 cat <<EOF > ./kubeadm-config.yaml
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
@@ -266,8 +317,10 @@ networking:
   dnsDomain: "cluster.local"
 EOF
 ```
+
 初始化master
-```
+
+```bash
 #kubeadm init --config=kubeadm-config.yaml --upload-certs
 完整输出结果
 kubeadm init --config=kubeadm-config.yaml
@@ -344,17 +397,22 @@ Then you can join any number of worker nodes by running the following on each as
 kubeadm join 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44 \
     --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 
 ```
+
 拷贝 kubeconfig 文件
-```
+
+```bash
 //这里的路径为/root
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+
 ## master添加节点
+
 node1和node2相同操作  
 将master节点上的$HOME/.kube/config 文件拷贝到node节点对应的文件中
-```
+
+```bash
 1.创建目录，这里的路径为/root
 mkdir -p $HOME/.kube 
 
@@ -364,9 +422,11 @@ scp k8s-master1:~/.kube/config $HOME/.kube
 3.修改权限
 chown $(id -u):$(id -g) $HOME/.kube/config
 ```
+
 将node1和node2加入到集群中  
 这里需要用到2.2中初始化master最后生成的token和sha256值
-```
+
+```bash
 #kubeadm join 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44     --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 
   
 输出结果  
@@ -386,8 +446,10 @@ This node has joined the cluster:
 
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
+
 如果忘记了token和sha256值，可以在master节点使用如下命令查看
-```
+
+```bash
 //查看token
 #kubeadm token list
 TOKEN                     TTL       EXPIRES                     USAGES                   DESCRIPTION   EXTRA GROUPS
@@ -402,16 +464,20 @@ px979r.mphk9ee5ya8fgy44   20h       2020-03-18T13:49:48+08:00   authentication,s
 #kubeadm token create --print-join-command
 kubeadm join 192.168.9.10:6443 --token 9b28zg.oyt0kvvpmtrem4bg     --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51
 ```
+
 master节点查看node，发现状态都是NotReady，因为还没有安装网络插件，这里我们安装calio官方插件文档
-```
+
+```bash
 kubectl get nodes
 NAME         STATUS     ROLES    AGE     VERSION
 k8s-master   NotReady   master   19m     v1.16.9
 k8s-node1    NotReady   <none>   4m10s   v1.16.9
 k8s-node2    NotReady   <none>   4m3s    v1.16.9
 ```
+
 ## master节点安装网络插件calio
-```
+
+```bash
 //下载文件
 wget https://docs.projectcalico.org/v3.8/manifests/calico.yaml
   
@@ -440,7 +506,6 @@ kube-proxy-nd982                          1/1     Running   0          11m
 kube-proxy-zh6cz                          1/1     Running   0          33m
 kube-scheduler-k8s-master                 1/1     Running   0          32m
 
-
 //查看node状态
 [root@k8s-master ~]# kubectl get nodes 
 NAME         STATUS   ROLES    AGE     VERSION
@@ -448,11 +513,14 @@ k8s-master   Ready    master   31m     v1.16.9
 k8s-node1    Ready    <none>   9m46s   v1.16.9
 k8s-node2    Ready    <none>   9m22s   v1.16.9
 ```
+
 ## 安装Dashboard(可选)
+
 下载文件及修改内容
 
 [这里查看dashboard对应的k8s版本](https://github.com/kubernetes/dashboard/releases)
-```
+
+```bash
 //下载文件  v2.0.0-rc3是中文版本，beta8是英文版本
 wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
 
@@ -474,7 +542,6 @@ spec:
   selector:
     k8s-app: kubernetes-dashboard
 
-
 //修改后内容
 spec:
   ports:
@@ -485,12 +552,16 @@ spec:
     k8s-app: kubernetes-dashboard
   type: NodePort		#增加，修改类型为nodeport
 ```
+
 部署dashboard
-```
+
+```bash
 kubectl apply -f recommended.yaml
 ```
+
 查看dashboard的运行状态及外网访问端口
-```
+
+```bash
 //查看dashboard运行状态
 #kubectl get pods -n kubernetes-dashboard -l k8s-app=kubernetes-dashboard
 NAME                                    READY   STATUS    RESTARTS   AGE
@@ -502,15 +573,20 @@ kubectl get svc -n kubernetes-dashboard -l k8s-app=kubernetes-dashboard
 NAME                   TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)         AGE
 kubernetes-dashboard   NodePort   10.96.142.172   <none>        443:30001/TCP   8m37s
 ```
+
 通过上边的30001端口访问dashboard，注意是https
+
 > k8s1.16.9这个版本中，使用的dashboard版本是2.0.0-beta8，只有火狐浏览器可以访问，其余浏览器都不能访问，会报错
+
 ```
 您的连接不是私密连接
 ```
+
 > 使用火狐浏览器访问，由于 dashboard 默认是自建的 https 证书，该证书是不受浏览器信任的，所以我们需要强制跳转就可以了
 
 然后创建一个具有全局所有权限的用户来登录Dashboard
-```
+
+```bash
 //编辑admin.yaml文件
 cat > admin.yaml <<EOF
 kind: ClusterRoleBinding
@@ -547,7 +623,6 @@ kubectl get secret -n kube-system|grep admin-token
 
 admin-token-j7sfh                                kubernetes.io/service-account-token   3      23s
 
-
 //获取base64解码后的字符串，注意需要用到上边命令查看到的token，会生成很长的一串字符串
 kubectl get secret admin-token-j7sfh -o jsonpath={.data.token} -n kube-system |base64 -d
 
@@ -558,4 +633,5 @@ kubectl get secret `kubectl get secret -n kube-system|grep admin-token|awk '{pri
 到此，使用kubeadm安装k8s 1.16.9完成！！！
 
 # 参考
+
 [在 Kubernetes集群中 安装 KubeSphere2.1](https://kubesphere.com.cn/forum/d/1272-kubeadm-k8s-kubesphere-2-1-1)

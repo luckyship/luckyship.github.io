@@ -8,22 +8,27 @@ comments: true
 ---
 
 # 环境准备
+
 debian 9 机器一台，作为master节点和node节点
 
 ## 首先安装docker
+
 [离线安装docker](https://www.cnblogs.com/luoSteel/p/10038954.html)  
 [docker 安装包下载地址](https://download.docker.com/linux/static/stable/x86_64/)
 
 ## 关闭swap、selinux、防火墙
-```
+
+```bash
 swapoff -a
 
 systemctl stop firewalld
 ```
 
 ## 添加k8s官方源
+
 需要科学上网
-```
+
+```bash
 sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 sudo cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
@@ -33,7 +38,8 @@ sudo apt-get install -y kubelet kubeadm kubectl kubernetes-cni
 ```
 
 ## 配置离线包
-```
+
+```bash
 $ apt-get download kubeadm=1.16.3-00 
 $ apt-get download kubelet=1.16.3-00 kubectl=1.16.3-00 kubernetes-cni
 $ apt-get download socat ebtables conntrack
@@ -45,8 +51,10 @@ $ dpkg -i xxxx.deb
 ```
 
 ## 导出docker 离线包
+
 列出所有镜像
-```
+
+```bash
 $ kubeadm config images list --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.16.3
 registry.aliyuncs.com/google_containers/kube-apiserver:v1.16.3
 registry.aliyuncs.com/google_containers/kube-controller-manager:v1.16.3
@@ -61,8 +69,10 @@ $ docker load < k8s.tar
 ```
 
 # 使用kubeadm部署k8s
+
 ## 初始化环境
-```
+
+```bash
 $ kubeadm init \
     --image-repository registry.aliyuncs.com/google_containers \
     --kubernetes-version v1.16.3 \
@@ -93,21 +103,27 @@ kubeadm join 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44 \
     --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 
 
 ```
-根据提示设置`kubeconfig`，或者添加子节点
+
+根据提示设置 `kubeconfig` ，或者添加子节点
+
 ## 设置k8s的网络插件
-```
+
+```bash
 $ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
 
-```
+```bash
 $ docker save weaveworks/weave-npc:2.7.0 weaveworks/weave-kube:2.7.0 > weave.tar
 $ docker load < weave.tar
 ```
+
 ## 安装helm
 
 ### 去除节点污点
+
 只有一个master节点的情况下，master节点不允许运行资源，需要去掉污点
-```
+
+```bash
 $ kubectl get nodes
 NAME       STATUS   ROLES    AGE    VERSION
 linx-dev   Ready    master   138m   v1.16.3
@@ -120,26 +136,34 @@ kubectl taint nodes linx-dev node-role.kubernetes.io/master:NoSchedule-
 ```
 
 ### 下载客户端
-```
+
+```bash
 wget https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
 ```
+
 ### 解压缩并拷贝helm二进制文件
-```
+
+```bash
 tar xf helm-v2.16.3-linux-amd64.tar.gz
 cp linux-amd64/helm /usr/local/bin
 ```
+
 ### 导出tiller镜像
-```
+
+```bash
 docker save registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.3 > helm.tar
 docker load < helm.tar
 ```
 
 ### 初始化helm，部署tiller
-```
+
+```bash
 $ kubectl -n kube-system create serviceaccount tiller
 $ kubectl create clusterrolebinding tiller --clusterrole cluster-admin –serviceaccount=kube-system:tiller
 ```
-`--stable-repo-url http://10.16.48.44/`需要起一个http 服务，apache或者node都可以，这儿下面放了一个文件index.yaml文件，可以从这儿下载到https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts/index.yaml
+
+`--stable-repo-url http://10.16.48.44/` 需要起一个http 服务，apache或者node都可以，这儿下面放了一个文件index.yaml文件，可以从这儿下载到https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts/index.yaml
+
 ```
 $ helm init --service-account tiller --tiller-image=registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.3 --upgrade --stable-repo-url http://193.160.57.100
 Creating /root/.helm/repository/repositories.yaml 
@@ -158,35 +182,46 @@ For more information on securing your installation see: https://docs.helm.sh/usi
 ## 安装openebs存储服务
 
 ### yaml文件
-将其中的`imagePullPolicy`改为`IfNotPresent`，这样可以优先选择本地镜像，而不会去请求网络
-```
+
+将其中的 `imagePullPolicy` 改为 `IfNotPresent` ，这样可以优先选择本地镜像，而不会去请求网络
+
+```bash
 https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
 ```
+
 ### 导出所有openebs镜像
-```
+
+```bash
 $ docker save quay.io/openebs/m-apiserver:1.5.0 quay.io/openebs/openebs-k8s-provisioner:1.5.0 quay.io/openebs/snapshot-controller:1.5.0 quay.io/openebs/snapshot-provisioner:1.5.0 quay.io/openebs/node-disk-manager-amd64:v0.4.5 quay.io/openebs/node-disk-operator-amd64:v0.4.5 quay.io/openebs/admission-server:1.5.0 quay.io/openebs/provisioner-localpv:1.5.0 quay.io/openebs/linux-utils:1.5.0 > openebs.tar
 
 $ docker load < openebs.tar
 ```
-```
+
+```bash
 kubectl apply -f openebs-operator-1.5.0.yaml
 ```
+
 ### 设置默认存储
-```
+
+```bash
 $ kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 storageclass.storage.k8s.io/openebs-hostpath patched
 ```
+
 ## 安装kubesphere
 
 ### 导入最小化镜像
-```
+
+```bash
 docker load < ks_minimal_images.tar
 ```
 
 ### 安装kubesphere
-```
+
+```bash
 kubectl apply -f kubesphere-minimal.yaml
 ```
 
 ## 参考
+
 [Helm离线安装](https://www.jianshu.com/p/2bb1dfdadee8)

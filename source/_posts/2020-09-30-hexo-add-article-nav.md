@@ -14,20 +14,24 @@ comments: true
 ```html
 toc.ejs
 <% if (item) { %>
-  <div id="toc" class="toc-article">
-    <%- toc(item.content, {list_number: false}) %>
-  </div>
+<div id="toc" class="toc-article">
+  <%- toc(item.content, {list_number: false}) %>
+</div>
 <% } %>
 ```
+
 在左侧栏插入代码
-```
+
+```html
 left-col.ejs
 <nav>
   <%- partial('_partial/post/toc', {item: page}) %>
 </nav>
 ```
+
 修改layout代码
-```
+
+```html
 <%- partial('_partial/left-col', null, {cache: !config.relative_link, post: page}) %>
 
 <%- partial('_partial/left-col', {cache: !config.relative_link, post: page}) %>

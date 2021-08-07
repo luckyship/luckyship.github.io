@@ -9,22 +9,24 @@ date: 2021-07-10 12:09:42
 
 ## 防抖(debounce)
 
-`在第一次触发事件时，不立即执行函数，而是给出一个期限值比如200ms`，然后：
+`在第一次触发事件时，不立即执行函数，而是给出一个期限值比如200ms` ，然后：
 如果在200ms内没有再次触发滚动事件，那么就执行函数
 如果在200ms内再次触发滚动事件，那么当前的计时取消，重新开始计时
-```
-function debounce(fn,delay){
-    let timer = null //借助闭包
-    return function() {
-        if(timer){
-            clearTimeout(timer) //进入该分支语句，说明当前正在一个计时过程中，并且又触发了相同事件。所以要取消当前的计时，重新开始计时
-            timer = setTimeout(fn,delay) 
-        }else{
-            timer = setTimeout(fn,delay) // 进入该分支说明当前并没有在计时，那么就开始一个计时
-        }
+
+```js
+function debounce(fn, delay) {
+  let timer = null //借助闭包
+  return function() {
+    if (timer) {
+      clearTimeout(timer) //进入该分支语句，说明当前正在一个计时过程中，并且又触发了相同事件。所以要取消当前的计时，重新开始计时
+      timer = setTimeout(fn, delay)
+    } else {
+      timer = setTimeout(fn, delay) // 进入该分支说明当前并没有在计时，那么就开始一个计时
     }
+  }
 }
 ```
+
 <!-- more -->
 
 ## 节流(throttle)
@@ -33,25 +35,26 @@ function debounce(fn,delay){
 
 如果短时间内大量触发同一事件，那么在函数执行一次之后，该函数在指定的时间期限内不再工作，直至过了这段时间才重新生效。
 
-```
-function throttle(fn,delay){
-    let valid = true
-    return function() {
-       if(!valid){
-           //休息时间 暂不接客
-           return false 
-       }
-       // 工作时间，执行函数并且在间隔期内把状态位设为无效
-        valid = false
-        setTimeout(() => {
-            fn()
-            valid = true;
-        }, delay)
+```js
+function throttle(fn, delay) {
+  let valid = true
+  return function() {
+    if (!valid) {
+      //休息时间 暂不接客
+      return false
     }
+    // 工作时间，执行函数并且在间隔期内把状态位设为无效
+    valid = false
+    setTimeout(() => {
+      fn()
+      valid = true;
+    }, delay)
+  }
 }
 ```
 
 ## 应用
+
 讲完了这两个技巧，下面介绍一下平时开发中常遇到的场景：
 
 * 搜索框input事件，例如要支持输入实时搜索可以使用节流方案（间隔一段时间就必须查询相关内容），或者实现输入间隔大于某个值（如500ms），就当做用户输入完成，然后开始搜索，具体使用哪种方案要看业务需求。

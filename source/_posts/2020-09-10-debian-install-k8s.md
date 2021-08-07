@@ -8,25 +8,35 @@ comments: true
 ---
 
 # 环境准备
+
 debian 9 机器一台，作为master节点和node节点
 
 ## 首先安装docker
+
 [离线安装docker](https://www.cnblogs.com/luoSteel/p/10038954.html)  
 [docker 安装包下载地址](https://download.docker.com/linux/static/stable/x86_64/)  
+
 ### 解压
-```
+
+```bash
 tar -xvf docker-18.06.1-ce.tgz
 ```
+
 ### 将解压出来的docker文件内容移动到 /usr/bin/ 目录下
-```
+
+```bash
 cp docker/* /usr/bin/
 ```
+
 ### 将docker注册为service
-```
+
+```bash
 vim /etc/systemd/system/docker.service
 ```
+
 将下列配置复制到docker.service中并保存
-```
+
+```bash
 [Unit]
 
 Description=Docker Application Container Engine
@@ -91,29 +101,36 @@ StartLimitInterval=60s
 
 WantedBy=multi-user.target
 ```
+
 ### 启动
-```
+
+```bash
 chmod +x /etc/systemd/system/docker.service             #添加文件权限并启动docker
 systemctl daemon-reload                                 #重载unit配置文件
 systemctl start docker                                  #启动Docker
 systemctl enable docker.service                         #设置开机自启
 ```
+
 ### 验证
-```
+
+```bash
 systemctl status docker                                 #查看Docker状态
 docker -v                                               #查看Docker版本
 ```
 
 ## 关闭swap、selinux、防火墙
-```
+
+```bash
 swapoff -a
 
 systemctl stop firewalld
 ```
 
 ## 添加k8s官方源
+
 需要科学上网
-```
+
+```bash
 sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 sudo cat <<EOF >/etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
@@ -123,9 +140,12 @@ sudo apt-get install kubelet=1.16.3-00 kubeadm=1.16.3-00 kubectl=1.16.3-00 kuber
 ```
 
 # 使用kubeadm部署k8s
+
 ## 初始化环境
+
 因为官方镜像比较慢，所以使用阿里镜像
-```
+
+```bash
 $ kubeadm init \
     --image-repository registry.aliyuncs.com/google_containers \
     --kubernetes-version v1.16.3 \
@@ -156,16 +176,23 @@ kubeadm join 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44 \
     --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 
 
 ```
-根据提示设置`kubeconfig`，或者添加子节点
+
+根据提示设置 `kubeconfig` ，或者添加子节点
+
 ## 设置k8s的网络插件
-使用`kubectl get pods -A`发现`coredns`状态不是`running`，需要配置网络插件
-```
+
+使用 `kubectl get pods -A` 发现 `coredns` 状态不是 `running` ，需要配置网络插件
+
+```bash
 $ kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 ```
+
 ## 安装helm
+
 ### 去除节点污点
 只有一个master节点的情况下，master节点不允许运行资源，需要去掉污点
-```
+
+```bash
 $ kubectl get nodes
 NAME       STATUS   ROLES    AGE    VERSION
 linx-dev   Ready    master   138m   v1.16.3
@@ -178,48 +205,63 @@ kubectl taint nodes linx-dev node-role.kubernetes.io/master:NoSchedule-
 ```
 
 ### 下载客户端
-```
+
+```bash
 wget https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz
 ```
+
 ### 解压缩并拷贝helm二进制文件
-```
+
+```bash
 tar xf helm-v2.16.3-linux-amd64.tar.gz
 cp linux-amd64/helm /usr/local/bin
 ```
+
 ### 添加阿里云的仓库
-```
+
+```bash
 helm init --client-only --stable-repo-url https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts/
 helm repo add incubator https://aliacs-app-catalog.oss-cn-hangzhou.aliyuncs.com/charts-incubator/
 helm repo update
 ```
+
 ### 创建 Kubernetes 的服务帐号和绑定角色
-```
+
+```bash
 // 创建serviceaccount
 kubectl create serviceaccount --namespace kube-system tiller
 
 // 创建角色绑定
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 ```
+
 ### 创建服务端 使用-i指定阿里云仓库
-```
+
+```bash
 helm init --service-account tiller --upgrade -i registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.3  --stable-repo-url https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
 ```
 
 ## 安装openebs存储服务
+
 ### 部署openebs
-```
+
+```bash
 kubectl apply -f https://openebs.github.io/charts/openebs-operator-1.5.0.yaml
 ```
+
 ### 设置默认存储
-```
+
+```bash
 $ kubectl patch storageclass openebs-hostpath -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 storageclass.storage.k8s.io/openebs-hostpath patched
 ```
+
 ## 安装kubesphere
 
-```
+```bash
 kubectl apply -f https://raw.githubusercontent.com/kubesphere/ks-installer/master/kubesphere-minimal.yaml
 ```
 
 ## 参考
+
 [Helm离线安装](https://www.jianshu.com/p/2bb1dfdadee8)

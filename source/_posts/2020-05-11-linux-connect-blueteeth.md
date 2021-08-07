@@ -33,7 +33,8 @@ $ sudo hciconfig hci0 up
 ```
 
 使用bluetoothctl去连接蓝牙
-```
+
+```bash
 $ bluetoothctl
 [bluetooth]# scan on 开始扫描
 [bluetooth]# pair 01:02:03:04:05:06 后面的mac地址是你的键盘mac地址
@@ -43,5 +44,6 @@ $ bluetoothctl
 ```
 
 ### 参考
+
 [Linux下的蓝牙键盘对接](https://www.jianshu.com/p/a89c8a0fdd73)  
 [在Linux系统中使用蓝牙功能的基本方法](https://www.jb51.net/LINUXjishu/379648.html)

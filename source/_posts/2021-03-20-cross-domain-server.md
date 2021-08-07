@@ -11,23 +11,25 @@ date: 2021-03-20 17:31:30
 
 ## nodejs express框架跨域解决
 
-```
-app.all("*",function(req,res,next){
+```js
+app.all("*", function(req, res, next) {
   //设置允许跨域的域名，*代表允许任意域名跨域
-  res.header("Access-Control-Allow-Origin","*");
+  res.header("Access-Control-Allow-Origin", "*");
 
   //允许的header类型
-  res.header("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
   //跨域允许的请求方式
-  res.header("Access-Control-Allow-Methods","DELETE,PUT,POST,GET,OPTIONS");
+  res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS");
   next();
 });
 ```
 
 ## nginx转发跨域
+
 nginx设置
-```
+
+```bash
 location ~ ^/aaaa {
     add_header Access-Control-Allow-Origin *;
     add_header Access-Control-Allow-Methods 'GET, POST, OPTIONS';
@@ -35,4 +37,3 @@ location ~ ^/aaaa {
     proxy_pass http://xx.xx.xx.xx:7071;
 }
 ```
-
