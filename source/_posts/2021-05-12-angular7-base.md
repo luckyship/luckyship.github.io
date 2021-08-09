@@ -8,7 +8,7 @@ date: 2021-05-12 22:24:02
 
 ## 开始准备
 
-1. 安装nodejs
+1. 安装 nodejs
 
 ```bash
 npm -v
@@ -20,32 +20,33 @@ npm -v
 npm i -g @angular/cli
 ```
 
-3. CLI命令建立项目
+3. CLI 命令建立项目
 
 ```bash
 ng new ng7demo
 ```
 
-选择是否加入路由模块以及哪种css预处理器
+选择是否加入路由模块以及哪种 css 预处理器
 
-> 可ctrl+c取消自动安装node_modules，手动进入项目npm install
-> node-sass安装不上可切换淘宝镜像库或者用cnpm安装
+> 可 ctrl+c 取消自动安装 node_modules，手动进入项目 npm install
+> node-sass 安装不上可切换淘宝镜像库或者用 cnpm 安装
 
-1. npm config set registry https://registry.npm.taobao.org 
+1. npm config set registry https://registry.npm.taobao.org
    npm install
 
-or 
+or
 
-2. npm install -g cnpm 
-   cnpm install 
+2. npm install -g cnpm
+   cnpm install
 
-4. 启动项目
+3. 启动项目
 
 ```bash
 ng serve --open // 自动打开浏览器 http://localhost:4200/
 ```
 
 ---
+
 <!--more-->
 
 ## 语法
@@ -57,7 +58,7 @@ ng serve --open // 自动打开浏览器 http://localhost:4200/
 ng g c article
 // 可添加目录
 ng g s ./serveices/eventBus
-// 
+//
 ```
 
 ### 组件引用
@@ -84,7 +85,7 @@ ng g s ./serveices/eventBus
 
 ### 插值表达式
 
-将业务逻辑中的数据通过插值表达式显示在模板文件，即html页面上，或者将html页面上的事件传输到业务逻辑。
+将业务逻辑中的数据通过插值表达式显示在模板文件，即 html 页面上，或者将 html 页面上的事件传输到业务逻辑。
 
 ```html
 <p>标题是{{title}}</p>
@@ -106,13 +107,13 @@ ng g s ./serveices/eventBus
 ### 事件绑定
 
 ```html
-<button (click)="showModal('click')"><button>
-    // 传递事件参数
-    <input type="text" (keyup)="updateContent($event)" />
-    // 双向绑定 视图和数据，只要一方发生变化，另一方跟着变化。
-    // 不需要在代码中手动更新视图，简化开发，增加代码内聚性，代码可读性更强。
-    <input type="text" [(ngModel)]="title" />
-    // 为了ngModel能够解析需要引入import {FormsModule} from "@angular/forms";
+<button (click)="showModal('click')"></button>
+<!-- 传递事件参数 -->
+<input type="text" (keyup)="updateContent($event)" />
+<!-- 双向绑定 视图和数据，只要一方发生变化，另一方跟着变化。 -->
+<!-- 不需要在代码中手动更新视图，简化开发，增加代码内聚性，代码可读性更强。 -->
+<input type="text" [(ngModel)]="title" />
+<!-- 为了ngModel能够解析需要引入 import {FormsModule} from "@angular/forms"; -->
 ```
 
 ### 模板指令
@@ -151,14 +152,12 @@ ng g s ./serveices/eventBus
 
 ```js
 // 输入
-<
-child title = "我的子组件" > < /child>
+<child title = "我的子组件"> </child>
 @Input
-public title: string = ""
-  // 输出
-  <
-  child title = "我的子组件"
-#child(follow) = "getFollow($event)" > < /child>
+public title: string = "";
+// 输出
+<child title="我的子组件" #child (follow) = "getFollow($event)" > </child>
+
 @Output()
 public follow = new EventEmitter();
 this.follow.emit("子组件传来的数据");
@@ -211,30 +210,17 @@ this.eventBusService.eventBus.subscribe(arg => {
 ### 组件注册
 
 ```js
-import {
-  BrowserModule
-} from '@angular/platform-browser';
-import {
-  NgModule
-} from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import {
-  AppRoutingModule
-} from './app-routing.module';
-import {
-  AppComponent
-} from './app.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 // import部分是模块以及装饰器的引入。
@@ -248,9 +234,7 @@ export class AppModule {}
 ### 路由导航
 
 ```js
-import {
-  NgModule
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   Routes,
   RouterModule
@@ -287,29 +271,22 @@ a[routerLink] = "['/']" > child < /a><br/ >
   router - outlet > < /router-outlet>
 ```
 
-### http服务
+### http 服务
 
 ```js
 // app.module.ts
-import {
-  HttpModule
-} from '@angular/http';
-import {
-  HttpClientModule
-} from '@angular/common/http';
+import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 // services
-import {
-  Headers
-} from '@angular/http';
-import {
-  HttpClient,
-  HttpResponse
-} from '@angular/common/http';
+import { Headers } from "@angular/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
-this.httpClient.request(UserService.METHOD_POST, url, options).subscribe((data) => {});
+this.httpClient
+  .request(UserService.METHOD_POST, url, options)
+  .subscribe(data => {});
 ```
 
-## ng7的新特性
+## ng7 的新特性
 
 ```js
 // angular.json
@@ -318,7 +295,7 @@ this.httpClient.request(UserService.METHOD_POST, url, options).subscribe((data) 
   "maximumWarning": "2mb",
   "maximumError": "5mb"
 }]
-// 这个配置适用于打包文件限制 ng build --prod 
+// 这个配置适用于打包文件限制 ng build --prod
 // 打包生成生产环境时如果包大于2MB,那么CLI工具会提示waning,如果大于5MB,中断打包。
 ```
 
