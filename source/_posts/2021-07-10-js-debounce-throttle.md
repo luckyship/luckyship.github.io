@@ -10,20 +10,20 @@ date: 2021-07-10 12:09:42
 ## 防抖(debounce)
 
 `在第一次触发事件时，不立即执行函数，而是给出一个期限值比如200ms` ，然后：
-如果在200ms内没有再次触发滚动事件，那么就执行函数
-如果在200ms内再次触发滚动事件，那么当前的计时取消，重新开始计时
+如果在 `200ms` 内没有再次触发滚动事件，那么就执行函数
+如果在 `200ms` 内再次触发滚动事件，那么当前的计时取消，重新开始计时
 
 ```js
 function debounce(fn, delay) {
-  let timer = null //借助闭包
-  return function() {
-    if (timer) {
-      clearTimeout(timer) //进入该分支语句，说明当前正在一个计时过程中，并且又触发了相同事件。所以要取消当前的计时，重新开始计时
-      timer = setTimeout(fn, delay)
-    } else {
-      timer = setTimeout(fn, delay) // 进入该分支说明当前并没有在计时，那么就开始一个计时
-    }
-  }
+  var timer = null; // 借助闭包
+  return function () {
+    var context = this;
+    var args = arguments; // 拿到所有参数
+    clearTimeout(timer); // timer为null时，或者timer已被清除，执行正常
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
 }
 ```
 
@@ -37,19 +37,19 @@ function debounce(fn, delay) {
 
 ```js
 function throttle(fn, delay) {
-  let valid = true
-  return function() {
-    if (!valid) {
-      //休息时间 暂不接客
-      return false
+  var previous = 0;
+  return function () {
+    var context = this;
+    var args = arguments; // 拿到所有参数
+    var now = +new Date();
+
+    if (now - previous > delay) {
+      setTimeout(function () {
+        fn.apply(context, args);
+        previos = now;
+      }, delay);
     }
-    // 工作时间，执行函数并且在间隔期内把状态位设为无效
-    valid = false
-    setTimeout(() => {
-      fn()
-      valid = true;
-    }, delay)
-  }
+  };
 }
 ```
 
@@ -57,5 +57,5 @@ function throttle(fn, delay) {
 
 讲完了这两个技巧，下面介绍一下平时开发中常遇到的场景：
 
-* 搜索框input事件，例如要支持输入实时搜索可以使用节流方案（间隔一段时间就必须查询相关内容），或者实现输入间隔大于某个值（如500ms），就当做用户输入完成，然后开始搜索，具体使用哪种方案要看业务需求。
-* 页面resize事件，常见于需要做页面适配的时候。需要根据最终呈现的页面情况进行dom渲染（这种情形一般是使用防抖，因为只需要判断最后一次的变化情况）
+- 搜索框 `input` 事件，例如要支持输入实时搜索可以使用节流方案（间隔一段时间就必须查询相关内容），或者实现输入间隔大于某个值（如 500ms），就当做用户输入完成，然后开始搜索，具体使用哪种方案要看业务需求。
+- 页面 `resize` 事件，常见于需要做页面适配的时候。需要根据最终呈现的页面情况进行 `dom` 渲染（这种情形一般是使用防抖，因为只需要判断最后一次的变化情况）
