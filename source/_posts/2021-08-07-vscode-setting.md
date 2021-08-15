@@ -34,6 +34,8 @@ date: 2021-08-07 17:15:37
 }
 ```
 
+<!-- more -->
+
 `prettier` 配置
 
 ```json
@@ -75,5 +77,3 @@ date: 2021-08-07 17:15:37
   "prettier.tslintIntegration": false // 不让prettier使用tslint的代码格式进行校验
 }
 ```
-
-<!-- more -->

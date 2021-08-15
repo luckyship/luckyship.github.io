@@ -15,6 +15,8 @@ date: 2021-08-09 16:27:43
 [1, [2, [3]]].flat(2); // [1, 2, 3]
 ```
 
+<!-- more -->
+
 #### es5 实现：递归调用
 
 ```js
@@ -70,7 +72,7 @@ function objectFactory() {
   var result = constructorFunction.apply(obj, arguments);
 
   // result || obj 这里这么写，是考虑到构造函数返回为null
-  return typeof result === "object" ? ret || obj : obj;
+  return typeof result === 'object' ? ret || obj : obj;
 }
 ```
 
@@ -82,7 +84,7 @@ function person(name, age) {
   this.age = age;
 }
 
-var p = objectFactory(person, "asd", 13);
+var p = objectFactory(person, 'asd', 13);
 
 console.log(p);
 ```

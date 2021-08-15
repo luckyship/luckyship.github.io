@@ -14,8 +14,8 @@ date: 2021-05-26 22:29:56
 ### silce
 
 ```js
-let a = [1, 2, 3]
-a.slice(0)
+let a = [1, 2, 3];
+a.slice(0);
 ```
 
 <!-- more -->
@@ -23,20 +23,21 @@ a.slice(0)
 ### concat
 
 ```js
-let a = [1, 2, 3]
-a.concat()
+let a = [1, 2, 3];
+a.concat();
 ```
 
 ### ... 运算符
 
 ```js
-let a = [1, 2, 3]
-let b = [...a]
+let a = [1, 2, 3];
+let b = [...a];
 ```
 
 ## 对象深拷贝
 
-### JSON方法
+### JSON 方法
+
 利用 `JSON.stringify()` 和 `JSON.parse()` 方法
 
 ```js
@@ -90,17 +91,30 @@ JSON.stringify({
 "{\"a\":null,\"b\":null,\"c\":null}"
 ```
 
+### Object.assign 只能一级深拷贝
+
+一级属性中有对象时， 二级对象为浅拷贝，一级对象为深拷贝
+
+```js
+let obj = { a: 1, b: 2, c: { d: 1 } }; // undefined
+let obj2 = Object.assign({}, obj); // undefined
+obj2.a = 2; // 2
+obj.a; // 1
+obj.c.d = 2; // 2
+obj2.c.d; // 2
+```
+
 ### 递归调用
 
 ```js
-var cloneObj = function(obj) {
-  var str, newobj = obj.constructor === Array ? [] : {};
+var cloneObj = function (obj) {
+  var str,
+    newobj = obj.constructor === Array ? [] : {};
   if (typeof obj !== 'object') {
     return;
   } else {
     for (var i in obj) {
-      newobj[i] = typeof obj[i] === 'object' ?
-        cloneObj(obj[i]) : obj[i];
+      newobj[i] = typeof obj[i] === 'object' ? cloneObj(obj[i]) : obj[i];
     }
   }
   return newobj;

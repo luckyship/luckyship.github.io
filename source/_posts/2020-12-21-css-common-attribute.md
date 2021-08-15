@@ -7,12 +7,12 @@ comments: true
 date: 2020-12-21 17:24:15
 ---
 
-## css通用属性
+## css 通用属性
 
-* initial
-* inherit
-* unset
-* revert
+- initial
+- inherit
+- unset
+- revert
 
 ## initial
 
@@ -25,22 +25,70 @@ date: 2020-12-21 17:24:15
 ### 可继承属性
 
 最后罗列一下默认为 `inherited: Yes` 的属性：
-* 所有元素可继承：visibility 和 cursor
-* 内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、 font-family、font-size、font-style、font-variant、font-weight、text- decoration、text-transform、direction
-* 块状元素可继承：text-indent和text-align
-* 列表元素可继承：list-style、list-style-type、list-style-position、list-style-image
-* 表格元素可继承：border-collapse
+
+- 所有元素可继承：visibility 和 cursor
+- 内联元素可继承：letter-spacing、word-spacing、white-space、line-height、color、font、 font-family、font-size、font-style、font-variant、font-weight、text- decoration、text-transform、direction
+- 块状元素可继承：text-indent 和 text-align
+- 列表元素可继承：list-style、list-style-type、list-style-position、list-style-image
+- 表格元素可继承：border-collapse
 
 ## unset
 
 名如其意， `unset` 关键字我们可以简单理解为不设置。其实，它是关键字 `initial` 和 `inherit` 的组合。
 
 什么意思呢？也就是当我们给一个 CSS 属性设置了 `unset` 的话：
-* 如果该属性是默认继承属性，该值等同于 `inherit`
-* 如果该属性是非继承属性，该值等同于 `initial`
+
+- 如果该属性是默认继承属性，该值等同于 `inherit`
+- 如果该属性是非继承属性，该值等同于 `initial`
 
 ## revert
 
-revert - 表示样式表中定义的元素属性的默认值。若用户定义样式表中显式设置，则按此设置；否则，按照浏览器定义样式表中的样式设置；否则，等价于unset 。
+`revert` 是更为新的一个关键字。直接意译的意思为 -- 恢复。
 
-> 只有safari9.1+和ios9.3+支持
+它与关键字 `unset` 非常类似，在大部分情况下，他们的作用是一模一样的！唯一的区别是：
+
+- `revert`：属性应用了该值后，将还原到具有由浏览器或用户创建的自定义样式表（在浏览器侧设置）设置的值
+- `unset`: 属性应用了该值后，样式将完全被还原
+
+### unset 和 revert 的不同之处
+
+```html
+<div class="father">
+  <b class="color unset">设置了 unset，我的 font-weight 会被完全清除</b>
+  <br />
+  <b class="color revert"
+    >设置了 revert，我的 font-weight 将会被还原到浏览器默认样式的 font-weight:
+    bold;</b
+  >
+</div>
+```
+
+```css
+.unset {
+  font-weight: unset;
+}
+
+.revert {
+  font-weight: revert;
+}
+```
+
+<iframe width="100%" height="100px" srcdoc="
+<style type='text/css'>
+.unset {
+  font-weight: unset;
+}
+.revert {
+  font-weight: revert;
+}
+</style>
+<div class='father'>
+  <b class='color unset'>设置了 unset，我的 font-weight 会被完全清除</b>
+  <br />
+  <b class='color revert'
+    >设置了 revert，我的 font-weight 将会被还原到浏览器默认样式的 font-weight:
+    bold;</b
+  >
+</div>
+">
+</iframe>
