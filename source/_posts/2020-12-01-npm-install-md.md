@@ -1,13 +1,13 @@
 ---
 layout: post
 title: npm安装配置
-excerpt: 'npm安装配置记录'
+excerpt: "npm安装配置记录"
 tags: [nodejs, npm]
 comments: true
 date: 2020-12-01 16:49:16
 ---
 
-## linux安装
+## linux 安装
 
 ```bash
 tar -zvxf node-v14.tar.gz
@@ -16,7 +16,7 @@ ln -s /node-v14/bin/npm /usr/bin/npm
 ln -s /node-v14/bin/npm /usr/local/bin/npm
 ```
 
-## 查看npm配置
+## 查看 npm 配置
 
 ```bash
 npm config list
@@ -37,7 +37,7 @@ npm config delete proxy
 npm config delete https-proxy
 ```
 
-## npm安装设置
+## npm 安装设置
 
 ```bash
 npm config set strict-ssl false // SSL错误
@@ -61,17 +61,19 @@ yarn config set profiler_binary_host_mirror https://npm.taobao.org/mirrors/node-
 
 ```
 
-## npm i 和 npm install的小区别
+## npm i 和 npm install 的小区别
 
-* 用`npm i `安装的模块无法用`npm uninstall`卸载，需要用`npm uninstall i`命令
-* `npm i `会帮助检测与当前node版本最匹配的npm包 版本号，并匹配出来相互依赖的npm包应该提升的版本号
-* 部分`npm`包在当前node版本下无法使用，必须使用建议版本
-* 安装报错时intall肯定会出现`npm-debug.log `文件，`npm i`不一定
+- 用`npm i `安装的模块无法用`npm uninstall`卸载，需要用`npm uninstall i`命令
+- `npm i `会帮助检测与当前 node 版本最匹配的 npm 包 版本号，并匹配出来相互依赖的 npm 包应该提升的版本号
+- 部分`npm`包在当前 node 版本下无法使用，必须使用建议版本
+- 安装报错时 intall 肯定会出现`npm-debug.log `文件，`npm i`不一定
 
 ## npm install 的执行过程
 
 1. 发出`npm install`命令
 2. 查询 `node_modules` 目录之中是否已经存在指定模块
 3. 若存在，不再重新安装
-4. 若不存在`npm` 向 `registry` 查询模块压缩包的网址下载压缩包，存放在根目录下的.npm目录里
+4. 若不存在`npm` 向 `registry` 查询模块压缩包的网址下载压缩包，存放在根目录下的.npm 目录里
 5. 解压压缩包到当前项目的 `node_modules` 目录
+
+> 如果有 `package-lock.json`，会优先按照 `package-lock.json` 中的版本来安装包
