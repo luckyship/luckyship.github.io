@@ -69,7 +69,7 @@ style 也可以通过对象语法和数组语法进行动态绑定
 
 所有的 `prop` 都使得其父子 `prop` 之间形成一个单向下行绑定：父级 `prop` 的更新会向下流动到子组件中，但是反过来不行，这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流难以解释.
 
-额外地，每次父级组件发生更新时，子组件中的所有 `prop` 都会刷新为最新的值，这意味着你不应该在一个子组件内部改变 `prop`，如果你这样做了，`vue` 会在浏览器的控制台发出警告，子组件想修改时，只能通过\$emit 派发一个自定义事件，父组件接收到后，由父组件修改.
+额外地，每次父级组件发生更新时，子组件中的所有 `prop` 都会刷新为最新的值，这意味着你不应该在一个子组件内部改变 `prop`，如果你这样做了，`vue` 会在浏览器的控制台发出警告，子组件想修改时，只能通过`$emit `派发一个自定义事件，父组件接收到后，由父组件修改.
 
 > 双向数据流是指数据从父级向子级传递数据，子级可以通过一些手段改变父级向子级传递的数据。
 
@@ -105,18 +105,18 @@ watch 和 computed 的对比
 
 运用场景：
 
-- 当我们需要进行数值计算，并依赖于其他数据时，应该使用 `computed，因为可以利用` `computed` 的缓存特性，避免每次获取值时都要重新计算。
+- 当我们需要进行数值计算，并依赖于其他数据时，应该使用 `computed`，因为可以利用 `computed` 的缓存特性，避免每次获取值时都要重新计算。
 
 - 但我们需要在数据变化时执行异步或开销较大的操作时应该使用 `watch`，使用 `watch` 选项允许我们执行异步操作，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态，这些都是计算属性无法做到的。
 
 ### 直接给一个数组项赋值，vue 能检测到吗
 
-- 由于 js 的限制(引用类型)，vue 不能检测到以下数组的变动(对象属性的添加和删除)：
+- 由于 `js` 的限制(引用类型)，`vue `不能检测到以下数组的变动(对象属性的添加和删除)：
 
-- 当你利用索引直接设置一个数组项时，例如 vm.item[indexOfItem] = newValue
-- 当你修改数组的长度时，例如 vm.items.length = newLength
+- 当你利用索引直接设置一个数组项时，例如 `vm.item[indexOfItem] = newValue`
+- 当你修改数组的长度时，例如 `vm.items.length = newLength`
 
-为了解决第一个问题，vue 提供了以下操作方法：
+为了解决第一个问题，`vue `提供了以下操作方法：
 
 ```js
 Vue.set(vm.items, indexOfItem, newValue)
@@ -160,7 +160,7 @@ data() {
 
 ### delete 和 Vue.delete 的区别
 
-delete 只是被删除的元素变成了 empty/undefined，其他元素的键值还是不变的。而 Vue.delete 直接删除了数组，改变了数组的键值。
+`delete` 只是被删除的元素变成了 `empty/undefined`，其他元素的键值还是不变的。而 `Vue.delete` 直接删除了数组，改变了数组的键值。
 
 ### vue 生命周期的理解（10 个）
 
@@ -170,46 +170,46 @@ delete 只是被删除的元素变成了 empty/undefined，其他元素的键值
 - 各个生命周期的作用
 
   - beforeCreate：组件被创建之初，组件的属性生效之前
-  - created：组件实例已经完全创建，属性也绑定，但是真实的 dom 还没有生成，\$el 还不能用(vue 实例的数据对象 data 有了，el 和数据对象 data 都为 undefined，还
+  - created：组件实例已经完全创建，属性也绑定，但是真实的 d`om` 还没有生成，`$el `还不能用(vue 实例的数据对象`data`有了，`el` 和数据对象 `data` 都为 `undefined`，还
     未初始化。)
-  - beforeMount：在挂载开始之前被调用，相关的 render 函数首次被调用
-  - mounted：el 被新创建的 vm.\$el 替换，并挂载到实例上去后调用该钩子
-  - beforeUpdate：组件数据更新之前调用，发生在虚拟 dom 打补丁之前
+  - beforeMount：在挂载开始之前被调用，相关的 `render` 函数首次被调用
+  - mounted：el 被新创建的 `vm.$el` 替换，并挂载到实例上去后调用该钩子
+  - beforeUpdate：组件数据更新之前调用，发生在虚拟 `dom` 打补丁之前
   - updated：组件数据更新之后
-  - activated：keep-alive 专属，组件被激活时调用
-  - deactivated：keep-alive 专属，组件被销毁时调用
+  - activated：`keep-alive` 专属，组件被激活时调用
+  - deactivated：`keep-alive` 专属，组件被销毁时调用
   - beforeDestroy：组件被销毁前
   - destroyed：组件被销毁后调用
 
 - _init_
 
-  - initLifecycle/Event，往 vm 上挂载各种属性
-  - callHook: beforeCreate: 实例刚创建
-  - initInjection/initState: 初始化注入和 data 响应性
-  - created: 创建完成，属性已经绑定， 但还未生成真实 dom
-  - 进行元素的挂载： $el / vm.$mount()
-  - 是否有 template: 解析成 render function
-    - \*.vue 文件: vue-loader 会将`<template>`编译成 render function
-  - beforeMount: 模板编译/挂载之前
-  - 执行 render function，生成真实的 dom，并替换到 dom tree 中
-  - mounted: 组件已挂载
+  - `initLifecycle/Event`，往 vm 上挂载各种属性
+  - `callHook: beforeCreate`: 实例刚创建
+  - `initInjection/initState`: 初始化注入和 data 响应性
+  - `created`: 创建完成，属性已经绑定， 但还未生成真实 dom
+  - 进行元素的挂载： `$el / vm.$mount()`
+  - 是否有 `template`: 解析成 render function
+    - `*.vue` 文件: vue-loader 会将`<template>`编译成 render function
+  - `beforeMount`: 模板编译/挂载之前
+  - 执行 `render function`，生成真实的 dom，并替换到 dom tree 中
+  - `mounted`: 组件已挂载
 
 - update:
 
-  - 执行 diff 算法，比对改变是否需要触发 UI 更新
-  - flushScheduleQueue
-    - watcher.before: 触发 beforeUpdate 钩子
-    - watcher.run(): 执行 watcher 中的 notify，通知所有依赖项更新 UI
-  - 触发 updated 钩子: 组件已更新
+  - 执行 `diff` 算法，比对改变是否需要触发 UI 更新
+  - `flushScheduleQueue`
+    - `watcher.before`: 触发 `beforeUpdate` 钩子
+    - `watcher.run()`: 执行 `watcher` 中的 `notify`，通知所有依赖项更新 UI
+  - 触发 `updated` 钩子: 组件已更新
 
-- actived / deactivated(keep-alive): 不销毁，缓存，组件激活与失活
+- `actived / deactivated(keep-alive)`: 不销毁，缓存，组件激活与失活
 - destroy:
-  - beforeDestroy: 销毁开始
+  - `beforeDestroy`: 销毁开始
   - 销毁自身且递归销毁子组件以及事件监听
-    - remove(): 删除节点
-    - watcher.teardown(): 清空依赖
-    - vm.\$off(): 解绑监听
-  - destroyed: 完成后触发钩子
+    - `remove()`: 删除节点
+    - `watcher.teardown()`: 清空依赖
+    - `vm.$off()`: 解绑监听
+  - `destroyed`: 完成后触发钩子
 
 ```js
 new Vue({})
@@ -322,7 +322,7 @@ Vue.prototype.$destory = function() {
 
 ### 父组件可以监听到子组件的生命周期吗
 
-- 手动设置\$emit 来发布监听
+- 手动设置`$emit` 来发布监听
 
 ```js
 // parent
@@ -348,63 +348,63 @@ mounted() {
     console.log('emit');
 ```
 
-### 谈谈你对 keep-alive 的了解
+### 谈谈你对 `keep-alive` 的了解
 
-keep-alive 是 vue 内置的一个组件，可以使被包含的组件保留状态，避免重复渲染，其有以下特性：
+`keep-alive` 是 `vue` 内置的一个组件，可以使被包含的组件保留状态，避免重复渲染，其有以下特性：
 
 - 一般结合路由和动态组件使用，用于缓存组件
-- 提供 include 和 exclude 属性，两者都支持字符串或正则表达式，include 表示只有名字匹配的组件会被缓存，exclude 表示任何名称匹配的组件都不会被缓存，其中 exclude 的优先级比 include 高
-- 对应两个钩子函数 actived 和 deactivated
+- 提供 `include` 和 `exclude` 属性，两者都支持字符串或正则表达式，`include` 表示只有名字匹配的组件会被缓存，`exclude` 表示任何名称匹配的组件都不会被缓存，其中 `exclude` 的优先级比 `include` 高
+- 对应两个钩子函数 `actived` 和 `deactivated`
 
 ### 组件中的 data 为什么是个函数
 
-因为组件是拿来复用的，且 js 里的对象是引用关系，如果组件中的 data 是一个对象，那么这样作用域没有隔离，子组件中的 data 属性值会相互影响，如果组件中的 data 是一个函数，那么每个实例可以维护一份被返回对象的独立的拷贝，组件实例之间的 data 属性值不会互相影响，而 new Vue 的实例是不会被复用的，因此不存在引用对象的问题。
+因为组件是拿来复用的，且 `js` 里的对象是引用关系，如果组件中的 `data` 是一个对象，那么这样作用域没有隔离，子组件中的 `data` 属性值会相互影响，如果组件中的 `data` 是一个函数，那么每个实例可以维护一份被返回对象的独立的拷贝，组件实例之间的 `data` 属性值不会互相影响，而 `new Vue` 的实例是不会被复用的，因此不存在引用对象的问题。
 
 ### v-model 的原理
 
-我们在 vue 项目中主要使用 v-model 指令在表单 input，textarea，select 等元素上创建双向绑定，我们知道 v-model 本质上不过是语法糖，v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+我们在 `vue` 项目中主要使用 `v-model` 指令在表单 `input`，`textarea`，`select` 等元素上创建双向绑定，我们知道 `v-model` 本质上不过是语法糖，`v-model` 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
 
-- text 和 textarea 元素使用 value 属性和 input 事件
-- checkbox 和 radio 使用 checked 和 change
-- select 字段将 value 作为 prop 并将 change 作为事件
+- `text` 和 `textarea` 元素使用 `value` 属性和 `input` 事件
+- `checkbox` 和 `radio` 使用 `checked` 和 `change`
+- `select` 字段将 `value` 作为 `prop` 并将 `change` 作为事件
 
 ### vue 组件间通信有哪几种方式（6 种）
 
-- props 和\$emit
+- `props `和`$emit`
   适用父子组件通信
 
-- ref 和$parent $children
-  ref：如果在普通 dom 上使用，引用指向的就是 dom 元素，如果用在子组件上，引用就指向组件实例 $parent/$children：访问父子实例
+- `ref` 和`$parent` `$children`
+  ref：如果在普通 `dom` 上使用，引用指向的就是 dom 元素，如果用在子组件上，引用就指向组件实例 `$parent/$children`：访问父子实例
 
-- EventBus（$emit/$on）
-  这种方法通过一个空的 vue 实例作为中央事件总线（事件中心），用它来触发事件和监听事件，从而实现任何组件间的通信，包括父子，隔代，兄弟组件
+- EventBus（`$emit/$on`）
+  这种方法通过一个空的 `vue` 实例作为中央事件总线（事件中心），用它来触发事件和监听事件，从而实现任何组件间的通信，包括父子，隔代，兄弟组件
 
-- $attrs/$listeners
-  $attrs：包含了父作用域里不被prop所识别（且获取）的特性绑定（class和style除外）。当一个组件没有声明任何prop时，这里会包含所有父作用域的绑定（class和style除外），并且可以通过v-bind="$attrs"传入内部组件。通常配合 inheritAttrs 选项一起使用
+- `$attrs/$listeners`
+  `$attrs`：包含了父作用域里不被 `prop` 所识别（且获取）的特性绑定（class 和 style 除外）。当一个组件没有声明任何 prop 时，这里会包含所有父作用域的绑定（class 和 style 除外），并且可以通过`v-bind="$attrs"`传入内部组件。通常配合 `inheritAttrs` 选项一起使用
 
-$listeners：包含了父作用域中的v-on事件监听器，它可以通过v-on="$listeners"传入内部组件
+`$listeners`：包含了父作用域中的 `v-on` 事件监听器，它可以通过`v-on="$listeners"`传入内部组件
 
-- provide、inject
-  祖先组件通过 provide 来提供变量，然后在子孙组件中通过 inject 来注入变量，provide / inject API 主要解决了跨级组件间的通信问题，不过他的使用场景，主要是子组件获取上级组件的状态，跨级组件间建立一种主动提供和依赖注入的关系
+- `provide`、`inject`
+  祖先组件通过 `provide` 来提供变量，然后在子孙组件中通过 `inject` 来注入变量，`provide / inject API `主要解决了跨级组件间的通信问题，不过他的使用场景，主要是子组件获取上级组件的状态，跨级组件间建立一种主动提供和依赖注入的关系
 
-- vuex
-  vuex 是一个专为 vue 应用程序开发的状态管理模式，每一个 vuex 应用的核心就是 store，store 基本上就是一仓库，它包含着你的应用中大部分的状态
+- `vuex`
+  `vuex` 是一个专为 `vue` 应用程序开发的状态管理模式，每一个 `vuex` 应用的核心就是 store，`store` 基本上就是一仓库，它包含着你的应用中大部分的状态
 
-vuex 的状态存储是响应式的，当 vue 从 store 中读取状态时候，若 store 中的状态发生变化，那么相应的组件也会相应的得到高效更新
+`vuex` 的状态存储是响应式的，当 vue 从 `store` 中读取状态时候，若 `store` 中的状态发生变化，那么相应的组件也会相应的得到高效更新
 
-改变 store 中的状态的唯一的途径就是显式地提交 mutation，这样使我们可以方便地跟踪每一个状态的变化
+改变 `store` 中的状态的唯一的途径就是显式地提交 `mutation`，这样使我们可以方便地跟踪每一个状态的变化
 
 ### 你使用过 vuex 吗
 
-vuex 是一个专门为 vue 应用程序开发的状态管理模式，每一个 vuex 应用的核心是 store，store 基本上就是一个容器，它包含着你的应用中大部分的状态（state）
+`vuex` 是一个专门为 `vue` 应用程序开发的状态管理模式，每一个 `vuex` 应用的核心是 `store`，`store` 基本上就是一个容器，它包含着你的应用中大部分的状态（`state`）
 
 主要包括以下几个模块：
 
 - state：定义了应用状态的数据结构，可以在这里设置默认的初始状态
-- Getters：允许组件从 State 中获取数据，mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性
-- Mutations：是唯一更改 store 中状态的方法，且必须是同步函数
-- Actions：用于提交 mutation，而不是直接更改状态，可以包含任意的异步操作
-- Modules：允许将单一的 Store 拆分成多个 store 且同时保存在单一的状态树里
+- Getters：允许组件从 `State` 中获取数据，`mapGetters` 辅助函数仅仅是将 `store` 中的 `getter` 映射到局部计算属性
+- Mutations：是唯一更改 `store` 中状态的方法，且必须是同步函数
+- Actions：用于提交 `mutation`，而不是直接更改状态，可以包含任意的异步操作
+- Modules：允许将单一的 `Store` 拆分成多个 `store` 且同时保存在单一的状态树里
 
 ### vuex 解决了什么问题
 
@@ -414,7 +414,7 @@ vuex 是一个专门为 vue 应用程序开发的状态管理模式，每一个 
 
 ### Vuex 中状态是对象时，使用时要注意什么？
 
-因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变 state 里面的状态，是不允许，所以先用深度克隆复制对象，再修改。
+因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变 `state` 里面的状态，是不允许，所以先用深度克隆复制对象，再修改。
 
 ### 组件中批量使用 Vuex 的 state 状态
 
@@ -429,7 +429,7 @@ export default {
 
 ### Vuex 中要从 state 派生一些状态出来，且多个组件使用它
 
-使用 getter 属性，相当 Vue 中的计算属性 computed，只有原状态改变派生状态才会改变。
+使用 `getter` 属性，相当 `Vue` 中的计算属性 `computed`，只有原状态改变派生状态才会改变。
 
 ```js
 const store = new Vuex.Store({
@@ -474,9 +474,9 @@ computed: {
   }
 ```
 
-- 在 getter 中可以通过第三个参数 rootState 访问到全局的 state, 可以通过第四个参数 rootGetters 访问到全局的 getter。
-- 在 mutation 中不可以访问全局的 state 和 getter，只能访问到局部的 state。
-- 在 action 中第一个参数 context 中的 context.rootState 访问到全局的 state，context.rootGetters 访问到全局的 getter。
+- 在 getter 中可以通过第三个参数 `rootState` 访问到全局的 `state`, 可以通过第四个参数 `rootGetters` 访问到全局的 `getter。`
+- 在 mutation 中不可以访问全局的 `state` 和 `getter`，只能访问到局部的 `state`。
+- 在 action 中第一个参数 `context` 中的 `context.rootState` 访问到全局的 `state`，`context.rootGetters` 访问到全局的 `getter`。
 
 ### 在组件中多次提交同一个 mutation, action
 
@@ -491,13 +491,13 @@ methods: {
 }
 ```
 
-this.setNumber(10)相当调用 this.\$store.commit('SET_NUMBER', 10)
+`this.setNumber(10)`相当调用 `this.$store.commit('SET_NUMBER', 10)`
 
 ### Vuex 中 action 和 mutation 有什么区别？
 
-1. action 提交的是 mutation，而不是直接变更状态。mutation 可以直接变更状态。
-2. action 可以包含任意异步操作。mutation 只能是同步操作。
-3. 提交方式不同，action 是用 this.$store.dispatch('ACTION_NAME',data)来提交。mutation是用this.$store.commit('SET_NUMBER',10)来提交。
+1. `action` 提交的是 `mutation`，而不是直接变更状态。`mutation `可以直接变更状态。
+2. `action` 可以包含任意异步操作。`mutation` 只能是同步操作。
+3. 提交方式不同，`action` 是用 `this.$store.dispatch('ACTION_NAME',data)`来提交。`mutation`是用`this.$store.commit('SET_NUMBER',10)`来提交。
 4. 接收参数不同：
 
 ```js
@@ -511,7 +511,7 @@ this.setNumber(10)相当调用 this.\$store.commit('SET_NUMBER', 10)
 }
 ```
 
-多个 actions，A 结束后再执行其他操作
+多个 `actions`，`A `结束后再执行其他操作
 
 ```js
 actions: {
@@ -541,7 +541,7 @@ export default {
 };
 ```
 
-- 怎么在带命名空间的模块内提交全局的 mutation 和 action？
+- 怎么在带命名空间的模块内提交全局的 `mutation` 和 `action`？
 
 ```js
 this.$store.dispatch("actionA", null, {
@@ -601,17 +601,17 @@ export default function createPlugin(param) {
 
 三个参数
 
-- to：即将要进入的目标 路由对象。
-- from：当前导航正要离开的路由对象。
-- next：函数，必须调用，不然路由跳转不过去。
+- `to`：即将要进入的目标 路由对象。
+- `from`：当前导航正要离开的路由对象。
+- `next`：函数，必须调用，不然路由跳转不过去。
 
-next()：进入下一个路由。
-next(false)：中断当前的导航。
-next('/')或 next({ path: '/' }) : 跳转到其他路由，当前导航被中断，进行新的一个导航。
+`next()`：进入下一个路由。
+`next(false)`：中断当前的导航。
+`next('/')`或 `next({ path: '/' })` : 跳转到其他路由，当前导航被中断，进行新的一个导航。
 
-- router.beforeEach：全局前置守卫。
-- router.beforeResolve：全局解析守卫。
-- router.afterEach：全局后置钩子。
+- `router.beforeEach`：全局前置守卫。
+- `router.beforeResolve`：全局解析守卫。
+- `router.afterEach`：全局后置钩子。
 
 ### 路由独享守卫
 
@@ -647,21 +647,21 @@ const router = new VueRouter({
 <router-link :to="{ path: 'user', query: { userId: 123 }}">User</router-link>
 ```
 
-注册在 router-link 上事件无效解决方法:
-使用@click.native。原因：router-link 会阻止 click 事件，.native 指直接监听一个原生事件
+注册在 `router-link` 上事件无效解决方法:
+使用`@click.native`。原因：`router-link `会阻止 `click` 事件，`.native` 指直接监听一个原生事件
 
-在 ie 和 firefox 无效：
+在 `ie` 和 `firefox` 无效：
 
-1. 使用 a 标签不用 Button
-2. 使用 Button 和 Router.navigate 方法
+1. 使用 `a` 标签不用 `Button`
+2. 使用 `Button` 和 `Router.navigate` 方法
 
 ### vue-router
 
 - mode
-  - hash
-  - history
+  - `hash`
+  - `history`
 - 跳转
-  - this.\$router.push()
+  - `this.$router.push()`
   - `<router-link to=""></router-link>`
 - 占位
   - `<router-view></router-view>`
@@ -680,14 +680,14 @@ router.push("/");
 
 ### params 和 query 的区别
 
-query 需要 path 引入，params 需要 name 引入
-this.$route.query.name、this.$route.params.query
+`query` 需要 `path` 引入，`params` 需要 `name` 引入
+`this.$route.query.name`、`this.$route.params.query`
 
-> 注意点：query 刷新不会丢失 query 数据，params 刷新会丢失数据
+> 注意点：`query` 刷新不会丢失 `query` 数据，`params` 刷新会丢失数据
 
 ### 组件内监听路由的变化
 
-只能用在包含<router-view />的组件内
+只能用在包含`<router-view />`的组件内
 
 1.
 
@@ -742,7 +742,7 @@ const router = new Router({
 },
 ```
 
-> this.\$route.meta.title
+> `this.$route.meta.title`
 
 2. query
 
@@ -755,7 +755,7 @@ this.$router.push({
 });
 ```
 
-> this.\$route.query.userId
+> `this.$route.query.userId`
 
 3. params
 
@@ -836,8 +836,8 @@ this.$router.push({
 
 $router和$route 的区别
 
-> $route为当前router跳转对象，里面可以获取name、path、query、params等
-> $router 为 VueRouter 实例，想要导航到不同 URL，则使用 router.push 方法，返回上一个历史\$router.to(-1)
+> `$route`为当前`router`跳转对象，里面可以获取`name、path、query、params`等
+> `$router` 为 `VueRouter `实例，想要导航到不同 URL，则使用 `router.push` 方法，返回上一个历史`$router.to(-1)`
 
 ### 打开新窗口
 
@@ -876,17 +876,9 @@ window.open(href, "_blank");
 ### 过滤器(filter)
 
 ```js
-< div > < span > {
-    {
-      money | moneyFilter(0.15)
-    }
-  } < /span>美元</div >
-  <
-  div > < span > {
-    {
-      money | moneyFilter(0.12)
-    }
-  } < /span>英镑</div >
+<div><span> {{ money | moneyFilter(0.15) }} </span>美元</div>
+<div><span> {{ money | moneyFilter(0.12) }} </span>英镑</div>
+
   filters: {
     moneyFilter: function(val, ratio) {
       return Number(val * ratio).toFixed(2);
@@ -894,7 +886,7 @@ window.open(href, "_blank");
   }
 ```
 
-除了用在插值上还可以用在 v-bind 表达式上。
+除了用在插值上还可以用在 `v-bind` 表达式上。
 
 ### computed 中的属性名和 data 中的属性名可以相同吗？也不能和 method 中属性同名
 
@@ -925,25 +917,25 @@ watch: {
 
 ### 强制刷新组件
 
-- this.\$forceUpdate()。
-- 组件上加上 key，然后变化 key 的值。
+- `this.$forceUpdate()`。
+- 组件上加上` key`，然后变化 `key` 的值。
 
 ### 访问子组件实例或者子元素
 
-1. ref
-   先用 ref 特性为子组件赋予一个 ID 引用<base-input ref="myInput"></<base-input>
+1. `ref`
+   先用 `ref `特性为子组件赋予一个 ID 引用<base-input ref="myInput"></<base-input>
 
-比如子组件有个 focus 的方法，可以这样调用 this.$refs.myInput.focus()；
-比如子组件有个value的数据，可以这样使用this.$refs.myInput.value。
+比如子组件有个 `focus` 的方法，可以这样调用 `this.$refs.myInput.focus()`；
+比如子组件有个`value`的数据，可以这样使用`this.$refs.myInput.value`。
 
 2. 子组件访问父组件
-   this.\$parent
+   `this.$parent`
 
 ### 组件什么时候下被销毁
 
-- 没有使用 keep-alive 切换
-- v-if="false"
-- 执行 vm.\$destroy()
+- 没有使用 `keep-alive` 切换
+- `v-if="false"`
+- 执行 `vm.$destroy()`
 
 ### $event.target和$event.currentTarget 有什么区别
 
@@ -1124,24 +1116,23 @@ Vue.nextTick()
   })
 ```
 
-```
-Vue 在更新 DOM 时是异步执行的。只要侦听到数据变化，Vue 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 watcher 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 DOM 操作是非常重要的。然后，在下一个的事件循环“tick”中，Vue 刷新队列并执行实际 (已去重的) 工作。Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserver 和 setImmediate，如果执行环境不支持，则会采用 setTimeout(fn, 0) 代替。
-例如，当你设置 vm.someData = 'new value'，该组件不会立即重新渲染。当刷新队列时，组件会在下一个事件循环“tick”中更新。多数情况我们不需要关心这个过程，但是如果你想基于更新后的 DOM 状态来做点什么，这就可能会有些棘手。虽然 Vue.js 通常鼓励开发人员使用“数据驱动”的方式思考，避免直接接触 DOM，但是有时我们必须要这么做。为了在数据变化之后等待 Vue 完成更新 DOM，可以在数据变化之后立即使用 Vue.nextTick(callback)。这样回调函数将在 DOM 更新完成后被调用。
-```
+`Vue` 在更新 `DOM` 时是异步执行的。只要侦听到数据变化，`Vue` 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 `watcher` 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 `DOM` 操作是非常重要的。然后，在下一个的事件循环`“tick”`中，Vue 刷新队列并执行实际 (已去重的) 工作。`Vue` 在内部对异步队列尝试使用原生的 `Promise.then`、`MutationObserver` 和 `setImmediate`，如果执行环境不支持，则会采用 `setTimeout(fn, 0)` 代替。
 
-> dom 更新为什么是一个异步操作因为它提升了渲染效率。
+例如，当你设置 `vm.someData = 'new value'`，该组件不会立即重新渲染。当刷新队列时，组件会在下一个事件循环`“tick”`中更新。多数情况我们不需要关心这个过程，但是如果你想基于更新后的 `DOM` 状态来做点什么，这就可能会有些棘手。虽然 `Vue.js` 通常鼓励开发人员使用“数据驱动”的方式思考，避免直接接触 `DOM`，但是有时我们必须要这么做。为了在数据变化之后等待 `Vue` 完成更新 `DOM`，可以在数据变化之后立即使用 `Vue.nextTick(callback)`。这样回调函数将在 `DOM` 更新完成后被调用。
+
+`dom` 更新为什么是一个异步操作因为它提升了渲染效率。
 
 ### 数据响应(数据劫持)
 
-数据响应的实现由两部分构成: 观察者( watcher ) 和 依赖收集器( Dep )，其核心是 defineProperty 这个方法，它可以重写属性的 get 与 set 方法，从而完成监听数据的改变。
+数据响应的实现由两部分构成: 观察者( `watcher` ) 和 依赖收集器( `Dep` )，其核心是 `defineProperty` 这个方法，它可以重写属性的 `get` 与 `set` 方法，从而完成监听数据的改变。
 
-> 1. 对需要 observe 的数据对象进行递归遍历，包括子属性对象的属性，都加上 setter 和 getter 这样的话，给这个对象的某个值赋值，就会触发 setter，那么就能监听到了数据变化
-> 2. compile 解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图
-> 3. Watcher 订阅者是 Observer 和 Compile 之间通信的桥梁，主要做的事情是:
->    ① 在自身实例化时往属性订阅器(dep)里面添加自己
->    ② 自身必须有一个 update()方法
->    ③ 待属性变动 dep.notice()通知时，能调用自身的 update()方法，并触发 Compile 中绑定的回调
-> 4. MVVM 作为数据绑定的入口，整合 Observer、Compile 和 Watcher 三者，通过 Observer 来监听自己的 model 数据变化，通过 Compile 来解析编译模板指令，最终利用 Watcher 搭起 Observer 和 Compile 之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据 model 变更的双向绑定效果。
+> 1. 对需要 `observe` 的数据对象进行递归遍历，包括子属性对象的属性，都加上 `setter` 和 `getter` 这样的话，给这个对象的某个值赋值，就会触发 `setter`，那么就能监听到了数据变化
+> 2. `compile` 解析模板指令，将模板中的变量替换成数据，然后初始化渲染页面视图，并将每个指令对应的节点绑定更新函数，添加监听数据的订阅者，一旦数据有变动，收到通知，更新视图
+> 3. `Watcher` 订阅者是 `Observer` 和 `Compile` 之间通信的桥梁，主要做的事情是:
+>    ① 在自身实例化时往属性订阅器(`dep`)里面添加自己
+>    ② 自身必须有一个 `update()`方法
+>    ③ 待属性变动 `dep.notice()`通知时，能调用自身的 `update()`方法，并触发 `Compile` 中绑定的回调
+> 4. `MVVM` 作为数据绑定的入口，整合 `Observer`、`Compile` 和 `Watcher` 三者，通过 `Observer` 来监听自己的 `model` 数据变化，通过 `Compile` 来解析编译模板指令，最终利用 `Watcher` 搭起 `Observer` 和 `Compile` 之间的通信桥梁，达到数据变化 -> 视图更新；视图交互变化(`input`) -> 数据 `model` 变更的双向绑定效果。
 
 ```js
 let data = {
@@ -1793,13 +1784,13 @@ app.config.globalProperties.$http = () => {};
 
 ### element-ui 使用中遇到的坑
 
-1. 不支持 v-model 修饰符导致如果使用.trim 当数据拼接了' '后，第一次点击数据中间编辑，光标会跳到末尾
+1. 不支持 `v-model` 修饰符导致如果使用`.trim` 当数据拼接了`' '`后，第一次点击数据中间编辑，光标会跳到末尾
 
-2. el-table 当注入的 data 经过过滤，所对应的\$index 还是原来的，导致删除 splice 对应的 index 不准确
+2. `el-table` 当注入的 `data` 经过过滤，所对应的`$index` 还是原来的，导致删除 `splice` 对应的 index 不准确
 
-3. 在 disabled 的 button 上使用 Tooltip 失效， el-tooltip 不显示(disable 属性)
+3. 在 `disabled` 的 `button` 上使用 `Tooltip` 失效， `el-tooltip` 不显示(`disable` 属性)
 
-4. input-number 输入精度 precision 既要编辑又要显示超出最小值
+4. `input-number` 输入精度 `precision` 既要编辑又要显示超出最小值
 
 5. 页面刷新、局部刷新
 
