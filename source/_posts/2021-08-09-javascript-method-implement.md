@@ -108,3 +108,78 @@ function newInstanceof(left, right) {
   }
 }
 ```
+
+### Promise.all
+
+promiseAll 源码实现
+
+```js
+function isPromise(obj) {
+  return (
+    !!obj &&
+    (typeof obj === 'object' || typeof obj === 'function') &&
+    typeof obj.then === 'function'
+  );
+}
+
+const myPromiseAll = arr => {
+  let result = [];
+  return new Promise((resolve, reject) => {
+    console.log('promiseAll');
+    for (let i = 0; i < arr.length; i++) {
+      if (isPromise(arr[i])) {
+        arr[i].then(data => {
+          result[i] = data;
+          if (result.length === arr.length) {
+            resolve(result);
+          }
+        }, reject);
+      } else {
+        result[i] = arr[i];
+      }
+    }
+  });
+};
+let p1 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 5000, 'foo1');
+});
+let p2 = new Promise((resolve, reject) => {
+  setTimeout(resolve, 1000, 'foo2');
+});
+let p3 = new Promise((resolve, reject) => {
+  setTimeout(function () {
+    resolve('foo3');
+  }, 10000);
+});
+myPromiseAll([p1, p2, p3]).then(values => {
+  console.log(values); // ["foo1", "foo2", "foo3"]
+});
+```
+
+## 函数柯里化
+
+```js
+function add(num) {
+  var sum = 0;
+  sum = sum + num;
+  var tempFun = function (numB) {
+    if (arguments.length === 0) {
+      return sum;
+    } else {
+      sum = sum + numB;
+      return tempFun;
+    }
+  };
+
+  tempFun.valueOf = function () {
+    return sum;
+  };
+  tempFun.toString = function () {
+    return sum + '';
+  };
+
+  return tempFun;
+}
+```
+
+[参考](https://segmentfault.com/q/1010000004342477)

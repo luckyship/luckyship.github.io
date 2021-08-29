@@ -14,15 +14,18 @@ date: 2021-07-10 12:09:42
 如果在 `200ms` 内再次触发滚动事件，那么当前的计时取消，重新开始计时
 
 ```js
-function debounce(fn, delay) {
-  var timer = null; // 借助闭包
+function debounce(func, wait) {
+  var timer = null;
   return function () {
-    var context = this;
-    var args = arguments; // 拿到所有参数
-    clearTimeout(timer); // timer为null时，或者timer已被清除，执行正常
+    var self = this;
+    var args = arguments;
+    if (timer) {
+      clearTimeout(timer);
+    }
     timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
+      timer = null;
+      return typeof func === 'function' && func.apply(self, args);
+    }, wait);
   };
 }
 ```
@@ -36,19 +39,15 @@ function debounce(fn, delay) {
 如果短时间内大量触发同一事件，那么在函数执行一次之后，该函数在指定的时间期限内不再工作，直至过了这段时间才重新生效。
 
 ```js
-function throttle(fn, delay) {
-  var previous = 0;
+function throttle(func, wait) {
+  var timer = null;
   return function () {
-    var context = this;
-    var args = arguments; // 拿到所有参数
-    var now = +new Date();
-
-    if (now - previous > delay) {
-      setTimeout(function () {
-        fn.apply(context, args);
-        previos = now;
-      }, delay);
-    }
+    var self = this;
+    var args = arguments;
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () {
+      return typeof func === 'function' && func.apply(self, args);
+    }, wait);
   };
 }
 ```

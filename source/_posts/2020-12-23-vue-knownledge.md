@@ -109,6 +109,8 @@ watch 和 computed 的对比
 
 - 但我们需要在数据变化时执行异步或开销较大的操作时应该使用 `watch`，使用 `watch` 选项允许我们执行异步操作，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态，这些都是计算属性无法做到的。
 
+[深入理解 vue computed 原理](https://juejin.cn/post/6844903606676799501)
+
 ### 直接给一个数组项赋值，vue 能检测到吗
 
 - 由于 `js` 的限制(引用类型)，`vue `不能检测到以下数组的变动(对象属性的添加和删除)：
@@ -419,10 +421,10 @@ mounted() {
 ### 组件中批量使用 Vuex 的 state 状态
 
 ```js
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 export default {
   computed: {
-    ...mapState(["price", "number"]),
+    ...mapState(['price', 'number']),
   },
 };
 ```
@@ -544,10 +546,10 @@ export default {
 - 怎么在带命名空间的模块内提交全局的 `mutation` 和 `action`？
 
 ```js
-this.$store.dispatch("actionA", null, {
+this.$store.dispatch('actionA', null, {
   root: true,
 });
-this.$store.commit("mutationA", null, {
+this.$store.commit('mutationA', null, {
   root: true,
 });
 ```
@@ -619,7 +621,7 @@ export default function createPlugin(param) {
 const router = new VueRouter({
   routes: [
     {
-      path: "/foo",
+      path: '/foo',
       component: Foo,
       beforeEnter: (to, from, next) => {
         // ...
@@ -675,7 +677,7 @@ const router = new VueRouter({
 
 ```js
 router.go(1);
-router.push("/");
+router.push('/');
 ```
 
 ### params 和 query 的区别
@@ -711,7 +713,7 @@ beforeRouteUpdate(to, from, next) {
 
 ```js
 const router = new Router({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes,
   scrollBehavior(to, from, savedPosition) {
@@ -748,7 +750,7 @@ const router = new Router({
 
 ```js
 this.$router.push({
-  path: "/home",
+  path: '/home',
   query: {
     userId: 123,
   },
@@ -798,17 +800,17 @@ webpack > 2.4 时 {
 非懒加载路由配置
 
 ```js
-import Vue from "vue";
-import Router from "vue-router";
-import Hello from "@/components/Hello";
+import Vue from 'vue';
+import Router from 'vue-router';
+import Hello from '@/components/Hello';
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
-      path: "/",
-      name: "Hello",
+      path: '/',
+      name: 'Hello',
       component: Hello,
     },
   ],
@@ -849,7 +851,7 @@ const obj = {
   },
 };
 const { href } = this.$router.resolve(obj);
-window.open(href, "_blank");
+window.open(href, '_blank');
 ```
 
 ### 动态绑定 Class 和 Style
@@ -1044,7 +1046,7 @@ input 标签 v-model 用 lazy 修饰之后，并不会立即监听 input 的 val
 
 ```js
 const timer = setInterval(() => {}, 500);
-this.$once("hook:beforeDestroy", () => {
+this.$once('hook:beforeDestroy', () => {
   clearInterval(timer);
 });
 ```
@@ -1142,7 +1144,7 @@ let data = {
 observe(data);
 
 // 初始化观察者
-new Watcher(data, "name", updateComponent);
+new Watcher(data, 'name', updateComponent);
 data.a = 2;
 
 // 简单表示用于数据更新后的操作
@@ -1160,7 +1162,7 @@ function observe(obj) {
 
 function defineReactive(obj, k, v) {
   // 递归子属性
-  if (type(v) == "object") observe(v);
+  if (type(v) == 'object') observe(v);
 
   // 新建依赖收集器
   let dep = new Dep();
@@ -1218,7 +1220,7 @@ class Watcher {
     this.cb(this.value);
   }
   before() {
-    callHook("beforeUpdate");
+    callHook('beforeUpdate');
   }
 }
 ```
@@ -1247,13 +1249,12 @@ class Watcher {
 - patch 函数 oldvnode vnode
 
   - 如果两个节点不一样，直接用新节点替换老节点；
-  - 如果两个节点一样，
-    ​ - 新老节点一样，直接返回；
-    ​ - 老节点有子节点，新节点没有：删除老节点的子节点；
-
-        ​ - 老节点没有子节点，新节点有子节点：新节点的子节点直接append到老节点；
-        ​ -	都只有文本节点：直接用新节点的文本节点替换老的文本节点；
-        ​ -	都有子节点：updateChildren
+  - 如果两个节点一样
+  - 新老节点一样，直接返回；
+  - 老节点有子节点，新节点没有：删除老节点的子节点；
+  - 老节点没有子节点，新节点有子节点：新节点的子节点直接 append 到老节点；
+  - 都只有文本节点：直接用新节点的文本节点替换老的文本节点；
+  - 都有子节点：updateChildren
 
 ```js
 // diff算法的实现
@@ -1272,7 +1273,7 @@ function dfs(oldNode, newNode, index, pathchs) {
       // 继续比对属性差异
       let props = diffProps(oldNode.props, newNode.props);
       curPathchs.push({
-        type: "changeProps",
+        type: 'changeProps',
         props,
       });
       // 递归进入下一层级的比较
@@ -1280,7 +1281,7 @@ function dfs(oldNode, newNode, index, pathchs) {
     } else {
       // 当 tagName 或者 key 修改了后，表示已经是全新节点，无需再比
       curPathchs.push({
-        type: "replaceNode",
+        type: 'replaceNode',
         node: newNode,
       });
     }
@@ -1306,13 +1307,13 @@ function diffProps(oldProps, newProps) {
   forin(olaProps, (k, v) => {
     if (!newProps.hasOwnProperty(k)) {
       propsPathchs.push({
-        type: "remove",
+        type: 'remove',
         prop: k,
       });
     } else {
       if (v !== newProps[k]) {
         propsPathchs.push({
-          type: "change",
+          type: 'change',
           prop: k,
           value: newProps[k],
         });
@@ -1322,7 +1323,7 @@ function diffProps(oldProps, newProps) {
   forin(newProps, (k, v) => {
     if (!oldProps.hasOwnProperty(k)) {
       propsPathchs.push({
-        type: "add",
+        type: 'add',
         prop: k,
         value: v,
       });
@@ -1373,7 +1374,7 @@ function diffList(oldList, newList, index, pathchs) {
     if (!list[i]) {
       list.splice(i, 1);
       change.push({
-        type: "remove",
+        type: 'remove',
         index: i,
       });
     }
@@ -1386,7 +1387,7 @@ function diffList(oldList, newList, index, pathchs) {
     if (index === -1 || key == null) {
       // 新增
       change.push({
-        type: "add",
+        type: 'add',
         node: item,
         index: i,
       });
@@ -1395,7 +1396,7 @@ function diffList(oldList, newList, index, pathchs) {
       // 移动
       if (index !== i) {
         change.push({
-          type: "move",
+          type: 'move',
           form: index,
           to: i,
         });
@@ -1430,7 +1431,85 @@ let reactiveData = new Proxy(data, {
 
 ### 为什么在 v-for 中使用 key？
 
-为了标识每个唯一的节点，方便比较，v-for 中加 key 可以减少渲染次数，提升渲染性能。
+为了标识每个唯一的节点，方便比较，`v-for` 中加 `key` 可以减少渲染次数，提升渲染性能。
+
+举个例子
+
+<!-- prettier-ignore -->
+```html
+<div v-for="(item, index) in list" :key="index">{{ item.name }}</div>
+
+list: [
+  { name: '小明', id: '11' },
+  { name: '小红', id: '12' },
+  { name: '小蓝', id: '13' },
+]
+
+<!-- 渲染为 -->
+<div key="0">小明</div>
+<div key="1">小红</div>
+<div key="2">小蓝</div>
+
+<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
+
+<!-- 渲染为 -->
+<div key="0">小林</div>
+<div key="1">小明</div>
+<div key="2">小红</div>
+<div key="3">小蓝</div>
+
+<!-- 新旧对比 -->
+
+<div key="0">小明</div> <div key="0">小林</div>
+<div key="1">小红</div> <div key="1">小明</div>
+<div key="2">小蓝</div> <div key="2">小红</div>
+                        <div key="3">小蓝</div>
+<!-- 可以看出，如果用index作key的话，如果数组index发生了变化，没有提升渲染效率 -->
+
+<!-- 现在我们用id作key -->
+<div key="11">小明</div>
+<div key="12">小红</div>
+<div key="13">小蓝</div>
+
+<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
+<div key="14">小林</div>
+<div key="11">小明</div>
+<div key="12">小红</div>
+<div key="13">小蓝</div>
+
+<!-- 新旧对比 -->
+                         <div key="14">小林</div>
+<div key="11">小明</div> <div key="11">小明</div>
+<div key="12">小红</div> <div key="12">小红</div>
+<div key="13">小蓝</div> <div key="13">小蓝</div>
+
+<!-- 可以看出其他三项不变，只有小林是新增的 -->
+
+```
+
+<!-- prettier-ignore-attribute -->
+
+### 为什么 v-if 和 v-for 不建议用在同一标签
+
+在 `vue` 中 `v-for` 的优先级高于 `v-if`
+
+```html
+<div v-for="item in [1,2,3,4,5]" v-if="item !== 3">{{ item }}</div>
+```
+
+当 `v-for` 和 `v-if` 同时存在时，`v-for` 会把上面的 5 个元素全部渲染出来，然后在去执行 `v-if`，去把 3 节点隐藏起来，这样做的坏处在于渲染了无用的 `dom` 节点，可以使用 `computed` 去解决这个问题
+
+```js
+<div v-for="item in list">
+  {{ item }}
+</div>
+
+computed() {
+  list() {
+    return [1,2,3,4,5].filter(item => item !==3)
+  }
+}
+```
 
 ### Vuex 页面刷新数据丢失怎么解决？
 
@@ -1508,8 +1587,7 @@ Vue.component("base-checkbox", {
     templete: `<input type="checkbox" v-bind:checked="checked" v-on:change="$emit('change',$event.target.value)"/>`
   })
 
-  <
-  base - checkbox v - model = "value" > < /base-checkbox>
+  <base-checkbox v-model="value" > </base-checkbox>
 ```
 
 ### provide/inject 有什么用？
@@ -1596,20 +1674,12 @@ inject: {
 `此指令可以解决使用插值表达式页面闪烁问题` 将该指令加在 html 标签中时，可以在该文件中加
 style 属性为 display：none
 
-```js
-< div class = "#app"
-v - cloak >
-  <
-  p > {
-    {
-      name
-    }
-  } < /p> < /
-div >
+```html
+<div class="#app" v-cloak>
+  <p>{{name}}</p>
+</div>
 
-  [v - cloak] {
-    display: none;
-  }
+[v-cloak] { display: none; }
 ```
 
 ### 封装 vue 组件的过程
@@ -1672,7 +1742,7 @@ div >
 
 ```js
 build: {
-  assetsPublicPath: "./";
+  assetsPublicPath: './';
 }
 ```
 
@@ -1680,7 +1750,7 @@ build: {
 
 ```js
 module.exports = {
-  publicPath: "./",
+  publicPath: './',
 };
 ```
 
@@ -1709,12 +1779,12 @@ proxy: {
 - vue2.x
 
 ```js
-import Vue from "vue";
-import App from "./App.vue";
+import Vue from 'vue';
+import App from './App.vue';
 
 new Vue({
   render: h => h(App),
-}).$mount("#app");
+}).$mount('#app');
 ```
 
 - vue3 新特性
@@ -1722,18 +1792,18 @@ new Vue({
 > createApp 会产生一个 app 实例，该实例拥有全局的可配置上下文
 
 ```js
-import { createApp } from "vue";
-import App from "./App.vue";
+import { createApp } from 'vue';
+import App from './App.vue';
 
-createApp(App).mount("#app");
+createApp(App).mount('#app');
 ```
 
 2. globalProperties
 
 ```js
-app.config.globalProperties.foo = "bar";
+app.config.globalProperties.foo = 'bar';
 
-app.component("child-component", {
+app.component('child-component', {
   mounted() {
     console.log(this.foo); // 'bar'
   },
