@@ -92,3 +92,7 @@ date: 2020-12-21 17:24:15
 </div>
 ">
 </iframe>
+
+## 参考
+
+[写了这么多年 CSS，initial 和 inherit 以及 unset 和 revert 还傻傻分不清楚？](https://mp.weixin.qq.com/s/J_7jGfsQXwvmVPF5MBepqA)
