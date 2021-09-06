@@ -22,96 +22,14 @@ photos:
 
 - 每一个组件默认都会创建一个 `Watcher`，自定义的 `watch` 和 `computed` 方法也会创建 `Watcher`
 
-### Object.defineProperty()实现双向绑定的缺点
+#### Object.defineProperty()实现双向绑定的缺点
 
 1. 只能监听某个属性，不能监听整个对象
 2. 需要使用 for in 遍历对象属性绑定监听
 3. 不能监听数组，需要重写数组方法进行特异性操作
 4. 会污染原对象
 
-### v-show 和 v-if 有什么区别
-
-- `v-if`（初始化不会渲染）
-  `v-if` 是真正的条件渲染，因为它会确保在切换过程中条件块内的事件监听和子组件适当地被销毁和重建，也是惰性的，如果在初始渲染条件为假时，则什么也不做——直到条件第一次变为真时才开始渲染条件块，能用在 `<template>` 上。
-
-- `v-show`（初始化会渲染）
-  `v-show` 就简单得多，不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 `css` 的 `display` 进行切换。
-
-所以，`v-if` 适用于切换不频繁的场景，`v-show` 适用于切换频繁的场景，不能用在 `<template>` 上。
-
-### class 和 style 如何动态绑定
-
-`class` 可以通过对象语法和数组语法进行动态绑定：
-
-- 对象语法
-
-```js
-< div v - bind: class = "{active: isActive, 'text-danger': hasError }" > < /div>
-data: {
-  isActive: true,
-  hasError: false
-}
-```
-
-- 数组语法
-
-```js
-< div v - bind: class = "[isActive ? activeClass : '', errorClass]" > < /div>
-data: {
-  activeClass: 'active',
-  errorClass: 'text-danger'
-}
-```
-
-style 也可以通过对象语法和数组语法进行动态绑定
-
-### 理解 vue 里的单向数据流
-
-所有的 `prop` 都使得其父子 `prop` 之间形成一个单向下行绑定：父级 `prop` 的更新会向下流动到子组件中，但是反过来不行，这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流难以解释.
-
-额外地，每次父级组件发生更新时，子组件中的所有 `prop` 都会刷新为最新的值，这意味着你不应该在一个子组件内部改变 `prop`，如果你这样做了，`vue` 会在浏览器的控制台发出警告，子组件想修改时，只能通过`$emit `派发一个自定义事件，父组件接收到后，由父组件修改.
-
-> 双向数据流是指数据从父级向子级传递数据，子级可以通过一些手段改变父级向子级传递的数据。
-
-### computed 和 watch 的区别和运用场景
-
-- `computed`：是计算属性，依赖其他属性值，并且 `computed` 的值有缓存，只有它依赖的属性值发生改变时下一次获取 `computed` 的值时候才会重新计算 `computed` 的值。避免在模板中放入太多的逻辑，导致模板过重且难以维护。当未发生改变时，则会返回上一次的数据。
-
-- `watch`：更多的是观察作用，类似于某些数据的监听回调，每当监听的数据发生变化时都会执行回调进行后续操作。
-
-- `methods`: 每次渲染时都需要重新执行。
-
-简单的说：
-
-- 1.`methods` 里面定义的是函数，你显然需要像`fuc()`这样去调用它（假设函数为 fuc）。
-
-- 2.`computed` 是计算属性，事实上和和 `data` 对象里的数据属性是同一类的（使用上）。
-
-- 3.`watch`: 类似于监听机制+事件机制。
-
-watch 和 computed 的对比
-
-首先它们都是以 Vue 的依赖追踪机制为基础的，它们的共同点是：都是希望在依赖数据发生改变的时候，被依赖的数据根据预先定义好的函数，发生“自动”的变化。我们当然可以自己写代码完成这一切，但却很可能造成写法混乱，代码冗余的情况。
-
-但 `watch` 和 `computed` 也有明显不同的地方：
-
-`watch` 和 `computed` 各自处理的数据关系场景不同
-
-- 1.watch 擅长处理的场景：一个数据影响多个数据
-
-- 2.computed 擅长处理的场景：一个数据受多个数据影响
-
-相比于 watch/computed，methods 不处理数据逻辑关系，只提供可调用的函数
-
-运用场景：
-
-- 当我们需要进行数值计算，并依赖于其他数据时，应该使用 `computed`，因为可以利用 `computed` 的缓存特性，避免每次获取值时都要重新计算。
-
-- 但我们需要在数据变化时执行异步或开销较大的操作时应该使用 `watch`，使用 `watch` 选项允许我们执行异步操作，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态，这些都是计算属性无法做到的。
-
-[深入理解 vue computed 原理](https://juejin.cn/post/6844903606676799501)
-
-### 直接给一个数组项赋值，vue 能检测到吗
+#### 直接给一个数组项赋值，vue 能检测到吗
 
 - 由于 `js` 的限制(引用类型)，`vue `不能检测到以下数组的变动(对象属性的添加和删除)：
 
@@ -160,11 +78,335 @@ data() {
   },
 ```
 
-### delete 和 Vue.delete 的区别
+#### delete 和 Vue.delete 的区别
 
 `delete` 只是被删除的元素变成了 `empty/undefined`，其他元素的键值还是不变的。而 `Vue.delete` 直接删除了数组，改变了数组的键值。
 
-### vue 生命周期的理解（10 个）
+#### Vue 中能监听到数组变化的方法有哪些？为什么这些方法能监听到呢？
+
+- push()、pop()、shift()、unshift()、splice()、sort()、reverse()，这些方法在 Vue 中被重新定义了，故可以监听到数组变化；
+- filter()、concat()、slice()，这些方法会返回一个新数组，也可以监听到数组的变化。
+
+### vue 指令
+
+#### v-show 和 v-if 有什么区别
+
+- `v-if`（初始化不会渲染）
+  `v-if` 是真正的条件渲染，因为它会确保在切换过程中条件块内的事件监听和子组件适当地被销毁和重建，也是惰性的，如果在初始渲染条件为假时，则什么也不做——直到条件第一次变为真时才开始渲染条件块，能用在 `<template>` 上。
+
+- `v-show`（初始化会渲染）
+  `v-show` 就简单得多，不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 `css` 的 `display` 进行切换。
+
+所以，`v-if` 适用于切换不频繁的场景，`v-show` 适用于切换频繁的场景，不能用在 `<template>` 上。
+
+#### 为什么在 v-for 中使用 key？
+
+为了标识每个唯一的节点，方便比较，`v-for` 中加 `key` 可以减少渲染次数，提升渲染性能。
+
+举个例子
+
+<!-- prettier-ignore -->
+```html
+<div v-for="(item, index) in list" :key="index">{{ item.name }}</div>
+
+list: [
+  { name: '小明', id: '11' },
+  { name: '小红', id: '12' },
+  { name: '小蓝', id: '13' },
+]
+
+<!-- 渲染为 -->
+<div key="0">小明</div>
+<div key="1">小红</div>
+<div key="2">小蓝</div>
+
+<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
+
+<!-- 渲染为 -->
+<div key="0">小林</div>
+<div key="1">小明</div>
+<div key="2">小红</div>
+<div key="3">小蓝</div>
+
+<!-- 新旧对比 -->
+
+<div key="0">小明</div> <div key="0">小林</div>
+<div key="1">小红</div> <div key="1">小明</div>
+<div key="2">小蓝</div> <div key="2">小红</div>
+                        <div key="3">小蓝</div>
+<!-- 可以看出，如果用index作key的话，如果数组index发生了变化，没有提升渲染效率 -->
+
+<!-- 现在我们用id作key -->
+<div key="11">小明</div>
+<div key="12">小红</div>
+<div key="13">小蓝</div>
+
+<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
+<div key="14">小林</div>
+<div key="11">小明</div>
+<div key="12">小红</div>
+<div key="13">小蓝</div>
+
+<!-- 新旧对比 -->
+                         <div key="14">小林</div>
+<div key="11">小明</div> <div key="11">小明</div>
+<div key="12">小红</div> <div key="12">小红</div>
+<div key="13">小蓝</div> <div key="13">小蓝</div>
+
+<!-- 可以看出其他三项不变，只有小林是新增的 -->
+
+```
+
+<!-- prettier-ignore-attribute -->
+
+#### 为什么 v-if 和 v-for 不建议用在同一标签
+
+在 `vue` 中 `v-for` 的优先级高于 `v-if`
+
+```html
+<div v-for="item in [1,2,3,4,5]" v-if="item !== 3">{{ item }}</div>
+```
+
+当 `v-for` 和 `v-if` 同时存在时，`v-for` 会把上面的 5 个元素全部渲染出来，然后在去执行 `v-if`，去把 3 节点隐藏起来，这样做的坏处在于渲染了无用的 `dom` 节点，可以使用 `computed` 去解决这个问题
+
+```js
+<div v-for="item in list">
+  {{ item }}
+</div>
+
+computed() {
+  list() {
+    return [1,2,3,4,5].filter(item => item !==3)
+  }
+}
+```
+
+#### class 和 style 如何动态绑定
+
+`class` 可以通过对象语法和数组语法进行动态绑定：
+
+- 对象语法
+
+```js
+< div v - bind: class = "{active: isActive, 'text-danger': hasError }" > < /div>
+data: {
+  isActive: true,
+  hasError: false
+}
+```
+
+- 数组语法
+
+```js
+< div v - bind: class = "[isActive ? activeClass : '', errorClass]" > < /div>
+data: {
+  activeClass: 'active',
+  errorClass: 'text-danger'
+}
+```
+
+style 也可以通过对象语法和数组语法进行动态绑定
+
+#### 动态绑定 Class 和 Style
+
+```html
+<!--第一种对象语法 -->
+<div
+  class="test"
+  :class="{active:actived,'active-click': clicked&&actived}"
+></div>
+<!-- 第二种数组语法 -->
+<div
+  class="test"
+  :class="[actived?activeClass : '', clicked&&actived?activeClickClass : '']"
+></div>
+<!-- 第三种对象和数组混合 -->
+<div
+  :class="[testClass,{active:actived},{'active-click':clicked&&actived}]"
+></div>
+<!-- 第四种对象和计算属性(推荐) -->
+<div :class="classObject"></div>
+```
+
+#### v-model 的原理
+
+我们在 `vue` 项目中主要使用 `v-model` 指令在表单 `input`，`textarea`，`select` 等元素上创建双向绑定，我们知道 `v-model` 本质上不过是语法糖，`v-model` 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
+
+- `text` 和 `textarea` 元素使用 `value` 属性和 `input` 事件
+- `checkbox` 和 `radio` 使用 `checked` 和 `change`
+- `select` 字段将 `value` 作为 `prop` 并将 `change` 作为事件
+
+#### v-on 绑定多个方法
+
+```html
+<template>
+  <div v-on:{click:a,dblclick:b}></div>
+</template>
+<script>
+  methods: {
+    a() {
+      alert(1)
+    },
+    b() {
+      alert(2)
+    }
+  }
+</script>
+```
+
+#### slot 插槽分发
+
+很多时候，我们封装了一个子组件之后，在父组件使用的时候，想添加一些 dom 元素，这个时候就可以使用 slot 插槽了，但是这些 dom 是否显示以及在哪里显示，则是看子组件
+中 slot 组件的位置了。
+
+#### v-clock 指令的作用
+
+- 解决页面闪烁问题(会显示插值表达式{{message}})
+  如果网速慢，而该标签内容是变量没有请求响应回来的时候，页面上先不显示该标签（vue 给该标
+  签加了 css 样式），当响应回来的时候改标签默认将 css 样式去除。
+
+`此指令可以解决使用插值表达式页面闪烁问题` 将该指令加在 html 标签中时，可以在该文件中加
+style 属性为 display：none
+
+```html
+<div class="#app" v-cloak>
+  <p>{{name}}</p>
+</div>
+
+[v-cloak] { display: none; }
+```
+
+#### vue 父子组件实现双向绑定实例
+
+```js
+<Child :name="name" :change="changeName" / >
+
+  props: {
+    name: {
+      type: String,
+      required: false
+    }
+  },
+  data() {
+    newName: ''
+  },
+  watch: {
+    name(val) {
+      this.newName = val
+    },
+    newName(val) {
+      this.$emit('change', val)
+    }
+  }
+```
+
+#### 自定义 v-model
+
+自定义 `v-model`，设置子组件 model 属性，设置 `v-model` 侦听的属性值，同时绑定属性变化时执行的事件，实现自定义 `v-model`，即双向绑定。
+
+```html
+// v-model只是一个语法糖
+<input type="text" v-model="price" />
+
+<input type="text" :value="price" @input="price=$event.target.value" />
+```
+
+- Vue.extend 方法创建一个组件
+
+```js
+// 注册组件
+Vue.component("base-checkbox", {
+    model: {
+      prop: 'checked', // 绑定属性
+      event: 'change', // 抛出事件
+    },
+    props: {
+      checked: boolean
+    },
+    templete: `<input type="checkbox" v-bind:checked="checked" v-on:change="$emit('change',$event.target.value)"/>`
+  })
+
+  <base-checkbox v-model="value" > </base-checkbox>
+```
+
+### 理解 vue 里的单向数据流
+
+所有的 `prop` 都使得其父子 `prop` 之间形成一个单向下行绑定：父级 `prop` 的更新会向下流动到子组件中，但是反过来不行，这样会防止从子组件意外改变父级组件的状态，从而导致你的应用的数据流难以解释.
+
+额外地，每次父级组件发生更新时，子组件中的所有 `prop` 都会刷新为最新的值，这意味着你不应该在一个子组件内部改变 `prop`，如果你这样做了，`vue` 会在浏览器的控制台发出警告，子组件想修改时，只能通过`$emit `派发一个自定义事件，父组件接收到后，由父组件修改.
+
+> 双向数据流是指数据从父级向子级传递数据，子级可以通过一些手段改变父级向子级传递的数据。
+
+### computed 和 watch
+
+#### computed 和 watch 的区别和运用场景
+
+- `computed`：是计算属性，依赖其他属性值，并且 `computed` 的值有缓存，只有它依赖的属性值发生改变时下一次获取 `computed` 的值时候才会重新计算 `computed` 的值。避免在模板中放入太多的逻辑，导致模板过重且难以维护。当未发生改变时，则会返回上一次的数据。
+
+- `watch`：更多的是观察作用，类似于某些数据的监听回调，每当监听的数据发生变化时都会执行回调进行后续操作。
+
+- `methods`: 每次渲染时都需要重新执行。
+
+简单的说：
+
+- 1.`methods` 里面定义的是函数，你显然需要像`fuc()`这样去调用它（假设函数为 fuc）。
+
+- 2.`computed` 是计算属性，事实上和和 `data` 对象里的数据属性是同一类的（使用上）。
+
+- 3.`watch`: 类似于监听机制+事件机制。
+
+watch 和 computed 的对比
+
+首先它们都是以 Vue 的依赖追踪机制为基础的，它们的共同点是：都是希望在依赖数据发生改变的时候，被依赖的数据根据预先定义好的函数，发生“自动”的变化。我们当然可以自己写代码完成这一切，但却很可能造成写法混乱，代码冗余的情况。
+
+但 `watch` 和 `computed` 也有明显不同的地方：
+
+`watch` 和 `computed` 各自处理的数据关系场景不同
+
+- 1.watch 擅长处理的场景：一个数据影响多个数据
+
+- 2.computed 擅长处理的场景：一个数据受多个数据影响
+
+相比于 watch/computed，methods 不处理数据逻辑关系，只提供可调用的函数
+
+运用场景：
+
+- 当我们需要进行数值计算，并依赖于其他数据时，应该使用 `computed`，因为可以利用 `computed` 的缓存特性，避免每次获取值时都要重新计算。
+
+- 但我们需要在数据变化时执行异步或开销较大的操作时应该使用 `watch`，使用 `watch` 选项允许我们执行异步操作，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态，这些都是计算属性无法做到的。
+
+[深入理解 vue computed 原理](https://juejin.cn/post/6844903606676799501)
+
+#### computed 中的属性名和 data 中的属性名可以相同吗？也不能和 method 中属性同名
+
+不能同名，因为不管是 computed 属性名还是 data 数据名还是 props 数据名都会被挂载在 vm 实例上，因此这三个都不能同名。
+
+#### watch 的属性使用箭头函数定义可以吗？
+
+不可以。this 会是 undefind, 因为箭头函数中的 this 指向的是定义时的 this，而不是执行时的 this，所以不会指向 Vue 实例的上下文。
+
+#### watch 怎么深度监听对象变化
+
+监听的函数接收两个参数，第一个参数是最新的值；第二个参数是输入之前的值；
+
+```js
+watch: {
+  a: {
+    handler: function(val, oldval) {
+
+    },
+    deep: true, // 一层层遍历给属性都加上监听器
+    immediate: true // 组件加载立即触发回调函数执行
+  },
+  'obj.a': {
+
+  }
+}
+```
+
+### Vue 生命周期
+
+#### vue 生命周期的理解（10 个）
 
 - 生命周期是什么(创建到销毁的过程)
   vue 实例有一个完整的生命周期，也就是从开始创建，初始化数据，编译模板，挂载 dom->渲染更新->渲染卸载等一些过程，我们称这是 vue 的生命周期
@@ -296,7 +538,7 @@ Vue.prototype.$destory = function() {
 }
 ```
 
-### vue 父子组件生命周期钩子函数的执行顺序
+#### vue 父子组件生命周期钩子函数的执行顺序
 
 - 加载渲染过程
   父 beforeCreate->父 created->父 beforeMount->子 beforeCreate->子 created->子 beforeMount->子 mounted->父 mounted
@@ -310,7 +552,7 @@ Vue.prototype.$destory = function() {
 - 销毁过程
   父 beforeDestroy->子 beforeDestroy->子 destroyed->父 destroy
 
-### 在哪个生命周期内调用异步请求
+#### 在哪个生命周期内调用异步请求
 
 可以在函数 created，beforeMount，mounted 中进行调用，因为在这三个钩子函数中 data 已经可以创建，可以将服务端返回的数据进行赋值，但是比较推荐在 created 钩子函数中调用异步请求，因为：
 
@@ -318,11 +560,11 @@ Vue.prototype.$destory = function() {
 - ssr 不支持 beforeMount，mounted 钩子函数，所以放在 created 中有助于一致性
 - mounted 里能够操作 dom
 
-### 在什么阶段才能访问操作 DOM
+#### 在什么阶段才能访问操作 DOM
 
 在钩子函数 mounted 被调用之前，vue 已经把编译好的模板挂载到页面上，所以在 mounted 中可以访问操作 dom，vue 具体的生命周期。
 
-### 父组件可以监听到子组件的生命周期吗
+#### 父组件可以监听到子组件的生命周期吗
 
 - 手动设置`$emit` 来发布监听
 
@@ -350,6 +592,16 @@ mounted() {
     console.log('emit');
 ```
 
+#### 在 created 和 mounted 这两个生命周期中请求数据有什么区别呢？
+
+在 created 中，页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态，DOM 节点没出来，无法操作 DOM 节点。在 mounted 不会这样，比较好。
+
+#### 组件什么时候下被销毁
+
+- 没有使用 `keep-alive` 切换
+- `v-if="false"`
+- 执行 `vm.$destroy()`
+
 ### 谈谈你对 `keep-alive` 的了解
 
 `keep-alive` 是 `vue` 内置的一个组件，可以使被包含的组件保留状态，避免重复渲染，其有以下特性：
@@ -361,14 +613,6 @@ mounted() {
 ### 组件中的 data 为什么是个函数
 
 因为组件是拿来复用的，且 `js` 里的对象是引用关系，如果组件中的 `data` 是一个对象，那么这样作用域没有隔离，子组件中的 `data` 属性值会相互影响，如果组件中的 `data` 是一个函数，那么每个实例可以维护一份被返回对象的独立的拷贝，组件实例之间的 `data` 属性值不会互相影响，而 `new Vue` 的实例是不会被复用的，因此不存在引用对象的问题。
-
-### v-model 的原理
-
-我们在 `vue` 项目中主要使用 `v-model` 指令在表单 `input`，`textarea`，`select` 等元素上创建双向绑定，我们知道 `v-model` 本质上不过是语法糖，`v-model` 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
-
-- `text` 和 `textarea` 元素使用 `value` 属性和 `input` 事件
-- `checkbox` 和 `radio` 使用 `checked` 和 `change`
-- `select` 字段将 `value` 作为 `prop` 并将 `change` 作为事件
 
 ### vue 组件间通信有哪几种方式（6 种）
 
@@ -396,7 +640,38 @@ mounted() {
 
 改变 `store` 中的状态的唯一的途径就是显式地提交 `mutation`，这样使我们可以方便地跟踪每一个状态的变化
 
-### 你使用过 vuex 吗
+#### provide/inject 有什么用？
+
+> 常用的父子组件通信方式都是父组件绑定要传递给子组件的数据，子组件通过 `props` 属性接收，一旦组件层级变多时，采用这种方式一级一级传递值非常麻烦，而且代码可读性不高，不便后期维护。
+
+> vue 提供了 `provide` 和 `inject` 帮助我们解决多层次嵌套嵌套通信问题。在 `provide` 中指定要传递给子孙组件的数据，子孙组件通过 `inject` 注入祖父组件传递过来的数据。
+
+> `provide` 和 `inject` 主要为高阶插件/组件库提供用例。并不推荐直接用于应用程序代码中。
+
+```js
+provide() {
+  return {
+    elForm: this
+  }
+}
+
+inject: ['elForm']
+
+provide: {
+  name: 'cosyer'
+}
+
+inject: {
+  newName: {
+    from: 'name',
+    default: ''
+  }
+}
+```
+
+### vuex
+
+#### 你使用过 vuex 吗
 
 `vuex` 是一个专门为 `vue` 应用程序开发的状态管理模式，每一个 `vuex` 应用的核心是 `store`，`store` 基本上就是一个容器，它包含着你的应用中大部分的状态（`state`）
 
@@ -408,17 +683,17 @@ mounted() {
 - Actions：用于提交 `mutation`，而不是直接更改状态，可以包含任意的异步操作
 - Modules：允许将单一的 `Store` 拆分成多个 `store` 且同时保存在单一的状态树里
 
-### vuex 解决了什么问题
+#### vuex 解决了什么问题
 
 1. 多个组件依赖同一状态，多层嵌套繁琐，兄弟组件没办法传值通信。
 
 2. 不同组件的行为需要修改同一状态
 
-### Vuex 中状态是对象时，使用时要注意什么？
+#### Vuex 中状态是对象时，使用时要注意什么？
 
 因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变 `state` 里面的状态，是不允许，所以先用深度克隆复制对象，再修改。
 
-### 组件中批量使用 Vuex 的 state 状态
+#### 组件中批量使用 Vuex 的 state 状态
 
 ```js
 import { mapState } from 'vuex';
@@ -429,7 +704,7 @@ export default {
 };
 ```
 
-### Vuex 中要从 state 派生一些状态出来，且多个组件使用它
+#### Vuex 中要从 state 派生一些状态出来，且多个组件使用它
 
 使用 `getter` 属性，相当 `Vue` 中的计算属性 `computed`，只有原状态改变派生状态才会改变。
 
@@ -480,7 +755,7 @@ computed: {
 - 在 mutation 中不可以访问全局的 `state` 和 `getter`，只能访问到局部的 `state`。
 - 在 action 中第一个参数 `context` 中的 `context.rootState` 访问到全局的 `state`，`context.rootGetters` 访问到全局的 `getter`。
 
-### 在组件中多次提交同一个 mutation, action
+#### 在组件中多次提交同一个 mutation, action
 
 ```js
 methods: {
@@ -495,7 +770,7 @@ methods: {
 
 `this.setNumber(10)`相当调用 `this.$store.commit('SET_NUMBER', 10)`
 
-### Vuex 中 action 和 mutation 有什么区别？
+#### Vuex 中 action 和 mutation 有什么区别？
 
 1. `action` 提交的是 `mutation`，而不是直接变更状态。`mutation `可以直接变更状态。
 2. `action` 可以包含任意异步操作。`mutation` 只能是同步操作。
@@ -531,7 +806,7 @@ actions: {
 }
 ```
 
-### 命名空间
+#### 命名空间
 
 ```js
 export default {
@@ -554,7 +829,7 @@ this.$store.commit('mutationA', null, {
 });
 ```
 
-### 在 Vuex 插件中怎么监听组件中提交 mutation 和 action？
+#### 在 Vuex 插件中怎么监听组件中提交 mutation 和 action？
 
 ```js
 export default function createPlugin(param) {
@@ -582,7 +857,7 @@ export default function createPlugin(param) {
 }
 ```
 
-### 在 v-model 上怎么用 Vuex 中 state 的值？
+#### 在 v-model 上怎么用 Vuex 中 state 的值？
 
 ```js
 < input v - model = "message" >
@@ -599,7 +874,13 @@ export default function createPlugin(param) {
   }
 ```
 
-### vue router 全局导航守卫
+#### Vuex 页面刷新数据丢失怎么解决？
+
+使用 vuex-persist 插件，它就是为 Vuex 持久化存储而生的一个插件。不需要你手动存取 storage ，而是直接将状态保存至 cookie 或者 localStorage 中
+
+### vue router
+
+#### vue router 全局导航守卫
 
 三个参数
 
@@ -615,7 +896,7 @@ export default function createPlugin(param) {
 - `router.beforeResolve`：全局解析守卫。
 - `router.afterEach`：全局后置钩子。
 
-### 路由独享守卫
+#### 路由独享守卫
 
 ```js
 const router = new VueRouter({
@@ -631,13 +912,13 @@ const router = new VueRouter({
 });
 ```
 
-### 组件内导航守卫
+#### 组件内导航守卫
 
 - beforeRouteLeave：在失活的组件里调用离开守卫。
 - beforeRouteUpdate：在重用的组件里调用, 比如包含`<router-view />`的组件。
 - beforeRouteEnter：在进入对应路由的组件创建前调用。
 
-### router-link
+#### router-link
 
 `<router-link>` 是 Vue-Router 的内置组件，在具有路由功能的应用中作为声明式的导航使用。类似 react 的 Link 标签
 
@@ -657,7 +938,7 @@ const router = new VueRouter({
 1. 使用 `a` 标签不用 `Button`
 2. 使用 `Button` 和 `Router.navigate` 方法
 
-### vue-router
+#### vue-router
 
 - mode
   - `hash`
@@ -668,26 +949,26 @@ const router = new VueRouter({
 - 占位
   - `<router-view></router-view>`
 
-### Vue router 跳转和 location.href 有什么区别？
+#### Vue router 跳转和 location.href 有什么区别？
 
 `router` 是 `hash` 改变
 `location.href` 是页面跳转，刷新页面
 
-### Vue router 除了 router-link 怎么实现跳转?
+#### Vue router 除了 router-link 怎么实现跳转?
 
 ```js
 router.go(1);
 router.push('/');
 ```
 
-### params 和 query 的区别
+#### params 和 query 的区别
 
 `query` 需要 `path` 引入，`params` 需要 `name` 引入
 `this.$route.query.name`、`this.$route.params.query`
 
 > 注意点：`query` 刷新不会丢失 `query` 数据，`params` 刷新会丢失数据
 
-### 组件内监听路由的变化
+#### 组件内监听路由的变化
 
 只能用在包含`<router-view />`的组件内
 
@@ -709,7 +990,7 @@ beforeRouteUpdate(to, from, next) {
 },
 ```
 
-### 切换新路由的滚动条处理
+#### 切换新路由的滚动条处理
 
 ```js
 const router = new Router({
@@ -729,7 +1010,7 @@ const router = new Router({
 });
 ```
 
-### 路由传参获取方式
+#### 路由传参获取方式
 
 1. meta：路由元信息，写在 routes 配置文件中。
 
@@ -778,7 +1059,7 @@ this.$router.push({
 // this.$route.params
 ```
 
-### 实现动态加载路由(路由懒加载)
+#### 实现动态加载路由(路由懒加载)
 
 - 使用 Router 的实例方法 addRoutes 来实现动态加载路由，一般用来实现菜单权限。
 
@@ -817,7 +1098,7 @@ export default new Router({
 });
 ```
 
-### 路由之间跳转
+#### 路由之间跳转
 
 1. 声明式
    通过使用内置组件<router-link :to="/home">来跳转 or router-link :to="{name:'index'}">
@@ -836,10 +1117,10 @@ this.$router.push({
 };
 ```
 
-$router和$route 的区别
+#### $router和$route 的区别
 
-> `$route`为当前`router`跳转对象，里面可以获取`name、path、query、params`等
-> `$router` 为 `VueRouter `实例，想要导航到不同 URL，则使用 `router.push` 方法，返回上一个历史`$router.to(-1)`
+`$route`为当前`router`跳转对象，里面可以获取`name、path、query、params`等
+`$router` 为 `VueRouter `实例，想要导航到不同 URL，则使用 `router.push` 方法，返回上一个历史`$router.to(-1)`
 
 ### 打开新窗口
 
@@ -852,27 +1133,6 @@ const obj = {
 };
 const { href } = this.$router.resolve(obj);
 window.open(href, '_blank');
-```
-
-### 动态绑定 Class 和 Style
-
-```html
-<!--第一种对象语法 -->
-<div
-  class="test"
-  :class="{active:actived,'active-click': clicked&&actived}"
-></div>
-<!-- 第二种数组语法 -->
-<div
-  class="test"
-  :class="[actived?activeClass : '', clicked&&actived?activeClickClass : '']"
-></div>
-<!-- 第三种对象和数组混合 -->
-<div
-  :class="[testClass,{active:actived},{'active-click':clicked&&actived}]"
-></div>
-<!-- 第四种对象和计算属性(推荐) -->
-<div :class="classObject"></div>
 ```
 
 ### 过滤器(filter)
@@ -890,33 +1150,6 @@ window.open(href, '_blank');
 
 除了用在插值上还可以用在 `v-bind` 表达式上。
 
-### computed 中的属性名和 data 中的属性名可以相同吗？也不能和 method 中属性同名
-
-不能同名，因为不管是 computed 属性名还是 data 数据名还是 props 数据名都会被挂载在 vm 实例上，因此这三个都不能同名。
-
-### watch 的属性使用箭头函数定义可以吗？
-
-不可以。this 会是 undefind, 因为箭头函数中的 this 指向的是定义时的 this，而不是执行时的 this，所以不会指向 Vue 实例的上下文。
-
-### watch 怎么深度监听对象变化
-
-监听的函数接收两个参数，第一个参数是最新的值；第二个参数是输入之前的值；
-
-```js
-watch: {
-  a: {
-    handler: function(val, oldval) {
-
-    },
-    deep: true, // 一层层遍历给属性都加上监听器
-    immediate: true // 组件加载立即触发回调函数执行
-  },
-  'obj.a': {
-
-  }
-}
-```
-
 ### 强制刷新组件
 
 - `this.$forceUpdate()`。
@@ -932,12 +1165,6 @@ watch: {
 
 2. 子组件访问父组件
    `this.$parent`
-
-### 组件什么时候下被销毁
-
-- 没有使用 `keep-alive` 切换
-- `v-if="false"`
-- 执行 `vm.$destroy()`
 
 ### $event.target和$event.currentTarget 有什么区别
 
@@ -988,24 +1215,6 @@ input 标签 v-model 用 lazy 修饰之后，并不会立即监听 input 的 val
 - .left
 - .right
 
-### v-on 绑定多个方法
-
-```html
-<template>
-  <div v-on:{click:a,dblclick:b}></div>
-</template>
-<script>
-  methods: {
-    a() {
-      alert(1)
-    },
-    b() {
-      alert(2)
-    }
-  }
-</script>
-```
-
 ### css 样式当前组件有效
 
 ```html
@@ -1033,10 +1242,6 @@ input 标签 v-model 用 lazy 修饰之后，并不会立即监听 input 的 val
 - 在组件中将 comments 选项设置为 true
 - `<template comments> ... <template>`
 
-### 在 created 和 mounted 这两个生命周期中请求数据有什么区别呢？
-
-在 created 中，页面视图未出现，如果请求信息过多，页面会长时间处于白屏状态，DOM 节点没出来，无法操作 DOM 节点。在 mounted 不会这样，比较好。
-
 ### Vue 组件里的定时器要怎么销毁？
 
 - 如果页面上有很多定时器，可以在 data 选项中创建一个对象 timer，给每个定时器取个名字一一映射在对象 timer 中，
@@ -1050,11 +1255,6 @@ this.$once('hook:beforeDestroy', () => {
   clearInterval(timer);
 });
 ```
-
-### Vue 中能监听到数组变化的方法有哪些？为什么这些方法能监听到呢？
-
-- push()、pop()、shift()、unshift()、splice()、sort()、reverse()，这些方法在 Vue 中被重新定义了，故可以监听到数组变化；
-- filter()、concat()、slice()，这些方法会返回一个新数组，也可以监听到数组的变化。
 
 ### 定义全局方法
 
@@ -1429,92 +1629,6 @@ let reactiveData = new Proxy(data, {
 });
 ```
 
-### 为什么在 v-for 中使用 key？
-
-为了标识每个唯一的节点，方便比较，`v-for` 中加 `key` 可以减少渲染次数，提升渲染性能。
-
-举个例子
-
-<!-- prettier-ignore -->
-```html
-<div v-for="(item, index) in list" :key="index">{{ item.name }}</div>
-
-list: [
-  { name: '小明', id: '11' },
-  { name: '小红', id: '12' },
-  { name: '小蓝', id: '13' },
-]
-
-<!-- 渲染为 -->
-<div key="0">小明</div>
-<div key="1">小红</div>
-<div key="2">小蓝</div>
-
-<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
-
-<!-- 渲染为 -->
-<div key="0">小林</div>
-<div key="1">小明</div>
-<div key="2">小红</div>
-<div key="3">小蓝</div>
-
-<!-- 新旧对比 -->
-
-<div key="0">小明</div> <div key="0">小林</div>
-<div key="1">小红</div> <div key="1">小明</div>
-<div key="2">小蓝</div> <div key="2">小红</div>
-                        <div key="3">小蓝</div>
-<!-- 可以看出，如果用index作key的话，如果数组index发生了变化，没有提升渲染效率 -->
-
-<!-- 现在我们用id作key -->
-<div key="11">小明</div>
-<div key="12">小红</div>
-<div key="13">小蓝</div>
-
-<!-- 现在执行 list.unshift({ name: '小林', id: '14' }) -->
-<div key="14">小林</div>
-<div key="11">小明</div>
-<div key="12">小红</div>
-<div key="13">小蓝</div>
-
-<!-- 新旧对比 -->
-                         <div key="14">小林</div>
-<div key="11">小明</div> <div key="11">小明</div>
-<div key="12">小红</div> <div key="12">小红</div>
-<div key="13">小蓝</div> <div key="13">小蓝</div>
-
-<!-- 可以看出其他三项不变，只有小林是新增的 -->
-
-```
-
-<!-- prettier-ignore-attribute -->
-
-### 为什么 v-if 和 v-for 不建议用在同一标签
-
-在 `vue` 中 `v-for` 的优先级高于 `v-if`
-
-```html
-<div v-for="item in [1,2,3,4,5]" v-if="item !== 3">{{ item }}</div>
-```
-
-当 `v-for` 和 `v-if` 同时存在时，`v-for` 会把上面的 5 个元素全部渲染出来，然后在去执行 `v-if`，去把 3 节点隐藏起来，这样做的坏处在于渲染了无用的 `dom` 节点，可以使用 `computed` 去解决这个问题
-
-```js
-<div v-for="item in list">
-  {{ item }}
-</div>
-
-computed() {
-  list() {
-    return [1,2,3,4,5].filter(item => item !==3)
-  }
-}
-```
-
-### Vuex 页面刷新数据丢失怎么解决？
-
-使用 vuex-persist 插件，它就是为 Vuex 持久化存储而生的一个插件。不需要你手动存取 storage ，而是直接将状态保存至 cookie 或者 localStorage 中
-
 ### vue 项目的优化
 
 1. v-if 和 v-show 区分场景使用
@@ -1536,88 +1650,6 @@ computed() {
 8. 释放组件资源(beforeDestroy 移除监听)
 
 9. 首屏优化 mixins 抽离公共代码
-
-### vue 父子组件实现双向绑定实例
-
-```js
-< Child: name = "name": change = "changeName" / >
-
-  props: {
-    name: {
-      type: String,
-      required: false
-    }
-  },
-  data() {
-    newName: ''
-  },
-  watch: {
-    name(val) {
-      this.newName = val
-    },
-    newName(val) {
-      this.$emit('change', val)
-    }
-  }
-```
-
-### 自定义 v-model
-
-自定义 v-model，设置子组件 model 属性，设置 v-model 侦听的属性值，同时绑定属性变化时执行的事件，实现自定义 v-model，即双向绑定。
-
-```html
-// v-model只是一个语法糖
-<input type="text" v-model="price" />
-
-<input type="text" :value="price" @input="price=$event.target.value" />
-```
-
-- Vue.extend 方法创建一个组件
-
-```js
-// 注册组件
-Vue.component("base-checkbox", {
-    model: {
-      prop: 'checked', // 绑定属性
-      event: 'change', // 抛出事件
-    },
-    props: {
-      checked: boolean
-    },
-    templete: `<input type="checkbox" v-bind:checked="checked" v-on:change="$emit('change',$event.target.value)"/>`
-  })
-
-  <base-checkbox v-model="value" > </base-checkbox>
-```
-
-### provide/inject 有什么用？
-
-> 常用的父子组件通信方式都是父组件绑定要传递给子组件的数据，子组件通过 `props` 属性接收，一旦组件层级变多时，采用这种方式一级一级传递值非常麻烦，而且代码可读性不高，不便后期维护。
-
-> vue 提供了 `provide` 和 `inject` 帮助我们解决多层次嵌套嵌套通信问题。在 `provide` 中指定要传递给子孙组件的数据，子孙组件通过 `inject` 注入祖父组件传递过来的数据。
-
-> `provide` 和 `inject` 主要为高阶插件/组件库提供用例。并不推荐直接用于应用程序代码中。
-
-```js
-provide() {
-  return {
-    elForm: this
-  }
-}
-
-inject: ['elForm']
-
-provide: {
-  name: 'cosyer'
-}
-
-inject: {
-  newName: {
-    from: 'name',
-    default: ''
-  }
-}
-```
 
 ### vue is 的作用
 
@@ -1659,28 +1691,6 @@ inject: {
 - static 中的文件则不会被打包。
 
 > 建议：将图片等未处理的文件放在 assets 中，打包减少体积。而对于第三方引入的一些资源文件如 iconfont.css 等可以放在 static 中，因为这些文件已经经过处理了。
-
-### slot 插槽分发
-
-很多时候，我们封装了一个子组件之后，在父组件使用的时候，想添加一些 dom 元素，这个时候就可以使用 slot 插槽了，但是这些 dom 是否显示以及在哪里显示，则是看子组件
-中 slot 组件的位置了。
-
-### v-clock 指令的作用
-
-- 解决页面闪烁问题(会显示插值表达式{{message}})
-  如果网速慢，而该标签内容是变量没有请求响应回来的时候，页面上先不显示该标签（vue 给该标
-  签加了 css 样式），当响应回来的时候改标签默认将 css 样式去除。
-
-`此指令可以解决使用插值表达式页面闪烁问题` 将该指令加在 html 标签中时，可以在该文件中加
-style 属性为 display：none
-
-```html
-<div class="#app" v-cloak>
-  <p>{{name}}</p>
-</div>
-
-[v-cloak] { display: none; }
-```
 
 ### 封装 vue 组件的过程
 
