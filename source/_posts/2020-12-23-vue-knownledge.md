@@ -158,8 +158,11 @@ list: [
 <div key="1">小红</div> <div key="1">小明</div>
 <div key="2">小蓝</div> <div key="2">小红</div>
                         <div key="3">小蓝</div>
-<!-- 可以看出，如果用index作key的话，如果数组index发生了变化，没有提升渲染效率 -->
+```
 
+可以看出，如果用 `index` 作 `key` 的话，如果数组 `index` 发生了变化，没有提升渲染效率
+
+```html
 <!-- 现在我们用id作key -->
 <div key="11">小明</div>
 <div key="12">小红</div>
@@ -172,13 +175,15 @@ list: [
 <div key="13">小蓝</div>
 
 <!-- 新旧对比 -->
-                         <div key="14">小林</div>
-<div key="11">小明</div> <div key="11">小明</div>
-<div key="12">小红</div> <div key="12">小红</div>
-<div key="13">小蓝</div> <div key="13">小蓝</div>
+<div key="14">小林</div>
+<div key="11">小明</div>
+<div key="11">小明</div>
+<div key="12">小红</div>
+<div key="12">小红</div>
+<div key="13">小蓝</div>
+<div key="13">小蓝</div>
 
 <!-- 可以看出其他三项不变，只有小林是新增的 -->
-
 ```
 
 <!-- prettier-ignore-attribute -->
