@@ -20,6 +20,20 @@ date: 2021-08-07 17:15:37
 
 vscode 配置
 
+自用配置
+
+```json
+{
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 120,
+  "prettier.useEditorConfig": false,
+  "prettier.endOfLine": "auto",
+  "prettier.arrowParens": "avoid"
+}
+```
+
+文档
+
 ```json
 {
   // 使能每一种语言默认格式化规则
@@ -47,7 +61,6 @@ vscode 配置
   "prettier.bracketSpacing": true, // 在对象，数组括号与文字之间加空格 "{ foo: bar }"
   "prettier.disableLanguages": ["vue"], // 不格式化vue文件，vue文件的格式化单独设置
   "prettier.endOfLine": "auto", // 结尾是 \n \r \n\r auto
-  "prettier.eslintIntegration": false, //不让prettier使用eslint的代码格式进行校验
   "prettier.htmlWhitespaceSensitivity": "ignore",
   "prettier.ignorePath": ".prettierignore", // 不使用prettier格式化的文件填写在项目的.prettierignore文件中
   "prettier.jsxBracketSameLine": false, // 在jsx中把'>' 是否单独放一行
@@ -56,6 +69,8 @@ vscode 配置
   "prettier.requireConfig": false, // Require a 'prettierconfig' to format prettier
   "prettier.stylelintIntegration": false, //不让prettier使用stylelint的代码格式进行校验
   "prettier.trailingComma": "es5", // 在对象或数组最后一个元素后面是否加逗号（在ES5中加尾逗号）
-  "prettier.tslintIntegration": false // 不让prettier使用tslint的代码格式进行校验
+  "prettier.tslintIntegration": false, // 不让prettier使用tslint的代码格式进行校验
+  "prettier.eslintIntegration": false, //不让prettier使用eslint的代码格式进行校验
+  "prettier.useEditorConfig": false // 取消优先配置editconfig，不取消prettier不起作用
 }
 ```
