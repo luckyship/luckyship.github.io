@@ -136,9 +136,7 @@ ng g s ./serveices/eventBus
 
 ```html
 <ul>
-  <li *ngFor="let race of raceList; let i = index">
-    {{ race.name }}-{{ i + 1 }}
-  </li>
+  <li *ngFor="let race of raceList; let i = index">{{ race.name }}-{{ i + 1 }}</li>
 </ul>
 ```
 
@@ -147,6 +145,51 @@ ng g s ./serveices/eventBus
 ```
 {{currentTime | date: "yyyy-MM-dd HH:mm:ss" }}
 ```
+
+#### 在 ts 中的用法
+
+```js
+import { DatePipe } from '@angular/common';
+
+constructor(
+        private datePipe: DatePipe,
+    ) {}
+
+this.datePipe.transform()
+```
+
+#### 自定义管道
+
+```bash
+ng g p search
+```
+
+为了节省性能，`angular` 内部对管道进行了优化，参数 `pure` 为 `true` 时(纯管道)，当只有数据变化时，才会触发管道的执行，
+基于这样的机制，`angular` 管道无法检测到数组，对象这样复杂数据类型的值的变化，所以针对这样的数据 `pure` 应设为 `false`(非纯管道)
+
+```js
+@Pipe({
+  name: 'flyingHeroesImpure',
+  pure: false,
+})
+export class FlyingHeroesImpurePipe extends FlyingHeroesPipe {}
+```
+
+[参考](https://angular.cn/guide/pipes#transforming-data-with-parameters-and-chained-pipes)
+
+#### 内置管道
+
+|                          管道名                          |                               用途                               |
+| :------------------------------------------------------: | :--------------------------------------------------------------: |
+|      [date](https://angular.cn/api/common/DatePipe)      |                       日期管道，格式化日期                       |
+| [json](https://angular.cn/api/common/JsonPipe)(非纯管道) | 将输入数据对象经过，`JSON.stringify()`方法转换后输出对象的字符串 |
+|                        uppercase                         |                 将文本所有小写字母转换成大写字母                 |
+|                        lowercase                         |                 将文本所有大写字母转换成小写字母                 |
+|   [number](https://angular.cn/api/common/DecimalPipe)    |                    将数值按特定的格式显示文本                    |
+|                         percent                          |                        将数值转百分比格式                        |
+| [currentcy](https://angular.cn/api/common/CurrencyPipe)  |                     将数值进行货币格式化处理                     |
+|                     slice(非纯管道)                      |                   将数组或者字符串裁剪成新子集                   |
+|                           i18n                           |                             翻译管道                             |
 
 ### 父子组件通信
 
@@ -189,7 +232,7 @@ export class EventBusService {
 2. 组件内发射数据
 
 ```javascript
-this.eventBusService.eventBus.next("child组件发送的数据");
+this.eventBusService.eventBus.next('child组件发送的数据');
 ```
 
 3. 组件接收数据
@@ -210,11 +253,11 @@ this.eventBusService.eventBus.subscribe(arg => {
 ### 组件注册
 
 ```js
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -235,16 +278,9 @@ export class AppModule {}
 
 ```js
 import { NgModule } from '@angular/core';
-import {
-  Routes,
-  RouterModule
-} from '@angular/router';
-import {
-  ChildComponent
-} from "./child/child.component";
-import {
-  BrotherComponent
-} from "./brother/brother.component";
+import { Routes, RouterModule  } from '@angular/router';
+import { ChildComponent } from "./child/child.component";
+import { BrotherComponent } from "./brother/brother.component";
 
 const routes: Routes = [{
     path: '',
@@ -262,28 +298,26 @@ const routes: Routes = [{
 })
 export class AppRoutingModule {}
 
-<
-!--RouterOutlet 相当于一个占位符, 在Angular中根据路由状态动态插入视图。-- >
-<
-a[routerLink] = "['/']" > child < /a><br/ >
-  <
-  a[routerLink] = "['/brother']" > brother < /a> <
-  router - outlet > < /router-outlet>
+//RouterOutlet 相当于一个占位符, 在Angular中根据路由状态动态插入视图
+<a [routerLink]="['/']" > child </a><br/>
+<a [routerLink]="['/brother']"> brother </a>
+<router-outlet></router-outlet>
 ```
 
 ### http 服务
 
 ```js
 // app.module.ts
-import { HttpModule } from "@angular/http";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 // services
-import { Headers } from "@angular/http";
-import { HttpClient, HttpResponse } from "@angular/common/http";
+import { Headers } from '@angular/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
-this.httpClient
-  .request(UserService.METHOD_POST, url, options)
-  .subscribe(data => {});
+this.httpClient.request(UserService.METHOD_POST, url, options).subscribe(
+  data => {},
+  error => {}
+);
 ```
 
 ## ng7 的新特性

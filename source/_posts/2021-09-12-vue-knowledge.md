@@ -26,6 +26,7 @@ date: 2021-09-12 16:26:18
 - 运行速度更快:相比较与 react 而言，同样是操作虚拟 dom，就性能而言，vue 存在很大的优势。
 
 <!-- more -->
+
 ### 2、谈谈对 vue 渐进式的理解
 
 ![](/img/vue-interview/001.png)
@@ -187,15 +188,7 @@ vue 用异步队列的方式来控制 DOM 更新和 nextTick 回调先后执行 
 ```js
 const arrayProto = Array.prototype;
 export const arrayMethods = Object.create(arrayProto);
-const methodsToPatch = [
-  'push',
-  'pop',
-  'shift',
-  'unshift',
-  'splice',
-  'sort',
-  'reverse',
-];
+const methodsToPatch = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse'];
 /**
  * Intercept mutating methods and emit events
  */
@@ -363,8 +356,7 @@ export default {
     // 获取第一个子元素的 vnode
     const slot = this.$slots.default;
     const vnode: VNode = getFirstComponentChild(slot);
-    const componentOptions: ?VNodeComponentOptions =
-      vnode && vnode.componentOptions;
+    const componentOptions: ?VNodeComponentOptions = vnode && vnode.componentOptions;
     if (componentOptions) {
       // name不在inlcude中或者在exlude中 直接返回vnode
       // check pattern
@@ -384,8 +376,7 @@ export default {
         vnode.key == null
           ? // same constructor may get registered as different local components
             // so cid alone is not enough (#3269)
-            componentOptions.Ctor.cid +
-            (componentOptions.tag ? `::${componentOptions.tag}` : '')
+            componentOptions.Ctor.cid + (componentOptions.tag ? `::${componentOptions.tag}` : '')
           : vnode.key;
       // 命中缓存,直接从缓存拿vnode 的组件实例,并且重新调整了 key 的顺序放在了最后一个
       if (cache[key]) {
@@ -428,7 +419,7 @@ LRU（Least recently used）算法根据数据的历史访问记录来进行淘�
 
 **keep-alive 的实现正是用到了 LRU 策略,将最近访问的组件 push 到 this.keys 最后面,this.keys[0]也就是最久没被访问的组件,当缓存实例超过 max 设置值,删除 this.keys[0]**
 
-### 14、vm.$set()实现原理是什么? 【原理题】
+### 14、`vm.$set()`实现原理是什么? 【原理题】
 
 受现代 JavaScript 的限制 (而且 Object.observe 也已经被废弃)，Vue 无法检测到对象属性的添加或删除。
 
@@ -666,13 +657,13 @@ new Vue({
 
 - 全局注册
 
-  ```
-  Vue.component(组件名,{ 组件配置选项 })
-  ```
+```js
+Vue.component(组件名, { 组件配置选项 });
+```
 
 - 局部注册
 
-  ```
+  ```js
   // 组件或者vue实例的配置选项里面增加components属性。
   {
      ...,
@@ -739,7 +730,7 @@ Vue.component('base-checkbox', {
 
 现在在这个组件上使用 `v-model` 的时候：
 
-```
+```js
 <base-checkbox v-model="lovingVue"></base-checkbox>
 ```
 
@@ -776,10 +767,7 @@ this.$emit('update:title', newTitle)
 然后父组件可以监听那个事件并根据需要更新一个本地的数据 property。例如：
 
 ```html
-<text-document
-  v-bind:title="doc.title"
-  v-on:update:title="doc.title = $event"
-></text-document>
+<text-document v-bind:title="doc.title" v-on:update:title="doc.title = $event"></text-document>
 ```
 
 为了方便起见，我们为这种模式提供一个缩写，即 `.sync` 修饰符：
@@ -974,11 +962,7 @@ this.$emit('update:title', newTitle)
     <template>
       <li>
         <div @click="toggle">
-          <i
-            v-if="isFolder"
-            class="fa "
-            :class="[open ? 'fa-folder-open' : 'fa-folder']"
-          ></i>
+          <i v-if="isFolder" class="fa " :class="[open ? 'fa-folder-open' : 'fa-folder']"></i>
           <!--isFolder判断是否存在子级改变图标-->
           <i v-if="!isFolder" class="fa fa-file-text"></i>
           {{ model.data.menuName }}
@@ -1017,9 +1001,9 @@ this.$emit('update:title', newTitle)
 
 ### 45、vue 如何强制刷新组件
 
-**1.使用 this.$forceUpdate 强制重新渲染**
+**1.使用 `this.$forceUpdate` 强制重新渲染**
 
-如果要在组件内部中进行强制刷新，则可以调用**this.$forceUpdate()**强制重新渲染组件，从而达到更新目的。
+如果要在组件内部中进行强制刷新，则可以调用**`this.$forceUpdate()`**强制重新渲染组件，从而达到更新目的。
 
 ```xml
 <template>
@@ -1315,7 +1299,7 @@ nextTick : 更新数据后立即操作 dom
 
 - 方式 1：父子通信
   - 父传子 ：自定义属性 props
-  - 子传父 ：自定义事件 $emit
+  - 子传父 ：自定义事件 `$emit`
 - 方式 2：父子关系
   - $parent,$root 等方式找到父组件或根节点去对应调用它的方法或者设置他的属性
   - $children,$refs 找到某个子组件直接调用他的方法或者设置他的属性
@@ -1330,14 +1314,14 @@ nextTick : 更新数据后立即操作 dom
 
 ### 63、说出$mount、$watch、$delete、$refs、$slots、$forceUpdate、$nextTick、$destroy 这些 API 方法或属性的的作用
 
-- $mount ：用于挂载 vue 实例到某个节点上面，功能类似 el 选项， 有了它可以不配置 el;
-- $watch：用于监听数据的变化，功能类似内部配置选项 watch 一样的效果。
-- $delete：用于删除data里面数据里面的对象的属性，可以实现响应式效果。 功能和$set 一致，只不过他是删除属性
-- $refs：用于获取原生 DOM 节点，或者某个组件对象
-- $slot： 用于获取当前组件传入的所有插槽内容
-- $forceUpdate： 用于刷新当前组件或 vue 实例，它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。
-- $nextTick：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。【简单理解即使等到 DOM 渲染完成再做应该的逻辑操作】
-- $destroy()：只是完全销毁一个实例。清理它与其它实例的连接，**解绑它的全部指令及事件监听器。**
+- `$mount` ：用于挂载 vue 实例到某个节点上面，功能类似 el 选项， 有了它可以不配置 el;
+- `$watch`：用于监听数据的变化，功能类似内部配置选项 watch 一样的效果。
+- `$delete`：用于删除 data 里面数据里面的对象的属性，可以实现响应式效果。 功能和`$set` 一致，只不过他是删除属性
+- `$refs`：用于获取原生 DOM 节点，或者某个组件对象
+- `$slot`： 用于获取当前组件传入的所有插槽内容
+- `$forceUpdate`： 用于刷新当前组件或 vue 实例，它仅仅影响实例本身和插入插槽内容的子组件，而不是所有子组件。
+- `$nextTick`：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。【简单理解即使等到 DOM 渲染完成再做应该的逻辑操作】
+- `$destroy()`：只是完全销毁一个实例。清理它与其它实例的连接，**解绑它的全部指令及事件监听器。**
 
 ### 64、**is 的用法（用于动态组件且基于 DOM 内模板的限制来工作。）**
 
@@ -1533,20 +1517,13 @@ Vue.component('box', {
 
 ```html
 <template>
-  <el-submenu
-    :index="menu.id"
-    popper-class="layout-sider-submenu"
-    :key="menu.id"
-  >
+  <el-submenu :index="menu.id" popper-class="layout-sider-submenu" :key="menu.id">
     <template slot="title">
       <Icon :type="menu.icon" v-if="menu.icon" />
       <span>{{ menu.title }}</span>
     </template>
     <template v-for="(child, i) in menu.menus">
-      <side-menu-item
-        v-if="Array.isArray(child.menus) && child.menus.length"
-        :menu="child"
-      ></side-menu-item>
+      <side-menu-item v-if="Array.isArray(child.menus) && child.menus.length" :menu="child"></side-menu-item>
       <el-menu-item :index="child.id" :key="child.id" v-else>
         <Icon :type="child.icon" v-if="child.icon" />
         <span>{{ child.title }}</span>
@@ -1590,7 +1567,7 @@ new Vue({
 })
 ```
 
-### 73、Vue 变量名如果以\_、$开头的属性会发生什么问题？怎么访问到它们的值？
+### 73、Vue 变量名如果以`_`、`$`开头的属性会发生什么问题？怎么访问到它们的值？
 
 以 `_ `或 `$` 开头的属性 不会 被 Vue 实例代理，因为它们可能和 Vue 内置的属性、API 方法冲突，你可以使用例如 `vm.$data._property` 的方式访问这些属性。
 
@@ -1711,13 +1688,12 @@ const routes = [{ name: '名称', path: '/地址/:标识符', component: 组件 
 <router-link to="/地址/数据"></router-link>
 <router-link :to="{ name: '名称', params: { 标识符: 数据 } }"></router-link>
 
-// 编程式导航 router.push('/地址/数据')
-router.push({name:'名称',params:{标识符:数据}})
+// 编程式导航 router.push('/地址/数据') router.push({name:'名称',params:{标识符:数据}})
 ```
 
 **获取动态参数**
 
-**this.$route.params.标识符 得到 数据**
+**`this.$route.params.`标识符 得到 数据**
 
 ---
 
@@ -1770,11 +1746,11 @@ const User = {
 ### 4、有哪些编程式导航方法
 
 - 编程式导航方法都存在 路由实例里面。 组件中可以使用`this.$router`访问，其他 JS 文件中可以通过导入路由实例调用
-  - this.$router.push('/地址') 跳转到某个新地址，历史记录栈中增加一个
-  - this.$router.replace('/地址') 跳转到某个地址，新地址替换当前地址在历史记录中的位置
-  - this.$router.go(数字) 正数前进几步；负数后退几步；0 表示刷新
-  - this.$router.back() 后退
-  - this.$router.forward() 前进
+  - `this.$router.push('/地址')` 跳转到某个新地址，历史记录栈中增加一个
+  - `this.$router.replace('/地址')` 跳转到某个地址，新地址替换当前地址在历史记录中的位置
+  - `this.$router.go(数字)` 正数前进几步；负数后退几步；0 表示刷新
+  - `this.$router.back()` 后退
+  - `this.$router.forward()` 前进
 
 ### 5、何为命名视图？如何使用
 
@@ -1847,26 +1823,26 @@ const User = {
 - 前后端分离实现面包屑有 2 中方式：
 
   - 方式 1： 每个页面直接写死
-  - 方式 2： 通过$route.matched 属性 去遍历 生成。
+  - 方式 2： 通过`$route.matched` 属性 去遍历 生成。
 
 - 方式 2 实现思路：
 
   - 要有面包屑一般肯定要是一个嵌套路由，否则一般就只能展示 2 级。
   - 每个路由都要有 meta 元信息， 然后里面设置一个 tilte，设置为标题。
-  - 我们的$route表示当前页面路由信息，如果是一个嵌套路由，那么$route.matched 属性是一个数组，里面的内容就是一个上上级到下一级的路由信息，我们可以通过遍历数组，取出每个里面的 path 地址和 meta 里面的 title 来进行设置即可。
+  - 我们的`$route` 表示当前页面路由信息，如果是一个嵌套路由，那么`$route.matched` 属性是一个数组，里面的内容就是一个上上级到下一级的路由信息，我们可以通过遍历数组，取出每个里面的 path 地址和 meta 里面的 title 来进行设置即可。
 
 ### 8、页面之间如何传参
 
 - 本地存储，一个页面设置，一个页面读取
 - 动态路由
   - /地址/数据 【A 页面】
-  - this.$route.params.标识符 获取数据 【B 页面】
+  - `this.$route.params.`标识符 获取数据 【B 页面】
 - query 传参
   - /地址?属性名=值 【A 页面】
-  - this.$route.query.属性名 【B 页面】
+  - `this.$route.query.`属性名 【B 页面】
 - hash 传参
   - /地址#属性名=值 【A 页面】
-  - this.$route.hash 然后再处理得到信息 【B 页面】
+  - `this.$route.hash` 然后再处理得到信息 【B 页面】
 - vue 存储和读取
 
 ### 9、vue-router 有哪几种导航钩子？
@@ -1903,7 +1879,7 @@ const router = new VueRouter({
 
 ### 10、$route和$router 的区别
 
-- $route 是“**路由信息**对象”
+- `$route` 是“**路由信息**对象”
   - path 路径地址
   - params 动态路由数据
   - hash hash 数据
@@ -1911,7 +1887,7 @@ const router = new VueRouter({
   - fullPath 完整地址
   - matched 路由匹配 （可用于制作面包屑）
   - name 路由名称
-- $router 是“**路由实例**”对象包括了路由的跳转方法，钩子函数等
+- `$router` 是“**路由实例**”对象包括了路由的跳转方法，钩子函数等
   - push/replace/go/back/forward
   - beforeEach/afterEach/...
   - addRoutes 方法，增加映射
@@ -2204,11 +2180,7 @@ NProgress.configure({
 <template>
   <ul class="tag-list">
     <!-- 循环这个li -->
-    <li
-      :class="$route.fullPath === item.path ? 'on' : ''"
-      v-for="(item, index) in list"
-      :key="index"
-    >
+    <li :class="$route.fullPath === item.path ? 'on' : ''" v-for="(item, index) in list" :key="index">
       <router-link :to="item.path"> {{ item.name }} </router-link>
       <i @click="del(item, index)">X</i>
     </li>
@@ -2233,9 +2205,7 @@ NProgress.configure({
         immediate: true, // 一开始就要做一次监听
         handler() {
           // 判断是否已经有
-          const hasPath = this.list.some(
-            val => val.path === this.$route.fullPath
-          );
+          const hasPath = this.list.some(val => val.path === this.$route.fullPath);
           // 如果没有就写入
           !hasPath &&
             this.list.push({
@@ -2279,9 +2249,7 @@ NProgress.configure({
       // 删除其他标签页
       delOther() {
         // 直接赋值为当前页面元素
-        this.list = [
-          { name: this.$route.meta.title, path: this.$route.fullPath },
-        ];
+        this.list = [{ name: this.$route.meta.title, path: this.$route.fullPath }];
         // 持久化存储
         localStorage.setItem('taglist', JSON.stringify(this.list));
       },
@@ -2385,10 +2353,10 @@ NProgress.configure({
 
 ### 29、切换路由时，需要保存草稿的功能，怎么实现呢？
 
-```
+```html
 <keep-alive :include="include">
-    <router-view></router-view>
- </keep-alive>
+  <router-view></router-view>
+</keep-alive>
 ```
 
 其中 include 可以是个数组，数组内容为路由的 name 选项的值。
@@ -2401,7 +2369,7 @@ NProgress.configure({
 
 - to：必填，表示目标路由的链接。当被点击后，内部会立刻把`to`的值传到`router.push()`，所以这个值可以是一个字符串或者是描述目标位置的对象。
 
-  ```
+  ```html
   <router-link to="home">Home</router-link>
   <router-link :to="'home'">Home</router-link>
   <router-link :to="{ path: 'home' }">Home</router-link>
@@ -2427,7 +2395,7 @@ NProgress.configure({
 
   ：是否精确匹配，默认为 false。
 
-  ```
+  ```html
   <!-- 这个链接只会在地址为 / 的时候被激活 -->
   <router-link to="/" exact></router-link>
   ```
@@ -2436,14 +2404,14 @@ NProgress.configure({
 
 ### 31、Vue 路由怎么跳转打开新窗口？
 
-```
+```js
 const obj = {
-    path: xxx,//路由地址
-    query: {
-       mid: data.id//可以带参数
-    }
+  path: xxx, //路由地址
+  query: {
+    mid: data.id, //可以带参数
+  },
 };
-const {href} = this.$router.resolve(obj);
+const { href } = this.$router.resolve(obj);
 window.open(href, '_blank');
 ```
 
@@ -3121,16 +3089,16 @@ ajax 的缺点
 
 - `params`是即将与请求一起发送的 URL 参数，必须是一个无格式对象(plainobject)或 URLSearchParams 对象
 
-  ```
-   params:{
-   	ID:12345
-   }
+  ```js
+  params: {
+    ID: 12345;
+  }
   ```
 
 - `auth`表示应该使用 HTTP 基础验证，并提供凭据
   这将设置一个`Authorization`头，覆写掉现有的任意使用`headers`设置的自定义`Authorization`头
 
-  ```
+  ```js
   auth:{
   username:'janedoe',
   password:'s00pers3cret'
@@ -3140,7 +3108,7 @@ ajax 的缺点
 - 'proxy'定义代理服务器的主机名称和端口，这里的`auth`表示 HTTP 基础验证应当用于连接代理，并提供凭据
   这将会设置一个`Proxy-Authorization`头，覆写掉已有的通过使用`header`设置的自定义`Proxy-Authorization`头。
 
-  ```
+  ```js
   proxy:{
       host:'127.0.0.1',
       port:9000,

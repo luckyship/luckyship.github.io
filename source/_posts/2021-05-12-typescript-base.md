@@ -36,9 +36,10 @@ tsc helloworld.ts
 [在线学习语法和特性](https://www.typescriptlang.org/play)
 
 ---
+
 <!--more-->
 
-## 类型 (11种)
+## 类型 (11 种)
 
 ### Boolean
 
@@ -57,7 +58,7 @@ let count: number = 10;
 ### String
 
 ```js
-let name: string = "cosyer";
+let name: string = 'cosyer';
 // ES5：var name = 'cosyer';
 ```
 
@@ -67,7 +68,7 @@ let name: string = "cosyer";
 let list: number[] = [1, 2, 3];
 // ES5：var list = [1,2,3];
 
-let list: Array < number > = [1, 2, 3]; // Array<number>泛型语法
+let list: Array<number> = [1, 2, 3]; // Array<number>泛型语法
 // ES5：var list = [1,2,3];
 ```
 
@@ -91,13 +92,13 @@ let dir: Direction = Direction.NORTH;
 默认情况下，NORTH 的初始值为 0，其余的成员会从 1 开始自动增长。换句话说，Direction. SOUTH 的值为 1，Direction. EAST 的值为 2，Direction. WEST 的值为 3。上面的枚举示例代码经过编译后会生成以下代码：
 
 ```js
-"use strict";
+'use strict';
 var Direction;
-(function(Direction) {
-  Direction[(Direction["NORTH"] = 0)] = "NORTH";
-  Direction[(Direction["SOUTH"] = 1)] = "SOUTH";
-  Direction[(Direction["EAST"] = 2)] = "EAST";
-  Direction[(Direction["WEST"] = 3)] = "WEST";
+(function (Direction) {
+  Direction[(Direction['NORTH'] = 0)] = 'NORTH';
+  Direction[(Direction['SOUTH'] = 1)] = 'SOUTH';
+  Direction[(Direction['EAST'] = 2)] = 'EAST';
+  Direction[(Direction['WEST'] = 3)] = 'WEST';
 })(Direction || (Direction = {}));
 var dir = Direction.NORTH;
 ```
@@ -127,13 +128,13 @@ enum Direction {
 编译生成：
 
 ```js
-"use strict";
+'use strict';
 var Direction;
-(function(Direction) {
-  Direction["NORTH"] = "NORTH";
-  Direction["SOUTH"] = "SOUTH";
-  Direction["EAST"] = "EAST";
-  Direction["WEST"] = "WEST";
+(function (Direction) {
+  Direction['NORTH'] = 'NORTH';
+  Direction['SOUTH'] = 'SOUTH';
+  Direction['EAST'] = 'EAST';
+  Direction['WEST'] = 'WEST';
 })(Direction || (Direction = {}));
 ```
 
@@ -155,23 +156,23 @@ enum Enum {
 编译生成：
 
 ```js
-"use strict";
+'use strict';
 var Enum;
-(function(Enum) {
-  Enum[Enum["A"] = 0] = "A";
-  Enum[Enum["B"] = 1] = "B";
-  Enum["C"] = "C";
-  Enum["D"] = "D";
-  Enum[Enum["E"] = 8] = "E";
-  Enum[Enum["F"] = 9] = "F";
+(function (Enum) {
+  Enum[(Enum['A'] = 0)] = 'A';
+  Enum[(Enum['B'] = 1)] = 'B';
+  Enum['C'] = 'C';
+  Enum['D'] = 'D';
+  Enum[(Enum['E'] = 8)] = 'E';
+  Enum[(Enum['F'] = 9)] = 'F';
 })(Enum || (Enum = {}));
 ```
 
 数字枚举相对字符串枚举多了 “反向映射”：
 
 ```js
-console.log(Enum.A) //输出：0
-console.log(Enum[0]) // 输出：A
+console.log(Enum.A); //输出：0
+console.log(Enum[0]); // 输出：A
 ```
 
 ### Any
@@ -180,7 +181,7 @@ console.log(Enum[0]) // 输出：A
 
 ```js
 let notSure: any = 666;
-notSure = "cosyer";
+notSure = 'cosyer';
 notSure = false;
 ```
 
@@ -207,14 +208,14 @@ let value: unknown;
 
 value = true; // OK
 value = 42; // OK
-value = "Hello World"; // OK
+value = 'Hello World'; // OK
 value = []; // OK
 value = {}; // OK
 value = Math.random; // OK
 value = null; // OK
 value = undefined; // OK
 value = new TypeError(); // OK
-value = Symbol("type"); // OK
+value = Symbol('type'); // OK
 ```
 
 对 value 变量的所有赋值都被认为是类型正确的。但是，当我们尝试将类型为 unknown 的值赋值给其他类型的变量时会发生什么？
@@ -244,7 +245,7 @@ unknown 类型只能被赋值给 any 类型和 unknown 类型本身。直观地�
 
 ```js
 let tupleType: [string, boolean]; // 强制类型匹配
-tupleType = ["cosyer", true];
+tupleType = ['cosyer', true];
 ```
 
 ### Void
@@ -254,7 +255,7 @@ tupleType = ["cosyer", true];
 ```js
 // 声明函数返回值为void
 function warnUser(): void {
-  console.log("This is my warning message");
+  console.log('This is my warning message');
 }
 ```
 
@@ -296,9 +297,9 @@ function infiniteLoop(): never {
 type Foo = string | number;
 
 function controlFlowAnalysisWithNever(foo: Foo) {
-  if (typeof foo === "string") {
+  if (typeof foo === 'string') {
     // 这里 foo 被收窄为 string 类型
-  } else if (typeof foo === "number") {
+  } else if (typeof foo === 'number') {
     // 这里 foo 被收窄为 number 类型
   } else {
     // foo 在这里是 never
@@ -308,7 +309,7 @@ function controlFlowAnalysisWithNever(foo: Foo) {
 ```
 
 注意在 else 分支里面，我们把收窄为 never 的 foo 赋值给一个显示声明的 never 变量。如果一切逻辑正确，那么这里应该能够编译通过。但是假如后来有一天你的同事修改了 Foo 的类型：
-type Foo = string | number | boolean; 
+type Foo = string | number | boolean;
 复制代码然而他忘记同时修改 controlFlowAnalysisWithNever 方法中的控制流程，这时候 else 分支的 foo 类型会被收窄为 boolean 类型，导致无法赋值给 never 类型，这时就会产生一个编译错误。通过这个方式，我们可以确保
 controlFlowAnalysisWithNever 方法总是穷尽了 Foo 的所有可能类型。 通过这个示例，我们可以得出一个结论： `使用 never 避免出现新增了联合类型没有对应的实现，目的就是写出类型绝对安全的代码。`
 
@@ -327,6 +328,33 @@ let strLength: number = ( < string > someValue).length;
 let someValue: any = "this is a string";
 let strLength: number = (someValue as string).length;
 ```
+
+## !
+
+非空断言操作符(感叹号)
+
+`x!` 将从 `x` 值域中排除 `null` 和 `undefined`.
+
+```js
+myFunc = (maybeString: string | undefined | null) => {
+  const onlyString: string = maybeString; // Error
+  const ignoreUndefinedAndNull: string = maybeString!; // Ok
+}
+
+myFunc2 = (onlyString: string) => {
+  const a: string = onlyString;
+}
+constructor() {
+  this.myFunc('jerry');
+  this.myFunc(undefined);
+
+  this.myFunc2(undefined);
+  this.myFunc2(null);
+}
+
+```
+
+没有编译错误，也能正常运行：
 
 ## 类型守卫
 
@@ -348,12 +376,12 @@ interface Employee {
 type UnknownEmployee = Employee | Admin;
 
 function printEmployeeInformation(emp: UnknownEmployee) {
-  console.log("Name: " + emp.name);
-  if ("privileges" in emp) {
-    console.log("Privileges: " + emp.privileges);
+  console.log('Name: ' + emp.name);
+  if ('privileges' in emp) {
+    console.log('Privileges: ' + emp.privileges);
   }
-  if ("startDate" in emp) {
-    console.log("Start Date: " + emp.startDate);
+  if ('startDate' in emp) {
+    console.log('Start Date: ' + emp.startDate);
   }
 }
 ```
@@ -362,10 +390,10 @@ function printEmployeeInformation(emp: UnknownEmployee) {
 
 ```js
 function padLeft(value: string, padding: string | number) {
-  if (typeof padding === "number") {
-    return Array(padding + 1).join(" ") + value;
+  if (typeof padding === 'number') {
+    return Array(padding + 1).join(' ') + value;
   }
-  if (typeof padding === "string") {
+  if (typeof padding === 'string') {
     return padding + value;
   }
   throw new Error(`Expected string or number, got '${padding}'.`);
@@ -417,6 +445,7 @@ function isString(x: any): x is string {
 ## 联合类型和类型别名
 
 ### 联合类型
+
 联合类型通常与 null 或 undefined 一起使用：
 
 ```js
@@ -425,10 +454,10 @@ const sayHello = (name: string | undefined) => {
 };
 ```
 
-例如，这里 name 的类型是 string | undefined 意味着可以将 string 或 undefined 的值传递给sayHello 函数。
+例如，这里 name 的类型是 string | undefined 意味着可以将 string 或 undefined 的值传递给 sayHello 函数。
 
 ```js
-sayHello("cosyer");
+sayHello('cosyer');
 sayHello(undefined);
 ```
 
@@ -488,8 +517,8 @@ function evaluatePrice(vehicle: Vehicle) {
 }
 
 const myTruck: Truck = {
-  vType: "truck",
-  capacity: 9.5
+  vType: 'truck',
+  capacity: 9.5,
 };
 evaluatePrice(myTruck);
 ```
@@ -508,11 +537,11 @@ does not exist on type 'Motorcycle'.
 ```js
 function evaluatePrice(vehicle: Vehicle) {
   switch (vehicle.vType) {
-    case "car":
+    case 'car':
       return vehicle.transmission * EVALUATION_FACTOR;
-    case "truck":
+    case 'truck':
       return vehicle.capacity * EVALUATION_FACTOR;
-    case "motorcycle":
+    case 'motorcycle':
       return vehicle.make * EVALUATION_FACTOR;
   }
 }
@@ -549,10 +578,10 @@ type IStaff = IPerson & IWorker;
 const staff: IStaff = {
   id: 'E1006',
   age: 33,
-  companyId: 'EFT'
+  companyId: 'EFT',
 };
 
-console.dir(staff)
+console.dir(staff);
 ```
 
 在上面示例中，我们首先为 IPerson 和 IWorker 类型定义了不同的成员，然后通过 & 运算符定义了 IStaff 交叉类型，所以该类型同时拥有 IPerson 和 IWorker 这两种类型的成员。
@@ -593,11 +622,12 @@ jQuery('#foo');
 jQuery('#foo');
 ```
 
-### 
+###
 
 ## 函数
 
 ### 区别
+
 |   TypeScript   |     JavaScript     |
 | :------------: | :----------------: |
 |    含有类型    |       无类型       |
@@ -648,16 +678,12 @@ IdGenerator = createUserId;
 
 ```js
 // 可选参数
-function createUserId(name: string, id: number, age ? : number): string {
+function createUserId(name: string, id: number, age?: number): string {
   return name + id;
 }
 
 // 默认参数
-function createUserId(
-  name: string = "cosyer",
-  id: number,
-  age ? : number
-): string {
+function createUserId(name: string = 'cosyer', id: number, age?: number): string {
   return name + id;
 }
 ```
@@ -668,7 +694,7 @@ function createUserId(
 
 ```js
 function push(array, ...items) {
-  items.forEach(function(item) {
+  items.forEach(function (item) {
     array.push(item);
   });
 }
@@ -742,7 +768,7 @@ let five_array = [...two_array, 2, 3, 4];
 ### 数组遍历
 
 ```js
-let colors: string[] = ["red", "green", "blue"];
+let colors: string[] = ['red', 'green', 'blue'];
 for (let i of colors) {
   console.log(i);
 }
@@ -754,36 +780,30 @@ for (let i of colors) {
 
 ```js
 let person = {
-  name: "cosyer",
-  gender: "Male",
+  name: 'cosyer',
+  gender: 'Male',
 };
 
-let {
-  name,
-  gender
-} = person;
+let { name, gender } = person;
 ```
 
 ### 对象展开扩展
 
 ```js
 let person = {
-  name: "cosyer",
-  gender: "Male",
-  address: "Nanjing",
+  name: 'cosyer',
+  gender: 'Male',
+  address: 'Nanjing',
 };
 
 // 组装对象
 let personWithAge = {
   ...person,
-  age: 33
+  age: 33,
 };
 
 // 获取除了某些项外的其它项
-let {
-  name,
-  ...rest
-} = person;
+let { name, ...rest } = person;
 ```
 
 ## 接口
@@ -801,7 +821,7 @@ interface Person {
 }
 
 let cosyer: Person = {
-  name: "cosyer",
+  name: 'cosyer',
   age: 25,
 };
 ```
@@ -819,7 +839,7 @@ interface Person {
 
 ```js
 let a: number[] = [1, 2, 3, 4];
-let ro: ReadonlyArray < number > = a;
+let ro: ReadonlyArray<number> = a;
 ro[0] = 12; // error!
 ro.push(5); // error!
 ro.length = 100; // error!
@@ -839,7 +859,7 @@ a = ro; // error!
 ### 泛型接口
 
 ```js
-interface GenericIdentityFn < T > {
+interface GenericIdentityFn<T> {
   (arg: T): T;
 }
 ```
@@ -863,12 +883,12 @@ myGenericNumber.add = function(x, y) {
 
 对刚接触 TypeScript 泛型的小伙伴来说，看到 T 和 E，还有 K 和 V 这些泛型变量时，估计会一脸懵逼。其实这些大写字母并没有什么本质的区别，只不过是一个约定好的规范而已。也就是说使用大写字母 A-Z 定义的类型变量都属于泛型，把 T 换成 A，也是一样的。下面我们介绍一下一些常见泛型变量代表的意思：
 
-* T（Type）：表示一个 TypeScript 类型
-* K（Key）：表示对象中的键类型
-* V（Value）：表示对象中的值类型
-* E（Element）：表示元素类型
+- T（Type）：表示一个 TypeScript 类型
+- K（Key）：表示对象中的键类型
+- V（Value）：表示对象中的值类型
+- E（Element）：表示元素类型
 
-### 泛型工具类型(6种)
+### 泛型工具类型(6 种)
 
 为了方便开发者 TypeScript 内置了一些常用的工具类型，比如 Partial、Required、Readonly、Record 和 ReturnType 等。
 
@@ -884,11 +904,11 @@ interface Person {
 
 const cosyer: Person = {
   name: 'cosyer',
-  age: 25
+  age: 25,
 };
 type Cosyer = typeof cosyer; // -> Person
 
-function toArray(x: number): Array < number > {
+function toArray(x: number): Array<number> {
   return [x];
 }
 
@@ -906,7 +926,7 @@ interface Person {
 }
 
 type K1 = keyof Person; // "name" | "age"
-type K2 = keyof Person[]; // "length" | "toString" | "pop" | "push" | "concat" | "join" 
+type K2 = keyof Person[]; // "length" | "toString" | "pop" | "push" | "concat" | "join"
 type K3 = keyof {
   [x: string]: Person
 }; // string | number
@@ -953,11 +973,11 @@ function loggingIdentity < T extends ILengthwise > (arg: T): T {
 
 ```js
 // error, number doesn't have a .length property
-loggingIdentity(3)
+loggingIdentity(3);
 
 loggingIdentity({
   length: 10,
-  value: 3
+  value: 3,
 });
 ```
 
@@ -981,37 +1001,38 @@ interface Todo {
   description: string;
 }
 
-function updateTodo(todo: Todo, fieldsToUpdate: Partial < Todo > ) {
+function updateTodo(todo: Todo, fieldsToUpdate: Partial<Todo>) {
   return {
     ...todo,
-    ...fieldsToUpdate
+    ...fieldsToUpdate,
   };
 }
 
 const todo1 = {
-  title: "organize desk",
-  description: "clear clutter",
+  title: 'organize desk',
+  description: 'clear clutter',
 };
 
 const todo2 = updateTodo(todo1, {
-  description: "throw out trash",
+  description: 'throw out trash',
 });
 ```
 
 ## 装饰器
 
 ### 装饰器是什么
-* 它是一个表达式
-* 该表达式被执行后，返回一个函数
-* 函数的入参分别为 target、name 和 descriptor
-* 执行该函数后，可能返回 descriptor 对象，用于配置 target 对象
+
+- 它是一个表达式
+- 该表达式被执行后，返回一个函数
+- 函数的入参分别为 target、name 和 descriptor
+- 执行该函数后，可能返回 descriptor 对象，用于配置 target 对象
 
 ### 装饰器的分类
 
-* 类装饰器（Class decorators）
-* 属性装饰器（Property decorators）
-* 方法装饰器（Method decorators）
-* 参数装饰器（Parameter decorators）
+- 类装饰器（Class decorators）
+- 属性装饰器（Property decorators）
+- 方法装饰器（Method decorators）
+- 参数装饰器（Parameter decorators）
 
 #### 类装饰器
 
@@ -1022,12 +1043,13 @@ declare type ClassDecorator = < TFunction extends Function > (
 ```
 
 类装饰器顾名思义，就是用来装饰类的。它接收一个参数：
-* target: TFunction - 被装饰的类
+
+- target: TFunction - 被装饰的类
 
 ```js
 function Greeter(target: Function): void {
-  target.prototype.greet = function(): void {
-    console.log("Hello cosyer!");
+  target.prototype.greet = function (): void {
+    console.log('Hello cosyer!');
   };
 }
 
@@ -1042,18 +1064,18 @@ let myGreeting = new Greeting();
 myGreeting.greet(); // console output: 'Hello cosyer!';
 ```
 
- `自定义参数`
+`自定义参数`
 
 ```js
 function Greeter(greeting: string) {
-  return function(target: Function) {
-    target.prototype.greet = function(): void {
+  return function (target: Function) {
+    target.prototype.greet = function (): void {
       console.log(greeting);
     };
   };
 }
 
-@Greeter("Hello TS!")
+@Greeter('Hello TS!')
 class Greeting {
   constructor() {
     // 内部实现
@@ -1067,13 +1089,13 @@ myGreeting.greet(); // console output: 'Hello TS!';
 #### 属性装饰器
 
 ```js
-declare type PropertyDecorator = (target: Object,
-  propertyKey: string | symbol) => void;
+declare type PropertyDecorator = (target: Object, propertyKey: string | symbol) => void;
 ```
 
 属性装饰器顾名思义，用来装饰类的属性。它接收两个参数：
-* target: Object - 被装饰的类
-* propertyKey: string | symbol - 被装饰类的属性名
+
+- target: Object - 被装饰的类
+- propertyKey: string | symbol - 被装饰类的属性名
 
 ```js
 function logProperty(target: any, key: string) {
@@ -1127,14 +1149,18 @@ p1.name = "chenyu";
 #### 方法装饰器
 
 ```js
-declare type MethodDecorator = < T > (target: Object, propertyKey: string | symbol,
-  descriptor: TypePropertyDescript < T > ) => TypedPropertyDescriptor < T > | void;
+declare type MethodDecorator = <T>(
+  target: Object,
+  propertyKey: string | symbol,
+  descriptor: TypePropertyDescript<T>
+) => TypedPropertyDescriptor<T> | void;
 ```
 
 方法装饰器顾名思义，用来装饰类的方法。它接收三个参数：
-* target: Object - 被装饰的类
-* propertyKey: string | symbol - 方法名
-* descriptor: TypePropertyDescript - 属性描述符
+
+- target: Object - 被装饰的类
+- propertyKey: string | symbol - 方法名
+- descriptor: TypePropertyDescript - 属性描述符
 
 ```js
 function LogOutput(tarage: Function, key: string, descriptor: any) {
@@ -1171,14 +1197,14 @@ console.log(calc.loggedOutput);
 #### 参数装饰器
 
 ```js
-declare type ParameterDecorator = (target: Object, propertyKey: string | symbol,
-  parameterIndex: number) => void
+declare type ParameterDecorator = (target: Object, propertyKey: string | symbol, parameterIndex: number) => void;
 ```
 
 参数装饰器顾名思义，是用来装饰函数参数，它接收三个参数：
-* target: Object - 被装饰的类
-* propertyKey: string | symbol - 方法名
-* parameterIndex: number - 方法中参数的索引值
+
+- target: Object - 被装饰的类
+- propertyKey: string | symbol - 方法名
+- parameterIndex: number - 方法中参数的索引值
 
 ```js
 function Log(target: Function, key: string, parameterIndex: number) {
@@ -1194,19 +1220,20 @@ class Greeter {
   }
 }
 
-// console output: The parameter in position 0 
+// console output: The parameter in position 0
 // at Greeter has been decorated
 ```
 
 ## 类
 
 ### 类的属性和方法
+
 在面向对象语言中，类是一种面向对象计算机编程语言的构造，是创建对象的蓝图，描述了所创建的对象共同的属性和方法。
 
 ```js
 class Greeter {
   // 静态属性
-  static cname: string = "Greeter";
+  static cname: string = 'Greeter';
   // 成员属性
   greeting: string;
 
@@ -1217,40 +1244,40 @@ class Greeter {
 
   // 静态方法
   static getClassName() {
-    return "Class name is Greeter";
+    return 'Class name is Greeter';
   }
 
   // 成员方法
   greet() {
-    return "Hello, " + this.greeting;
+    return 'Hello, ' + this.greeting;
   }
 }
 
-let greeter = new Greeter("world");
+let greeter = new Greeter('world');
 ```
 
 编译生成：
 
 ```js
-"use strict";
-var Greeter = /** @class */ (function() {
+'use strict';
+var Greeter = /** @class */ (function () {
   // 构造函数 - 执行初始化操作
   function Greeter(message) {
     this.greeting = message;
   }
   // 静态方法
-  Greeter.getClassName = function() {
-    return "Class name is Greeter";
+  Greeter.getClassName = function () {
+    return 'Class name is Greeter';
   };
   // 成员方法
-  Greeter.prototype.greet = function() {
-    return "Hello, " + this.greeting;
+  Greeter.prototype.greet = function () {
+    return 'Hello, ' + this.greeting;
   };
   // 静态属性
-  Greeter.cname = "Greeter";
+  Greeter.cname = 'Greeter';
   return Greeter;
-}());
-var greeter = new Greeter("world");
+})();
+var greeter = new Greeter('world');
 ```
 
 ### 访问器(getter/setter)
@@ -1306,18 +1333,18 @@ class Snake extends Animal {
   }
 
   move(distanceInMeters = 5) {
-    console.log("Slithering...");
+    console.log('Slithering...');
     super.move(distanceInMeters);
   }
 }
 
-let sam = new Snake("Sammy the Python");
+let sam = new Snake('Sammy the Python');
 sam.move();
 ```
 
 ### 私有字段
 
-在 TypeScript 3.8 版本就开始支持ECMAScript 私有字段
+在 TypeScript 3.8 版本就开始支持 ECMAScript 私有字段
 
 ```js
 class Person {
@@ -1332,7 +1359,7 @@ class Person {
   }
 }
 
-let cosyer = new Person("cosyer");
+let cosyer = new Person('cosyer');
 
 cosyer.#name;
 // Property '#name' is not accessible outside class 'Person'
@@ -1341,24 +1368,25 @@ cosyer.#name;
 
 与常规属性（甚至使用 private 修饰符声明的属性）不同，私有字段要牢记以下规则：
 
-* 私有字段以 # 字符开头，有时我们称之为私有名称；
-* 每个私有字段名称都唯一地限定于其包含的类；
-* 不能在私有字段上使用 TypeScript 可访问性修饰符（如 public 或 private）；
-* 私有字段不能在包含的类之外访问，甚至不能被检测到。
+- 私有字段以 # 字符开头，有时我们称之为私有名称；
+- 每个私有字段名称都唯一地限定于其包含的类；
+- 不能在私有字段上使用 TypeScript 可访问性修饰符（如 public 或 private）；
+- 私有字段不能在包含的类之外访问，甚至不能被检测到。
 
 ## 编译上下文
 
 ### tsconfig.json 的作用
-* 用于标识 TypeScript 项目的根路径；
-* 用于配置 TypeScript 编译器；
-* 用于指定编译的文件。
+
+- 用于标识 TypeScript 项目的根路径；
+- 用于配置 TypeScript 编译器；
+- 用于指定编译的文件。
 
 ### tsconfig.json 重要字段
 
-* files - 设置要编译的文件的名称；
-* include - 设置需要进行编译的文件，支持路径模式匹配；
-* exclude - 设置无需进行编译的文件，支持路径模式匹配；
-* compilerOptions - 设置与编译流程相关的选项。
+- files - 设置要编译的文件的名称；
+- include - 设置需要进行编译的文件，支持路径模式匹配；
+- exclude - 设置无需进行编译的文件，支持路径模式匹配；
+- compilerOptions - 设置与编译流程相关的选项。
 
 ### compilerOptions 选项
 
