@@ -33,6 +33,7 @@ date: 2020-12-01 16:40:53
 [react 源码分析](https://react.iamkasong.com/)
 [前端面试题](https://muyiy.cn/question/)
 [面试](https://juejin.cn/post/6844903928442667015)
+[react 基础](https://github.com/spiritzx/blog2/blob/993e65c7c826ac6d926a5d965d48a5d0734b8135/browser/react/react_readme.md)
 
 ### 友链
 
