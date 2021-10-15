@@ -53,42 +53,38 @@ let b = [...a];
 ```js
 // 函数
 var source = {
-  name: function() {
+  name: function () {
     console.log(1);
   },
   child: {
-    name: "child"
-  }
-}
+    name: 'child',
+  },
+};
 var target = JSON.parse(JSON.stringify(source));
 console.log(target.name); //undefined
 
 // 正则
 var source = {
-  name: function() {
+  name: function () {
     console.log(1);
   },
-  child: new RegExp("e")
-}
+  child: new RegExp('e'),
+};
 var target = JSON.parse(JSON.stringify(source));
 console.log(target.name); //undefined
 console.log(target.child); //Object {}
 
 // undefined
->
-JSON.stringify({
-  a: undefined
-})
-"{}"
+JSON.stringify({ a: undefined });
+('{}');
 
 // NaN、Infinity和-Infinity
->
 JSON.stringify({
   a: NaN,
   b: Infinity,
-  c: -Infinity
-})
-"{\"a\":null,\"b\":null,\"c\":null}"
+  c: -Infinity,
+});
+('{"a":null,"b":null,"c":null}');
 ```
 
 ### Object.assign 只能一级深拷贝
