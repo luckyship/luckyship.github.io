@@ -19,12 +19,9 @@ function debounce(func, wait) {
   return function () {
     var self = this;
     var args = arguments;
-    if (timer) {
-      clearTimeout(timer);
-    }
+    if (timer) clearTimeout(timer);
     timer = setTimeout(function () {
-      timer = null;
-      return typeof func === 'function' && func.apply(self, args);
+      typeof func === 'function' && func.apply(self, args);
     }, wait);
   };
 }
@@ -44,9 +41,13 @@ function throttle(func, wait) {
   return function () {
     var self = this;
     var args = arguments;
-    if (timer) clearTimeout(timer);
+    if (timer) {
+      return;
+    }
+
+    typeof func === 'function' && func.apply(self, args);
     timer = setTimeout(function () {
-      return typeof func === 'function' && func.apply(self, args);
+      timer = null;
     }, wait);
   };
 }
