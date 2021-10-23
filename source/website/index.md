@@ -26,6 +26,7 @@ date: 2020-12-01 16:40:53
 [jquery api 文档大全](https://oscarotero.com/jquery/)
 [快速启动 vue、angular、react 项目](https://stackblitz.com/)
 [前端大文件上传](https://rynxiao.com/%E6%8A%80%E6%9C%AF/2021/06/28/big-file-upload.html)
+[在浏览器中使用 es module](https://www.jianshu.com/p/f7db50cf956f)
 
 ### 面试
 
