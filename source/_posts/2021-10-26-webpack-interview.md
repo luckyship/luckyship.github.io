@@ -1,12 +1,10 @@
 ---
 layout: post
-title: 2021-10-26-webpack-interview
-tags: []
+title: webpack配置
+tags: [javascript]
 comments: true
 date: 2021-10-26 15:15:01
 ---
-
-# [关于 webpack 的面试题](https://www.cnblogs.com/gaoht/p/11310365.html)
 
 随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如 react 的 jsx 代码必须编译后才能在浏览器中使用；又如 sass 和 less 的代码浏览器也是不支持的。 而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，webpack 脱颖而出成为了当今最流行的前端构建工具。 然而大多数的使用者都只是单纯的会使用，而并不知道其深层的原理。希望通过以下的面试题总结可以帮助大家温故知新、查缺补漏，知其然而又知其所以然。
 
@@ -30,7 +28,7 @@ date: 2021-10-26 15:15:01
 
 ## 问题解答
 
-### 1\. webpack 与 grunt、gulp 的不同？
+### 1. webpack 与 grunt、gulp 的不同？
 
 三者都是前端构建工具，grunt 和 gulp 在早期比较流行，现在 webpack 相对来说比较主流，不过一些轻量化的任务还是会用 gulp 来处理，比如单独打包 CSS 文件等。
 
@@ -48,7 +46,7 @@ gulp 和 grunt 需要开发者将整个前端构建过程拆分成多个\`Task\`
 
 gulp 更像后端开发者的思路，需要对于整个流程了如指掌 webpack 更倾向于前端开发者的思路
 
-### 2\. 与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？
+### 2. 与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？
 
 同样是基于入口的打包工具还有以下几个主流的：
 
@@ -581,3 +579,7 @@ module.exports = {
   devtool: 'source-map', // 'eval-source-map'
 };
 ```
+
+## 参考
+
+[关于 webpack 的面试题](https://www.cnblogs.com/gaoht/p/11310365.html)

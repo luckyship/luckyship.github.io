@@ -315,10 +315,28 @@ import { Headers } from '@angular/http';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 
 this.httpClient.request(UserService.METHOD_POST, url, options).subscribe(
-  data => {},
-  error => {}
+  next => {},
+  error => {},
+  complete => {} // 指next完成后，会执行complete, 并不是finally的意思
 );
 ```
+
+#### 集中处理 http 的 error
+
+```js
+class MyErrorHandler implements ErrorHandler {
+  handleError(error) {
+    // do something with the exception
+  }
+}
+
+@NgModule({
+  providers: [{ provide: ErrorHandler, useClass: MyErrorHandler }],
+})
+class MyModule {}
+```
+
+[参考](https://angular.cn/api/core/ErrorHandler)
 
 ## ng7 的新特性
 
