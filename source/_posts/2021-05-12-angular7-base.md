@@ -338,6 +338,14 @@ class MyModule {}
 
 [参考](https://angular.cn/api/core/ErrorHandler)
 
+## angular 通过 ip 访问
+
+绑定到`0.0.0.0`上
+
+```bash
+# ng serve --host 0.0.0.0 --port 4200
+```
+
 ## ng7 的新特性
 
 ```js

@@ -30,21 +30,21 @@ date: 2021-10-26 15:15:01
 
 ### 1. webpack 与 grunt、gulp 的不同？
 
-三者都是前端构建工具，grunt 和 gulp 在早期比较流行，现在 webpack 相对来说比较主流，不过一些轻量化的任务还是会用 gulp 来处理，比如单独打包 CSS 文件等。
+三者都是前端构建工具，grunt 和 `gulp` 在早期比较流行，现在 webpack 相对来说比较主流，不过一些轻量化的任务还是会用 gulp 来处理，比如单独打包 CSS 文件等。
 
-grunt 和 gulp 是基于任务和流（Task、Stream）的。类似 jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据， 整条链式操作构成了一个任务，多个任务就构成了整个 web 的构建流程。
+`grunt` 和 `gulp` 是基于任务和流（Task、Stream）的。类似 jQuery，找到一个（或一类）文件，对其做一系列链式操作，更新流上的数据， 整条链式操作构成了一个任务，多个任务就构成了整个 web 的构建流程。
 
-webpack 是基于入口的。webpack 会自动地递归解析入口所需要加载的所有资源文件，然后用不同的 Loader 来处理不同的文件，用 Plugin 来扩展 webpack 功能。
+`webpack` 是基于入口的。`webpack` 会自动地递归解析入口所需要加载的所有资源文件，然后用不同的 Loader 来处理不同的文件，用 Plugin 来扩展 `webpack` 功能。
 
 所以总结一下：
 
 - 从构建思路来说
 
-gulp 和 grunt 需要开发者将整个前端构建过程拆分成多个\`Task\`，并合理控制所有\`Task\`的调用关系 webpack 需要开发者找到入口，并需要清楚对于不同的资源应该使用什么 Loader 做何种解析和加工
+`gulp` 和 `grunt` 需要开发者将整个前端构建过程拆分成多个`Task`，并合理控制所有`Task`的调用关系 `webpack` 需要开发者找到入口，并需要清楚对于不同的资源应该使用什么 Loader 做何种解析和加工
 
 - 对于知识背景来说
 
-gulp 更像后端开发者的思路，需要对于整个流程了如指掌 webpack 更倾向于前端开发者的思路
+`gulp` 更像后端开发者的思路，需要对于整个流程了如指掌 `webpack` 更倾向于前端开发者的思路
 
 ### 2. 与 webpack 类似的工具还有哪些？谈谈你为什么最终选择（或放弃）使用 webpack？
 
@@ -190,18 +190,18 @@ Vue UI 组件库的按需加载 为了快速开发前端项目，经常会引入
 ### webpack 示例
 
 ```js
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
-const TerserWebpackPlugin = require('terser-webpack-plugin'); // 用terser-webpack-plugin替换掉uglifyjs-webpack-plugin解决uglifyjs不支持es6语法问题
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const AddAssetHtmlWebpackPlugin = require("add-asset-html-webpack-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin"); // 用terser-webpack-plugin替换掉uglifyjs-webpack-plugin解决uglifyjs不支持es6语法问题
 
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
+const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 
-process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，设置browserslist使用哪个参数
+process.env.NODE_ENV = "production"; // 定义nodejs环境变量，设置browserslist使用哪个参数
 
 /**
  * 开发环境性能优化：
@@ -289,7 +289,7 @@ process.env.NODE_ENV = 'production'; // 定义nodejs环境变量，设置browser
 const commonCssLoader = [
   // 'style-loader', // 创建style标签，将js中的样式资源进行插入，添加到head中生效
   MiniCssExtractPlugin.loader, // 替换'style-loader'，提取js中的css成单独文件
-  'css-loader', // 将css文件变成commonjs模块加载到js中，里面内容是样式字符串
+  "css-loader", // 将css文件变成commonjs模块加载到js中，里面内容是样式字符串
   {
     /**还需要再package.json这两年个定义 browserslist
      * "browserslist": {
@@ -305,11 +305,11 @@ const commonCssLoader = [
      *     ]
      * }
      * */
-    loader: 'postcss-loader',
+    loader: "postcss-loader",
     options: {
-      ident: 'postcss',
+      ident: "postcss",
       plugins: () => {
-        require('postcss-preset-env')();
+        require("postcss-preset-env")();
       },
     },
   },
@@ -317,21 +317,21 @@ const commonCssLoader = [
 
 module.exports = {
   // 入口起点
-  entry: path.join(__dirname, 'src/index.js'), // 单入口
+  entry: path.join(__dirname, "src/index.js"), // 单入口
   // entry: { // 多入口：几个入口就有几个bundle
   //     app: path.join(__dirname, 'src/index.js'),
   // },
   // 输出
   output: {
     // 输出文件目录
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, "dist"),
     // 文件名称
-    filename: 'js/[name].[contenthash:10].js',
+    filename: "js/[name].[contenthash:10].js",
     // 所有资源引入公共路径前缀--> 用于生产环境
-    publicPath: '/',
-    chunkFilename: 'js/[name].[contenthash:10]_chunk.js', // 非入口chunk的名称
-    library: '[name]', // 整个库向外暴露的变量名
-    libraryTarget: 'window', // 变量名添加到哪一个上 browser; 'global'(node)/'commonjs'
+    publicPath: "/",
+    chunkFilename: "js/[name].[contenthash:10]_chunk.js", // 非入口chunk的名称
+    library: "[name]", // 整个库向外暴露的变量名
+    libraryTarget: "window", // 变量名添加到哪一个上 browser; 'global'(node)/'commonjs'
   },
   /**
    * 代码分割：chunk表示一个文件 chunk表示一个文件
@@ -354,13 +354,13 @@ module.exports = {
       name: entrypoint => `runtime-${entrypoint.name}`,
     },
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
       minSize: 30 * 1024, // 分割的chunk最小为30kb，小于30kb不提取
       maxSize: 0, // 无最大的限制
       minChunks: 1, // 要提取的chunk最少被引用一次
       maxAsyncRequests: 5, // 按需加载时并行加载的文件的最大数量
       maxInitialRequests: 3, // 入口js文件最大并行请求数量
-      automaticNameDelimiter: '~', // 名称连接符
+      automaticNameDelimiter: "~", // 名称连接符
       name: true, // 可以使用命名规则
       cacheGroups: {
         // 分割chunk的组
@@ -381,18 +381,18 @@ module.exports = {
   externals: {
     // 使用CDN: 拒绝jQuery被打包进来（忽略的库名，npm包名），需要手动引入进来使用CDN，速度更快
     // 不适用CDN可以使用DLL
-    jquery: 'jquery',
+    jquery: "jquery",
   },
   // 解析模块的规则
   resolve: {
     // 配置解析模块的路径别名: 简写路径，缺点是路径没有提示
     alias: {
-      $css: path.join(__dirname, 'src/css'),
+      $css: path.join(__dirname, "src/css"),
     },
     // 配置省略文件路径的后缀名
-    extensions: ['.js', '.json', '.jsx'],
+    extensions: [".js", ".json", ".jsx"],
     // 告诉webpack 解析模块去哪个目录找
-    modules: ['node_modules'],
+    modules: ["node_modules"],
   },
   module: {
     rules: [
@@ -404,11 +404,11 @@ module.exports = {
          * }
          * airbnb--> eslint eslint-config-airbnb-base eslint-plugin-import
          */
-        test: '/.js$/',
-        loader: 'eslint-loader',
-        enforce: 'pre', // pre: 优先执行; post: 推迟执行
+        test: "/.js$/",
+        loader: "eslint-loader",
+        enforce: "pre", // pre: 优先执行; post: 推迟执行
         exculde: /node_modules/, // 排除一些文件
-        include: path.join(__dirname, 'src'), // 只检查src目录下的
+        include: path.join(__dirname, "src"), // 只检查src目录下的
         options: {
           fix: true,
         },
@@ -425,35 +425,35 @@ module.exports = {
              *     问题：将所有兼容性代码全部引入，体积太大
              *  3. 需要做兼容性处理的就做：按需加载 --> core-js
              * */
-            test: '/.js$/',
-            exclude: '/node_modules/',
+            test: "/.js$/",
+            exclude: "/node_modules/",
             use: [
               {
-                loader: 'thread-loader', // 开启多进程打包
+                loader: "thread-loader", // 开启多进程打包
                 options: {
                   workers: 2,
                 },
               },
               {
-                loader: 'babel-loader',
+                loader: "babel-loader",
                 options: {
                   // 预设：指示babel做怎么样的兼容性处理
                   presets: [
-                    '@babel/preset-env', // 方法1
+                    "@babel/preset-env", // 方法1
                     {
                       // 方法3-按需加载（不能使用方法2 @babel/polyfill）
-                      useBuiltIns: 'usage',
+                      useBuiltIns: "usage",
                       corejs: {
                         // 指定core-js版本
                         version: 3,
                       },
                       // 兼容的浏览器版本
                       targets: {
-                        chrome: '60',
-                        firefox: '60',
-                        ie: '9',
-                        safari: '10',
-                        egde: '17',
+                        chrome: "60",
+                        firefox: "60",
+                        ie: "9",
+                        safari: "10",
+                        egde: "17",
                       },
                     },
                   ],
@@ -465,7 +465,7 @@ module.exports = {
           },
           {
             // 处理css资源
-            test: '/.css$/',
+            test: "/.css$/",
             use: [
               // use数组中loader 执行顺序：从右向左，从下向上依次执行
               ...commonCssLoader,
@@ -473,11 +473,11 @@ module.exports = {
           },
           {
             // 处理less资源
-            test: '/.less$/',
+            test: "/.less$/",
             use: [
               // 需要下载 --> less-loader less
               ...commonCssLoader,
-              'less-loader', // 将less文件编译成css文件
+              "less-loader", // 将less文件编译成css文件
             ],
           },
           {
@@ -485,26 +485,26 @@ module.exports = {
             test: /\.(png|jpg|jpeg|gif|svg)$/,
             // 默认处理不了html中的img图片
             // 下载-- > url-loader file-loader
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
-              outputPath: 'img/', // 图片输出的路径
+              outputPath: "img/", // 图片输出的路径
               limit: 5 * 1024, // 图片大小小于5kb，就会被base64处理，优点：减少请求数量；缺点：图片体积会更大
               // url-loader默认使用es6模块化解析，html-loader引入图片是commonjs，解析会出问题
               esModule: false,
             },
           },
           {
-            test: '/.html$/',
+            test: "/.html$/",
             // 处理html中的umg图片（负责引入img，从而被url-loader处理）
             // 下载 --> html-loader
-            loader: 'html-loader',
+            loader: "html-loader",
           },
           {
             // 打包其他资源（除了html/js/css以外资源)
             exclude: /\.(css|js|html|less)$/,
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[contenthash:10].[ext]',
+              name: "[name].[contenthash:10].[ext]",
             },
           },
         ],
@@ -515,7 +515,7 @@ module.exports = {
     // 默认创建空的HTML，自动引入打包输出的所有资源
     new HtmlWebpackPlugin({
       // 复制template的html文件，自动引入打包输出的所有资源
-      template: 'src/index.html',
+      template: "src/index.html",
       // html压缩
       minify: {
         collapseWhitespace: true, // 移除空格
@@ -524,7 +524,7 @@ module.exports = {
     }),
     // css提取成单独文件
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:10].css',
+      filename: "css/[name].[contenthash:10].css",
     }),
     // 压缩css
     new OptimizeCssAssetsPlugin(),
@@ -539,17 +539,17 @@ module.exports = {
     }),
     // 告诉webpack 哪些库不参与打包, 同时使用时的名称也得改变
     new webpack.DllReferencePlugin({
-      manifest: path.join(__dirname, 'dll/manifest.json'),
+      manifest: path.join(__dirname, "dll/manifest.json"),
     }),
     // 将某个文件打包输出出去，并在html中自动引入该资源
     new AddAssetHtmlWebpackPlugin({
-      filename: path.join(__dirname, 'dll/jquery.js'),
+      filename: path.join(__dirname, "dll/jquery.js"),
     }),
   ],
-  mode: 'development', // 'production', // 生产环境自动压缩js代码
+  mode: "development", // 'production', // 生产环境自动压缩js代码
   devServer: {
     // 开发服务器：自动化编译，自动化刷新浏览器等
-    contentBase: path.join(__dirname, 'dist'),
+    contentBase: path.join(__dirname, "dist"),
     watchContentBase: true, // 检视contentBase目录下的所有文件，一点文件变化就reload
     watchOptions: {
       // 忽略监视文件
@@ -557,26 +557,26 @@ module.exports = {
     },
     compress: true, // 启动gzip压缩
     port: 3000, // 指定端口号
-    host: '0.0.0.0', // 指定域名 localhost
+    host: "0.0.0.0", // 指定域名 localhost
     open: true,
     hot: true, // 热替换 开启HMR功能
     stats: { colors: true },
-    clientLogLevel: 'none', // 不要显示启动服务器日志信息
+    clientLogLevel: "none", // 不要显示启动服务器日志信息
     quiet: true, // 除一些基本启动信息以外，其他内容不要展示
     overlay: false, //如果出错不要全屏提示
     // 服务器代理，解决开发环境的跨域问题
     prxoy: {
       // 一旦接受到/api/xxx 穷奇就会转发到另一个服务器3000
-      '/api': {
-        target: 'http://localhost:3000',
+      "/api": {
+        target: "http://localhost:3000",
         // 发生请求时，请求路径重写，去掉api
         pathRewrite: {
-          '^api': '',
+          "^api": "",
         },
       },
     },
   },
-  devtool: 'source-map', // 'eval-source-map'
+  devtool: "source-map", // 'eval-source-map'
 };
 ```
 
