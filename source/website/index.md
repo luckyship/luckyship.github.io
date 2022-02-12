@@ -10,6 +10,7 @@ date: 2020-12-01 16:40:53
 [css 小图标大全](https://fontawesome.com/v4.7.0/)  
 [精美图片](http://pic.netbian.com/)
 [chrome 插件](https://www.extfans.com/)
+[chrome 插件 2](https://crxdl.com/)
 
 ### 下载地址
 
