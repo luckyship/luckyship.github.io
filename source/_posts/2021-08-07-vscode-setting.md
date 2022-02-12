@@ -24,6 +24,7 @@ vscode 配置
 
 ```json
 {
+  "editor.formatOnSave": true, // 自动保存
   "prettier.singleQuote": true,
   "prettier.printWidth": 120,
   "prettier.useEditorConfig": false,
