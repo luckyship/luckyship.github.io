@@ -29,6 +29,7 @@ date: 2020-12-01 16:40:53
 [前端大文件上传](https://rynxiao.com/%E6%8A%80%E6%9C%AF/2021/06/28/big-file-upload.html)
 [在浏览器中使用 es module](https://www.jianshu.com/p/f7db50cf956f)
 [不一样的前端基础知识](https://github.com/mqyqingfeng/Blog)
+[算法题](https://programmercarl.com/)
 
 ### 面试
 
@@ -43,3 +44,4 @@ date: 2020-12-01 16:40:53
 
 [友链 2](https://blog.ihoey.com/)  
 [友链](http://mydearest.cn/)
+[友链 3](https://hejialianghe.gitee.io/)
