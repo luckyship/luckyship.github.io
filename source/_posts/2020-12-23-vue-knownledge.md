@@ -216,22 +216,26 @@ computed() {
 
 - 对象语法
 
-```js
-< div v - bind: class = "{active: isActive, 'text-danger': hasError }" > < /div>
-data: {
-  isActive: true,
-  hasError: false
-}
+```html
+<div v-bind:class="{active: isActive, 'text-danger': hasError }"></div>
+<script>
+  data: {
+    isActive: true,
+    hasError: false
+  }
+</script>
 ```
 
 - 数组语法
 
-```js
-< div v - bind: class = "[isActive ? activeClass : '', errorClass]" > < /div>
-data: {
-  activeClass: 'active',
-  errorClass: 'text-danger'
-}
+```html
+<div v-bind:class="[isActive ? activeClass : '', errorClass]"></div>
+<script>
+  data: {
+    activeClass: 'active',
+    errorClass: 'text-danger'
+  }
+</script>
 ```
 
 style 也可以通过对象语法和数组语法进行动态绑定
@@ -240,19 +244,11 @@ style 也可以通过对象语法和数组语法进行动态绑定
 
 ```html
 <!--第一种对象语法 -->
-<div
-  class="test"
-  :class="{active:actived,'active-click': clicked&&actived}"
-></div>
+<div class="test" :class="{active:actived,'active-click': clicked&&actived}"></div>
 <!-- 第二种数组语法 -->
-<div
-  class="test"
-  :class="[actived?activeClass : '', clicked&&actived?activeClickClass : '']"
-></div>
+<div class="test" :class="[actived?activeClass : '', clicked&&actived?activeClickClass : '']"></div>
 <!-- 第三种对象和数组混合 -->
-<div
-  :class="[testClass,{active:actived},{'active-click':clicked&&actived}]"
-></div>
+<div :class="[testClass,{active:actived},{'active-click':clicked&&actived}]"></div>
 <!-- 第四种对象和计算属性(推荐) -->
 <div :class="classObject"></div>
 ```
@@ -307,9 +303,9 @@ style 属性为 display：none
 
 #### vue 父子组件实现双向绑定实例
 
-```js
-<Child :name="name" :change="changeName" / >
-
+```html
+<Child :name="name" :change="changeName" />
+<script>
   props: {
     name: {
       type: String,
@@ -327,6 +323,7 @@ style 属性为 display：none
       this.$emit('change', val)
     }
   }
+</script>
 ```
 
 #### 自定义 v-model
@@ -1265,6 +1262,39 @@ input 标签 v-model 用 lazy 修饰之后，并不会立即监听 input 的 val
 <script></script>
 <style scoped>
   .textScoped[data-v-3e5b2a80] {
+    color: red;
+  }
+</style>
+```
+
+#### 如何解决样式隔离
+
+1. 深度选择器
+
+- `>>>`
+- `/deep/`
+- `::v-deep`
+
+有些像 Sass 之类的预处理器无法正确解析 `>>>`。这种情况下你可以使用 `/deep/` 或 `::v-deep` 操作符取而代之——两者都是 `>>>` 的别名，同样可以正常工作。
+
+> 需要注意即使把深度选择器加在最前面，对于设置了`scoped`的`style`标签，仍然无法影响外部组件的样式，这一点和`angular`有区别
+
+2. 新增一个`style`标签
+
+```html
+<template>
+  <span data-v-3e5b2a80 class="textScoped">scoped测试</span>
+</template>
+<script></script>
+<style scoped>
+  .textScoped[data-v-3e5b2a80] {
+    color: red;
+  }
+</style>
+
+<!-- 新增style标签，不加scoped，就不会发生样式隔离 -->
+<style>
+  .textScoped {
     color: red;
   }
 </style>
