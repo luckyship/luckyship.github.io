@@ -191,7 +191,67 @@ export class FlyingHeroesImpurePipe extends FlyingHeroesPipe {}
 |                     slice(非纯管道)                      |                   将数组或者字符串裁剪成新子集                   |
 |                           i18n                           |                             翻译管道                             |
 
-### 父子组件通信
+### 组件注册
+
+```js
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, AppRoutingModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+// import部分是模块以及装饰器的引入。
+
+// declarations部分是声明模块的内部成员。（可以是组件、管道、指令）
+// imports部分是导入其它模块。
+// providers指定应用程序根级别需要使用的service。（一般是service）
+// bootstrap是app启动的根组件。
+
+// export控制将那些内部成员暴露给外部使用。
+```
+
+### 防抖方法实现
+
+```ts
+withRefresh = false;
+packages$!: Observable<NpmPackageInfo[]>;
+private searchText$ = new Subject<string>();
+
+search(packageName: string) {
+  this.searchText$.next(packageName);
+}
+
+ngOnInit() {
+  this.packages$ = this.searchText$.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    switchMap(packageName =>
+      this.searchService.search(packageName, this.withRefresh))
+  );
+}
+
+constructor(private searchService: PackageSearchService) { }
+
+```
+
+`searchText$` 是来自用户的搜索框值的序列。它被定义为 RxJS `Subject` 类型，这意味着它是一个多播 `Observable`，它还可以通过调用 `next(value)` 来自行发出值，就像在 `search()` 方法中一样。
+
+除了把每个 `searchText` 的值都直接转发给 `PackageSearchService` 之外，`ngOnInit()` 中的代码还通过下列三个操作符对这些搜索值进行*管道*处理，以便只有当它是一个新值并且用户已经停止输入时，要搜索的值才会抵达该服务。
+
+- `debounceTime(500)`⁠—等待用户停止输入（本例中为 1/2 秒）。
+- `distinctUntilChanged()`⁠—等待搜索文本发生变化。
+- `switchMap()`⁠—将搜索请求发送到服务。
+
+## 父子组件通信
+
+### Input、Output 传值
 
 ```js
 // 输入
@@ -210,8 +270,11 @@ this.follow.emit("子组件传来的数据");
 
 1. 注册服务
 
+```bash
+ng g s ./services/eventBus
+```
+
 ```js
-ng g s. / services / eventBus
 import {
   Injectable
 } from "@angular/core";
@@ -219,9 +282,10 @@ import {
   Observable,
   Subject
 } from "rxjs";
+
 // 服务总线 组件间分享数据
 @Injectable({
-  providedIn: "root"
+  providedIn: "root" // 在所有组件共享数据
 })
 export class EventBusService {
   public eventBus: Subject < string > = new Subject();
@@ -250,61 +314,40 @@ this.eventBusService.eventBus.subscribe(arg => {
 <button (click)="child.sayHello()">子组件说话</button>
 ```
 
-### 组件注册
-
-```js
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-
-@NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [],
-  bootstrap: [AppComponent],
-})
-export class AppModule {}
-// import部分是模块以及装饰器的引入。
-// declarations部分是声明模块的内部成员。
-// imports部分是导入其它模块。
-// providers指定应用程序根级别需要使用的service。
-// bootstrap是app启动的根组件。
-// export控制将那些内部成员暴露给外部使用。
-```
-
-### 路由导航
+## 路由导航
 
 ```js
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule  } from '@angular/router';
-import { ChildComponent } from "./child/child.component";
-import { BrotherComponent } from "./brother/brother.component";
+import { Routes, RouterModule } from '@angular/router';
+import { ChildComponent } from './child/child.component';
+import { BrotherComponent } from './brother/brother.component';
 
-const routes: Routes = [{
+const routes: Routes = [
+  {
     path: '',
-    component: ChildComponent
+    component: ChildComponent,
   },
   {
     path: 'brother',
-    component: BrotherComponent
-  }
+    component: BrotherComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}
+```
 
-//RouterOutlet 相当于一个占位符, 在Angular中根据路由状态动态插入视图
-<a [routerLink]="['/']" > child </a><br/>
+```html
+<!-- RouterOutlet 相当于一个占位符, 在Angular中根据路由状态动态插入视图  -->
+<a [routerLink]="['/']"> child </a><br />
 <a [routerLink]="['/brother']"> brother </a>
 <router-outlet></router-outlet>
 ```
 
-### http 服务
+## http 服务
 
 ```js
 // app.module.ts
@@ -321,7 +364,13 @@ this.httpClient.request(UserService.METHOD_POST, url, options).subscribe(
 );
 ```
 
-#### 集中处理 http 的 error
+如果想使用`async`语法，可以把`angular`观察对象转成`promise`
+
+```js
+this.httpClient.request(UserService.METHOD_POST, url, options).toPromise();
+```
+
+### 集中处理 http 的 error
 
 ```js
 class MyErrorHandler implements ErrorHandler {
@@ -358,7 +407,3 @@ class MyModule {}
 // 这个配置适用于打包文件限制 ng build --prod
 // 打包生成生产环境时如果包大于2MB,那么CLI工具会提示waning,如果大于5MB,中断打包。
 ```
-
-## 参考
-
-[angular7](https://mydearest.cn/)
