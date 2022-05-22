@@ -55,9 +55,9 @@ ng serve --open // 自动打开浏览器 http://localhost:4200/
 
 ```bash
 // 标签app-article 如果不想要或者自定义前缀可在angular.json里修改prefix属性
-ng g c article
+ng generate component article
 // 可添加目录
-ng g s ./serveices/eventBus
+ng generate service ./serveices/eventBus
 //
 ```
 
@@ -95,7 +95,8 @@ ng g s ./serveices/eventBus
 
 ```html
 <img [src]="imgSrc" />
-<input value="value"
+
+<input value="value" />
 ```
 
 ### 插值运算 加减乘除/字符串拼接/三元/方法调用
@@ -151,9 +152,7 @@ ng g s ./serveices/eventBus
 ```js
 import { DatePipe } from '@angular/common';
 
-constructor(
-        private datePipe: DatePipe,
-    ) {}
+constructor(private datePipe: DatePipe) {}
 
 this.datePipe.transform()
 ```
@@ -161,7 +160,7 @@ this.datePipe.transform()
 #### 自定义管道
 
 ```bash
-ng g p search
+ng generate pipe search
 ```
 
 为了节省性能，`angular` 内部对管道进行了优化，参数 `pure` 为 `true` 时(纯管道)，当只有数据变化时，才会触发管道的执行，
@@ -259,7 +258,7 @@ constructor(private searchService: PackageSearchService) { }
 @Input
 public title: string = "";
 // 输出
-<child title="我的子组件" #child (follow) = "getFollow($event)" > </child>
+<child title="我的子组件" (follow)="getFollow($event)" #child ></child>
 
 @Output()
 public follow = new EventEmitter();
@@ -291,6 +290,18 @@ export class EventBusService {
   public eventBus: Subject < string > = new Subject();
   constructor() {}
 }
+```
+
+`service` 也可以指定在某个某块生效，比如下方 `service` 就只在`UserModule`中生效
+
+```js
+import { Injectable } from '@angular/core';
+import { UserModule } from './user.module';
+
+@Injectable({
+  providedIn: UserModule,
+})
+export class UserService {}
 ```
 
 2. 组件内发射数据
@@ -347,6 +358,19 @@ export class AppRoutingModule {}
 <router-outlet></router-outlet>
 ```
 
+### 路由懒加载
+
+使用`loadChildren`可以配置路由懒加载
+
+```js
+const routes: Routes = [
+  {
+    path: 'items',
+    loadChildren: () => import('./items/items.module').then(m => m.ItemsModule),
+  },
+];
+```
+
 ## http 服务
 
 ```js
@@ -395,9 +419,9 @@ class MyModule {}
 # ng serve --host 0.0.0.0 --port 4200
 ```
 
-## ng7 的新特性
+## angular.json
 
-```js
+```json
 // angular.json
 "budgets": [{
   "type": "initial",
@@ -406,4 +430,79 @@ class MyModule {}
 }]
 // 这个配置适用于打包文件限制 ng build --prod
 // 打包生成生产环境时如果包大于2MB,那么CLI工具会提示waning,如果大于5MB,中断打包。
+
+{
+  "project": {
+    "name": "ng-admin", //项目名称
+    "ejected": false // 标记该应用是否已经执行过eject命令把webpack配置释放出来
+  },
+  "apps": [
+    {
+      "root": "src", // 源码根目录
+      "outDir": "dist", // 编译后的输出目录，默认是dist/
+      "assets": [
+        // 记录资源文件夹，构建时复制到`outDir`指定的目录
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html", // 指定首页文件，默认值是"index.html"
+      "main": "main.ts", // 指定应用的入门文件
+      "polyfills": "polyfills.ts", // 指定polyfill文件
+      "test": "test.ts", // 指定测试入门文件
+      "tsconfig": "tsconfig.app.json", // 指定tsconfig文件
+      "testTsconfig": "tsconfig.spec.json", // 指定TypeScript单测脚本的tsconfig文件
+      "tsconfig": "tsconfig.app.json",
+      "prefix": "app", // 使用`ng generate`命令时，自动为selector元数据的值添加的前缀名
+      "deployUrl": "//cdn.com.cn", // 指定站点的部署地址，该值最终会赋给webpack的output.publicPath，常用于CDN部署
+      "styles": [
+        // 引入全局样式，构建时会打包进来，常用于第三方库引入的样式
+        "styles.css"
+      ],
+      "scripts": [
+        // 引入全局脚本，构建时会打包进来，常用语第三方库引入的脚本
+      ],
+      "environmentSource": "environments/environment.ts", // 基础环境配置
+      "environments": {
+        // 子环境配置文件
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json"
+    },
+    {
+      "project": "src/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    // 执行`ng generate`命令时的一些默认值
+    "styleExt": "scss", // 默认生成的样式文件后缀名
+    "component": {
+      "flat": false, // 生成组件时是否新建文件夹包装组件文件，默认为false（即新建文件夹）
+      "spec": true, // 是否生成spec文件，默认为true
+      "inlineStyle": false, // 新建时是否使用内联样式，默认为false
+      "inlineTemplate": false, // 新建时是否使用内联模板，默认为false
+      "viewEncapsulation": "Emulated", // 指定生成的组件的元数据viewEncapsulation的默认值
+      "changeDetection": "OnPush" // 指定生成的组件的元数据changeDetection的默认值
+    }
+  }
+}
 ```
+
+[官网参考](https://angular.cn/guide/workspace-config)

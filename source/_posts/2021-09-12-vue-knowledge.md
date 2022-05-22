@@ -9,7 +9,7 @@ date: 2021-09-12 16:26:18
 
 ## 一、vue
 
-### 1、vue 优点
+### vue 优点
 
 - 轻量级框架：只关注视图层，是一个构建数据的视图集合，大小只有几十 kb；
 
@@ -27,11 +27,11 @@ date: 2021-09-12 16:26:18
 
 <!-- more -->
 
-### 2、谈谈对 vue 渐进式的理解
+### 谈谈对 vue 渐进式的理解
 
 ![](/img/vue-interview/001.png)
 
-### 3、vue 双向绑定原理 【原理题】
+### vue 双向绑定原理 【原理题】
 
 <img src="/img/vue-interview/002.png" style="zoom:50%;" />
 
@@ -63,7 +63,7 @@ re-render 时,vm.render()再次执行,会移除所有 subs 中的 watcer 的订�
 
 **vue.js 采用数据劫持结合发布-订阅模式,通过 Object.defineproperty 来劫持各个属性的 setter,getter,在数据变动时发布消息给订阅者,触发响应的监听回调**
 
-### 4、computed 的实现原理【原理题】
+### computed 的实现原理【原理题】
 
 computed 本质是一个惰性求值的观察者。
 
@@ -79,7 +79,7 @@ computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
 
 没有的话,仅仅把 this.dirty = true。 (当计算属性依赖于其他数据时，属性并不会立即重新计算，只有之后其他地方需要读取属性的时候，它才会真正计算，即具备 lazy（懒计算）特性。)
 
-### 5、 computed 和 watch 有什么区别及运用场景?【原理题】
+### computed 和 watch 有什么区别及运用场景?【原理题】
 
 - 区别
 
@@ -91,7 +91,7 @@ computed watcher 通过 this.dep.subs.length 判断有没有订阅者,
   - **当我们需要进行数值计算,并且依赖于其它数据时,应该使用 computed,**因为可以利用 computed 的缓存特性,避免每次获取值时,都要重新计算。 【不能放异步】
   - **当我们需要在数据变化时执行异步或开销较大的操作时,应该使用 watch,**使用 watch 选项允许我们执行异步操作 ( 访问一个 API ),限制我们执行该操作的频率,并在我们得到最终结果前,设置中间状态。这些都是计算属性无法做到的。 【可以放异步处理】
 
-### 6、为什么在 Vue3.0 采用了 Proxy,抛弃了 Object.defineProperty？【原理题】
+### 为什么在 Vue3.0 采用了 Proxy,抛弃了 Object.defineProperty？【原理题】
 
 Object.defineProperty 本身有一定的监控到数组下标变化的能力,但是在 Vue 中,从性能/体验的性价比考虑,尤大大就弃用了这个特性(Vue 为什么不能检测数组变动 )。为了解决这个问题,经过 vue 内部处理后可以使用以下几种方法来监听数组
 
@@ -110,7 +110,7 @@ reverse();
 **Object.defineProperty 只能劫持对象的属性,**因此我们需要对每个对象的每个属性进行遍历。<u>Vue 2.x 里,是通过 递归 + 遍历 data 对象来实现对数据的监控的,如果属性值也是对象那么需要深度遍历,显然如果能劫持一个完整的对象是才是更好的选择。</u>
 Proxy 可以劫持整个对象,并返回一个新的对象。Proxy 不仅可以代理对象,还可以代理数组。还可以代理动态增加的属性。
 
-### 7、Vue 中的 key 到底有什么用？【原理题】
+### Vue 中的 key 到底有什么用？【原理题】
 
 回答： 【简单表达：**为了防止就地复用！**】
 
@@ -134,7 +134,7 @@ function createKeyToOldIdx(children, beginIdx, endIdx) {
 }
 ```
 
-### 8、谈一谈 nextTick 的原理【原理题】
+### 谈一谈 nextTick 的原理【原理题】
 
 **JS 运行机制**
 
@@ -181,7 +181,7 @@ Vue 在内部对异步队列尝试使用原生的 Promise.then、MutationObserve
 
 vue 用异步队列的方式来控制 DOM 更新和 nextTick 回调先后执行 microtask 因为其高优先级特性，能确保队列中的微任务在一次事件循环前被执行完毕考虑兼容问题,vue 做了 microtask 向 macrotask 的降级方案
 
-### 9、vue 是如何对数组方法进行变异的 ?【原理题】
+### vue 是如何对数组方法进行变异的 ?【原理题】
 
 我们先来看看源码
 
@@ -227,14 +227,14 @@ Observer.prototype.observeArray = function observeArray(items) {
 
 简单来说,Vue 通过原型拦截的方式重写了数组的 7 个方法,首先获取到这个数组的 ob,也就是它的 Observer 对象,如果有新的值,就调用 observeArray 对新的值进行监听,然后手动调用 notify,通知 render watcher,执行 update
 
-### 10、 Vue 组件 data 为什么必须是函数 ?【原理题】
+### Vue 组件 data 为什么必须是函数 ?【原理题】
 
 new Vue()实例中,data 可以直接是一个对象,为什么在 vue 组件中,data 必须是一个函数呢?
 因为组件是可以复用的,JS 里对象是引用关系,如果组件 data 是一个对象,那么子组件中的 data 属性值会互相污染,产生副作用。
 
 所以一个组件的 data 选项必须是一个函数,因此每个实例可以维护一份被返回对象的独立的拷贝。new Vue 的实例是不会被复用的,因此不存在以上问题。
 
-### 11、谈谈 Vue 事件机制,手写$on,$off,$emit,$once 【原理题】
+### 谈谈 Vue 事件机制,手写$on,$off,$emit,$once 【原理题】
 
 Vue 事件机制 本质上就是 一个 发布-订阅 模式的实现。
 
@@ -307,7 +307,7 @@ class Vue {
 }
 ```
 
-### 12、说说 Vue 的渲染过程 【原理题】
+### 说说 Vue 的渲染过程 【原理题】
 
 调用 compile 函数,生成 render 函数字符串 ,编译过程如下:
 
@@ -321,7 +321,7 @@ class Vue {
 
 <img src="/img/vue-interview/004.png" style="zoom:60%;" />
 
-### 13、聊聊 keep-alive 的实现原理和缓存策略 【原理题】
+### 聊聊 keep-alive 的实现原理和缓存策略 【原理题】
 
 ```js
 export default {
@@ -419,7 +419,7 @@ LRU（Least recently used）算法根据数据的历史访问记录来进行淘�
 
 **keep-alive 的实现正是用到了 LRU 策略,将最近访问的组件 push 到 this.keys 最后面,this.keys[0]也就是最久没被访问的组件,当缓存实例超过 max 设置值,删除 this.keys[0]**
 
-### 14、`vm.$set()`实现原理是什么? 【原理题】
+### `vm.$set()`实现原理是什么? 【原理题】
 
 受现代 JavaScript 的限制 (而且 Object.observe 也已经被废弃)，Vue 无法检测到对象属性的添加或删除。
 
@@ -464,26 +464,26 @@ export function set(target: Array | Object, key: any, val: any): any {
 如果 target 本身就不是响应式,直接赋值
 如果属性不是响应式,则调用 defineReactive 方法进行响应式处理
 
-### 15、什么是 MVVM？
+### 什么是 MVVM？
 
 MVVM 是是 Model-View-ViewModel 的缩写，Model 代表数据模型，定义数据操作的业务逻辑，View 代表视图层，负责将数据模型渲染到页面上，ViewModel 通过双向绑定把 View 和 Model 进行同步交互，不需要手动操作 DOM 的一种设计思想。
 
-### 16、MVVM 和 MVC 区别？和其他框架(jquery)区别？那些场景适用？
+### MVVM 和 MVC 区别？和其他框架(jquery)区别？那些场景适用？
 
 MVVM 和 MVC 都是一种设计思想，主要就是 MVC 中的 Controller 演变成 ViewModel,，<u>MVVM 主要通过数据来显示视图层而不是操作节点，解决了 MVC 中大量的 DOM 操作使页面渲染性能降低，加载速度慢，影响用户体验问题。主要用于数据操作比较多的场景</u>。
 场景：**数据操作比较多的场景，更加便捷**
 
-### 17、v-show 和 v-if 指令的共同点和不同点?
+### v-show 和 v-if 指令的共同点和不同点?
 
 - v-show 指令是通过修改元素的 displayCSS 属性让其显示或者隐藏。 【CSS 控制节点是否显示，节点一直存在】
 - v-if 指令是直接销毁和重建 DOM 达到让元素显示和隐藏的效果。 【DOM 节点是否存在】
 - 使用场景：需要反复展示就用`v-show`，如果一次决定不同模板内容就用`v-if`
 
-### 18、vue 中 key 值的作用
+### vue 中 key 值的作用
 
 **当 Vue.js 用 v-for 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。**如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。key 的作用主要是为了高效的更新虚拟 DOM 【防止采用就地复用策略进行改变】
 
-### 19、如何在组件内部实现一个双向数据绑定？
+### 如何在组件内部实现一个双向数据绑定？
 
 - 该题目又可能称之为 ：**如何在组件上面使用 v-model**
 
@@ -523,7 +523,7 @@ new Vue({
 });
 ```
 
-### 20、常用指令
+### 常用指令
 
 - v-model 双向数据绑定，一般用于表单元素。
 
@@ -536,53 +536,53 @@ new Vue({
 - v-html 渲染文档，可以编译 HTML 字符串
 - v-text 渲染文本，不可以编译 HTML 字符串
 
-### 21、computed 和 method 区别
+### computed 和 method 区别
 
 - computed 依赖于缓存，依赖的变量变化了才会变化，模板变化了，即使依赖变量没有变化也不会重新计算；
 - method 是事件，method 里面的事件每次都会执行，只要模板更新都会再次执行。
 
-### 22、什么是 vue 的单向数据流
+### 什么是 vue 的单向数据流
 
 - 文档地址：https://cn.vuejs.org/v2/guide/components-props.html#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81
 
 - vue 的单向数据流指的是 vue 组件通信里面**父子通信是自上而下的，我们不能直接修改 props 里面属性。**
 
-### 23、vue 里面如何操作样式
+### vue 里面如何操作样式
 
 - 操作 style
   - 对象语法 `:style="{CSS属性名:变量}" `
   - 数组语法 `:style="[样式描述变量1，样式描述变量2]"`
   - 直接字符串 `style='css属性名:css属性值;css属性名2:css属性值2;...'`
 - 操作 class
-  - 对象语法 `:style="{class名:布尔变量}"`
+  - 对象语法 `:class="{class名:布尔变量}"`
   - 数组语法 `:class="[变量1,变量2,...]"`
   - 三木语法：` :class = "条件 ? 'class名1':'class名2'"`
 
-### 24、v-if 和 v-for 为什么不推荐一起用
+### v-if 和 v-for 为什么不推荐一起用
 
 当 `v-if` 与 `v-for` 一起使用时，`v-for` 具有比 `v-if` 更高的优先级。 所以会导致每个列表项渲染的时候都会进行条件判断，从而让性能比较低。
 
-### 25、数组更新检测有哪些方法
+### 数组更新检测有哪些方法
 
 - 变更方法 【修改原数组】
 
-  Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
+Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
 
-  ```js
-  push();
-  pop();
-  shift();
-  unshift();
-  splice();
-  sort();
-  reverse();
-  ```
+```js
+push();
+pop();
+shift();
+unshift();
+splice();
+sort();
+reverse();
+```
 
 - 替换数组
 
   变更方法，顾名思义，会变更调用了这些方法的原始数组。相比之下，也有非变更方法，例如 `filter()`、`concat()` 和 `slice()`。它们不会变更原始数组，而**总是返回一个新数组**。
 
-### 26、如果获取事件对象
+### 如果获取事件对象
 
 - 在书写事件函数的时候直接写上形参就表示事件对象
 
@@ -596,17 +596,18 @@ new Vue({
 
 - 如果既要传参又要获取事件对象，那么传入实参的时候传入一个`$event`表示事件对象，`$event`这个单词不能写错
 
-  ```js
+  ```html
   <button @click="run(10,$event)">点击</button>
+  <script>
+    methods:{
+    		run(num,ev){  // 形参实参一一对应，ev和$event对应所以 就是事件对象
 
-  methods:{
-  		run(num,ev){  // 形参实参一一对应，ev和$event对应所以 就是事件对象
-
-  		}
-  }
+    		}
+    }
+  </script>
   ```
 
-### 27、哪些常见事件修饰符，有何作用
+### 哪些常见事件修饰符，有何作用
 
 - `.stop ` 阻止冒泡
 - `.prevent` 阻止默认行为
@@ -615,7 +616,7 @@ new Vue({
 - `.once` 一次性绑定
 - `.passive` 一般给 scroll 或者 resize 事件绑定，等到调整完成之后触发。
 
-### 28、有哪些常见按键修饰符，以及如何定义按键修饰符
+### 有哪些常见按键修饰符，以及如何定义按键修饰符
 
 - `.enter`
 - `.tab`
@@ -630,7 +631,7 @@ new Vue({
 
 **自定义按键修饰符：`Vue.config.keyCodes.按键修饰符名 = 按键码`**
 
-### 29、如何实现一个 v-model 指令
+### 如何实现一个 v-model 指令
 
 - v-model 其实是 属性绑定和事件综合使用的语法糖。
 
@@ -640,20 +641,20 @@ new Vue({
   // 再给输入框绑定input事件，一旦输入，就将输入框的值赋给msg变量，从而实现双向绑定
   ```
 
-### 30、表单控件绑定需要什么？
+### 表单控件绑定需要什么？
 
 - 给一组单选控件绑定给同一个变量，且每个单选控件都要有个一个 value
 - 给一组多选控件绑定同一个变量，且这个变量是一个数组，且每个多选项都要有一个 value
 - 如果 input 的 type 为 checkbox，我们用来做勾选的时候， 应该绑定一个布尔值类型的变量
 - textarea 绑定数据，同样应该使用 v-model 直接给到标签，而不是插值表达式
 
-### 31、有哪些常见的表单修饰符
+### 有哪些常见的表单修饰符
 
 - `.lazy` 在“change”时而非“input”时更新
 - `.number` 将用户的输入值转为数值类型
 - `.trim` 自动过滤用户输入的首尾空白字符
 
-### 32、如何定义一个组件
+### 如何定义一个组件
 
 - 全局注册
 
@@ -663,49 +664,49 @@ Vue.component(组件名, { 组件配置选项 });
 
 - 局部注册
 
-  ```js
-  // 组件或者vue实例的配置选项里面增加components属性。
-  {
-     ...,
-  	 components:{
-  	 	 组件名:{ 组件配置对象 }
-  	 }
+```js
+// 组件或者vue实例的配置选项里面增加components属性。
+{
+  ...,
+  components:{
+    组件名:{ 组件配置对象 }
   }
-  ```
+}
+```
 
-### 33、组件 data 为啥是一个函数
+### 组件 data 为啥是一个函数
 
 因为组件是可以复用的,JS 里对象是引用关系,如果组件 data 是一个对象,那么子组件中的 data 属性值会互相污染,产生副作用。
 
 **简而言之：组件的数据应该是各自独立的，互不干扰，所以 data 是函数返回一个对象，这样各自就独立了。**
 
-### 34、组件的 props 是什么？如何定义
+### 组件的 props 是什么？如何定义
 
 - props 是组件向外提供的一个接口，用来接收外部数据，也是父组件传递给子组件的主要方式
 
 - 如何定义
 
-  ```js
-  // 方式1： 数组语法
-  props:['自定义属性名1','自定义属性名2',...]
+```js
+// 方式1： 数组语法
+props:['自定义属性名1','自定义属性名2',...]
 
-  // 方式2： 对象语法
-  props:{
-  	自定义属性名1:{
-    		type:类型 或  [类型1，类型2,...],    // 类型有  Object,Array,String,Boolean,Number,Date,Function ，
-    		default:默认值，  // 基本数据类型
-        default(){        // 如果props的值是引用数据类型，那么设置默认值的时候应该是一个函数，返回数组或对象
-          return []/{}
-        },
-        required:true/false,
-        validator:function(val){  // val就是该属性对应的值，用于内部做判断使用
-           return true/false   // true表示验证通过，false表示验证不通过，控制台会有警告
-        }
-  	}
+// 方式2： 对象语法
+props:{
+  自定义属性名1:{
+      type:类型 或  [类型1，类型2,...],    // 类型有  Object,Array,String,Boolean,Number,Date,Function ，
+      default:默认值，  // 基本数据类型
+      default(){        // 如果props的值是引用数据类型，那么设置默认值的时候应该是一个函数，返回数组或对象
+        return []/{}
+      },
+      required:true/false,
+      validator:function(val){  // val就是该属性对应的值，用于内部做判断使用
+        return true/false   // true表示验证通过，false表示验证不通过，控制台会有警告
+      }
   }
-  ```
+}
+```
 
-### 35、如何自定义组件的 v-model
+### 如何自定义组件的 v-model
 
 一个组件上的 `v-model` 默认会利用名为 `value` 的 prop 和名为 `input` 的事件，但是像单选框、复选框等类型的输入控件可能会将 `value` attribute 用于[不同的目的](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox#Value)。`model` 选项可以用来避免这样的冲突：
 
@@ -738,11 +739,11 @@ Vue.component('base-checkbox', {
 
 注意你仍然需要在组件的 `props` 选项里声明 `checked` 这个 prop。
 
-### 36、`.native`修饰符有何用
+### `.native`修饰符有何用
 
 - 当我们给组件绑定原生事件无效的时候，可以加上`.native`修饰符就可以让组件上面的原生事件有效。
 
-### 37、`.sync`修饰符有何作用
+### `.sync`修饰符有何作用
 
 `.sync`的用法如下：
 
@@ -778,7 +779,7 @@ this.$emit('update:title', newTitle)
 
 **注意带有 `.sync` 修饰符的 `v-bind` **不能**和表达式一起使用**
 
-### 38、插槽是什么？ 有哪些分类？
+### 插槽是什么？ 有哪些分类？
 
 - 插槽是用来自定义组件内部模板内容的一种方式；
 - 分类：
@@ -786,7 +787,7 @@ this.$emit('update:title', newTitle)
   - 具名插槽
   - 作用域插槽
 
-### 39、写一个具名插槽
+### 写一个具名插槽
 
 方式 1：(老写法)
 
@@ -830,7 +831,7 @@ this.$emit('update:title', newTitle)
 <slot name="名称"></slot>
 ```
 
-### 40、作用域插槽如何写
+### 作用域插槽如何写
 
 方式 1：(老写法)
 
@@ -865,14 +866,14 @@ this.$emit('update:title', newTitle)
 </组件名>
 ```
 
-### 41、如何实现动态组件
+### 如何实现动态组件
 
 ```html
 <component :is="变量"></component>
 <!--变量的值就是组件名，这里就会展示什么组件-->
 ```
 
-### 42、如何实现缓存组件
+### 如何实现缓存组件
 
 ```html
 <keep-alive>
@@ -880,11 +881,11 @@ this.$emit('update:title', newTitle)
 </keep-alive>
 ```
 
-### 43、缓存组件要注意什么？
+### 缓存组件要注意什么？
 
 - 缓存组件抱起来的组件将会被缓存，下一次打开的时候不会被再次创建（所以前四个生命周期不会再次被创建），所以我们不能把组件一打开就要做的放在 created 或 mounted 里面，因为组件不会再次创建。我们需要放在`activated`钩子里面。具体可参见文档：https://cn.vuejs.org/v2/api/#activated
 
-### 44、如何定义一个递归组件
+### 如何定义一个递归组件
 
 - 所谓的递归组件就是内部不断调用自己，在我们的树形结构中非常常见，如无限极分类；无限极菜单都常用；
 
@@ -999,7 +1000,7 @@ this.$emit('update:title', newTitle)
     </script>
     ```
 
-### 45、vue 如何强制刷新组件
+### vue 如何强制刷新组件
 
 **1.使用 `this.$forceUpdate` 强制重新渲染**
 
@@ -1054,14 +1055,14 @@ export default {
 </script>
 ```
 
-### 46、什么时候使用 vue 动画
+### 什么时候使用 vue 动画
 
 - 条件渲染 (使用 `v-if`)
 - 条件展示 (使用 `v-show`)
 - 动态组件
 - 组件根节点
 
-### 47、vue 动画有哪些类名
+### vue 动画有哪些类名
 
 1. `v-enter`：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
 2. `v-enter-active`：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
@@ -1072,7 +1073,7 @@ export default {
 
 ![](https://cn.vuejs.org/images/transition.png)
 
-### 48、有哪些自定义过渡类名
+### 有哪些自定义过渡类名
 
 - `enter-class`
 - `enter-active-class`
@@ -1081,7 +1082,7 @@ export default {
 - `leave-active-class`
 - `leave-to-class` (2.1.8+)
 
-### 49、vue 中 mixins 配置选项是什么？有何作用
+### vue 中 mixins 配置选项是什么？有何作用
 
 - mixins 是混入，用于实现复用组件所需要的配置选项，可以实现很多功能的复用。
 
@@ -1110,7 +1111,7 @@ export default {
   var
   ```
 
-### 50、如何实现一个自定义指令
+### 如何实现一个自定义指令
 
 ```js
 // 全局注册指令
@@ -1128,7 +1129,7 @@ Vue.directive('指令名', {
 }
 ```
 
-### 51、自定义指令有何作用？ 有哪些钩子
+### 自定义指令有何作用？ 有哪些钩子
 
 - 作用：当我们希望对原生的 DOM 节点，或者组件 都做 某一类型的操作的时候（如：页面已进入输入框就获取焦点；如输入框一旦加上某个指令就可以实现自动验证），我们就可以用自定义指令来开发我们想要的功能。
 
@@ -1165,7 +1166,7 @@ Vue.directive('指令名', {
 
   - `oldVnode`：上一个虚拟节点，仅在 `update` 和 `componentUpdated` 钩子中可用。
 
-### 52、过滤器是什么？如何定义？如何使用？
+### 过滤器是什么？如何定义？如何使用？
 
 - 是什么： 是对模板里面的数据进行某一类的操作，可以理解为模板的工具函数（如：直接在模板里面使用定义好的过滤器实现时间戳变格式化的时间；价格保留小数位等等处理）
 
@@ -1201,7 +1202,7 @@ Vue.directive('指令名', {
   {{ 变量 | 过滤器(实参) }}   // 过滤器传参
   ```
 
-### 53、Vue.use 是什么? 如何使用？
+### Vue.use 是什么? 如何使用？
 
 - 是什么： vue.use 是 vue 的插件安装函数。调用 use 我们可以安装很多第三方的插件，如 vue-router,vuex, element-ui,vant 等等，当然最重要的是可以安装我们自己开发的插件。
 
@@ -1245,13 +1246,13 @@ Vue.directive('指令名', {
   Vue.use(MyPlugin, { someOption: true });
   ```
 
-### 54、vue-loader 是什么？使用它的用途有哪些？
+### vue-loader 是什么？使用它的用途有哪些？
 
 解析.vue 文件的一个加载器，跟 template/js/style 转换成 js 模块。
 
-用途：js 可以写 es6、style 样式可以 scss 或 less、template 可以加 jade 等
+用途：js 可以写 esstyle 样式可以 scss 或 less、template 可以加 jade 等
 
-### 55、聊聊你对 Vue.js 的 template 编译的理解？
+### 聊聊你对 Vue.js 的 template 编译的理解？
 
 **简而言之，就是先转化成 AST 树，再得到的 render 函数返回 VNode（Vue 的虚拟 DOM 节点）**
 
@@ -1261,27 +1262,27 @@ Vue.directive('指令名', {
 
 然后，AST 会经过 generate（将 AST 语法树转化成 render funtion 字符串的过程）得到 render 函数，render 的返回值是 VNode，VNode 是 Vue 的虚拟 DOM 节点，里面有（标签名、子节点、文本等等）
 
-### 56、什么是 vue 生命周期？
+### 什么是 vue 生命周期？
 
 Vue 实例从创建到销毁的过程，就是生命周期。也就是从开始创建、初始化数据、编译模板、挂载 Dom→ 渲染、更新 → 渲染、卸载等一系列过程，我们称这是 Vue 的生命周期。
 
-### 57、vue 生命周期的作用是什么？
+### vue 生命周期的作用是什么？
 
 它的生命周期中有多个事件钩子，让我们在控制整个 Vue 实例的过程时更容易形成好的逻辑。
 
-### 58、vue 生命周期总共有几个阶段？
+### vue 生命周期总共有几个阶段？
 
 它可以总共分为 8 个阶段：创建前/后, 载入前/后,更新前/后,销毁前/销毁后
 
-### 59、第一次页面加载会触发哪几个钩子？
+### 第一次页面加载会触发哪几个钩子？
 
 第一次页面加载时会触发 beforeCreate, created, beforeMount, mounted 这几个钩子
 
-### 60、DOM 渲染在 哪个周期中就已经完成？
+### DOM 渲染在 哪个周期中就已经完成？
 
 DOM 渲染在 mounted 中就已经完成了
 
-### 61、简单描述每个周期具体适合哪些场景？
+### 简单描述每个周期具体适合哪些场景？
 
 beforecreate : 可以在这加个 loading 事件，出现加载框效果
 
@@ -1295,7 +1296,7 @@ beforeDestroy : 可以做一个确认停止事件的确认框
 
 nextTick : 更新数据后立即操作 dom
 
-### 62、vue 组件如何通信
+### vue 组件如何通信
 
 - 方式 1：父子通信
   - 父传子 ：自定义属性 props
@@ -1312,7 +1313,7 @@ nextTick : 更新数据后立即操作 dom
 - 方式 5： vuex
 - 方式 6： 本地存储
 
-### 63、说出$mount、$watch、$delete、$refs、$slots、$forceUpdate、$nextTick、$destroy 这些 API 方法或属性的的作用
+### 说出$mount、$watch、$delete、$refs、$slots、$forceUpdate、$nextTick、$destroy 这些 API 方法或属性的的作用
 
 - `$mount` ：用于挂载 vue 实例到某个节点上面，功能类似 el 选项， 有了它可以不配置 el;
 - `$watch`：用于监听数据的变化，功能类似内部配置选项 watch 一样的效果。
@@ -1323,7 +1324,7 @@ nextTick : 更新数据后立即操作 dom
 - `$nextTick`：将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。【简单理解即使等到 DOM 渲染完成再做应该的逻辑操作】
 - `$destroy()`：只是完全销毁一个实例。清理它与其它实例的连接，**解绑它的全部指令及事件监听器。**
 
-### 64、**is 的用法（用于动态组件且基于 DOM 内模板的限制来工作。）**
+### **is 的用法（用于动态组件且基于 DOM 内模板的限制来工作。）**
 
 **is 用来动态切换组件，DOM 模板解析**
 
@@ -1334,14 +1335,14 @@ nextTick : 更新数据后立即操作 dom
 </table>
 ```
 
-### 65、vue 的两个核心是什么
+### vue 的两个核心是什么
 
 **数据驱动、组件系统。**
 
 > 数据驱动:Object.defineProperty 和存储器属性: getter 和 setter（所以只兼容 IE9 及以上版本），可称为基于依赖收集的观测机制,核心是 VM，即 ViewModel，保证数据和视图的一致性。
 > 组件系统:[点此查看](https://link.zhihu.com/?target=https%3A//blog.csdn.net/tangxiujiang/article/details/79620542%23commentBox)
 
-### 66、vue 的 render 函数式什么？如何使用
+### vue 的 render 函数式什么？如何使用
 
 Vue 推荐在绝大多数情况下使用模板来创建你的 HTML。然而在一些场景中，你真的需要 JavaScript 的完全编程的能力。这时你可以用**渲染函数**，它比模板更接近编译器。 **无论 el 也好，template 最终都是通过 render 函数渲染，而且如果同时存在三者，render 函数权重最大！**
 
@@ -1497,7 +1498,7 @@ Vue.component('box', {
 
 **参考：https://www.jianshu.com/p/7508d2a114d3**
 
-### 67、使用 key 要什么要注意的吗？
+### 使用 key 要什么要注意的吗？
 
 - 不要使用对象或数组之类的非基本类型值作为 key，请用字符串或数值类型的值；
 
@@ -1505,13 +1506,13 @@ Vue.component('box', {
 
 例：在渲染`[a,b,c]`用 index 作为 key，那么在删除第二项的时候，index 就会从 0 1 2 变成 0 1（而不是 0 2)，随之第三项的 key 变成 1 了，就会误把第三项删除了。
 
-### 68、组件的 name 选项有什么作用？
+### 组件的 name 选项有什么作用？
 
 - 递归组件时，组件调用自身使用；
 - 用`is`特殊特性和`component`内置组件标签时使用；
 - `keep-alive`内置组件标签中`include `和`exclude`属性中使用。
 
-### 69、什么是递归组件？举个例子说明下？
+### 什么是递归组件？举个例子说明下？
 
 递归引用可以理解为组件调用自身，在开发多级菜单组件时就会用到，调用前要先设置组件的 name 选项， **注意一定要配合 v-if 使用，避免形成死循环**，用 element-vue 组件库中 NavMenu 导航菜单组件开发多级菜单为例：
 
@@ -1546,17 +1547,17 @@ Vue.component('box', {
 </script>
 ```
 
-### 70、说下`$attrs`和`$listeners`的使用场景？
+### 说下`$attrs`和`$listeners`的使用场景？
 
 `$attrs`: 包含了父作用域中（组件标签）不作为 prop 被识别 (且获取) 的特性绑定 (class 和 style 除外)。 在创建基础组件时候经常使用，可以和组件选项`inheritAttrs:false`和配合使用在组件内部标签上用`v-bind="$attrs"`将非 prop 特性绑定上去；
 
 `$listeners`: 包含了父作用域中（组件标签）的 (不含`.native`) v-on 事件监听器。 在组件上监听一些特定的事件，比如 focus 事件时，如果组件的根元素不是表单元素的，则监听不到，那么可以用`v-on="$listeners"`绑定到表单元素标签上解决。
 
-### 71、EventBus 注册在全局上时，路由切换时会重复触发事件，如何解决呢？
+### EventBus 注册在全局上时，路由切换时会重复触发事件，如何解决呢？
 
 在有使用`$on`的组件中要在`beforeDestroy`钩子函数中用`$off`销毁。
 
-### 72、Vue 怎么改变插入模板的分隔符？
+### Vue 怎么改变插入模板的分隔符？
 
 用`delimiters`选项,其默认是`["{{", "}}"]`
 
@@ -1567,17 +1568,17 @@ new Vue({
 })
 ```
 
-### 73、Vue 变量名如果以`_`、`$`开头的属性会发生什么问题？怎么访问到它们的值？
+### Vue 变量名如果以`_`、`$`开头的属性会发生什么问题？怎么访问到它们的值？
 
 以 `_ `或 `$` 开头的属性 不会 被 Vue 实例代理，因为它们可能和 Vue 内置的属性、API 方法冲突，你可以使用例如 `vm.$data._property` 的方式访问这些属性。
 
-### 74、怎么捕获 Vue 组件的错误信息？
+### 怎么捕获 Vue 组件的错误信息？
 
 - `errorCaptured`是组件内部钩子，当捕获一个来自子孙组件的错误时被调用，接收`error`、`vm`、`info`三个参数，`return false`后可以阻止错误继续向上抛出。
 
 - `errorHandler`为全局钩子，使用`Vue.config.errorHandler`配置，接收参数与`errorCaptured`一致，2.6 后可捕捉`v-on`与`promise`链的错误，可用于统一错误处理与错误兜底。
 
-### 75、Vue 项目中如何配置 favicon？
+### Vue 项目中如何配置 favicon？
 
 - 静态配置 `<link rel="icon" href="<%= BASE_URL %>favicon.ico">`,
 
@@ -1600,11 +1601,11 @@ new Vue({
   }
   ```
 
-### 77、Vue 为什么要求组件模板只能有一个根元素？
+### Vue 为什么要求组件模板只能有一个根元素？
 
 当前的 virtualDOM 差异和 diff 算法在很大程度上依赖于每个子组件总是只有一个根元素。
 
-### 76、说说你对单向数据流和双向数据流的理解
+### 说说你对单向数据流和双向数据流的理解
 
 单向数据流是指数据只能从父级向子级传递数据，子级不能改变父级向子级传递的数据。
 
@@ -1614,12 +1615,12 @@ new Vue({
 
 ## 二、vue-router
 
-### 1、vue-route 如何使用？
+### vue-route 如何使用？
 
 ```js
-// 【1、安装 】
+// 【安装 】
 npm i vue-router
-// 【2、配置】
+// 【配置】
 // src/router/index.js 创建配置文件
 import Vue from 'vuex'
 import Router  from "vue-router"
@@ -1638,7 +1639,7 @@ const router = new Router({
 // 暴露
 export default router
 
-// 【3、注入vue实例】
+// 【注入vue实例】
 // main.js中操作
 ...
 import router from './router'
@@ -1649,15 +1650,15 @@ new Vue({
   ...
 })
 
-// 【4、定义路由出口】
+// 【定义路由出口】
 // App.vue中操作
 <router-view></router-view>
 
-// 【5、使用router-link跳转】
+// 【使用router-link跳转】
 <router-link to="/地址"></router-link>
 ```
 
-### 2、何为命名路由？
+### 何为命名路由？
 
 - 其实就是给路由取一个名字,增加一个 name 属性。
 
@@ -1677,7 +1678,7 @@ new Vue({
   // 编程式导航 router.push('/地址') router.push({name:'名称'})
   ```
 
-### 3、如何定义动态路由，获取动态参数
+### 如何定义动态路由，获取动态参数
 
 ```js
 // 映射关系
@@ -1743,7 +1744,7 @@ const User = {
 };
 ```
 
-### 4、有哪些编程式导航方法
+### 有哪些编程式导航方法
 
 - 编程式导航方法都存在 路由实例里面。 组件中可以使用`this.$router`访问，其他 JS 文件中可以通过导入路由实例调用
   - `this.$router.push('/地址')` 跳转到某个新地址，历史记录栈中增加一个
@@ -1752,7 +1753,7 @@ const User = {
   - `this.$router.back()` 后退
   - `this.$router.forward()` 前进
 
-### 5、何为命名视图？如何使用
+### 何为命名视图？如何使用
 
 - 所谓的命名视图的意思是默认情况下我们一个路由地址渲染一个组件到一个 router-view 里面去；而命名视图的目的是 **可以实现一个路由地址，渲染多个组件到不同的 router-view 里去进行展示**
 
@@ -1786,7 +1787,7 @@ const User = {
   <!--渲染组件B-->
   ```
 
-### 6、何为嵌套路由？ 如何使用？何时使用？
+### 何为嵌套路由？ 如何使用？何时使用？
 
 - 定义：所谓的嵌套路由，指的的是在一个路由组件里面还有会有 router-view 展示下一级的路由组件信息。
 
@@ -1814,7 +1815,7 @@ const User = {
   ]
   ```
 
-### 7、怎么通过路由实现面包屑
+### 怎么通过路由实现面包屑
 
 - 认识面包屑
 
@@ -1831,7 +1832,7 @@ const User = {
   - 每个路由都要有 meta 元信息， 然后里面设置一个 tilte，设置为标题。
   - 我们的`$route` 表示当前页面路由信息，如果是一个嵌套路由，那么`$route.matched` 属性是一个数组，里面的内容就是一个上上级到下一级的路由信息，我们可以通过遍历数组，取出每个里面的 path 地址和 meta 里面的 title 来进行设置即可。
 
-### 8、页面之间如何传参
+### 页面之间如何传参
 
 - 本地存储，一个页面设置，一个页面读取
 - 动态路由
@@ -1845,7 +1846,7 @@ const User = {
   - `this.$route.hash` 然后再处理得到信息 【B 页面】
 - vue 存储和读取
 
-### 9、vue-router 有哪几种导航钩子？
+### vue-router 有哪几种导航钩子？
 
 三种
 
@@ -1877,7 +1878,7 @@ const router = new VueRouter({
 });
 ```
 
-### 10、$route和$router 的区别
+### $route和$router 的区别
 
 - `$route` 是“**路由信息**对象”
   - path 路径地址
@@ -1892,7 +1893,7 @@ const router = new VueRouter({
   - beforeEach/afterEach/...
   - addRoutes 方法，增加映射
 
-### 11、路由元信息是什么？有何作用？
+### 路由元信息是什么？有何作用？
 
 - 设置每个路由映对象的时候，可以增加一个 meta 属性，里面可以自定义相关数据
 
@@ -1916,7 +1917,7 @@ const router = new VueRouter({
   - meta 里面放入权限验证字段，判断是否有权限访问页面
   - ...
 
-### 12、如何实现页面的过渡效果
+### 如何实现页面的过渡效果
 
 ```html
 <transition>
@@ -1924,7 +1925,7 @@ const router = new VueRouter({
 </transition>
 ```
 
-### 13、如何实现路由重定向
+### 如何实现路由重定向
 
 ```js
 // 路由映射
@@ -1935,7 +1936,7 @@ const router = new VueRouter({
 }
 ```
 
-### 14、路由懒加载是什么？ 如何实现？为什么要懒加载？
+### 路由懒加载是什么？ 如何实现？为什么要懒加载？
 
 - 为什么： 当打包构建应用时，JavaScript 包会变得非常大，影响页面加载。如果我们能把不同路由对应的组件分割成不同的代码块，然**后当路由被访问的时候才加载对应组件，这样就更加高效了。**
 
@@ -1951,7 +1952,7 @@ const router = new VueRouter({
   }
   ```
 
-### 15、导航钩子有何作用？
+### 导航钩子有何作用？
 
 - 导航钩子类似中间件的味道，对导航的发生过程进行拦截，满足条件才可以继续向下走，否则路由就会被挂起来。 所以我们很多时候需要注意是否需要在导航守卫里面调用 next
 - 全局前置守卫：（`router.beforeEach((to, from, next) => { ... }`）
@@ -1967,7 +1968,7 @@ const router = new VueRouter({
 - 局部后置守卫： （`beforeRouteLeave (to, from, next) { ... }`）
   - 某个页面要消失的时候做的事情，如判断是否要离开，是否保存了数据等。
 
-### 16、如何实现激活导航
+### 如何实现激活导航
 
 - 默认如果`router-link`组件的地址和当前路由地址一致，会加上`router-link-active`的 class 名（这是模糊匹配）或者 `router-link-exact-active`的 class 名（这是严格匹配）
 
@@ -1982,13 +1983,13 @@ const router = new VueRouter({
   })
   ```
 
-### 17、有哪些路由模式？ 实现的具体原理是什么？
+### 有哪些路由模式？ 实现的具体原理是什么？
 
 - 路由模式 2 中：
   - history 模式 原理： html5 的 history 里面的 api， 如 pushState,replaceState
   - hash 模式 原理： 监听 window 的 hashchange 事件，展示不同组件
 
-### 18、history 模式路由要注意什么？
+### history 模式路由要注意什么？
 
 - 如果不想要很丑的 hash，我们可以用路由的 **history 模式**，这种模式充分利用 `history.pushState` API 来完成 URL 跳转而无须重新加载页面。
 
@@ -1998,13 +1999,13 @@ const router = new VueRouter({
 
 - **简而言之： history 模式需要后台配置，否则会和真正的服务器端路由地址冲突。**
 
-### 19、addRoutes 方法是什么？有何作用？
+### addRoutes 方法是什么？有何作用？
 
 - 是什么：动态添加更多的路由规则。参数必须是一个符合 `routes` 选项要求的数组。
 
 - 作用： 可以实现根据需求动态加载路由配置映射关系数据信息，我们一般在**管理系统中，通过这个方法来实现 按需加载路由映射，从而实现不同的角色看到不同的菜单。**
 
-### 20、base 配置项的作用
+### base 配置项的作用
 
 - 配置路由地址的基准前缀地址，增加这个选项之后所有的路由地址会全部自动增加上这个前缀，但是我们写`router-link` 的时候不需要加这个前缀。
 
@@ -2018,7 +2019,7 @@ const router = new VueRouter({
   })
   ```
 
-### 21、如何处理滚动行为
+### 如何处理滚动行为
 
 - **history 模式下**
 
@@ -2050,20 +2051,20 @@ const router = new VueRouter({
   });
   ```
 
-### 22、路由里面有哪些常用组件
+### 路由里面有哪些常用组件
 
 - `router-link`
 
 - `router-view`
 
-### 23、路由里面详情页跳转详情页，组件不重新创建如何处理？
+### 路由里面详情页跳转详情页，组件不重新创建如何处理？
 
 - 我们的`vue-router`同路由跳转到同路由，组件是不会更新的。 如：文章详情路由`/article/11` 页面里面有个链接跳转到`/article/22` 这篇文章，其实就是同路由组件跳转。这个时候文章详情组件是不会再次被创建的，所以我们不能把获取数据请求的方法写在 `created`或者 `mounted`里面或者在里面去调用，因为组件不会被再次创建，如果写在生命周期里面去调用，从而导致跳转到`/article/22`的时候无法请求数据，
 - 如何解决：
   - 方式 1：使用 `beforeRouteUpdate`，因为`/article/11`跳转到`/article/22` 这个跳转属于同路由组件更新，`beforeRouteUpdate`会被触发
   - 方式 2： 使用`watch`去监听`$route`的变化，在监听的函数里面去发送请求。
 
-### 24、如何实现页面加载进度条
+### 如何实现页面加载进度条
 
 **核心使用：`nprogress`插件**
 
@@ -2118,7 +2119,7 @@ NProgress.configure({
   });
   ```
 
-### 25、如何实现刷新页面
+### 如何实现刷新页面
 
 - **实现思路有 3 种**
 - 方式 1：
@@ -2172,7 +2173,7 @@ NProgress.configure({
 
 本文所使用的方法，其实是一种 hack 方法，在极端情况下，比如网络极端恶劣，那么可能出现跳到空页面后跳不会来，或者干脆跳不到空页面的情况，大家需要根据自己的项目情况酌情选择。
 
-### 26、如何使用路由实现标签页
+### 如何使用路由实现标签页
 
 ![](/img/vue-interview/007.png)
 
@@ -2265,12 +2266,12 @@ NProgress.configure({
   };
   /*
 思路：
-    1、有一个数组，用于存储打开过的标签信息
+    有一个数组，用于存储打开过的标签信息
         // 数组格式： [{ name:'名称',path:'/地址' },...]
-    2、增加：
+    增加：
         // 用watch监听$route的变化
             // 有变化，插入到数组中去（判断一下数组中是否已经存在）
-	3、删除：
+	删除：
 		删除所有： 直接赋值为空数组，然后跳转到默认地址
 		删除其他： 直接赋值为一个元素，就是当前路由的信息
 		删除单个：
@@ -2338,20 +2339,20 @@ NProgress.configure({
 </style>
 ```
 
-### 27、说一下路由实现的原理
+### 说一下路由实现的原理
 
 - hash 模式：**监听 window 的 hashchange 事件，从而实现更换展示不同的组件**
 - history 模式： <u>从 HTML5 开始，**History interface** 提供了 2 个新的方法：**pushState()**、**replaceState()** 使得我们可以对浏览器历史记录栈进行修改</u>
 - 参考文档地址：https://www.cnblogs.com/gaosirs/p/10606266.html
 - vue-router 原理文档：https://blog.csdn.net/derivation/article/details/105085951
 
-### 28、完整的 vue-router 导航解析流程
+### 完整的 vue-router 导航解析流程
 
 > 1.导航被触发； 2.在失活的组件里调用 beforeRouteLeave 守卫； 3.调用全局 beforeEach 守卫； 4.在复用组件里调用 beforeRouteUpdate 守卫； 5.调用路由配置里的 beforeEnter 守卫； 6.解析异步路由组件； 7.在被激活的组件里调用 beforeRouteEnter 守卫； 8.调用全局 beforeResolve 守卫； 9.导航被确认；
 > 10..调用全局的 afterEach 钩子；
 > 11.DOM 更新； 12.用创建好的实例调用 beforeRouteEnter 守卫中传给 next 的回调函数。
 
-### 29、切换路由时，需要保存草稿的功能，怎么实现呢？
+### 切换路由时，需要保存草稿的功能，怎么实现呢？
 
 ```html
 <keep-alive :include="include">
@@ -2361,7 +2362,7 @@ NProgress.configure({
 
 其中 include 可以是个数组，数组内容为路由的 name 选项的值。
 
-### 30、说说你对 router-link 的了解
+### 说说你对 router-link 的了解
 
 `<router-link>`是 Vue-Router 的内置组件，在具有路由功能的应用中作为声明式的导航使用。
 
@@ -2402,7 +2403,7 @@ NProgress.configure({
 
 - `event`：声明可以用来触发导航的事件。可以是一个字符串或是一个包含字符串的数组，默认是`click`。
 
-### 31、Vue 路由怎么跳转打开新窗口？
+### Vue 路由怎么跳转打开新窗口？
 
 ```js
 const obj = {
@@ -2417,23 +2418,23 @@ window.open(href, '_blank');
 
 ## 三、vuex
 
-### 1、vuex 和本地存储的区别
+### vuex 和本地存储的区别
 
 - vuex 刷新就丢失，本地存储一直在
 
 - vuex 它可以实时更新，本地存储不能
 
-### 2、什么是 Vuex？
+### 什么是 Vuex？
 
 Vuex 是一个专为 Vue.js 应用程序开发的状态管理插件。它采用集中式存储管理应用的所有组件的状态，而更改状态的唯一方法是提交 mutation，例`this.$store.commit('SET_VIDEO_PAUSE', video_pause)`，SET_VIDEO_PAUSE 为 mutations 属性中定义的方法。
 
-### 3、Vuex 解决了什么问题？
+### Vuex 解决了什么问题？
 
 - 多个组件依赖于同一状态时，对于多层嵌套的组件的传参将会非常繁琐，并且对于兄弟组件间的状态传递无能为力。
 
 - 来自不同组件的行为需要变更同一状态。以往采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。以上的这些模式非常脆弱，通常会导致无法维护的代码。
 
-### 4、怎么引用 Vuex？
+### 怎么引用 Vuex？
 
 - 先安装依赖`nnpm install vuex --save`
 
@@ -2471,19 +2472,19 @@ const vm = new Vue({
 }).$mount('#app');
 ```
 
-### 5、Vuex 的 5 个核心属性是什么？
+### Vuex 的 5 个核心属性是什么？
 
 分别是 state、getters、mutations、actions、modules 。
 
-### 6、Vuex 中状态储存在哪里，怎么改变它？
+### Vuex 中状态储存在哪里，怎么改变它？
 
 存储在 state 中，改变 Vuex 中的状态的唯一途径就是显式地提交 (commit) mutation。
 
-### 7、Vuex 中状态是对象时，使用时要注意什么？
+### Vuex 中状态是对象时，使用时要注意什么？
 
 因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变 state 里面的状态，是不允许，所以先用深度克隆复制对象，再修改。
 
-### 8、怎么在组件中批量使用 Vuex 的 state 状态？
+### 怎么在组件中批量使用 Vuex 的 state 状态？
 
 使用 mapState 辅助函数, 利用对象展开运算符将 state 混入 computed 对象中
 
@@ -2496,7 +2497,7 @@ export default {
 };
 ```
 
-### 9、Vuex 中要从 state 派生一些状态出来，且多个组件使用它，该怎么做，？
+### Vuex 中要从 state 派生一些状态出来，且多个组件使用它，该怎么做，？
 
 使用 getter 属性，相当 Vue 中的计算属性 computed，只有原状态改变派生状态才会改变。
 
@@ -2536,7 +2537,7 @@ computed: {
 
 ```
 
-### 10、怎么通过 getter 来实现在组件内可以通过特定条件来获取 state 的状态？
+### 怎么通过 getter 来实现在组件内可以通过特定条件来获取 state 的状态？
 
 通过让 getter 返回一个函数，来实现给 getter 传参。然后通过参数来进行判断从而获取 state 中满足要求的状态
 
@@ -2569,7 +2570,7 @@ mounted(){
 }
 ```
 
-### 11、怎么在组件中批量使用 Vuex 的 getter 属性
+### 怎么在组件中批量使用 Vuex 的 getter 属性
 
 使用 mapGetters 辅助函数, 利用对象展开运算符将 getter 混入 computed 对象中
 
@@ -2582,7 +2583,7 @@ export default {
 };
 ```
 
-### 12、怎么在组件中批量给 Vuex 的 getter 属性取别名并使用
+### 怎么在组件中批量给 Vuex 的 getter 属性取别名并使用
 
 使用 mapGetters 辅助函数, 利用对象展开运算符将 getter 混入 computed 对象中
 
@@ -2598,7 +2599,7 @@ export default {
 };
 ```
 
-### 13、在 Vuex 的 state 中有个状态 number 表示货物数量，在组件怎么改变它。
+### 在 Vuex 的 state 中有个状态 number 表示货物数量，在组件怎么改变它。
 
 首先要在 mutations 中注册一个 mutation
 
@@ -2621,11 +2622,11 @@ const store = new Vuex.Store({
 this.$store.commit('SET_NUMBER', 10);
 ```
 
-### 14、在 Vuex 中使用 mutation 要注意什么。
+### 在 Vuex 中使用 mutation 要注意什么。
 
 mutation 必须是同步函数
 
-### 15、在组件中多次提交同一个 mutation，怎么写使用更方便。
+### 在组件中多次提交同一个 mutation，怎么写使用更方便。
 
 使用 mapMutations 辅助函数,在组件中这么使用
 
@@ -2640,7 +2641,7 @@ methods:{
 
 然后调用`this.setNumber(10)`相当调用`this.$store.commit('SET_NUMBER',10)`
 
-### 16、Vuex 中 action 和 mutation 有什么区别？
+### Vuex 中 action 和 mutation 有什么区别？
 
 - action 提交的是 mutation，而不是直接变更状态。mutation 可以直接变更状态。
 
@@ -2661,11 +2662,11 @@ methods:{
 }
 ```
 
-### 17、Vuex 中 action 和 mutation 有什么相同点？
+### Vuex 中 action 和 mutation 有什么相同点？
 
 第二参数都可以接收外部提交时传来的参数。 `this.$store.dispatch('ACTION_NAME',data)`和`this.$store.commit('SET_NUMBER',10)`
 
-### 18、在组件中多次提交同一个 action，怎么写使用更方便。
+### 在组件中多次提交同一个 action，怎么写使用更方便。
 
 使用 mapActions 辅助函数,在组件中这么使用
 
@@ -2679,7 +2680,7 @@ methods:{
 
 然后调用`this.setNumber(10)`相当调用`this.$store.dispatch('SET_NUMBER',10)`
 
-### 19、Vuex 中 action 通常是异步的，那么如何知道 action 什么时候结束呢？
+### Vuex 中 action 通常是异步的，那么如何知道 action 什么时候结束呢？
 
 在 action 函数中返回 Promise，然后再提交时候用 then 处理
 
@@ -2699,7 +2700,7 @@ this.$store.dispatch('SET_NUMBER_A').then(() => {
 })
 ```
 
-### 20、Vuex 中有两个 action，分别是 actionA 和 actionB，其内都是异步操作，在 actionB 要提交 actionA，需在 actionA 处理结束再处理其它操作，怎么实现？
+### Vuex 中有两个 action，分别是 actionA 和 actionB，其内都是异步操作，在 actionB 要提交 actionA，需在 actionA 处理结束再处理其它操作，怎么实现？
 
 利用 ES6 的`async`和`await`来实现。
 
@@ -2715,7 +2716,7 @@ actions:{
 }
 ```
 
-### 21、有用过 Vuex 模块吗，为什么要使用，怎么使用。
+### 有用过 Vuex 模块吗，为什么要使用，怎么使用。
 
 有，因为使用单一状态树，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store 对象就有可能变得相当臃肿。所以将 store 分割成模块（module）。每个模块拥有自己的 state、mutations、actions、getters，甚至是嵌套子模块，从上至下进行同样方式的分割。
 
@@ -2759,11 +2760,11 @@ const store = new Vuex.Store({
 export default store;
 ```
 
-### 22、在模块中，getter 和 mutation 接收的第一个参数 state，是全局的还是模块的？
+### 在模块中，getter 和 mutation 接收的第一个参数 state，是全局的还是模块的？
 
 第一个参数 state 是模块的 state，也就是局部的 state。
 
-### 23、在模块中，getter 和 mutation 和 action 中怎么访问全局的 state 和 getter？
+### 在模块中，getter 和 mutation 和 action 中怎么访问全局的 state 和 getter？
 
 - 在 getter 中可以通过第三个参数 rootState 访问到全局的 state,可以通过第四个参数 rootGetters 访问到全局的 getter。
 
@@ -2771,7 +2772,7 @@ export default store;
 
 - 在 action 中第一个参数 context 中的`context.rootState`访问到全局的 state，`context.rootGetters`访问到全局的 getter。
 
-### 24、在组件中怎么访问 Vuex 模块中的 getter 和 state,怎么提交 mutation 和 action？
+### 在组件中怎么访问 Vuex 模块中的 getter 和 state,怎么提交 mutation 和 action？
 
 - 直接通过`this.$store.getters.xxx`和`this.$store.模块名.xxx`来访问模块中的 getter 和 state。
 
@@ -2785,7 +2786,7 @@ export default store;
 
 - 直接通过`this.$store.dispatch('模块名/actionA',data)`提交模块中的 action。
 
-### 25、用过 Vuex 模块的命名空间吗？为什么使用，怎么使用。
+### 用过 Vuex 模块的命名空间吗？为什么使用，怎么使用。
 
 默认情况下，模块内部的 action、mutation 和 getter 是注册在全局命名空间，如果多个模块中 action、mutation 的命名是一样的，那么提交 mutation、action 时，将会触发所有模块中命名相同的 mutation、action。
 
@@ -2801,7 +2802,7 @@ export default {
 };
 ```
 
-### 26、怎么在带命名空间的模块内提交全局的 mutation 和 action？
+### 怎么在带命名空间的模块内提交全局的 mutation 和 action？
 
 将` { root: true }` 作为第三参数传给 dispatch 或 commit 即可。
 
@@ -2810,7 +2811,7 @@ this.$store.dispatch('actionA', null, { root: true });
 this.$store.commit('mutationA', null, { root: true });
 ```
 
-### 27、怎么在带命名空间的模块内注册全局的 action？
+### 怎么在带命名空间的模块内注册全局的 action？
 
 ```js
 actions: {
@@ -2821,13 +2822,13 @@ actions: {
   }
 ```
 
-### 28、组件中怎么提交 modules 中的带命名空间的 moduleA 中的 mutationA？
+### 组件中怎么提交 modules 中的带命名空间的 moduleA 中的 mutationA？
 
 ```js
 this.$store.commit('moduleA/mutationA', data);
 ```
 
-### 29、怎么使用 mapState，mapGetters，mapActions 和 mapMutations 这些函数来绑定带命名空间的模块？
+### 怎么使用 mapState，mapGetters，mapActions 和 mapMutations 这些函数来绑定带命名空间的模块？
 
 **使用`createNamespacedHelpers`创建基于某个命名空间辅助函数**
 
@@ -2887,7 +2888,7 @@ export default {
 }
 ```
 
-### 30、Vuex 插件有用过吗？怎么用简单介绍一下？
+### Vuex 插件有用过吗？怎么用简单介绍一下？
 
 Vuex 插件就是一个函数，它接收 store 作为唯一参数。在 Vuex.Store 构造器选项 plugins 引入。 在 store/plugin.js 文件中写入
 
@@ -2910,7 +2911,7 @@ const store = new Vuex.Store({
 });
 ```
 
-### 31、在 Vuex 插件中怎么监听组件中提交 mutation 和 action？
+### 在 Vuex 插件中怎么监听组件中提交 mutation 和 action？
 
 - 用 Vuex.Store 的实例方法`subscribe`监听组件中提交 mutation
 - 用 Vuex.Store 的实例方法`subscribeAction`监听组件中提交 action 在 store/plugin.js 文件中写入
@@ -2950,7 +2951,7 @@ const store = new Vuex.Store({
 });
 ```
 
-### 32、在 v-model 上怎么用 Vuex 中 state 的值？
+### 在 v-model 上怎么用 Vuex 中 state 的值？
 
 需要通过 computed 计算属性来转换。
 
@@ -2969,7 +2970,7 @@ computed: {
 }
 ```
 
-### 33、Vuex 的严格模式是什么,有什么作用,怎么开启？
+### Vuex 的严格模式是什么,有什么作用,怎么开启？
 
 在严格模式下，**无论何时发生了状态变更且不是由 mutation 函数引起的，将会抛出错误。**这能保证所有的状态变更都能被调试工具跟踪到。（有效防止了直接赋值 state 里面的内容进行修改）
 
@@ -2981,19 +2982,19 @@ const store = new Vuex.Store({
 });
 ```
 
-### 34、为什么不推荐直接赋值修改 state
+### 为什么不推荐直接赋值修改 state
 
 组件里直接修改 state 也是生效的,但是不推荐这种直接修改 state 的方式，**因为这样不能使用 vuex 的浏览器插件来跟踪状态的变化，不利于调试。如果是严格模式下，直接会抛出错误。**
 
 ## 四、axios
 
-### 1、axios 是什么
+### axios 是什么
 
 1. Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。前端最流行的 ajax 请求库，
 
 2. react/vue 官方都推荐使用 axios 发 ajax 请求
 
-### 2、axios 特点
+### axios 特点
 
 1. 基于 promise 的异步 ajax 请求库，支持 promise 所有的 API
 
@@ -3009,7 +3010,7 @@ const store = new Vuex.Store({
 
 7. 安全性更高，客户端支持防御 XSRF，就是让你的每个请求都带一个从 cookie 中拿到的 key, 根据浏览器同源策略，假冒的网站是拿不到你 cookie 中得 key 的，这样，后台就可以轻松辨别出这个请求是否是用户在假冒网站上的误导输入，从而采取正确的策略。
 
-### 3、axios 常用语法
+### axios 常用语法
 
 - **axios(config): 通用/最本质的发任意类型请求的方式**
 
@@ -3043,7 +3044,7 @@ const store = new Vuex.Store({
 
 - axios.spread(): 用来指定接收所有成功数据的回调函数的方法
 
-### 4、axios 为什么既能在浏览器环境运行又能在服务器(node)环境运行？
+### axios 为什么既能在浏览器环境运行又能在服务器(node)环境运行？
 
 axios 在浏览器端使用`XMLHttpRequest`对象发送 ajax 请求；在 node 环境使用`http`对象发送 ajax 请求。
 
@@ -3064,7 +3065,7 @@ function getDefaultAdapter () {
 
 上面几行代码，可以看出：XMLHttpRequest 是一个 API，它为客户端提供了在客户端和服务器之间传输数据的功能；process 对象是一个 global （全局变量），提供有关信息，控制当前 Node.js 进程。原来作者是通过判断 XMLHttpRequest 和 process 这两个全局变量来判断程序的运行环境的，从而在不同的环境提供不同的 http 请求模块，实现客户端和服务端程序的兼容。
 
-### 5、axios 相比原生 ajax 的优点
+### axios 相比原生 ajax 的优点
 
 ajax 的缺点
 
@@ -3074,7 +3075,7 @@ ajax 的缺点
 - 不符合关注分离（Separation of Concerns）的原则
 - 配置和调用方式非常混乱，而且基于事件的异步模型不友好。
 
-### 6、说下你了解的 axios 相关配置属性？
+### 说下你了解的 axios 相关配置属性？
 
 - `url`是用于请求的服务器 URL
 
@@ -3119,7 +3120,7 @@ ajax 的缺点
   }
   ```
 
-### 7、什么是 axios 拦截器
+### 什么是 axios 拦截器
 
 - 什么是拦截器： 在我们实际发送请求到我们的服务器之前进行拦截处理；在我们的服务器端正式返回数据给具体请求方法前进行拦截。
 
@@ -3130,7 +3131,7 @@ ajax 的缺点
 - 请求拦截器的作用是在请求发送前进行一些操作，例如在每个请求体里加上 token，统一做了处理如果以后要改也非常容易。
 - 响应拦截器的作用是在接收到响应后进行一些操作，例如在服务器返回登录状态失效，需要重新登录的时候，跳转到登录页等。
 
-### 8、拦截器如何使用
+### 拦截器如何使用
 
 ```js
 // 添加请求拦截器
@@ -3158,7 +3159,7 @@ axios.interceptors.response.use(
 );
 ```
 
-### 9、如何创建一个 axios 实例
+### 如何创建一个 axios 实例
 
 ```js
 const $axios = axios.create({
@@ -3167,7 +3168,7 @@ const $axios = axios.create({
 // 注意创建的axios实例对象是没有all方法的。
 ```
 
-### 10、axios 处理 token 过期后如何继续之前的请求
+### axios 处理 token 过期后如何继续之前的请求
 
 ```js
 /**
@@ -3261,7 +3262,7 @@ request.interceptors.response.use(
 export default request;
 ```
 
-### 11、vue 中如何使用 axios
+### vue 中如何使用 axios
 
 - 安装 axios `npm i axios -S`
 
@@ -3372,7 +3373,7 @@ vue 中使用 axios 一般主要是 2 中方法
 
 ## 五、vue-cli
 
-### 1、**vue 等单页面应用及其优缺点**
+### **vue 等单页面应用及其优缺点**
 
 **缺点：**
 
@@ -3388,7 +3389,7 @@ vue 中使用 axios 一般主要是 2 中方法
 > API 共享，同一套后端程序代码不用修改就可以用于 Web 界面、手机、平板等多种客户端
 > 用户体验好、快，内容的改变不需要重新加载整个页面。
 
-### 2、vue-cli 如何安装 2.x 版本模板
+### vue-cli 如何安装 2.x 版本模板
 
 - 查看 vue-cli 版本号
 
@@ -3437,7 +3438,7 @@ vue 中使用 axios 一般主要是 2 中方法
   npm run build
   ```
 
-### 3、vue-cli2.x 如何配置 less
+### vue-cli2.x 如何配置 less
 
 安装模块
 
@@ -3445,7 +3446,7 @@ vue 中使用 axios 一般主要是 2 中方法
 npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里写的版本号实测过没有问题，版本太高可能编译出错
 ```
 
-### 4、vue-cli2.x 如何配置跨域
+### vue-cli2.x 如何配置跨域
 
 然后`config/index.js`里
 
@@ -3463,7 +3464,7 @@ npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里
 }
 ```
 
-### 5、vue-cli2.x 如何进行打包配置
+### vue-cli2.x 如何进行打包配置
 
 - 默认打包出来的 index.html 和静态资源文件是绝对路径关系，很多时候需要使用相对路径关系，方便部署！
 
@@ -3485,11 +3486,11 @@ npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里
 
 ## 七、其他
 
-### 1、vue 常用 UI 库有哪些
+### vue 常用 UI 库有哪些
 
-### 2、vue 常用插件
+### vue 常用插件
 
-### 3、vue 项目如何实现权限管理
+### vue 项目如何实现权限管理
 
 - 权限管理是基于 RBAC 完成的， 就是不同用户会有不同的角色，每个角色会有不同的菜单信息，从而决定了我们的用户能看到不同的菜单页面。
 - 权限前后端都要做：后端是做接口访问权限，保证数据安全；前端做权限是保证用户访问到不同的页面，操作不同的功能。
@@ -3505,7 +3506,7 @@ npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里
       - 这样就决定了不同的用户有不同的映射表，访问不同的页面。
     - **如果是节点级别的权限管理，后端返回该用户所对应角色的所有可以操作的节点标识符，我们通过自定义指令实现判断这些标识符所对应的按钮是否可以显示。**
 
-### 4、说说你对 SPA 单页面的理解，它的优缺点分别是什么？
+### 说说你对 SPA 单页面的理解，它的优缺点分别是什么？
 
 是一种只需要将单个页面加载到服务器之中的 web 应用程序。当浏览器向服务器发出第一个请求时，服务器会返回一个 index.html 文件，它所需的 js，css 等会在显示时统一加载，部分页面按需加载。url 地址变化时不会向服务器在请求页面，通过路由才实现页面切换。
 
@@ -3520,7 +3521,7 @@ npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里
 
 - 首屏加载过慢（初次加载耗时多）
 
-### 5、SPA 单页面的实现方式有哪些？
+### SPA 单页面的实现方式有哪些？
 
 - 在 hash 模式中，在 window 上监听 hashchange 事件（地址栏中 hash 变化触发）驱动界面变化；
 
@@ -3528,7 +3529,7 @@ npm install less@3.9 less-loader@5.0.0 --save-dev    // 注意版本号，这里
 
 - 直接在界面用显示隐藏事件驱动界面变化。
 
-### 6、Vue 如何优化首页加载速度
+### Vue 如何优化首页加载速度
 
 **减少请求的次数**
 

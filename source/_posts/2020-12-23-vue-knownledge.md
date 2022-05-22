@@ -440,7 +440,7 @@ watch: {
 - 各个生命周期的作用
 
   - beforeCreate：组件被创建之初，组件的属性生效之前
-  - created：组件实例已经完全创建，属性也绑定，但是真实的 d`om` 还没有生成，`$el `还不能用(vue 实例的数据对象`data`有了，`el` 和数据对象 `data` 都为 `undefined`，还
+  - created：组件实例已经完全创建，属性也绑定，但是真实的 `dom` 还没有生成，`$el `还不能用(vue 实例的数据对象`data`有了，`el` 和数据对象 `data` 都为 `undefined`，还
     未初始化。)
   - beforeMount：在挂载开始之前被调用，相关的 `render` 函数首次被调用
   - mounted：el 被新创建的 `vm.$el` 替换，并挂载到实例上去后调用该钩子
