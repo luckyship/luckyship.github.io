@@ -25,11 +25,40 @@ vscode 配置
 ```json
 {
   "editor.formatOnSave": true, // 自动保存
-  "prettier.singleQuote": true,
+  "prettier.singleQuote": true, // 单引号
   "prettier.printWidth": 120,
   "prettier.useEditorConfig": false,
-  "prettier.endOfLine": "auto",
-  "prettier.arrowParens": "avoid"
+  "prettier.endOfLine": "auto", // 最后一行
+  "prettier.arrowParens": "avoid" // 箭头函数括号
+}
+```
+
+各类语言自动格式化
+
+```json
+{
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true
 }
 ```
 
