@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 各种js、jquery浏览器高度、宽度
-excerpt: '各种js、jquery浏览器高度、宽度'
+excerpt: "各种js、jquery浏览器高度、宽度"
 tags: [javascript, jquery, web]
 comments: true
 date: 2020-10-21 17:29:48
@@ -42,6 +42,12 @@ alert(window.screen.availHeight); //屏幕可用工作区的高
 alert(window.screen.availWidth); //屏幕可用工作区的宽
 ```
 
+> scrollTop 是一个非整数，而 scrollHeight 和 clientHeight 是四舍五入的，因此确定滚动区域是否滚动到底的唯一方法是查看滚动量是否足够接近某个阈值 (在本例中为 1)：
+
+> `Math.abs(element.scrollHeight - element.clientHeight - element.scrollTop) < 1`
+
+> [参考](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollHeight)
+
 ## jquery
 
 ```js
@@ -54,7 +60,3 @@ alert($(document).width()); //浏览器当前窗口文档对象宽度
 alert($(document.body).width()); //浏览器当前窗口文档body的宽度
 alert($(document.body).outerWidth(true)); //浏览器当前窗口文档body的总宽度 包括border padding margin
 ```
-
-## 转载
-
-[Javascript、Jquery获取浏览器和屏幕各种高度宽度](https://www.cnblogs.com/EricaMIN1987_IT/p/3593431.html)
