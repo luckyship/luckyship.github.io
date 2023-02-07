@@ -14,7 +14,7 @@ debian 9 机器一台，作为master节点和node节点
 ## 首先安装docker
 
 [离线安装docker](https://www.cnblogs.com/luoSteel/p/10038954.html)  
-[docker 安装包下载地址](https://download.docker.com/linux/static/stable/x86_64/)
+[docker 安装包](https://download.docker.com/linux/static/stable/x86_64/)
 
 ## 关闭swap、selinux、防火墙
 
