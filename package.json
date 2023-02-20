@@ -24,6 +24,7 @@
     "hexo-renderer-marked": "^3.0.0",
     "hexo-renderer-stylus": "^2.0.0",
     "hexo-server": "^2.0.0",
+    "leancloud-storage": "^4.14.0",
     "puppeteer": "^5.3.1"
   }
 }
