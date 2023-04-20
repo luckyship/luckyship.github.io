@@ -141,6 +141,17 @@ ng generate service ./serveices/eventBus
 </ul>
 ```
 
+| 属性             | 说明             |
+| ---------------- | ---------------- |
+| `$implicit: T`   | 声明在构造函数中 |
+| `ngForOf: U`     | 声明在构造函数中 |
+| `index: number`  | 声明在构造函数中 |
+| `count: number`  | 声明在构造函数中 |
+| `first: boolean` | 只读             |
+| `last: boolean`  | 只读             |
+| `even: boolean`  | 只读             |
+| `odd: boolean`   | 只读             |
+
 ### 管道符
 
 ```
@@ -168,7 +179,7 @@ ng generate pipe search
 
 ```js
 @Pipe({
-  name: 'flyingHeroesImpure',
+  name: "flyingHeroesImpure",
   pure: false,
 })
 export class FlyingHeroesImpurePipe extends FlyingHeroesPipe {}
@@ -193,11 +204,11 @@ export class FlyingHeroesImpurePipe extends FlyingHeroesPipe {}
 ### 组件注册
 
 ```js
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -295,8 +306,8 @@ export class EventBusService {
 `service` 也可以指定在某个某块生效，比如下方 `service` 就只在`UserModule`中生效
 
 ```js
-import { Injectable } from '@angular/core';
-import { UserModule } from './user.module';
+import { Injectable } from "@angular/core";
+import { UserModule } from "./user.module";
 
 @Injectable({
   providedIn: UserModule,
@@ -307,13 +318,13 @@ export class UserService {}
 2. 组件内发射数据
 
 ```javascript
-this.eventBusService.eventBus.next('child组件发送的数据');
+this.eventBusService.eventBus.next("child组件发送的数据");
 ```
 
 3. 组件接收数据
 
 ```javascript
-this.eventBusService.eventBus.subscribe(arg => {
+this.eventBusService.eventBus.subscribe((arg) => {
   console.log(`接收到事件${arg}`);
 });
 ```
@@ -328,18 +339,18 @@ this.eventBusService.eventBus.subscribe(arg => {
 ## 路由导航
 
 ```js
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ChildComponent } from './child/child.component';
-import { BrotherComponent } from './brother/brother.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { ChildComponent } from "./child/child.component";
+import { BrotherComponent } from "./brother/brother.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ChildComponent,
   },
   {
-    path: 'brother',
+    path: "brother",
     component: BrotherComponent,
   },
 ];
@@ -365,8 +376,8 @@ export class AppRoutingModule {}
 ```js
 const routes: Routes = [
   {
-    path: 'items',
-    loadChildren: () => import('./items/items.module').then(m => m.ItemsModule),
+    path: "items",
+    loadChildren: () => import("./items/items.module").then((m) => m.ItemsModule),
   },
 ];
 ```
@@ -375,16 +386,16 @@ const routes: Routes = [
 
 ```js
 // app.module.ts
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 // services
-import { Headers } from '@angular/http';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Headers } from "@angular/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 
 this.httpClient.request(UserService.METHOD_POST, url, options).subscribe(
-  next => {},
-  error => {},
-  complete => {} // 指next完成后，会执行complete, 并不是finally的意思
+  (next) => {},
+  (error) => {},
+  (complete) => {} // 指next完成后，会执行complete, 并不是finally的意思
 );
 ```
 
