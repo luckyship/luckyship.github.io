@@ -30,7 +30,7 @@ date: 2023-03-17 13:45:44
 [[_attribute_]](https://www.w3school.com.cn/cssref/selector_attribute.asp "CSS [attribute] 选择器") | [target] | 选择带有 target 属性的所有元素。  
 [[_attribute_=_value_]](https://www.w3school.com.cn/cssref/selector_attribute_value.asp "CSS [attribute=value] 选择器") | [target=_blank] | 选择带有 target="_blank" 属性的所有元素。  
 [[\_attribute_~=_value_]](https://www.w3school.com.cn/cssref/selector_attribute_value_contain.asp "CSS [attribute~=value] 选择器") | [title~=flower] | 选择 title 属性包含单词 "flower" 的所有元素。  
-[[_attribute_|=_value_]](https://www.w3school.com.cn/cssref/selector_attribute_value_start.asp "CSS [attribute|=value] 选择器") | [lang|=en] | 选择 lang 属性值以 "en" 开头的所有元素。  
+[[_attribute_\|=_value_]](https://www.w3school.com.cn/cssref/selector_attribute_value_start.asp "CSS [attribute\|=value] 选择器") | [lang\|=en] | 选择 lang 属性值以 "en" 开头的所有元素。  
 [[_attribute_^=_value_]](https://www.w3school.com.cn/cssref/selector_attr_begin.asp "CSS [attribute^=value] 选择器") | a[href^="https"] | 选择其 src 属性值以 "https" 开头的每个 `<a>` 元素。  
 [[_attribute_$=_value_]](https://www.w3school.com.cn/cssref/selector_attr_end.asp "CSS [attribute$=value] 选择器") | a[href$=".pdf"] | 选择其 src 属性以 ".pdf" 结尾的所有 `<a>` 元素。  
 [[_attribute_\*=_value_]](https://www.w3school.com.cn/cssref/selector_attr_contain.asp "CSS [attribute*=value] 选择器") | a[href*="w3school"] | 选择其 href 属性值中包含 "abc" 子串的每个 `<a>` 元素。
