@@ -137,7 +137,7 @@ ng generate service ./serveices/eventBus
 
 ```html
 <ul>
-  <li *ngFor="let race of raceList; let i = index">{{ race.name }}-{{ i + 1 }}</li>
+  <li *ngFor="let race of raceList; let i = index; let l = last">{{ race.name }}-{{ i + 1 }}</li>
 </ul>
 ```
 
@@ -203,6 +203,12 @@ export class FlyingHeroesImpurePipe extends FlyingHeroesPipe {}
 
 ### 组件注册
 
+- declarations: 声明该模块中拥有哪些组件、指令和管道。这些组件等都是该模块中的局部组件。
+- imports: 声明该模块所依赖的其他模块。在该模块中使用了其他模块导出的组件、指令和服务时，必须先将这些模块引入进来。
+- exports: 声明该模块中可被外部访问的组件、指令和管道。这些组件等都是该模块中的全局组件。
+- providers: 声明该模块中提供的服务。这些服务可以被该模块以及该模块所依赖的其他模块使用。
+- bootstrap: 声明该模块的根组件。通常情况下，只有应用的根模块才会设置该属性。
+
 ```js
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -217,14 +223,6 @@ import { AppComponent } from "./app.component";
   bootstrap: [AppComponent],
 })
 export class AppModule {}
-// import部分是模块以及装饰器的引入。
-
-// declarations部分是声明模块的内部成员。（可以是组件、管道、指令）
-// imports部分是导入其它模块。
-// providers指定应用程序根级别需要使用的service。（一般是service）
-// bootstrap是app启动的根组件。
-
-// export控制将那些内部成员暴露给外部使用。
 ```
 
 ### 防抖方法实现
