@@ -12,6 +12,10 @@ date: 2020-12-01 16:40:53
 [chrome 插件](https://www.extfans.com/)
 [chrome 插件 2](https://crxdl.com/)
 [html 在线执行网站](https://jsbin.com/)
+[serverless网站 vercel](https://vercel.com/)
+[serverless网站 railway](https://railway.app/)
+[chatgpt](https://chatbot4.52ai.pro/)
+[chatgpt2](https://chatgpt.itedus.cn/)
 
 ### 下载地址
 
