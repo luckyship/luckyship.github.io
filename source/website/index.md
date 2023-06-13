@@ -16,6 +16,7 @@ date: 2020-12-01 16:40:53
 [serverless网站 railway](https://railway.app/)
 [chatgpt](https://chatbot4.52ai.pro/)
 [chatgpt2](https://chatgpt.itedus.cn/)
+[AI 设计网站](https://js.design/ai)
 
 ### 下载地址
 
