@@ -1,0 +1,3 @@
+[submodule "themes/lucky"]
+	path = themes/lucky
+	url = git@github.com:luckyship/myblog.git
