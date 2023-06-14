@@ -3,7 +3,7 @@ layout: post
 title: "DataTable搜索框，正则匹配规则"
 date: 2019-03-12
 excerpt: "每一行代表的字符串是以2个空格将每一列连成一个字符串"
-tags: [DataTable, web, javascript]
+tags: [dataTable, web, javascript]
 comments: true
 ---
 
