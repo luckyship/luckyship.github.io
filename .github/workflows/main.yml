@@ -1,0 +1,49 @@
+name: Hexo Deploy Automatically
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+jobs:
+  deploy-blog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Latest Version
+        uses: actions/checkout@v2
+
+      - name: Checkout Theme
+        run: |
+          git submodule init
+          git submodule update
+
+      - name: Setup Node Env
+        uses: actions/setup-node@v1
+
+      - name: Cache Node Dependencies
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm install
+
+      - name: Deploy
+        env:
+          SSH_KEY: ${{secrets.GITEE_RSA_PRIVATE_KEY}}
+        run: |
+          export TZ='Asia/Shanghai' 
+
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          git config --global user.name 'luckyship'
+          git config --global user.email '304093931@qq.com'
+
+          npm run deploy
