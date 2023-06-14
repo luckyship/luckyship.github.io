@@ -81,7 +81,8 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+# updated_option: 'mtime'
+# 使用git commit的最近修改时间
 
 # Pagination
 ## Set per_page to 0 to disable pagination
