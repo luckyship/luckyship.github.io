@@ -5,8 +5,8 @@
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
-    "deploy": "hexo clean && hexo generate && node ./script/init.js && hexo deploy",
-    "gitee": "hexo clean && hexo generate && hexo deploy && node script/gitee-build.js",
+    "deploy": "hexo clean && hexo generate && node ./self_script/init.js && hexo deploy",
+    "gitee": "hexo clean && hexo generate && hexo deploy && node self_script/gitee-build.js",
     "server": "hexo server"
   },
   "hexo": {
@@ -15,7 +15,6 @@
   "dependencies": {
     "hexo": "^5.0.0",
     "hexo-deployer-git": "^2.1.0",
-    "hexo-filter-date-from-git": "^0.1.2",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
     "hexo-generator-index": "^2.0.0",
