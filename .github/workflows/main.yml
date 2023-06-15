@@ -11,10 +11,16 @@ jobs:
 
     steps:
       - name: Checkout Latest Version
-        uses: actions/checkout@v2
+        run: |
+          git clone https://github.com/luckyship/luckyship.github.io.git
+          cd luckyship.github.io
+          git checkout dev
+
 
       - name: Checkout Theme
         run: |
+          cd luckyship.github.io
+
           git submodule init
           git submodule update
 
@@ -25,17 +31,20 @@ jobs:
         id: cache
         uses: actions/cache@v1
         with:
-          path: node_modules
+          path: luckyship.github.io/node_modules
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
 
       - name: Install Dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm install
+        run: |
+          cd luckyship.github.io
+          npm install
 
       - name: Deploy
         env:
           SSH_KEY: ${{secrets.GITEE_RSA_PRIVATE_KEY}}
         run: |
+          cd luckyship.github.io
           export TZ='Asia/Shanghai' 
 
           mkdir -p ~/.ssh/

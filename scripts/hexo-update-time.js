@@ -12,6 +12,7 @@ hexo.extend.filter.register("before_post_render", (data) => {
   const originUpdated = data.updated;
   const gitUpdated = getUpdated(data);
   // if (gitUpdated < originUpdated) {
+
   data.updated = gitUpdated;
   // }
 
@@ -31,6 +32,7 @@ function getDate(data) {
 function getUpdated(data) {
   const filePath = getFilePath(data);
   const updated = execSync(`git log --follow -1 --format="%ad" -- ${filePath}`).toString().trim();
+
   if (updated === "") {
     return moment();
   }
