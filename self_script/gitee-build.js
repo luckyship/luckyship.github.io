@@ -69,4 +69,4 @@ async function giteeUpdate(username, giteePageUrl, passwd) {
 // process.stdin.on('end', function () {
 //      process.stdin.pause();
 // });
-giteeUpdate(username, giteePageUrl, 'Xuchao?123');
+giteeUpdate(username, giteePageUrl, '');

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: github、gitee自动部署hexo博客
-tags: []
+tags: [hexo]
 comments: true
 date: 2023-06-14 11:57:13
 ---
