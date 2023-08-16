@@ -17,6 +17,7 @@ date: 2020-12-01 16:40:53
 [chatgpt](https://chatbot4.52ai.pro/)
 [chatgpt2](https://chatgpt.itedus.cn/)
 [AI 设计网站](https://js.design/ai)
+[svg转换](https://www.svgminify.com/)
 
 ### 下载地址
 
