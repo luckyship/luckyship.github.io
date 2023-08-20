@@ -12,12 +12,9 @@ date: 2020-12-01 16:40:53
 [chrome 插件](https://www.extfans.com/)
 [chrome 插件 2](https://crxdl.com/)
 [html 在线执行网站](https://jsbin.com/)
-[serverless网站 vercel](https://vercel.com/)
-[serverless网站 railway](https://railway.app/)
-[chatgpt](https://chatbot4.52ai.pro/)
-[chatgpt2](https://chatgpt.itedus.cn/)
-[AI 设计网站](https://js.design/ai)
-[svg转换](https://www.svgminify.com/)
+[serverless 网站 vercel](https://vercel.com/)
+[serverless 网站 railway](https://railway.app/)
+[svg 转换(react 驼峰转换)](https://www.svgminify.com/)
 
 ### 下载地址
 
@@ -48,6 +45,13 @@ date: 2020-12-01 16:40:53
 [前端面试题](https://muyiy.cn/question/)
 [面试](https://juejin.cn/post/6844903928442667015)
 [react 基础](https://github.com/spiritzx/blog2/blob/993e65c7c826ac6d926a5d965d48a5d0734b8135/browser/react/react_readme.md)
+
+### AI
+
+[访问密码：youyui](https://y.yoo.ac/#/)
+[chatgpt](https://chatbot4.52ai.pro/)
+[chatgpt2](https://chatgpt.itedus.cn/)
+[AI 设计网站](https://js.design/ai)
 
 ### 友链
 
