@@ -1,6 +1,6 @@
 ---
 layout: post
-title: angular中的变化检测-zone
+title: angular中的变化检测-zone.js
 tags: [angular, javascript]
 comments: true
 date: 2023-06-06 15:58:39
