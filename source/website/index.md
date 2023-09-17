@@ -36,6 +36,7 @@ date: 2020-12-01 16:40:53
 [在浏览器中使用 es module](https://www.jianshu.com/p/f7db50cf956f)
 [不一样的前端基础知识](https://github.com/mqyqingfeng/Blog)
 [算法题](https://programmercarl.com/)
+[flutter中文教程](https://book.flutterchina.club/)
 
 ### 面试
 
