@@ -35,7 +35,7 @@ date: 2023-03-14 15:14:06
 
 ### 控制反转和依赖注入
 
-那么在开始正题之前，肯定要先理解依赖注入的概念，如果已经理解的同学可以忽略这一章节，一提起依赖注入，大家就会和控制反转联系在一起，我在看过很多文章之后发现知乎上的一个回答 [Spring IoC 有什么好处呢？](https://link.juejin.cn/?target=https%3A%2F%2Fwww.zhihu.com%2Fquestion%2F23277575 "https://www.zhihu.com/question/23277575") 介绍的特别详细和易懂，大家不了解的可以阅读一下，简单总结一下就是：
+那么在开始正题之前，肯定要先理解依赖注入的概念，如果已经理解的同学可以忽略这一章节，一提起依赖注入，大家就会和控制反转联系在一起，我在看过很多文章之后发现知乎上的一个回答 [Spring IoC 有什么好处呢？](https://www.zhihu.com/question/23277575) 介绍的特别详细和易懂，大家不了解的可以阅读一下，简单总结一下就是：
 
 > 软件只有到达了一定的复杂度才会需要各种设计原则和模式，那么依赖倒置原则（Dependency Inversion Principle ）就是为了解决软件模块之间的耦合性提出的一种思想，让大型软件变的可维护，高层模块不应该依赖低层模块，两者都应该依赖其抽象，抽象不应该依赖细节，细节应该依赖抽象。那么控制反转（Inversion of Control） 就是依赖倒置原则的一种代码设计思路，具体采用的方法就是所谓的依赖注入（Dependency Injection），通过依赖注入实现控制权的反转，除了依赖注入外，还有可以通过模板方法模式实现控制反转，那么所谓依赖注入，就是把底层类作为参数传入上层类，实现上层类对下层类的“控制”。
 > ![image.png](https://atlas-rc.pingcode.com/files/public/61133376f6d53d77d25c5b02/origin-url)
@@ -63,8 +63,8 @@ const heroesService = IocContainer.get(HeroesService);
 如果类很多，依赖层级比较深，那么 IocContainer 会帮我们统一管理依赖， `IocContainer` ​ 其实也叫注入器 `Injector` ​, 说的其实就是一回事，Angular 框架中叫 `Injector` ​。
 ![image.png](https://atlas-rc.pingcode.com/files/public/611379a0f6d53d640b5c5b2c/origin-url)
 关于控制反转和依赖注入更多参考：
-[Inversion of Control vs Dependency Injection](https://link.juejin.cn/?target=https%3A%2F%2Fstackoverflow.com%2Fquestions%2F6550700%2Finversion-of-control-vs-dependency-injection "https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection")  
-[Wikipedia Dependency Injection](https://link.juejin.cn/?target=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FDependency_injection "https://en.wikipedia.org/wiki/Dependency_injection")
+[Inversion of Control vs Dependency Injection](https://stackoverflow.com/questions/6550700/inversion-of-control-vs-dependency-injection)  
+[Wikipedia Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection)
 
 **依赖注入的优势：**
 
