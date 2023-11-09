@@ -44,7 +44,7 @@ Array.prototype.newFlat = function (depth) {
   var arr = this;
   // var result = [];
 
-  while (arr.some(item => Array.isArray(item))) {
+  while (arr.some((item) => Array.isArray(item))) {
     if (depth >= 1) {
       depth--;
       arr = [].concat(...arr);
@@ -95,6 +95,14 @@ console.log(p);
 
 ```js
 function newInstanceof(left, right) {
+  /**
+   * 前置判断，不符合直接访问false
+   * 根据语法A instanceof B，我们可以得知两点，首先A得是一个实例对象，B得是一个构造器函数。
+   */
+  if (typeof left !== 'object' || left === null || typeof right !== 'function') {
+    return false;
+  }
+
   var proto = left.__proto__;
   while (true) {
     if (proto === null) {
@@ -115,20 +123,16 @@ promiseAll 源码实现
 
 ```js
 function isPromise(obj) {
-  return (
-    !!obj &&
-    (typeof obj === 'object' || typeof obj === 'function') &&
-    typeof obj.then === 'function'
-  );
+  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
 }
 
-const myPromiseAll = arr => {
+const myPromiseAll = (arr) => {
   let result = [];
   return new Promise((resolve, reject) => {
     console.log('promiseAll');
     for (let i = 0; i < arr.length; i++) {
       if (isPromise(arr[i])) {
-        arr[i].then(data => {
+        arr[i].then((data) => {
           result[i] = data;
           if (result.length === arr.length) {
             resolve(result);
@@ -151,7 +155,7 @@ let p3 = new Promise((resolve, reject) => {
     resolve('foo3');
   }, 10000);
 });
-myPromiseAll([p1, p2, p3]).then(values => {
+myPromiseAll([p1, p2, p3]).then((values) => {
   console.log(values); // ["foo1", "foo2", "foo3"]
 });
 ```
