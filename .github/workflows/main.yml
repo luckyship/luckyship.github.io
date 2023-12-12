@@ -22,7 +22,7 @@ jobs:
           cd luckyship.github.io
 
           git submodule init
-          git submodule update
+          git submodule update --remote
 
       - name: Setup Node Env
         uses: actions/setup-node@v1
