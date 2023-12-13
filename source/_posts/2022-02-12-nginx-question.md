@@ -219,6 +219,16 @@ location 指令的作用是根据用户请求的 URI 来执行不同的应用，
 
 注意：~ 代表自己输入的英文字母
 
+| 匹配符 | 匹配规则                     | 优先级 |
+| ------ | ---------------------------- | ------ |
+| =      | 精确匹配                     | 1      |
+| ^~     | 以某个字符串开头             | 2      |
+| ~      | 区分大小写的正则匹配         | 3      |
+| ~\*    | 不区分大小写的正则匹配       | 4      |
+| !~     | 区分大小写不匹配的正则       | 5      |
+| !~\*   | 不区分大小写不匹配的正则     | 6      |
+| /      | 通用匹配，任何请求都会匹配到 | 7      |
+
 **Location 正则案例**
 
 示例：
@@ -343,7 +353,7 @@ server {
 
 也就是我们刚才所讲的情况。漏桶算法提供的机制实际上就是刚才的案例：突发流量会进入到一个漏桶，漏桶会按照我们定义的速率依次处理请求，如果水流过大也就是突发流量过大就会直接溢出，则多余的请求会被拒绝。所以漏桶算法能控制数据的传输速率。
 
-![图片](https://mmbiz.qpic.cn/mmbiz/8KKrHK5ic6XCsMRO2nqOkIPRzZSApnnmSgG08HxRicLibqrCyQdQQc0pNCzWUEEMib72YsVMzffRc5nbloHaLQ8iceQ/640?wx_fmt=other&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![图片](D:img/2022-02-12-nginx-question/2.jpg)
 
 **令牌桶算法**
 
@@ -351,7 +361,7 @@ server {
 
 令牌桶算法的机制如下：存在一个大小固定的令牌桶，会以恒定的速率源源不断产生令牌。如果令牌消耗速率小于生产令牌的速度，令牌就会一直产生直至装满整个令牌桶。更多面试题，欢迎关注公众号 Java 面试题精选
 
-![图片](https://mmbiz.qpic.cn/mmbiz/8KKrHK5ic6XCsMRO2nqOkIPRzZSApnnmSJnb6YyOItYk6ZVB3emWVQfI7Uic6g0ahsqna5cNCbJG3Trsvmia4CqPQ/640?wx_fmt=other&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![图片](D:img/2022-02-12-nginx-question/3.jpg)
 
 ### 为什么要做动静分离？
 
