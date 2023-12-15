@@ -9,7 +9,7 @@ date: 2021-07-24 19:10:37
 
 ### call
 
-首先上一个call使用
+首先上一个 call 使用
 
 ```js
 function add(c, d) {
@@ -18,44 +18,45 @@ function add(c, d) {
 
 const obj = {
   a: 1,
-  b: 2
+  b: 2,
 };
 
 console.log(add.call(obj, 3, 4)); // 10
 ```
 
 <!-- more -->
-大统上的说法就是，call改变了this的指向, 然后，介绍this xxx什么一大堆名词，反正不管你懂不懂，成功绕晕你就已经ok了，但是实际发生的过程，可以看成下面的样子。
+
+大统上的说法就是，call 改变了 this 的指向, 然后，介绍 this xxx 什么一大堆名词，反正不管你懂不懂，成功绕晕你就已经 ok 了，但是实际发生的过程，可以看成下面的样子。
 
 ```js
 const o = {
   a: 1,
   b: 2,
-  add: function(c, d) {
-    return this.a + this.b + c + d
-  }
+  add: function (c, d) {
+    return this.a + this.b + c + d;
+  },
 };
 ```
 
-* 给o对象添加一个add属性，这个时候 this 就指向了 o，
-* o.add(5, 7)得到的结果和add.call(o, 5, 6)相同。
-* 但是给对象o添加了一个额外的add属性，这个属性我们是不需要的，所以可以使用delete删除它。
+- 给 o 对象添加一个 add 属性，这个时候 this 就指向了 o，
+- o.add(5, 7)得到的结果和 add.call(o, 5, 6)相同。
+- 但是给对象 o 添加了一个额外的 add 属性，这个属性我们是不需要的，所以可以使用 delete 删除它。
 
 so, 基本为以下三部。
 
 ```js
 // 1. 将函数设为对象的属性
-o.fn = bar
+o.fn = bar;
 // 2. 执行该函数
-o.fn()
+o.fn();
 // 3. 删除该函数
-delete o.fn
+delete o.fn;
 ```
 
-所以我们基于ES5 实现call
+所以我们基于 ES5 实现 call
 
 ```js
-Function.prototype.es3Call = function(context) {
+Function.prototype.es3Call = function (context) {
   var content = context || window;
   content.fn = this;
   var args = [];
@@ -67,53 +68,71 @@ Function.prototype.es3Call = function(context) {
   var result = eval('content.fn(' + args + ')');
   delete content.fn;
   return result;
-}
+};
 console.error(add.es3Call(obj, 3, 4)); // 10
-console.log(add.es3Call({
-  a: 3,
-  b: 9
-}, 3, 4)); // 19
-console.log(add.es3Call({
-  a: 3,
-  b: 9
-}, {
-  xx: 1
-}, 4)); // 12[object Object]4
+console.log(
+  add.es3Call(
+    {
+      a: 3,
+      b: 9,
+    },
+    3,
+    4
+  )
+); // 19
+console.log(
+  add.es3Call(
+    {
+      a: 3,
+      b: 9,
+    },
+    {
+      xx: 1,
+    },
+    4
+  )
+); // 12[object Object]4
 ```
 
-基于ES6 实现call, 其实差别不大，es6新增… rest，这就可以放弃eval的写法，如下
+基于 ES6 实现 call, 其实差别不大，es6 新增… rest，这就可以放弃 eval 的写法，如下
 
 ```js
 // ES6 call 实现
-Function.prototype.es6Call = function(context) {
-  var context = context || window;
-  context.fn = this;
+Function.prototype.es6Call = function (context) {
+  var content = context || window;
+  content.fn = this;
   var args = [];
   for (var i = 1, len = arguments.length; i < len; i++) {
-    args.push('arguments[' + i + ']');
+    args.push(arguments[i]);
   }
-  const result = context.fn(...args);
+  const result = content.fn(...args);
   delete content.fn;
   return result;
-}
+};
 
 console.error(add.es6Call(obj, 3, 4));
-console.log(add.es6Call({
-  a: 3,
-  b: 9
-}, {
-  xx: 1
-}, 4)); // 12[object Object]4
+console.log(
+  add.es6Call(
+    {
+      a: 3,
+      b: 9,
+    },
+    {
+      xx: 1,
+    },
+    4
+  )
+); // 12[object Object]4
 ```
 
 ### apply
 
-apply和call区别在于apply第二个参数是Array，而call是将一个个传入
+apply 和 call 区别在于 apply 第二个参数是 Array，而 call 是将一个个传入
 
-基于es3实现
+基于 es3 实现
 
 ```js
-Function.prototype.es3Apply = function(context, arr) {
+Function.prototype.es3Apply = function (context, arr) {
   var context = context || window;
   context.fn = this;
   var result;
@@ -126,19 +145,19 @@ Function.prototype.es3Apply = function(context, arr) {
       args.push('arr[' + i + ']');
     }
     // 执行函数
-    result = eval('context.fn(' + args + ')')
+    result = eval('context.fn(' + args + ')');
   }
   delete context.fn;
-  return result
-}
+  return result;
+};
 
 console.log(add.es3Apply(obj, [1, 'abc', '2'])); // 4abc
 ```
 
-基于es6实现
+基于 es6 实现
 
 ```js
-Function.prototype.es6Apply = function(context, arr) {
+Function.prototype.es6Apply = function (context, arr) {
   var context = context || window;
   context.fn = this;
   var result;
@@ -149,8 +168,8 @@ Function.prototype.es6Apply = function(context, arr) {
     result = context.fn(...arr);
   }
   delete context.fn;
-  return result
-}
+  return result;
+};
 
 console.error(add.es6Apply(obj, [1, 2])); // 6
 ```
@@ -160,25 +179,31 @@ console.error(add.es6Apply(obj, [1, 2])); // 6
 bind() 方法会创建一个新函数。
 当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，
 之后的一序列参数将会在传递的实参前传入作为它的参数。
-先看一个使用bind方法的实例
+先看一个使用 bind 方法的实例
 
 ```js
 function foo(c, d) {
-  this.b = 100
-  console.log(this.a)
-  console.log(this.b)
-  console.log(c)
-  console.log(d)
+  this.b = 100;
+  console.log(this.a);
+  console.log(this.b);
+  console.log(c);
+  console.log(d);
 }
 // 我们将foo bind到{a: 1}
-var func = foo.bind({
-  a: 1
-}, '1st');
+var func = foo.bind(
+  {
+    a: 1,
+  },
+  '1st'
+);
 func('2nd'); // 1 100 1st 2nd
 // 即使再次call也不能改变this。
-func.call({
-  a: 2
-}, '3rd'); // 1 100 1st 3rd
+func.call(
+  {
+    a: 2,
+  },
+  '3rd'
+); // 1 100 1st 3rd
 
 // 当 bind 返回的函数作为构造函数的时候，
 // bind 时指定的 this 值会失效，但传入的参数依然生效。
@@ -187,14 +212,14 @@ func.call({
 // new func('4th'); //undefined 100 1st 4th
 ```
 
-首先使用ES3实现
+首先使用 ES3 实现
 
 ```js
-Function.prototype.es3Bind = function(context) {
-  if (typeof this !== "function") throw new TypeError('what is trying to be bound is not callback');
+Function.prototype.es3Bind = function (context) {
+  if (typeof this !== 'function') throw new TypeError('what is trying to be bound is not callback');
   var self = this;
   var args = Array.prototype.slice.call(arguments, 1);
-  const fBound = function() {
+  const fBound = function () {
     // 获取函数的参数
     var bindArgs = Array.prototype.slice.call(arguments);
     // 返回函数的执行结果
@@ -202,47 +227,59 @@ Function.prototype.es3Bind = function(context) {
     // 构造函数this instanceof fNOP返回true，将绑定函数的this指向该实例，可以让实例获得来自绑定函数的值。
     // 当作为普通函数时，this 指向 window，此时结果为 false，将绑定函数的 this 指向 context
     return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
-  }
+  };
   // 创建空函数
-  var fNOP = function() {};
+  var fNOP = function () {};
   // fNOP函数的prototype为绑定函数的prototype
   fNOP.prototype = this.prototype;
   // 返回函数的prototype等于fNOP函数的实例实现继承
   fBound.prototype = new fNOP();
   // 以上三句相当于Object.create(this.prototype)
   return fBound;
-}
+};
 
-var func = foo.es3Bind({
-  a: 1
-}, '1st');
+var func = foo.es3Bind(
+  {
+    a: 1,
+  },
+  '1st'
+);
 func('2nd'); // 1 100 1st 2nd
-func.call({
-  a: 2
-}, '3rd'); // 1 100 1st 3rd
+func.call(
+  {
+    a: 2,
+  },
+  '3rd'
+); // 1 100 1st 3rd
 new func('4th'); //undefined 100 1st 4th
 ```
 
-es6实现
+es6 实现
 
 ```js
-Function.prototype.es6Bind = function(context, ...rest) {
+Function.prototype.es6Bind = function (context, ...rest) {
   if (typeof this !== 'function') throw new TypeError('invalid invoked!');
   var self = this;
   return function F(...args) {
     if (this instanceof F) {
-      return new self(...rest, ...args)
+      return new self(...rest, ...args);
     }
-    return self.apply(context, rest.concat(args))
-  }
-}
+    return self.apply(context, rest.concat(args));
+  };
+};
 
-var func = foo.es6Bind({
-  a: 1
-}, '1st');
+var func = foo.es6Bind(
+  {
+    a: 1,
+  },
+  '1st'
+);
 func('2nd'); // 1 100 1st 2nd
-func.call({
-  a: 2
-}, '3rd'); // 1 100 1st 3rd
+func.call(
+  {
+    a: 2,
+  },
+  '3rd'
+); // 1 100 1st 3rd
 new func('4th'); //undefined 100 1st 4th
 ```
