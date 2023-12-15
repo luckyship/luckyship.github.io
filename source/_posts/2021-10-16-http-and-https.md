@@ -221,7 +221,7 @@ Via: 1.0 fred, 1.1 p.example.net
 
 记录客户端请求的来源 IP，每经过一级代理(匿名代理除外)，代理服务器都会把这次请求的来源 IP 追加进去
 
-`X\-Forwarded\-For: client,proxy1,proxy2`
+`X-Forwarded-For: client,proxy1,proxy2`
 
 注意：与服务器直连的代理服务器的 IP 不会被追加进去，该代理可能过 TCP 连接的`Remote Address`字段获取到与服务器直连的代理服务器 IP
 
@@ -233,7 +233,7 @@ Via: 1.0 fred, 1.1 p.example.net
 
 `X-Forwarded-For`是可以伪造的，比如一些通过 X-Forwarded-For 获取到客户端 IP 来限制刷票的系统就可以通过伪造该请求头达到刷票的目的，如果客户端请求显示指定了
 
-`X\-Forwarded\-For：192.168.1.108`
+`X-Forwarded-For：192.168.1.108`
 
 那么服务端收到的这个请求头，第一个 IP 就是伪造的
 
@@ -243,7 +243,7 @@ Via: 1.0 fred, 1.1 p.example.net
 
 ```
 location / {
- proxy_set_header X\-Forwarded\-For $remote_addr
+ proxy_set_header X-Forwarded-For $remote_addr
 }
 ```
 
@@ -501,7 +501,7 @@ No，这样也存在安全问题。因为每次要用一个固定的密钥来解
 
 1. `会话复用`，上面说了，复用 session 可以减少 CPU 消耗，因为不需要进行非对称密钥交换的计算。可以提升访问速度，不需要进行完全握手阶段二，节省了一个 RTT 和计算耗时。
 2. 使用 `SPDY` 或者 `HTTP2`。SPDY 最大的特性就是多路复用，能将多个 HTTP 请求在同一个连接上一起发出去，不像目前的 HTTP 协议一样，只能串行地逐个发送请求。Pipeline 虽然支持多个请求一起发送，但是接收时依然得按照顺序接收，本质上无法解决并发的问题。HTTP2 支持多路复用，有同样的效果。
-3. 设置`HSTS`，服务端返回一个 HSTS 的 http header，浏览器获取到 HSTS 头部之后，在一段时间内，不管用户输入www.baidu.com还是http:\\/\\/www.baidu.com ，都会默认将请求内部跳转成 https:\\/\\/www.baidu.com。Chrome, firefox, ie 都支持了 HSTS。
+3. 设置`HSTS`，服务端返回一个 HSTS 的 http header，浏览器获取到 HSTS 头部之后，在一段时间内，不管用户输入www.baidu.com还是http://www.baidu.com ，都会默认将请求内部跳转成 https://www.baidu.com。Chrome, firefox, ie 都支持了 HSTS。
 4. `Nginx`设置`Ocsp stapling`。Ocsp 全称在线证书状态检查协议 (rfc6960)，用来向 CA 站点查询证书状态，比如是否撤销。通常情况下，浏览器使用 OCSP 协议发起查询请求，CA 返回证书状态内容，然后浏览器接受证书是否可信的状态。这个过程非常消耗时间，因为 CA 站点有可能在国外，网络不稳定，RTT 也比较大。如果不需要查询则可节约时间。
 5. `False start`。简单概括 False start 的原理就是在 clientkeyexchange 发出时将应用层数据一起发出来，能够节省一个 RTT。
 
