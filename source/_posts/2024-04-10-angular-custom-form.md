@@ -193,6 +193,8 @@ export class InputNumberComponent implements OnInit {
 
 ## 使用自定义组件
 
+### 响应式表单
+
 下面我们在 `form` 表单里引入自定义组件，试试看效果
 
 ```ts
@@ -222,3 +224,31 @@ export class AppComponent {
 ```
 
 我们在组件下面显示出对应的 form 的表单值，可以看到，我们的自定义组件`input-number`已经生效了
+
+## 模板驱动式表单
+
+上面的例子我们是使用 `formControlName`， 下面我们使用`ngModel`同样可以
+
+```ts
+import { Component } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  template: `
+    <div>
+      <app-input-number [(ngModel)]="count"></app-input-number>
+      <div>{{ count }}</div>
+    </div>
+  `,
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  count = 5;
+
+  constructor(private fb: FormBuilder) {}
+}
+```
+
+## 源码
+[angular-custom-form-example](https://github.com/luckyship/angular-custom-form-example)
