@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 2024-07-01-linux-command
+title: linux-command
 tags: []
 comments: true
 date: 2024-07-01 11:10:05
