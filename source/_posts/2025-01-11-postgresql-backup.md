@@ -21,9 +21,19 @@ date: 2025-01-11 16:01:25
 
 <!-- more -->
 
-## 一、逻辑备份
+## 逻辑备份
 
-### 1.pg_dump 工具
+### 使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）
+
+```bash
+# 备份到指定csv表格
+psql -h localhost  -U username -d database -p 5433   -c "\copy (select * from test_table  oc where id = 139375) TO '~/test.csv' WITH (FORMAT CSV, HEADER);"
+
+# 从csv表格恢复数据到数据库
+psql -h localhost  -U username -d database -p 5433    -c "\copy test_table FROM '~/test.csv' WITH (FORMAT CSV, HEADER);"
+```
+
+### pg_dump 工具
 
 以下为 pg_dump 工具的常用参数选项（更多参数可使用 pg_dump --help 查看）
 
@@ -101,7 +111,7 @@ pg_dump -h 127.0.0.1 -U postgres -d pg_hive | gzip > /opt/pg_hive20210108_gz.sql
 /pg_dump -h 127.0.0.1 -U postgres -d pg_hive | split -b 100m - /opt/pg_hive20210108_sp.sql
 ```
 
-### 2.pg_dumpall 工具
+### pg_dumpall 工具
 
 相对于 pg_dump 只能备份单个库，pg_dumpall 可以备份整个[PostgreSql](https://so.csdn.net/so/search?q=PostgreSql&spm=1001.2101.3001.7020)实例中所有的数据，包括角色和表空间定义。
 
@@ -112,7 +122,7 @@ pg_dump -h 127.0.0.1 -U postgres -d pg_hive | gzip > /opt/pg_hive20210108_gz.sql
 pg_dumpall -h 127.0.0.1 -U postgres  -f /opt/pg_hive20210108_all.sql
 ```
 
-## 二、逻辑备份还原
+## 逻辑备份还原
 
 **逻辑备份的还原命令为 psql 和 pg_restore：**  
 如果使用 pg_dump 未指定 format（即未使用-F 参数），则导出的是 SQL 脚本，导入时需用 psql 命令，否则用 pg_restore 还原。因这 2 个还原工具大部分参数与 pg_dump 含义相近，可使用命令后加–help 查看详细参数。
@@ -134,7 +144,7 @@ cat /opt/pg_hive20210108_sp.sql* | psql -h 127.0.0.1 -U postgres -d pg_hive
 
 ```
 
-## 三、连续归档备份
+## 连续归档备份
 
 连续归档是通过基础备份和 wal 日志相结合的方式进行备份，恢复的时候可以选择恢复到指定的时间点、指定事务点、或者完全恢复到 wal 日志的最新位置。
 
@@ -199,7 +209,7 @@ insert into test values(generate_series(1,10));
 select pg_switch_wal();
 ```
 
-## 四、连续归档恢复
+## 连续归档恢复
 
 1、创建 data 文件夹
 
