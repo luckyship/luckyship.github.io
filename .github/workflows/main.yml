@@ -16,7 +16,6 @@ jobs:
           cd luckyship.github.io
           git checkout dev
 
-
       - name: Checkout Theme
         run: |
           cd luckyship.github.io
@@ -29,7 +28,7 @@ jobs:
 
       - name: Cache Node Dependencies
         id: cache
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: luckyship.github.io/node_modules
           key: ${{runner.OS}}-npm-caches-${{ hashFiles('package-lock.json') }}
