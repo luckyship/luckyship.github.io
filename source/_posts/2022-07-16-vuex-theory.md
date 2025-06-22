@@ -25,7 +25,7 @@ date: 2022-07-16 15:08:31
 
 ![](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWdrci5jbi1iai51ZmlsZW9zLmNvbS8wZmU4YzkzMi1mNjBhLTQ2NmMtYjMxNS1jZjkyZWRmNTM2YjYucG5n?x-oss-process=image/format,png)
 
-> 已经把项目放到 **github**：[github.com/Sunny-lucki…](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2FSunny-lucking%2FhowToBuildMyVuex 'https://github.com/Sunny-lucking/howToBuildMyVuex') 可以卑微地要个 star 吗。有什么不理解的或者是建议欢迎评论提出
+> 已经把项目放到 **github**：[github.com/Sunny-lucki…](https://link.juejin.cn/?target=https%3A%2F%2Fgithub.com%2FSunny-lucking%2FhowToBuildMyVuex "https://github.com/Sunny-lucking/howToBuildMyVuex") 可以卑微地要个 star 吗。有什么不理解的或者是建议欢迎评论提出
 
 我们主要看下 App.vue,main.js,store/index.js
 
@@ -45,8 +45,8 @@ App.vue
 store/index.js
 
 ```js
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
 
 Vue.use(Vuex);
 
@@ -61,16 +61,16 @@ export default new Vuex.Store({
 main.js
 
 ```js
-import Vue from 'vue';
-import App from './App.vue';
-import store from './store';
+import Vue from "vue";
+import App from "./App.vue";
+import store from "./store";
 
 Vue.config.productionTip = false;
 
 new Vue({
   store,
-  render: h => h(App),
-}).$mount('#app');
+  render: (h) => h(App),
+}).$mount("#app");
 ```
 
 现在我们启动一下项目。看看项目初始化有没有成功。
@@ -89,8 +89,8 @@ ok，没毛病，初始化成功。
 
 ```js
 //store/index.js
-import Vue from 'vue';
-import Vuex from './myVuex'; //修改代码
+import Vue from "vue";
+import Vuex from "./myVuex"; //修改代码
 
 Vue.use(Vuex);
 
@@ -132,18 +132,13 @@ let Vuex = {
 所以，我们可以再一步 假设 Vuex 有有 install 这个方法。
 
 ```js
-Class Store{
-
-}
-let install = function(){
-
-}
+class Store {}
+let install = function () {};
 
 let Vuex = {
   Store,
-  install
-}
-
+  install,
+};
 ```
 
 到这里，你能大概地将 Vuex 写出来吗？
@@ -186,8 +181,6 @@ plugin;
 
 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。如果插件是一个函数，它会被作为 install 方法。调用 install 方法时，会将 Vue 作为参数传入。install 方法被同一个插件多次调用时，插件也只会被安装一次。
 
-关于如何上开发 Vue 插件，请看这篇文章，非常简单，不用两分钟就看完：[如何开发 Vue 插件？](https://link.juejin.cn/?target=https%3A%2F%2Fmp.weixin.qq.com%2Fs%3F__biz%3DMzU5NDM5MDg1Mw%3D%3D%26mid%3D2247483874%26idx%3D1%26sn%3Dac6c9cf2629068dec3e5da8aa3e29364%26chksm%3Dfe00bbc8c97732dea7be43e903a794229876d8ab6c9381f2388ba22886fba7776b7b34b7af86%26token%3D1885963052%26lang%3Dzh_CN%23rd 'https://mp.weixin.qq.com/s?__biz=MzU5NDM5MDg1Mw==&mid=2247483874&idx=1&sn=ac6c9cf2629068dec3e5da8aa3e29364&chksm=fe00bbc8c97732dea7be43e903a794229876d8ab6c9381f2388ba22886fba7776b7b34b7af86&token=1885963052&lang=zh_CN#rd')
-
 （3）作用
 
 注册插件，此时只需要调用 install 方法并将 Vue 作为参数传入即可。但在细节上有两部分逻辑要处理：
@@ -199,23 +192,22 @@ plugin;
 （4）实现
 
 ```js
-Vue.use = function(plugin){
-	const installedPlugins = (this._installedPlugins || (this._installedPlugins = []));
-	if(installedPlugins.indexOf(plugin)>-1){
-		return this;
-	}
-	<!-- 其他参数 -->
-	const args = toArray(arguments,1);
-	args.unshift(this);
-	if(typeof plugin.install === 'function'){
-		plugin.install.apply(plugin,args);
-	}else if(typeof plugin === 'function'){
-		plugin.apply(null,plugin,args);
-	}
-	installedPlugins.push(plugin);
-	return this;
-}
-
+Vue.use = function (plugin) {
+  const installedPlugins = this._installedPlugins || (this._installedPlugins = []);
+  if (installedPlugins.indexOf(plugin) > -1) {
+    return this;
+  }
+  // <!-- 其他参数 -->
+  const args = toArray(arguments, 1);
+  args.unshift(this);
+  if (typeof plugin.install === "function") {
+    plugin.install.apply(plugin, args);
+  } else if (typeof plugin === "function") {
+    plugin.apply(null, plugin, args);
+  }
+  installedPlugins.push(plugin);
+  return this;
+};
 ```
 
 1、在 Vue.js 上新增了 use 方法，并接收一个参数 plugin。
@@ -237,16 +229,16 @@ Vue.use = function(plugin){
 来看 mian.js
 
 ```js
-import Vue from 'vue';
-import App from './App.vue';
-import store from './store';
+import Vue from "vue";
+import App from "./App.vue";
+import store from "./store";
 
 Vue.config.productionTip = false;
 
 new Vue({
   store,
-  render: h => h(App),
-}).$mount('#app');
+  render: (h) => h(App),
+}).$mount("#app");
 ```
 
 我们可以发现这里只是将 store ，也就是 store/index.js 导出的 store 实例，作为 Vue 参数的一部分。
@@ -255,19 +247,20 @@ new Vue({
 
 因此，install 方法我们可以这样完善
 
-```kotlin
-let install = function(Vue){
-    Vue.mixin({
-        beforeCreate(){
-            if (this.$options && this.$options.store){ // 如果是根组件
-                this.$store = this.$options.store
-            }else { //如果是子组件
-                this.$store = this.$parent && this.$parent.$store
-            }
-        }
-    })
-}
-
+```js
+let install = function (Vue) {
+  Vue.mixin({
+    beforeCreate() {
+      if (this.$options && this.$options.store) {
+        // 如果是根组件
+        this.$store = this.$options.store;
+      } else {
+        //如果是子组件
+        this.$store = this.$parent && this.$parent.$store;
+      }
+    },
+  });
+};
 ```
 
 解释下代码：
@@ -286,9 +279,8 @@ let install = function(Vue){
 
 ## 六、实现 Vuex 的 state
 
-```bash
-    <p>{{this.$store.state.num}}</p>
-
+```html
+<p>{{this.$store.state.num}}</p>
 ```
 
 我们都知道，可以通过这个 语句获得 state 的值 但是我们在 Store 类里还没实现，显然，现在就这样取得话肯定报错。
@@ -308,7 +300,7 @@ export default new Vuex.Store({
 
 也就是说，我们把这个对象
 
-```css
+```js
  {
   state: {
     num: 0;
@@ -414,7 +406,7 @@ class Store {
     // 新增代码
     let getters = options.getter || {};
     this.getters = {};
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach((getterName) => {
       Object.defineProperty(this.getters, getterName, {
         get: () => {
           return getters[getterName](this.state);
@@ -438,8 +430,8 @@ ok，现在来试一下，getter 可不可以使用。
 
 ```js
 //store/index.js
-import Vue from 'vue';
-import Vuex from './myVuex';
+import Vue from "vue";
+import Vuex from "./myVuex";
 
 Vue.use(Vuex);
 
@@ -449,7 +441,7 @@ export default new Vuex.Store({
   },
   // 新增测试代码
   getter: {
-    getNum: state => {
+    getNum: (state) => {
       return state.num;
     },
   },
@@ -487,7 +479,7 @@ class Store {
 
     let getters = options.getter || {};
     this.getters = {};
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach((getterName) => {
       Object.defineProperty(this.getters, getterName, {
         get: () => {
           return getters[getterName](this.state);
@@ -497,8 +489,8 @@ class Store {
     //新增代码
     let mutations = options.mutations || {};
     this.mutations = {};
-    Object.keys(mutations).forEach(mutationName => {
-      this.mutations[mutationName] = arg => {
+    Object.keys(mutations).forEach((mutationName) => {
+      this.mutations[mutationName] = (arg) => {
         mutations[mutationName](this.state, arg);
       };
     });
@@ -532,7 +524,7 @@ class Store {
 
     let getters = options.getter || {};
     this.getters = {};
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach((getterName) => {
       Object.defineProperty(this.getters, getterName, {
         get: () => {
           return getters[getterName](this.state);
@@ -542,8 +534,8 @@ class Store {
 
     let mutations = options.mutations || {};
     this.mutations = {};
-    Object.keys(mutations).forEach(mutationName => {
-      this.mutations[mutationName] = arg => {
+    Object.keys(mutations).forEach((mutationName) => {
+      this.mutations[mutationName] = (arg) => {
         mutations[mutationName](this.state, arg);
       };
     });
@@ -586,8 +578,8 @@ store/index.js
 
 ```js
 //store/index.js
-import Vue from 'vue';
-import Vuex from './myVuex';
+import Vue from "vue";
+import Vuex from "./myVuex";
 
 Vue.use(Vuex);
 
@@ -596,7 +588,7 @@ export default new Vuex.Store({
     num: 0,
   },
   getter: {
-    getNum: state => {
+    getNum: (state) => {
       return state.num;
     },
   },
@@ -630,7 +622,7 @@ class Store {
 
     let getters = options.getter || {};
     this.getters = {};
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach((getterName) => {
       Object.defineProperty(this.getters, getterName, {
         get: () => {
           return getters[getterName](this.state);
@@ -640,16 +632,16 @@ class Store {
 
     let mutations = options.mutations || {};
     this.mutations = {};
-    Object.keys(mutations).forEach(mutationName => {
-      this.mutations[mutationName] = arg => {
+    Object.keys(mutations).forEach((mutationName) => {
+      this.mutations[mutationName] = (arg) => {
         mutations[mutationName](this.state, arg);
       };
     });
     //新增代码
     let actions = options.actions;
     this.actions = {};
-    Object.keys(actions).forEach(actionName => {
-      this.actions[actionName] = arg => {
+    Object.keys(actions).forEach((actionName) => {
+      this.actions[actionName] = (arg) => {
         actions[actionName](this, arg);
       };
     });
@@ -700,10 +692,10 @@ class Store {
   export default {
     methods: {
       add() {
-        this.$store.commit('incre', 1);
+        this.$store.commit("incre", 1);
       },
       asyncAdd() {
-        this.$store.dispatch('asyncIncre', 2);
+        this.$store.dispatch("asyncIncre", 2);
       },
     },
   };
@@ -714,8 +706,8 @@ store/index.js
 
 ```js
 //store/index.js
-import Vue from 'vue';
-import Vuex from './myVuex';
+import Vue from "vue";
+import Vuex from "./myVuex";
 
 Vue.use(Vuex);
 
@@ -724,7 +716,7 @@ export default new Vuex.Store({
     num: 0,
   },
   getter: {
-    getNum: state => {
+    getNum: (state) => {
       return state.num;
     },
   },
@@ -737,7 +729,7 @@ export default new Vuex.Store({
   actions: {
     asyncIncre({ commit }, arg) {
       setTimeout(() => {
-        commit('incre', arg);
+        commit("incre", arg);
       }, 1000);
     },
   },
@@ -755,13 +747,13 @@ oh my god，居然出错了，它这里错误 说的是执行到这里发现这�
 来分析一下：
 
 ```js
-this.$store.commit('incre', 1);
+this.$store.commit("incre", 1);
 ```
 
 执行这段代码的时候，执行 commit 的时候，this 是谁调用就指向谁，所以 this 指向`$store`。
 
 ```js
-this.$store.dispatch('asyncIncre', 2);
+this.$store.dispatch("asyncIncre", 2);
 ```
 
 执行这段代码，就会执行
@@ -789,7 +781,7 @@ class Store {
 
     let getters = options.getter || {};
     this.getters = {};
-    Object.keys(getters).forEach(getterName => {
+    Object.keys(getters).forEach((getterName) => {
       Object.defineProperty(this.getters, getterName, {
         get: () => {
           return getters[getterName](this.state);
@@ -799,16 +791,16 @@ class Store {
 
     let mutations = options.mutations || {};
     this.mutations = {};
-    Object.keys(mutations).forEach(mutationName => {
-      this.mutations[mutationName] = arg => {
+    Object.keys(mutations).forEach((mutationName) => {
+      this.mutations[mutationName] = (arg) => {
         mutations[mutationName](this.state, arg);
       };
     });
 
     let actions = options.actions;
     this.actions = {};
-    Object.keys(actions).forEach(actionName => {
-      this.actions[actionName] = arg => {
+    Object.keys(actions).forEach((actionName) => {
+      this.actions[actionName] = (arg) => {
         actions[actionName](this, arg);
       };
     });
