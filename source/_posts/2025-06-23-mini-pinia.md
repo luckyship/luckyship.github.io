@@ -155,7 +155,7 @@ export const useCounterStore = defineStore("counter", () => {
 });
 ```
 
-```vue
+```html
 <!-- App.vue -->
 <template>
   <div>
@@ -165,9 +165,9 @@ export const useCounterStore = defineStore("counter", () => {
 </template>
 
 <script setup>
-import { useCounterStore } from "./counterStore";
+  import { useCounterStore } from "./counterStore";
 
-const counter = useCounterStore();
+  const counter = useCounterStore();
 </script>
 ```
 
