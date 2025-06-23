@@ -30,7 +30,8 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
-        run: yarn install
+
+      - run: yarn install
 
       # 4. 更新 submodule（强制拉最新远程）
       - name: Update submodules from remote

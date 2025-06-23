@@ -1,7 +1,6 @@
 "use strict";
 
 hexo.extend.generator.register("index_multiorder", function (locals) {
-  console.log("-------");
   const config = hexo.config;
 
   console.log(Object.keys(locals.posts.data[0]));
@@ -49,7 +48,6 @@ hexo.extend.generator.register("index_multiorder", function (locals) {
 
   // 多字段排序比较函数
   function multiFieldSort(a, b, orders) {
-    console.log("----fasfas------");
     for (const { field, order } of orders) {
       let av = a[field];
       let bv = b[field];
