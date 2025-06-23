@@ -26,9 +26,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # 3. 安装依赖
+      - name: Clean npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
-        run: npm install
+        run: npm ci || npm install
 
       # 4. 更新 submodule（强制拉最新远程）
       - name: Update submodules from remote
