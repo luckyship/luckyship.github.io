@@ -38,9 +38,22 @@ jobs:
         run: git submodule update --remote --init
 
       # 5. 构建 Hexo
-      - name: Generate site
-        run: npm run deploy
+      - name: Deploy
+        env:
+          SSH_KEY: ${{secrets.GITEE_RSA_PRIVATE_KEY}}
+        run: |
+          cd luckyship.github.io
+          export TZ='Asia/Shanghai' 
 
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          git config --global user.name 'luckyship'
+          git config --global user.email '304093931@qq.com'
+
+          npm run deploy
       # 6. 可选：部署到 GitHub Pages / FTP 等
       # - name: Deploy
       #   run: npx hexo deploy
