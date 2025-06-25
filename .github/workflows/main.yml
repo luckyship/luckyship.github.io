@@ -1,4 +1,4 @@
-name: Hexo Deploy Automatically (with cache)
+name: Hexo Deploy Automatically (with cache and yarn)
 
 on:
   push:
@@ -32,32 +32,21 @@ jobs:
           path: luckyship.github.io
           key: hexo-project-cache
 
-      - name: Setup Node Env
+      # Node.js + Yarn
+      - name: Setup Node.js and Yarn
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-
-      - name: Cache Node Modules
-        id: node-modules-cache
-        uses: actions/cache@v4
-        with:
-          path: luckyship.github.io/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('luckyship.github.io/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - uses: actions/setup-node@v4
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        with:
-          node-version: "20"
           cache: "yarn"
+          cache-dependency-path: luckyship.github.io/yarn.lock
 
-      - name: Install Dependencies
-        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+      # 安装依赖
+      - name: Install Dependencies with Yarn
         run: |
           cd luckyship.github.io
-          yarn install
+          yarn install --frozen-lockfile
 
+      # 部署
       - name: Deploy Hexo Blog
         env:
           SSH_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
@@ -73,4 +62,4 @@ jobs:
           git config --global user.name 'luckyship'
           git config --global user.email '304093931@qq.com'
 
-          npm run deploy
+          yarn deploy
