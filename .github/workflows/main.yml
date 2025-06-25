@@ -1,47 +1,62 @@
-name: Deploy Hexo Blog
+name: Hexo Deploy Automatically (with cache)
 
 on:
   push:
-    branches:
-      - dev # 或 master，根据你仓库的主分支
+    branches: [dev]
+  workflow_dispatch:
 
 jobs:
-  build:
+  deploy-blog:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 拉取代码 + 子模块
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive # 初始化所有子模块
-          fetch-depth: 0 # 保留完整 git 历史（可选）
-
-      # 2. 缓存 node_modules
-      - name: Cache node_modules
+      - name: Restore Project Cache
+        id: project-cache
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          path: luckyship.github.io
+          key: hexo-project-cache
+
+      - name: Clone Project (if cache miss)
+        if: steps.project-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/luckyship/luckyship.github.io.git
+          cd luckyship.github.io
+          git checkout dev
+          git submodule update --init --recursive
+
+      - name: Save Project to Cache
+        if: steps.project-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: luckyship.github.io
+          key: hexo-project-cache
+
+      - name: Setup Node Env
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Cache Node Modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: luckyship.github.io/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('luckyship.github.io/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "yarn"
-
-      - run: yarn install
-
-      # 4. 更新 submodule（强制拉最新远程）
-      - name: Update submodules from remote
-        run: git submodule update --remote --init
-
-      # 5. 构建 Hexo
-      - name: Deploy
-        env:
-          SSH_KEY: ${{secrets.GITEE_RSA_PRIVATE_KEY}}
+      - name: Install Dependencies
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
+          cd luckyship.github.io
+          npm install
+
+      - name: Deploy Hexo Blog
+        env:
+          SSH_KEY: ${{ secrets.GITEE_RSA_PRIVATE_KEY }}
+        run: |
+          cd luckyship.github.io
           export TZ='Asia/Shanghai' 
 
           mkdir -p ~/.ssh/
@@ -53,6 +68,3 @@ jobs:
           git config --global user.email '304093931@qq.com'
 
           npm run deploy
-      # 6. 可选：部署到 GitHub Pages / FTP 等
-      # - name: Deploy
-      #   run: npx hexo deploy
