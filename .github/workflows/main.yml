@@ -46,11 +46,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install Dependencies
+      - uses: actions/setup-node@v4
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        with:
+          node-version: "20"
+          cache: "yarn"
         run: |
           cd luckyship.github.io
-          npm install
+          yarn install
 
       - name: Deploy Hexo Blog
         env:
