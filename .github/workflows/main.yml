@@ -51,6 +51,9 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+
+      - name: Install Dependencies
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: |
           cd luckyship.github.io
           yarn install
