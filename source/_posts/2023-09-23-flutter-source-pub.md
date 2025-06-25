@@ -19,7 +19,7 @@ Got TLS error trying to find package flutter_inappwebview at https://pub.dev.
 
 配置本地环境方法
 
-对于 Linux 和 MacOS来说，添加如下两条环境变量即可：
+对于 Linux 和 MacOS 来说，添加如下两条环境变量即可：
 
 ```bash
 export PUB_HOSTED_URL=https://pub.flutter-io.cn
