@@ -17,7 +17,7 @@ date: 2025-06-23 20:55:56
 
 ### 创建 store
 
-createPinia() —— 创建一个“全局容器”
+createPinia() —— 创建一个”全局容器”
 
 ```js
 export function createPinia() {
