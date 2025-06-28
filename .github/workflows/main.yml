@@ -28,6 +28,7 @@ jobs:
           git checkout dev
           git pull
           git submodule update --init --recursive
+          git submodule update --remote --merge
 
       - name: Save Project to Cache
         if: steps.project-cache.outputs.cache-hit != 'true'
