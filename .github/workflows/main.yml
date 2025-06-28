@@ -22,8 +22,7 @@ jobs:
         run: |
           git clone https://github.com/luckyship/luckyship.github.io.git
 
-      - name: Clone Project (if cache miss)
-        if: steps.project-cache.outputs.cache-hit != 'true'
+      - name: pull Project ()
         run: |
           cd luckyship.github.io
           git checkout dev
