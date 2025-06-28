@@ -47,7 +47,7 @@ phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs
 electron_mirror=https://npm.taobao.org/mirrors/electron
 ```
 
-可以参考[npm 安装](https://luckyship.gitee.io/2020/12/01/2020-12-01-npm-install-md)
+可以参考[npm 安装](https://luckyship.github.io/2020/12/01/2020-12-01-npm-install-md)
 
 ## node 版本与 node-sass 版本不兼容
 
