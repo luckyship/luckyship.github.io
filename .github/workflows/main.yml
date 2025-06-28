@@ -21,8 +21,13 @@ jobs:
         if: steps.project-cache.outputs.cache-hit != 'true'
         run: |
           git clone https://github.com/luckyship/luckyship.github.io.git
+
+      - name: Clone Project (if cache miss)
+        if: steps.project-cache.outputs.cache-hit != 'true'
+        run: |
           cd luckyship.github.io
           git checkout dev
+          git pull
           git submodule update --init --recursive
 
       - name: Save Project to Cache
