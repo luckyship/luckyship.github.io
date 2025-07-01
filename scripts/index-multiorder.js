@@ -3,12 +3,11 @@
 hexo.extend.generator.register("index_multiorder", function (locals) {
   const config = hexo.config;
 
-  console.log(Object.keys(locals.posts.data[0]));
   locals.posts.data = locals.posts.data.sort((a, b) => {
-    return multiFieldSort(a, b, parseOrderBy(config.order_by));
+    return multiFieldSort(a, b, parseOrderBy(config?.index_generator?.order_by));
   });
   const posts = locals.posts;
-
+  // 如果没有配置 pagination_dir，则默认为 "page"
   const paginationDir = config.pagination_dir || "page";
   const perPage = config.per_page || 10;
   const totalPosts = posts.length;
@@ -24,8 +23,9 @@ hexo.extend.generator.register("index_multiorder", function (locals) {
       layout: ["index"],
       data: {
         posts: pagePosts,
-        current_page: i,
-        total_pages: totalPages,
+        all_posts: posts,
+        current: i,
+        total: totalPages,
         prev_link: i > 1 ? (i === 2 ? "/" : `/${paginationDir}/${i - 1}/`) : null,
         next_link: i < totalPages ? `/${paginationDir}/${i + 1}/` : null,
       },
@@ -51,7 +51,6 @@ hexo.extend.generator.register("index_multiorder", function (locals) {
     for (const { field, order } of orders) {
       let av = a[field];
       let bv = b[field];
-
       // 兼容 moment 对象转换为时间戳
       if (av && typeof av.toDate === "function") av = av.toDate().getTime();
       if (bv && typeof bv.toDate === "function") bv = bv.toDate().getTime();
