@@ -45,7 +45,7 @@ date: 2021-09-05 09:12:00
 小 A 在 `index.js`中声明 `name` 属性是一个字符串。
 
 ```js
-var name = '我不是外星人';
+var name = "我不是外星人";
 ```
 
 然后小 A 在 `list.js` 中，引用 `name` 属性，
@@ -105,7 +105,7 @@ function name() {
 `hello.js`中
 
 ```js
-let name = 'aaa';
+let name = "aaa";
 module.exports = function sayName() {
   return name;
 };
@@ -116,11 +116,11 @@ module.exports = function sayName() {
 `home.js`
 
 ```js
-const sayName = require('./hello.js');
+const sayName = require("./hello.js");
 module.exports = function say() {
   return {
     name: sayName(),
-    author: '我不是外星人',
+    author: "我不是外星人",
   };
 };
 ```
@@ -144,11 +144,11 @@ module.exports = function say() {
 
 ```js
 (function (exports, require, module, __filename, __dirname) {
-  const sayName = require('./hello.js');
+  const sayName = require("./hello.js");
   module.exports = function say() {
     return {
       name: sayName(),
-      author: '我不是外星人',
+      author: "我不是外星人",
     };
   };
 });
@@ -160,11 +160,7 @@ module.exports = function say() {
 
 ```js
 function wrapper(script) {
-  return (
-    '(function (exports, require, module, __filename, __dirname) {' +
-    script +
-    '\n})'
-  );
+  return "(function (exports, require, module, __filename, __dirname) {" + script + "\n})";
 }
 ```
 
@@ -185,13 +181,7 @@ const modulefunction = wrapper(`
 > 如上模拟了一个包装函数功能， script 为我们在 js 模块中写的内容，最后返回的就是如上包装之后的函数。当然这个函数暂且是一个字符串。
 
 ```js
-runInThisContext(modulefunction)(
-  module.exports,
-  require,
-  module,
-  __filename,
-  __dirname
-);
+runInThisContext(modulefunction)(module.exports, require, module, __filename, __dirname);
 ```
 
 > 在模块加载的时候，会通过 `runInThisContext` (可以理解成 `eval` ) 执行 `modulefunction` ，传入`require` ，`exports` ，`module` 等参数。最终我们写的 `nodejs` 文件就这么执行了。
@@ -205,9 +195,9 @@ runInThisContext(modulefunction)(
 我们还是以 `nodejs` 为参考，比如如下代码片段中：
 
 ```js
-const fs = require('fs'); // ①核心模块
-const sayName = require('./hello.js'); //② 文件模块
-const crypto = require('crypto-js'); // ③第三方自定义模块
+const fs = require("fs"); // ①核心模块
+const sayName = require("./hello.js"); //② 文件模块
+const crypto = require("crypto-js"); // ③第三方自定义模块
 ```
 
 如上代码片段中：
@@ -252,8 +242,8 @@ const crypto = require('crypto-js'); // ③第三方自定义模块
 `a.js`文件
 
 ```js
-const getMes = require('./b');
-console.log('我是 a 文件');
+const getMes = require("./b");
+console.log("我是 a 文件");
 exports.say = function () {
   const message = getMes();
   console.log(message);
@@ -263,12 +253,12 @@ exports.say = function () {
 `b.js`文件
 
 ```js
-const say = require('./a');
+const say = require("./a");
 const object = {
-  name: 'aaaa',
-  author: '我不是外星人',
+  name: "aaaa",
+  author: "我不是外星人",
 };
-console.log('我是 b 文件');
+console.log("我是 b 文件");
 module.exports = function () {
   return object;
 };
@@ -277,10 +267,10 @@ module.exports = function () {
 主文件`main.js`
 
 ```js
-const a = require('./a');
-const b = require('./b');
+const a = require("./a");
+const b = require("./b");
 
-console.log('node 入口文件');
+console.log("node 入口文件");
 ```
 
 接下来终端输入 `node main.js` 运行 `main.js`，效果如下：
@@ -370,16 +360,16 @@ function require(id) {
 为了进一步验证上面所说的，我们改造一下 `b.js` 如下:
 
 ```js
-const say = require('./a');
+const say = require("./a");
 const object = {
-  name: 'aaa',
-  author: '我不是外星人',
+  name: "aaa",
+  author: "我不是外星人",
 };
-console.log('我是 b 文件');
-console.log('打印 a 模块', say);
+console.log("我是 b 文件");
+console.log("打印 a 模块", say);
 
 setTimeout(() => {
-  console.log('异步打印 a 模块', say);
+  console.log("异步打印 a 模块", say);
 }, 0);
 
 module.exports = function () {
@@ -417,9 +407,9 @@ node 入口文件
 `a.js`
 
 ```js
-console.log('我是 a 文件');
+console.log("我是 a 文件");
 exports.say = function () {
-  const getMes = require('./b');
+  const getMes = require("./b");
   const message = getMes();
   console.log(message);
 };
@@ -428,7 +418,7 @@ exports.say = function () {
 `main.js`
 
 ```js
-const a = require('./a');
+const a = require("./a");
 a.say();
 ```
 
@@ -447,8 +437,8 @@ $ node main.js
 
 ```js
 exports = {
-  name: 'asd',
-  author: '我不是外星人',
+  name: "asd",
+  author: "我不是外星人",
   say() {
     console.log(666);
   },
@@ -469,12 +459,12 @@ $ node main.js
 ```js
 function wrap(myExports) {
   myExports = {
-    name: '我不是外星人',
+    name: "我不是外星人",
   };
 }
 
 let myExports = {
-  name: 'alien',
+  name: "alien",
 };
 wrap(myExports);
 console.log(myExports);
@@ -495,7 +485,7 @@ $ node main.js
 
 ```js
 function wrap(myExports) {
-  myExports.name = '我不是外星人';
+  myExports.name = "我不是外星人";
 }
 ```
 
@@ -512,8 +502,8 @@ $ node main.js
 
 ```js
 module.exports = {
-  name: 'aaa',
-  author: '我不是外星人',
+  name: "aaa",
+  author: "我不是外星人",
   say() {
     console.log(666);
   },
@@ -531,10 +521,10 @@ module.exports = function () {
 从上述 `require` 原理实现中，我们知道了 `exports` 和 `module.exports` 持有相同引用，因为最后导出的是 `module.exports` 。那么这就说明在一个文件中，我们最好选择 `exports` 和 `module.exports` 两者之一，如果两者同时存在，很可能会造成覆盖的情况发生。比如如下情况：
 
 ```js
-exports.name = 'alien'; // 此时 exports.name 是无效的
+exports.name = "alien"; // 此时 exports.name 是无效的
 module.exports = {
-  name: 'aaa',
-  author: '我不是外星人',
+  name: "aaa",
+  author: "我不是外星人",
   say() {
     console.log(666);
   },
@@ -582,11 +572,11 @@ module.exports = function () {}; //导出方法
 导出模块：`a.js`
 
 ```js
-const name = 'aaa';
-const author = '我不是外星人';
+const name = "aaa";
+const author = "我不是外星人";
 export { name, author };
 export const say = function () {
-  console.log('hello , world');
+  console.log("hello , world");
 };
 ```
 
@@ -594,7 +584,7 @@ export const say = function () {
 
 ```js
 // name , author , say 对应 a.js 中的  name , author , say
-import { name, author, say } from './a.js';
+import { name, author, say } from "./a.js";
 ```
 
 - `export { }`， 与变量名绑定，命名导出。
@@ -606,10 +596,10 @@ import { name, author, say } from './a.js';
 导出模块：`a.js`
 
 ```js
-const name = 'aaa';
-const author = '我不是外星人';
+const name = "aaa";
+const author = "我不是外星人";
 const say = function () {
-  console.log('hello , world');
+  console.log("hello , world");
 };
 export default {
   name,
@@ -621,7 +611,7 @@ export default {
 导入模块：`main.js`
 
 ```js
-import mes from './a.js';
+import mes from "./a.js";
 console.log(mes); //{ name: 'aaa',author:'我不是外星人', say:Function }
 ```
 
@@ -635,11 +625,11 @@ console.log(mes); //{ name: 'aaa',author:'我不是外星人', say:Function }
 导出模块：`a.js`
 
 ```js
-export const name = 'aaa';
-export const author = '我不是外星人';
+export const name = "aaa";
+export const author = "我不是外星人";
 
 export default function say() {
-  console.log('hello , world');
+  console.log("hello , world");
 }
 ```
 
@@ -648,7 +638,7 @@ export default function say() {
 第一种：
 
 ```js
-import theSay, { name, author as bookAuthor } from './a.js';
+import theSay, { name, author as bookAuthor } from "./a.js";
 console.log(
   theSay, // ƒ say() {console.log('hello , world') }
   name, // "aaa"
@@ -659,7 +649,7 @@ console.log(
 第二种：
 
 ```js
-import theSay, * as mes from './a';
+import theSay, * as mes from "./a";
 console.log(
   theSay, // ƒ say() { console.log('hello , world') }
   mes // { name:'aaa' , author: "我不是外星人" ，default:  ƒ say() { console.log('hello , world') } }
@@ -671,7 +661,7 @@ console.log(
 ##### 重属名导入
 
 ```js
-import { bookName as name, say, bookAuthor as author } from 'module';
+import { bookName as name, say, bookAuthor as author } from "module";
 console.log(bookName, bookAuthor, say); //aaa 我不是外星人
 ```
 
@@ -695,7 +685,7 @@ export { bookName as name, bookAuthor as author, ..., say } from 'module' //第�
 ##### 无需导入模块，只运行模块
 
 ```js
-import 'module';
+import "module";
 ```
 
 > 执行 `module` 不导出值 多次调用 `module` 只运行一次。
@@ -703,7 +693,7 @@ import 'module';
 ##### 动态导入
 
 ```js
-const promise = import('module');
+const promise = import("module");
 ```
 
 > `import('module')`，动态导入返回一个 `Promise`。为了支持这种方式，需要在 `webpack` 中做相应的配置处理。
@@ -719,8 +709,8 @@ const promise = import('module');
 
 ```js
 function say() {
-  import name from './a.js';
-  export const author = '我不是外星人';
+  import name from "./a.js";
+  export const author = "我不是外星人";
 }
 ```
 
@@ -754,28 +744,28 @@ import 'default' + name from 'module'
 `main.js`
 
 ```js
-console.log('main.js开始执行');
-import say from './a';
-import say1 from './b';
-console.log('main.js执行完毕');
+console.log("main.js开始执行");
+import say from "./a";
+import say1 from "./b";
+console.log("main.js执行完毕");
 ```
 
 `a.js`
 
 ```js
-import b from './b';
-console.log('a模块加载');
+import b from "./b";
+console.log("a模块加载");
 export default function say() {
-  console.log('hello , world');
+  console.log("hello , world");
 }
 ```
 
 `b.js`
 
 ```js
-console.log('b模块加载');
+console.log("b模块加载");
 export default function sayhello() {
-  console.log('hello,world');
+  console.log("hello,world");
 }
 ```
 
@@ -807,7 +797,7 @@ export const addNumber = () => {
 `main.js`中
 
 ```js
-import { num, addNumber } from './a';
+import { num, addNumber } from "./a";
 num = 2;
 ```
 
@@ -822,7 +812,7 @@ Uncaught Error: "num" is read-only.
 所以可以在 `main.js` 中这么修改。
 
 ```js
-import { num, addNumber } from './a';
+import { num, addNumber } from "./a";
 
 console.log(num); // num = 1
 addNumber();
@@ -845,8 +835,8 @@ console.log(num); // num = 2
 
 ```js
 setTimeout(() => {
-  const result = import('./b');
-  result.then(res => {
+  const result = import("./b");
+  result.then((res) => {
     console.log(res);
   });
 }, 0);
@@ -855,9 +845,9 @@ setTimeout(() => {
 `b.js`
 
 ```js
-export const name = 'alien';
+export const name = "alien";
 export default function sayhello() {
-  console.log('hello,world');
+  console.log("hello,world");
 }
 ```
 
@@ -884,7 +874,7 @@ export default function sayhello() {
 
 ```js
 if (isRequire) {
-  const result = import('./b');
+  const result = import("./b");
 }
 ```
 
@@ -895,9 +885,9 @@ if (isRequire) {
 ```js
 [
   {
-    path: 'home',
-    name: '首页',
-    component: () => import('./home'),
+    path: "home",
+    name: "首页",
+    component: () => import("./home"),
   },
 ];
 ```
@@ -905,7 +895,7 @@ if (isRequire) {
 ###### React 中动态加载
 
 ```js
-const LazyComponent = React.lazy(() => import('./text'));
+const LazyComponent = React.lazy(() => import("./text"));
 class index extends React.Component {
   render() {
     return (
@@ -946,7 +936,7 @@ export const delNumber = () => {
 `main.js`：
 
 ```js
-import { addNumber } from './a';
+import { addNumber } from "./a";
 addNumber();
 ```
 
