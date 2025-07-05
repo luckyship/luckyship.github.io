@@ -25,19 +25,23 @@ jobs:
       - name: pull Project ()
         run: |
           cd luckyship.github.io
-          rm -rf themes
           git checkout dev
           git checkout -- .
           git add .
           git stash
           git pull --rebase
-          git submodule update --init --recursive
 
       - name: Save Project to Cache
         uses: actions/cache@v4
         with:
           path: luckyship.github.io
           key: hexo-project-cache
+
+      - name: update submodule
+        run: |
+          cd luckyship.github.io
+          rm -rf themes
+          git submodule update --init --recursive
 
       # Node.js + Yarn
       - name: Setup Node.js and Yarn
