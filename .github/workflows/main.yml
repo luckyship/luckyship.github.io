@@ -28,6 +28,8 @@ jobs:
           rm -rf themes
           git checkout dev
           git checkout -- .
+          git add .
+          git stash
           git pull --rebase
           git submodule update --init --recursive
 
