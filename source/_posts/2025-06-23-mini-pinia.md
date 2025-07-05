@@ -2,6 +2,7 @@
 layout: post
 title: 自己实现一个简单版 Pinia（miniPinia）
 tags: [vue, javascript]
+categories: review
 comments: true
 date: 2025-06-23 20:55:56
 ---

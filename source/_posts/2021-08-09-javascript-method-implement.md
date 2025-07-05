@@ -68,11 +68,11 @@ function objectFactory() {
   var obj = new Object();
   // 取出第一个参数为构造函数，同时删除第一个参数，剩余参数为构造函数的参数
   var constructorFunction = [].shift.call(arguments);
-  obj.__proto__ = constructorFunction.protoype;
+  obj.__proto__ = constructorFunction.prototype;
   var result = constructorFunction.apply(obj, arguments);
 
   // result || obj 这里这么写，是考虑到构造函数返回为null
-  return typeof result === 'object' ? ret || obj : obj;
+  return typeof result === "object" ? result || obj : obj;
 }
 ```
 
@@ -84,10 +84,12 @@ function person(name, age) {
   this.age = age;
 }
 
-var p = objectFactory(person, 'asd', 13);
+var p = objectFactory(person, "asd", 13);
 
 console.log(p);
 ```
+
+> 本质上是利用了，实例的\_\_proto\_\_属性 等于构造函数的 prototype
 
 ### 实现 instanceof 关键字
 
@@ -99,7 +101,7 @@ function newInstanceof(left, right) {
    * 前置判断，不符合直接访问false
    * 根据语法A instanceof B，我们可以得知两点，首先A得是一个实例对象，B得是一个构造器函数。
    */
-  if (typeof left !== 'object' || left === null || typeof right !== 'function') {
+  if (typeof left !== "object" || left === null || typeof right !== "function") {
     return false;
   }
 
@@ -123,13 +125,13 @@ promiseAll 源码实现
 
 ```js
 function isPromise(obj) {
-  return !!obj && (typeof obj === 'object' || typeof obj === 'function') && typeof obj.then === 'function';
+  return !!obj && (typeof obj === "object" || typeof obj === "function") && typeof obj.then === "function";
 }
 
 const myPromiseAll = (arr) => {
   let result = [];
   return new Promise((resolve, reject) => {
-    console.log('promiseAll');
+    console.log("promiseAll");
     for (let i = 0; i < arr.length; i++) {
       if (isPromise(arr[i])) {
         arr[i].then((data) => {
@@ -145,14 +147,14 @@ const myPromiseAll = (arr) => {
   });
 };
 let p1 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 5000, 'foo1');
+  setTimeout(resolve, 5000, "foo1");
 });
 let p2 = new Promise((resolve, reject) => {
-  setTimeout(resolve, 1000, 'foo2');
+  setTimeout(resolve, 1000, "foo2");
 });
 let p3 = new Promise((resolve, reject) => {
   setTimeout(function () {
-    resolve('foo3');
+    resolve("foo3");
   }, 10000);
 });
 myPromiseAll([p1, p2, p3]).then((values) => {
@@ -179,7 +181,7 @@ function add(num) {
     return sum;
   };
   tempFun.toString = function () {
-    return sum + '';
+    return sum + "";
   };
 
   return tempFun;

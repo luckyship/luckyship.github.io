@@ -2,6 +2,7 @@
 layout: post
 title: 一文彻底搞懂providedIn的所有选项，除了root还能选择啥
 tags: [angular, javascript]
+categories: review
 comments: true
 date: 2024-04-13 19:32:09
 ---
@@ -125,13 +126,11 @@ export class AppComponent {}
     RouterModule.forRoot([
       {
         path: "root-first",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootFirstModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootFirstModule),
       },
       {
         path: "root-second",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootSecondModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootSecondModule),
       },
     ]),
   ],
@@ -269,8 +268,7 @@ export class AppComponent {
       // },
       {
         path: "root-second",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootSecondModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootSecondModule),
       },
     ]),
   ],
@@ -406,13 +404,11 @@ export class AppComponent {
     RouterModule.forRoot([
       {
         path: "root-first",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootFirstModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootFirstModule),
       },
       {
         path: "root-second",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootSecondModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootSecondModule),
       },
     ]),
   ],
@@ -529,13 +525,11 @@ export class RootService {
     RouterModule.forRoot([
       {
         path: "root-first",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootFirstModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootFirstModule),
       },
       {
         path: "root-second",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootSecondModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootSecondModule),
       },
     ]),
   ],
@@ -625,8 +619,7 @@ export class AppComponent {
     RouterModule.forRoot([
       {
         path: "root-first",
-        loadChildren: () =>
-          import("./app.module").then((val) => val.RootFirstModule),
+        loadChildren: () => import("./app.module").then((val) => val.RootFirstModule),
       },
     ]),
   ],
