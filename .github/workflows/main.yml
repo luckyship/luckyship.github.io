@@ -42,6 +42,7 @@ jobs:
           cd luckyship.github.io
           rm -rf themes
           git submodule update --init --recursive
+          git submodule update --remote --merge
 
       # Node.js + Yarn
       - name: Setup Node.js and Yarn
