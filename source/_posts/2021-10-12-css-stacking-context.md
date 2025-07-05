@@ -71,8 +71,8 @@ date: 2021-10-12 11:06:48
 <div class='z-index'>
     <div id='background' style='background-color:violet; transform: translate(0px, 0px);'>
       <span style='position: absolute;'>层叠上下文background/border</span>
-      <div style='background-color:blueviolet; position: relative; z-index: -1; top: 50px; left: 50px;'>负index</div>
-      <div style='background-color:steelblue; margin: 0 0 0 100px;'>block块状盒子</div>
+      <div style='background-color:blueviolet;  z-index: -1; margin-left: 50px; margin-top: 50px;'>负index</div>
+      <div style='background-color:steelblue; margin: -50px 0 0 100px;'>block块状盒子</div>
       <div style='background-color:springgreen; float: left; margin: -50px 0 -50px 150px'>float浮动盒子</div>
       <div style='background-color:greenyellow; display: inline-block; margin: -50px 0 0 200px;'>
         inline/inline-block盒子
