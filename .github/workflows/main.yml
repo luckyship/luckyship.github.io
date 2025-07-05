@@ -27,6 +27,7 @@ jobs:
           cd luckyship.github.io
           rm -rf themes
           git checkout dev
+          git checkout -- .
           git pull --rebase
           git submodule update --init --recursive
 
