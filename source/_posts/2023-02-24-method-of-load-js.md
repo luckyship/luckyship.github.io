@@ -34,7 +34,7 @@ async 模式下，它的加载是异步的，JS 不会阻塞 DOM 的渲染，asy
 <script defer src="index.js"></script>
 ```
 
-defer 模式下，JS 的加载也是异步的，defer 资源会在 `DOMContentLoaded` 执行之前，并且 defer 是有顺序的加载
+defer 模式下，JS 的加载也是异步的，defer 资源会在 `DOMContentLoaded` 事件触发之前执行，并且 defer 是有顺序的执行，不会阻塞 dom 解析
 
 如果有多个设置了 defer 的 script 标签存在，则会按照引入的前后顺序执行，即便是后面的 script 资源先返回
 
