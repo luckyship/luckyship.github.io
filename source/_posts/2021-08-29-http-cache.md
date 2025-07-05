@@ -120,6 +120,8 @@ res.setHeader("ETag", "xxx");
 
 实际使用的时候，我们通常会 2 种缓存都使用，比如 github pages
 
+这是这篇博客的请求示例，下面是返回头的参数
+
 ```bash
 cache-control          max-age=600
 etag                   W/"6868c122-420c1"
@@ -135,6 +137,8 @@ Status Code 200 OK (from memory cache)
 ```
 
 而一旦超过了 600s，浏览器就会在请求头里面添加`if-modified-since`、`if-none-match`这两个字段
+
+下面是超过 600s 后，浏览器请求头的参数
 
 ```bash
 if-modified-since   Sat, 05 Jul 2025 06:07:30 GMT
