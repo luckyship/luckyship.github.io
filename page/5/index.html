@@ -19,7 +19,7 @@
       },
     });
   </script>
-  <script async src="/main/js/slider.5bd9ed.js"></script><script async src="/main/js/main.3d9955.js"></script><script async src="/main/js/mobile.fdba68.js"></script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script>
 
   <link rel="dns-prefetch" href="https://luckyship.github.io">
   <title>luckyship</title>
@@ -42,7 +42,7 @@
   
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
   
-  <link rel="stylesheet" type="text/css" href="/main/css/index.3d9955.css">
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
   <style type="text/css">
     
     #container.show {
@@ -225,7 +225,7 @@
             
 
   
-    <article id="post-2021-10-12-css-stacking-context" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-2021-11-30-angular-container-template-content" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -233,7 +233,7 @@
   
     <h1 itemprop="name">
 	
-	  <a class="article-title" href="/2021/10/12/2021-10-12-css-stacking-context/">css层叠上下文</a>
+	  <a class="article-title" href="/2021/11/30/2021-11-30-angular-container-template-content/">ng-template、ng-container、ng-content 的用法</a>
 	
     </h1>
   
@@ -242,17 +242,40 @@
   
   
 
-<a href="/2021/10/12/2021-10-12-css-stacking-context/" class="archive-article-date">
-        <!-- <time datetime="2021-10-12T03:06:48.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
+<a href="/2021/11/30/2021-11-30-angular-container-template-content/" class="archive-article-date">
+  <!-- <time datetime="2021-11-30T08:51:34.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-30</time>
         <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
                 2025-06-25</time> -->
 
-        
-                <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-11-30
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -264,9 +287,526 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <p>对于 css 的层叠顺序一直不是很清楚，使用 z-index 的时候有的时候不生效，为啥会产生这样的场景呢，css 的层叠顺序到底是怎样的</p>
+    <h3 id="ng-container"><a href="#ng-container" class="headerlink" title="ng-container"></a>ng-container</h3><p><strong>ng-container</strong>：此标签不渲染成 DOM；默认显示标签内部内容，也可以使用结构型指令（ngIf、ngFor…）</p>
+<p>官网详细介绍：<a target="_blank" rel="noopener" href="https://angular.cn/guide/structural-directives">https://angular.cn/guide/structural-directives</a></p>
+<p>eg：代码块</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ng-container</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello World !!!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">ng-container</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>网页渲染结果</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">_ngcontent-vkg-c0</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>Hello World !!!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
     
-    <a class="article-more-a" href="/2021/10/12/2021-10-12-css-stacking-context/#more">more >></a>
+    <a class="article-more-a" href="/2021/11/30/2021-11-30-angular-container-template-content/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">angular</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/11/30/2021-11-30-angular-container-template-content/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2021-10-26-webpack-interview" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/10/26/2021-10-26-webpack-interview/">webpack配置</a>
+	
+    </h1>
+  
+
+
+  
+  
+
+<a href="/2021/10/26/2021-10-26-webpack-interview/" class="archive-article-date">
+  <!-- <time datetime="2021-10-26T07:15:01.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-26</time>
+        <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-06-25</time> -->
+
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-26
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>随着现代前端开发的复杂度和规模越来越庞大，已经不能抛开工程化来独立开发了，如 react 的 jsx 代码必须编译后才能在浏览器中使用；又如 sass 和 less 的代码浏览器也是不支持的。 而如果摒弃了这些开发框架，那么开发的效率将大幅下降。在众多前端工程化工具中，webpack 脱颖而出成为了当今最流行的前端构建工具。 然而大多数的使用者都只是单纯的会使用，而并不知道其深层的原理。希望通过以下的面试题总结可以帮助大家温故知新、查缺补漏，知其然而又知其所以然。</p>
+    
+    <a class="article-more-a" href="/2021/10/26/2021-10-26-webpack-interview/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/10/26/2021-10-26-webpack-interview/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2021-10-25-ReDos" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/10/25/2021-10-25-ReDos/">ReDos攻击</a>
+	
+    </h1>
+  
+
+
+  
+  
+
+<a href="/2021/10/25/2021-10-25-ReDos/" class="archive-article-date">
+  <!-- <time datetime="2021-10-25T09:52:43.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-25</time>
+        <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-06-25</time> -->
+
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-25
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="ReDoS-原理"><a href="#ReDoS-原理" class="headerlink" title="ReDoS 原理"></a>ReDoS 原理</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>DFA</code>对于文本串里的每一个字符只需扫描一次，比较快，但特性较少；<code>NFA</code>要翻来覆去吃字符、吐字符，速度慢，但是特性(如:分组、替换、分割)丰富。<code>NFA</code>支持  <code>惰性(lazy)</code>、<code>回溯(backtracking)</code>、<code>反向引用(backreference)</code>，<code>NFA</code>缺省应用<code>greedy</code>模式，<code>NFA</code>可能会陷入递归险境导致性能极差。</p>
+    
+    <a class="article-more-a" href="/2021/10/25/2021-10-25-ReDos/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">regex</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/10/25/2021-10-25-ReDos/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2021-10-25-moudle" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/10/25/2021-10-25-moudle/">commonJS、AMD、CMD、UMD、ES6 module</a>
+	
+    </h1>
+  
+
+
+  
+  
+
+<a href="/2021/10/25/2021-10-25-moudle/" class="archive-article-date">
+  <!-- <time datetime="2021-10-25T08:04:18.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-25</time>
+        <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-06-25</time> -->
+
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-25
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="commonJS"><a href="#commonJS" class="headerlink" title="commonJS"></a>commonJS</h2><ul>
+<li>特点：</li>
+</ul>
+<blockquote>
+<p>1、模块可以多次加载，但是只会在第一次加载时运行一次，然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。要想让模块再次运行，必须清除缓存。<br>2、模块加载会阻塞接下来代码的执行，需要等到模块加载完成才能继续执行——同步加载。</p>
+</blockquote>
+<ul>
+<li>环境：服务器环境</li>
+<li>应用：nodejs 的模块规范是参照 commonJS 实现的。</li>
+<li>语法：</li>
+</ul>
+<blockquote>
+<p>1、导入：require(‘路径’)<br>2、导出：module.exports 和 exports</p>
+</blockquote>
+    
+    <a class="article-more-a" href="/2021/10/25/2021-10-25-moudle/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/10/25/2021-10-25-moudle/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2021-10-16-http-and-https" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/10/16/2021-10-16-http-and-https/">http和https</a>
+	
+    </h1>
+  
+
+
+  
+  
+
+<a href="/2021/10/16/2021-10-16-http-and-https/" class="archive-article-date">
+  <!-- <time datetime="2021-10-16T08:26:06.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-16</time>
+        <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-06-25</time> -->
+
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-16
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="HTTP-的特点和缺点"><a href="#HTTP-的特点和缺点" class="headerlink" title="HTTP 的特点和缺点"></a>HTTP 的特点和缺点</h2><p><strong>特点</strong>：<code>无连接</code>、<code>无状态</code>、<code>灵活</code>、<code>简单快速</code></p>
+<ul>
+<li><strong>无连接</strong>：每一次请求都要连接一次，请求结束就会断掉，不会保持连接</li>
+<li><strong>无状态</strong>：每一次请求都是独立的，请求结束不会记录连接的任何信息(<strong>提起裤子就不认人的意思</strong>)，减少了网络开销，这<code>是优点也是缺点</code></li>
+<li><strong>灵活</strong>：通过 http 协议中头部的<code>Content-Type</code>标记，可以传输任意数据类型的数据对象(文本、图片、视频等等)，非常灵活</li>
+<li><strong>简单快速</strong>：发送请求访问某个资源时，只需传送请求方法和 URL 就可以了，使用简单，正由于 http 协议简单，使得 http 服务器的程序规模小，因而通信速度很快</li>
+</ul>
+    
+    <a class="article-more-a" href="/2021/10/16/2021-10-16-http-and-https/#more">more >></a>
     
     
 
@@ -285,30 +825,136 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
       		
 		</ul>
 	</div>
 
     
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
     
     <p class="article-more-link">
-      <a class="article-more-a" href="/2021/10/12/2021-10-12-css-stacking-context/">展开全文 >></a>
+      <a class="article-more-a" href="/2021/10/16/2021-10-16-http-and-https/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2021-10-13-vscode-i18n" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2021/10/13/2021-10-13-vscode-i18n/">vscode项目国际化插件</a>
+	
+    </h1>
+  
+
+
+  
+  
+
+<a href="/2021/10/13/2021-10-13-vscode-i18n/" class="archive-article-date">
+  <!-- <time datetime="2021-10-13T08:29:10.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-13</time>
+        <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-06-25</time> -->
+
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-13
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>背景：由于经常遇到需要国际化的项目，每次要了解字串是什么意思，都要去搜索对应的字串是什么意思，比较消耗时间</p>
+    
+    <a class="article-more-a" href="/2021/10/13/2021-10-13-vscode-i18n/#more">more >></a>
+    
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">vscode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2021/10/13/2021-10-13-vscode-i18n/">展开全文 >></a>
     </p>
     
 
@@ -356,16 +1002,39 @@
   
 
 <a href="/2021/09/20/2021-09-20-web-framed-diff/" class="archive-article-date">
-        <!-- <time datetime="2021-09-20T02:35:14.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-20</time>
+  <!-- <time datetime="2021-09-20T02:35:14.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-20</time>
         <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
                 2025-06-25</time> -->
 
-        
-                <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
+  
+  <time datetime="2025-06-25T14:36:01.936Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-20
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -478,16 +1147,39 @@
   
 
 <a href="/2021/09/12/2021-09-12-vue-knowledge/" class="archive-article-date">
-        <!-- <time datetime="2021-09-12T08:26:18.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
+  <!-- <time datetime="2021-09-12T08:26:18.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
         <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
                 2025-06-25</time> -->
 
-        
-                <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
+  
+  <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-12
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -606,16 +1298,39 @@
   
 
 <a href="/2021/09/12/2021-09-12-diff-calculate/" class="archive-article-date">
-        <!-- <time datetime="2021-09-12T08:18:15.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
+  <!-- <time datetime="2021-09-12T08:18:15.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
         <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
                 2025-06-25</time> -->
 
-        
-                <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
+  
+  <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-12
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -706,237 +1421,6 @@
 
 
   
-    <article id="post-2021-09-05-commonjs-es-module" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/09/05/2021-09-05-commonjs-es-module/">剖析commonjs与es module</a>
-	
-    </h1>
-  
-
-
-  
-  
-
-<a href="/2021/09/05/2021-09-05-commonjs-es-module/" class="archive-article-date">
-        <!-- <time datetime="2021-09-05T01:12:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-05</time>
-        <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
-
-        
-                <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天我们来深度分析一下 <code>Commonjs</code> 和 <code>Es Module</code>，希望通过本文的学习，能够让大家彻底明白 <code>Commonjs</code> 和 <code>Es Module</code> 原理，能够一次性搞定面试中遇到的大部分有关 <code>Commonjs</code> 和 <code>Es Module</code> 的问题。</p>
-<p>老规矩我们带上疑问开始今天的分析 🤔🤔🤔：</p>
-<ol>
-<li><code>Commonjs</code> 和 <code>Es Module</code> 有什么区别 ？</li>
-<li><code>Commonjs</code> 如何解决的循环引用问题 ？</li>
-<li>既然有了 <code>exports</code>，为何又出了 <code>module.exports</code>? 既生瑜，何生亮 ？</li>
-<li><code>require</code> 模块查找机制 ？</li>
-<li><code>Es Module</code> 如何解决循环引用问题 ？</li>
-<li><code>exports = &#123;&#125;</code> 这种写法为何无效 ？</li>
-<li>关于 <code>import()</code> 的动态引入 ？</li>
-<li><code>Es Module</code> 如何改变模块下的私有变量 ？</li>
-<li>…
-    
-    <a class="article-more-a" href="/2021/09/05/2021-09-05-commonjs-es-module/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/09/05/2021-09-05-commonjs-es-module/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021-08-29-http-cache" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/08/29/2021-08-29-http-cache/">前端缓存</a>
-	
-    </h1>
-  
-
-
-  
-  
-
-<a href="/2021/08/29/2021-08-29-http-cache/" class="archive-article-date">
-        <!-- <time datetime="2021-08-29T07:25:04.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-29</time>
-        <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
-
-        
-                <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>缓存，这是一个老生常谈的话题，也常被作为前端面试的一个知识点。</p>
-<p>本文，重点在与探讨在实际项目中，如何进行缓存的设置，并给出一个较为合理的方案。</p>
-<p>在介绍缓存的时候，我们习惯将缓存分为<code>强缓存</code>和<code>协商缓存</code>两种。两者的主要区别是使用本地缓存的时候，是否需要向服务器验证本地缓存是否依旧有效。顾名思义，协商缓存，就是需要和服务器进行协商，最终确定是否使用本地缓存。</p>
-    
-    <a class="article-more-a" href="/2021/08/29/2021-08-29-http-cache/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/08/29/2021-08-29-http-cache/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-2021-08-21-regex-lazy-match" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -955,16 +1439,39 @@
   
 
 <a href="/2021/08/21/2021-08-21-regex-lazy-match/" class="archive-article-date">
-        <!-- <time datetime="2021-08-21T14:11:01.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-21</time>
+  <!-- <time datetime="2021-08-21T14:11:01.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-21</time>
         <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
                 2025-06-25</time> -->
 
-        
-                <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
+  
+  <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-08-21
+      <span style="font-size: 10px"> (更新于2025-06-25)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -1046,328 +1553,10 @@
 
 
   
-    <article id="post-2021-08-19-min-vue" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
   
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/08/19/2021-08-19-min-vue/">实现一个minVue方法</a>
-	
-    </h1>
-  
-
-
-  
-  
-
-<a href="/2021/08/19/2021-08-19-min-vue/" class="archive-article-date">
-        <!-- <time datetime="2021-08-19T02:15:02.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-19</time>
-        <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
-
-        
-                <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <p>实现 <code>vue</code> 的双向绑定，<code>v-text</code>、<code>v-model</code>、<code>v-on</code> 方法</p>
-    
-    <a class="article-more-a" href="/2021/08/19/2021-08-19-min-vue/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/08/19/2021-08-19-min-vue/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021-08-09-javascript-method-implement" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/08/09/2021-08-09-javascript-method-implement/">手写javascript方法</a>
-	
-    </h1>
-  
-
-
-  
-  
-
-<a href="/2021/08/09/2021-08-09-javascript-method-implement/" class="archive-article-date">
-        <!-- <time datetime="2021-08-09T08:27:43.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
-        <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
-
-        
-                <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="数组扁平化"><a href="#数组扁平化" class="headerlink" title="数组扁平化"></a>数组扁平化</h3><p>效果：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">[<span class="hljs-number">1</span>, [<span class="hljs-number">2</span>, [<span class="hljs-number">3</span>]]].<span class="hljs-title function_">flat</span>(<span class="hljs-number">2</span>); <span class="hljs-comment">// [1, 2, 3]</span><br></code></pre></td></tr></table></figure>
-    
-    <a class="article-more-a" href="/2021/08/09/2021-08-09-javascript-method-implement/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/08/09/2021-08-09-javascript-method-implement/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021-08-07-vscode-setting" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2021/08/07/2021-08-07-vscode-setting/">vscode配置项</a>
-	
-    </h1>
-  
-
-
-  
-  
-
-<a href="/2021/08/07/2021-08-07-vscode-setting/" class="archive-article-date">
-        <!-- <time datetime="2021-08-07T09:15:37.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-07</time>
-        <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
-
-        
-                <time datetime="2025-06-25T14:36:01.934Z" title="最后更新" itemprop="datePublished">
-                        <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                        2025-06-25</time>
-        
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="prettier-配置"><a href="#prettier-配置" class="headerlink" title="prettier 配置"></a><code>prettier</code> 配置</h3><p>强制 <code>prettier</code> 不生效</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- prettier-ignore --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x&quot;</span>&gt;</span>hello world<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-comment">&lt;!-- prettier-ignore-attribute --&gt;</span><br></code></pre></td></tr></table></figure>
-    
-    <a class="article-more-a" href="/2021/08/07/2021-08-07-vscode-setting/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">base</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2021/08/07/2021-08-07-vscode-setting/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/page/4/">Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/6/">Next</a>
+    </nav>
   
 
 
@@ -1490,6 +1679,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
               </li>
              
@@ -1502,11 +1699,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1515,10 +1708,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1546,11 +1735,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">html</a>
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
               </li>
              
               <li class="article-tag-list-item">

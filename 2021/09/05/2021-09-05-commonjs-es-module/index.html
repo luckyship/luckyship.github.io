@@ -19,7 +19,7 @@
       },
     });
   </script>
-  <script async src="/main/js/slider.5bd9ed.js"></script><script async src="/main/js/main.3d9955.js"></script><script async src="/main/js/mobile.fdba68.js"></script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script>
 
   <link rel="dns-prefetch" href="https://luckyship.github.io">
   <title>剖析commonjs与es module | luckyship</title>
@@ -34,7 +34,7 @@
 <meta property="og:description" content="前言今天我们来深度分析一下 Commonjs 和 Es Module，希望通过本文的学习，能够让大家彻底明白 Commonjs 和 Es Module 原理，能够一次性搞定面试中遇到的大部分有关 Commonjs 和 Es Module 的问题。 老规矩我们带上疑问开始今天的分析 🤔🤔🤔：  Commonjs 和 Es Module 有什么区别 ？ Commonjs 如何解决的循环引用问题">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-05T01:12:00.000Z">
-<meta property="article:modified_time" content="2025-06-25T14:36:01.935Z">
+<meta property="article:modified_time" content="2025-07-05T08:18:14.925Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="javascript">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
   
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
   
-  <link rel="stylesheet" type="text/css" href="/main/css/index.3d9955.css">
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
   <style type="text/css">
     
     #container.show {
@@ -245,22 +245,46 @@
 
 
   
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
 
 
 <a href="/2021/09/05/2021-09-05-commonjs-es-module/" class="archive-article-date">
-        <!-- <time datetime="2021-09-05T01:12:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-05</time>
-        <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
+  <!-- <time datetime="2021-09-05T01:12:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-05</time>
+        <time datetime="2025-07-05T08:18:14.925Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
+                2025-07-05</time> -->
 
-        
-                <time datetime="2021-09-05T01:12:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-05</time>
-        
+  
+  <time datetime="2025-07-05T08:18:14.925Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-05
+      <span style="font-size: 10px"> (更新于2025-07-05)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -314,7 +338,7 @@
 <p>如上在没有模块化的前提下，如果在 <code>html</code> 中这么写，那么就会暴露一系列问题。</p>
 <h4 id="全局污染"><a href="#全局污染" class="headerlink" title="全局污染"></a>全局污染</h4><p>没有模块化，那么 <code>script</code> 内部的变量是可以相互污染的。比如有一种场景，如上 <code>./index.js</code> 文件和 <code>./list.js</code> 文件为小 A 开发的，<code>./home.js</code> 为小 B 开发的。</p>
 <p>小 A 在 <code>index.js</code>中声明 <code>name</code> 属性是一个字符串。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br></code></pre></td></tr></table></figure>
 
 <p>然后小 A 在 <code>list.js</code> 中，引用 <code>name</code> 属性，</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(name); <span class="hljs-comment">// ƒ name()&#123;&#125;</span><br></code></pre></td></tr></table></figure>
@@ -344,11 +368,11 @@
 <li><code>require</code> 函数可以帮助我们导入其他模块（自定义模块、系统模块、第三方库模块）中的内容；</li>
 </ul>
 <h4 id="commonjs-使用初体验"><a href="#commonjs-使用初体验" class="headerlink" title="commonjs 使用初体验"></a>commonjs 使用初体验</h4><p>我们先尝试这导出一个模块：<br><code>hello.js</code>中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&#x27;aaa&#x27;</span>;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> name;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> name;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>导入：接下来简单的导入：</p>
 <p><code>home.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./hello.js&#x27;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>    <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>    <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>如上就是 <code>Commonjs</code> 最简单的实现，那么暴露出两个问题：</p>
 <ul>
@@ -363,13 +387,13 @@
 <li><code>exports</code> 当前模块导出的属性</li>
 </ul>
 <p>在编译的过程中，实际 <code>Commonjs</code> 对 <code>js</code> 的代码块进行了首尾包装， 我们以上述的 <code>home.js</code> 为例子 🌰，它被包装之后的样子如下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">(<span class="hljs-keyword">function</span> (<span class="hljs-params"><span class="hljs-built_in">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname</span>) &#123;<br>  <span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./hello.js&#x27;</span>);<br>  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>      <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>    &#125;;<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">(<span class="hljs-keyword">function</span> (<span class="hljs-params"><span class="hljs-built_in">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname</span>) &#123;<br>  <span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>);<br>  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>      <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>    &#125;;<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>在 <code>Commonjs</code> 规范下模块中，会形成一个包装函数，我们写的代码将作为包装函数的执行上下文，使用的 <code>require</code> ，<code>exports</code> ，<code>module</code> 本质上是通过形参的方式传递到包装函数中的。</p>
 </blockquote>
 <p>那么包装函数本质上是什么样子的呢？</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">script</span>) &#123;<br>  <span class="hljs-keyword">return</span> (<br>    <span class="hljs-string">&#x27;(function (exports, require, module, __filename, __dirname) &#123;&#x27;</span> +<br>    script +<br>    <span class="hljs-string">&#x27;\n&#125;)&#x27;</span><br>  );<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">script</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;(function (exports, require, module, __filename, __dirname) &#123;&quot;</span> + script + <span class="hljs-string">&quot;\n&#125;)&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>包装函数执行。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> modulefunction = <span class="hljs-title function_">wrapper</span>(<span class="hljs-string">`</span><br><span class="hljs-string">  const sayName = require(&#x27;./hello.js&#x27;)</span><br><span class="hljs-string">    module.exports = function say()&#123;</span><br><span class="hljs-string">        return &#123;</span><br><span class="hljs-string">            name:sayName(),</span><br><span class="hljs-string">            author:&#x27;我不是外星人&#x27;</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">`</span>);<br></code></pre></td></tr></table></figure>
@@ -377,7 +401,7 @@
 <blockquote>
 <p>如上模拟了一个包装函数功能， script 为我们在 js 模块中写的内容，最后返回的就是如上包装之后的函数。当然这个函数暂且是一个字符串。</p>
 </blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">runInThisContext</span>(modulefunction)(<br>  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>,<br>  <span class="hljs-built_in">require</span>,<br>  <span class="hljs-variable language_">module</span>,<br>  __filename,<br>  __dirname<br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">runInThisContext</span>(modulefunction)(<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname);<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>在模块加载的时候，会通过 <code>runInThisContext</code> (可以理解成 <code>eval</code> ) 执行 <code>modulefunction</code> ，传入<code>require</code> ，<code>exports</code> ，<code>module</code> 等参数。最终我们写的 <code>nodejs</code> 文件就这么执行了。</p>
@@ -385,7 +409,7 @@
 <p>到此为止，完成了整个模块执行的原理。接下来我们来分析以下 <code>require</code> 文件加载的流程。</p>
 <h3 id="require-文件加载流程"><a href="#require-文件加载流程" class="headerlink" title="require 文件加载流程"></a>require 文件加载流程</h3><p>上述说了 <code>commonjs</code> 规范大致的实现原理，接下来我们分析一下， <code>require</code> 如何进行文件的加载的。</p>
 <p>我们还是以 <code>nodejs</code> 为参考，比如如下代码片段中：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>); <span class="hljs-comment">// ①核心模块</span><br><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./hello.js&#x27;</span>); <span class="hljs-comment">//② 文件模块</span><br><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;crypto-js&#x27;</span>); <span class="hljs-comment">// ③第三方自定义模块</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>); <span class="hljs-comment">// ①核心模块</span><br><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>); <span class="hljs-comment">//② 文件模块</span><br><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;crypto-js&quot;</span>); <span class="hljs-comment">// ③第三方自定义模块</span><br></code></pre></td></tr></table></figure>
 
 <p>如上代码片段中：</p>
 <ul>
@@ -414,13 +438,13 @@
 <h4 id="require-模块引入与处理"><a href="#require-模块引入与处理" class="headerlink" title="require 模块引入与处理"></a>require 模块引入与处理</h4><p><code>CommonJS</code> 模块同步加载并执行模块文件，<code>CommonJS</code> 模块在执行阶段分析模块依赖，采用深度优先遍历（<code>depth-first traversal</code>），执行顺序是父 -&gt; 子 -&gt; 父；</p>
 <p>为了搞清除 <code>require</code> 文件引入流程。我们接下来再举一个例子，这里注意一下细节：</p>
 <p><code>a.js</code>文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./b&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;我是 a 文件&#x27;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 a 文件&quot;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>b.js</code>文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;aaaa&#x27;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;我是 b 文件&#x27;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 b 文件&quot;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>主文件<code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);<br><span class="hljs-keyword">const</span> b = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./b&#x27;</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;node 入口文件&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> b = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;node 入口文件&quot;</span>);<br></code></pre></td></tr></table></figure>
 
 <p>接下来终端输入 <code>node main.js</code> 运行 <code>main.js</code>，效果如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>我是 b 文件<br>我是 a 文件<br>node 入口文件<br></code></pre></td></tr></table></figure>
@@ -458,7 +482,7 @@
 </ul>
 <p>如上第 ⑤ 的时候，当执行 <code>b.js</code> 模块的时候，因为 <code>a.js</code> 还没有导出 <code>say</code> 方法，所以 <code>b.js</code> 同步上下文中，获取不到 <code>say</code>。</p>
 <p>为了进一步验证上面所说的，我们改造一下 <code>b.js</code> 如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;aaa&#x27;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;我是 b 文件&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;打印 a 模块&#x27;</span>, say);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;异步打印 a 模块&#x27;</span>, say);<br>&#125;, <span class="hljs-number">0</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 b 文件&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;打印 a 模块&quot;</span>, say);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;异步打印 a 模块&quot;</span>, say);<br>&#125;, <span class="hljs-number">0</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>打印结果：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>我是 b 文件<br>打印 a 模块<br>我是 a 文件<br>node 入口文件<br>异步打印 a 模块<br></code></pre></td></tr></table></figure>
@@ -476,10 +500,10 @@
 <h4 id="require-动态加载"><a href="#require-动态加载" class="headerlink" title="require 动态加载"></a>require 动态加载</h4><p>上述我们讲了 <code>require</code> 查找文件和加载流程。接下来介绍 <code>commonjs</code> 规范下的 <code>require</code> 的另外一个特性——动态加载。</p>
 <p><code>require</code> 可以在任意的上下文，动态加载模块。我对上述 <code>a.js</code> 修改。</p>
 <p><code>a.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;我是 a 文件&#x27;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./b&#x27;</span>);<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 a 文件&quot;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;./a&#x27;</span>);<br>a.<span class="hljs-title function_">say</span>();<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br>a.<span class="hljs-title function_">say</span>();<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如上在 <code>a.js</code> 模块的 <code>say</code> 函数中，用 <code>require</code> 动态加载 <code>b.js</code> 模块。然后执行在 <code>main.js</code> 中执行 <code>a.js</code> 模块的 <code>say</code> 方法。</p>
@@ -491,14 +515,14 @@
 <p><code>exports</code> 就是传入到当前模块内的一个对象，本质上就是 <code>module.exports</code>。</p>
 </blockquote>
 <p>问题：为什么 <code>exports=&#123;&#125;</code> 直接赋值一个对象就不可以呢？ 比如我们将如上 <code>a.js</code> 修改一下：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;asd&#x27;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;asd&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>打印结果：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123;&#125;<br></code></pre></td></tr></table></figure>
 
 <p>理想情况下是通过 <code>exports = &#123;&#125;</code> 直接赋值，不需要在 <code>exports.a = xxx</code> 每一个属性，但是如上我们看到了这种方式是无效的。为什么会这样？实际这个是 <code>js</code> 本身的特性决定的。</p>
 <p>通过上述讲解都知道 <code>exports</code> ， <code>module</code> 和 <code>require</code> 作为形参的方式传入到 js 模块中。我们直接 <code>exports = &#123;&#125;</code> 修改 <code>exports</code> ，等于重新赋值了形参，那么会重新赋值一份，但是不会在引用原来的形参。举一个简单的例子</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>  &#125;;<br>&#125;<br><br><span class="hljs-keyword">let</span> myExports = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;alien&#x27;</span>,<br>&#125;;<br><span class="hljs-title function_">wrap</span>(myExports);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myExports);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  &#125;;<br>&#125;<br><br><span class="hljs-keyword">let</span> myExports = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;alien&quot;</span>,<br>&#125;;<br><span class="hljs-title function_">wrap</span>(myExports);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myExports);<br></code></pre></td></tr></table></figure>
 
 <p>打印：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123; name: <span class="hljs-string">&#x27;alien&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
@@ -506,19 +530,19 @@
 <p>我们期望修改 <code>myExports</code> ，但是没有任何作用。</p>
 <p>假设 <code>wrap</code> 就是 <code>Commonjs</code> 规范下的包装函数，我们的 <code>js</code> 代码就是包装函数内部的内容。当我们把 <code>myExports</code> 对象传进去，但是直接赋值 <code>myExports = &#123; name:&#39;我不是外星人&#39; &#125;</code> 没有任何作用，相等于内部重新声明一份 <code>myExports</code> 而和外界的 <code>myExports</code> 断绝了关系。所以解释了为什么不能 <code>exports=&#123;...&#125;</code> 直接赋值。</p>
 <p>那么解决上述也容易，只需要函数中像 <code>exports.name</code> 这么写就可以了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>打印:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123; name: <span class="hljs-string">&#x27;我不是外星人&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
 
 <h4 id="module-exports-使用"><a href="#module-exports-使用" class="headerlink" title="module.exports 使用"></a>module.exports 使用</h4><p><code>module.exports</code> 本质上就是 <code>exports</code> ，我们用 <code>module.exports</code> 来实现如上的导出。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;aaa&#x27;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>module.exports</code> 也可以单独导出一个函数或者一个类。比如如下：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// ...</span><br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>从上述 <code>require</code> 原理实现中，我们知道了 <code>exports</code> 和 <code>module.exports</code> 持有相同引用，因为最后导出的是 <code>module.exports</code> 。那么这就说明在一个文件中，我们最好选择 <code>exports</code> 和 <code>module.exports</code> 两者之一，如果两者同时存在，很可能会造成覆盖的情况发生。比如如下情况：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&#x27;alien&#x27;</span>; <span class="hljs-comment">// 此时 exports.name 是无效的</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;aaa&#x27;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&#x27;我不是外星人&#x27;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;alien&quot;</span>; <span class="hljs-comment">// 此时 exports.name 是无效的</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>上述情况下 <code>exports.name</code> 无效，会被 <code>module.exports</code> 覆盖。</p>
 <h5 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h5><p>1 那么问题来了？既然有了 <code>exports</code>，为何又出了 <code>module.exports</code>?</p>
@@ -536,10 +560,10 @@
 <p>在 <code>Es Module</code> 中用 <code>export</code> 用来导出模块，<code>import</code> 用来导入模块。但是 <code>export</code> 配合 <code>import</code> 会有很多种组合情况，接下来我们逐一分析一下。</p>
 <h4 id="导出-export-和导入-import"><a href="#导出-export-和导入-import" class="headerlink" title="导出 export 和导入 import"></a>导出 export 和导入 import</h4><p>所有通过 <code>export</code> 导出的属性，在 <code>import</code> 中可以通过结构的方式，解构出来。</p>
 <h5 id="export-正常导出，import-导入"><a href="#export-正常导出，import-导入" class="headerlink" title="export 正常导出，import 导入"></a>export 正常导出，import 导入</h5><p>导出模块：<code>a.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&#x27;aaa&#x27;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br><span class="hljs-keyword">export</span> &#123; name, author &#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello , world&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><span class="hljs-keyword">export</span> &#123; name, author &#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>导入模块：<code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// name , author , say 对应 a.js 中的  name , author , say</span><br><span class="hljs-keyword">import</span> &#123; name, author, say &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a.js&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// name , author , say 对应 a.js 中的  name , author , say</span><br><span class="hljs-keyword">import</span> &#123; name, author, say &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><code>export &#123; &#125;</code>， 与变量名绑定，命名导出。</li>
@@ -547,10 +571,10 @@
 <li>这种情况下 <code>import &#123; &#125;</code> 内部的变量名称，要与 <code>export &#123; &#125;</code> 完全匹配。</li>
 </ul>
 <h5 id="默认导出-export-default"><a href="#默认导出-export-default" class="headerlink" title="默认导出 export default"></a>默认导出 export default</h5><p>导出模块：<code>a.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&#x27;aaa&#x27;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br><span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello , world&#x27;</span>);<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  name,<br>  author,<br>  say,<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  name,<br>  author,<br>  say,<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p>导入模块：<code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a.js&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(mes); <span class="hljs-comment">//&#123; name: &#x27;aaa&#x27;,author:&#x27;我不是外星人&#x27;, say:Function &#125;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(mes); <span class="hljs-comment">//&#123; name: &#x27;aaa&#x27;,author:&#x27;我不是外星人&#x27;, say:Function &#125;</span><br></code></pre></td></tr></table></figure>
 
 <ul>
 <li><code>export default anything</code> 导入 <code>module</code> 的默认导出。<code>anything</code> 可以是函数，属性方法，或者对象。</li>
@@ -558,19 +582,19 @@
 </ul>
 <h5 id="混合导入｜导出"><a href="#混合导入｜导出" class="headerlink" title="混合导入｜导出"></a>混合导入｜导出</h5><p><code>ES6 module</code> 可以使用 <code>export default</code> 和 <code>export</code> 导入多个属性。</p>
 <p>导出模块：<code>a.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&#x27;aaa&#x27;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello , world&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>导入模块：<code>main.js</code> 中有几种导入方式：</p>
 <p>第一种：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, &#123; name, author <span class="hljs-keyword">as</span> bookAuthor &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a.js&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123;console.log(&#x27;hello , world&#x27;) &#125;</span><br>  name, <span class="hljs-comment">// &quot;aaa&quot;</span><br>  bookAuthor <span class="hljs-comment">// &quot;我不是外星人&quot;</span><br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, &#123; name, author <span class="hljs-keyword">as</span> bookAuthor &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123;console.log(&#x27;hello , world&#x27;) &#125;</span><br>  name, <span class="hljs-comment">// &quot;aaa&quot;</span><br>  bookAuthor <span class="hljs-comment">// &quot;我不是外星人&quot;</span><br>);<br></code></pre></td></tr></table></figure>
 
 <p>第二种：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, * <span class="hljs-keyword">as</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125;</span><br>  mes <span class="hljs-comment">// &#123; name:&#x27;aaa&#x27; , author: &quot;我不是外星人&quot; ，default:  ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125; &#125;</span><br>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, * <span class="hljs-keyword">as</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125;</span><br>  mes <span class="hljs-comment">// &#123; name:&#x27;aaa&#x27; , author: &quot;我不是外星人&quot; ，default:  ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125; &#125;</span><br>);<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>导出的属性被合并到 <code>mes</code> 属性上， <code>export</code> 被导入到对应的属性上，<code>export default</code> 导出内容被绑定到 <code>default</code> 属性上。<code>theSay</code> 也可以作为被 <code>export default</code> 导出属性。</p>
 </blockquote>
-<h5 id="重属名导入"><a href="#重属名导入" class="headerlink" title="重属名导入"></a>重属名导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; bookName <span class="hljs-keyword">as</span> name, say, bookAuthor <span class="hljs-keyword">as</span> author &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(bookName, bookAuthor, say); <span class="hljs-comment">//aaa 我不是外星人</span><br></code></pre></td></tr></table></figure>
+<h5 id="重属名导入"><a href="#重属名导入" class="headerlink" title="重属名导入"></a>重属名导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; bookName <span class="hljs-keyword">as</span> name, say, bookAuthor <span class="hljs-keyword">as</span> author &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;module&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(bookName, bookAuthor, say); <span class="hljs-comment">//aaa 我不是外星人</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>从 <code>module</code> 模块中引入 <code>name</code> ，并重命名为 <code>bookName</code> ，从 <code>module</code> 模块中引入 <code>author</code> ，并重命名为 <code>bookAuthor</code>。然后在当前模块下，使用被重命名的名字。</p>
@@ -583,19 +607,19 @@
 <li>第二种方式：从 <code>module</code> 中导入 <code>name</code> ，<code>author </code>，<code>say</code> 再以相同的属性名，导出。</li>
 <li>第三种方式：从 <code>module</code> 中导入 <code>name</code> ，重属名为 <code>bookName</code> 导出，从 <code>module</code> 中导入 <code>author</code> ，重属名为 <code>bookAuthor</code> 导出，正常导出 <code>say</code> 。</li>
 </ul>
-<h5 id="无需导入模块，只运行模块"><a href="#无需导入模块，只运行模块" class="headerlink" title="无需导入模块，只运行模块"></a>无需导入模块，只运行模块</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;module&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<h5 id="无需导入模块，只运行模块"><a href="#无需导入模块，只运行模块" class="headerlink" title="无需导入模块，只运行模块"></a>无需导入模块，只运行模块</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;module&quot;</span>;<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>执行 <code>module</code> 不导出值 多次调用 <code>module</code> 只运行一次。</p>
 </blockquote>
-<h5 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;module&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<h5 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;module&quot;</span>);<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p><code>import(&#39;module&#39;)</code>，动态导入返回一个 <code>Promise</code>。为了支持这种方式，需要在 <code>webpack</code> 中做相应的配置处理。</p>
 </blockquote>
 <h4 id="ES6-module-特性"><a href="#ES6-module-特性" class="headerlink" title="ES6 module 特性"></a>ES6 module 特性</h4><p>接下来我们重点分析一下 <code>ES6 module</code> 一些重要特性。</p>
 <h5 id="1-静态语法"><a href="#1-静态语法" class="headerlink" title="1 静态语法"></a>1 静态语法</h5><p><code>ES6 module</code> 的引入和导出是静态的，<code>import</code> 会自动提升到代码的顶层 ，<code>import</code> , <code>export</code> 不能放在块级作用域或条件语句中。<br>🙅 错误写法一：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a.js&#x27;</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&#x27;我不是外星人&#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>🙅 错误写法二：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">isexport &amp;&amp;  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span>  name = <span class="hljs-string">&#x27;aaa&#x27;</span><br></code></pre></td></tr></table></figure>
@@ -608,13 +632,13 @@
 <h5 id="2-执行特性"><a href="#2-执行特性" class="headerlink" title="2 执行特性"></a>2 执行特性</h5><p><code>ES6 module</code> 和 <code>Common.js</code> 一样，对于相同的 <code>js</code> 文件，会保存静态属性。</p>
 <p>但是与 <code>Common.js</code> 不同的是 ，<code>CommonJS</code> 模块同步加载并执行模块文件，<code>ES6</code> 模块提前加载并执行模块文件，<code>ES6</code> 模块在预处理阶段分析模块依赖，在执行阶段执行模块，两个阶段都采用深度优先遍历，执行顺序是子 -&gt; 父。</p>
 <p>为了验证这一点，看一下如下 demo。<br><code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;main.js开始执行&#x27;</span>);<br><span class="hljs-keyword">import</span> say <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br><span class="hljs-keyword">import</span> say1 <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./b&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;main.js执行完毕&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;main.js开始执行&quot;</span>);<br><span class="hljs-keyword">import</span> say <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-keyword">import</span> say1 <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./b&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;main.js执行完毕&quot;</span>);<br></code></pre></td></tr></table></figure>
 
 <p><code>a.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> b <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./b&#x27;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;a模块加载&#x27;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello , world&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> b <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./b&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;a模块加载&quot;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>b.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;b模块加载&#x27;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello,world&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;b模块加载&quot;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello,world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>main.js </code>和 <code>a.js</code> 都引用了 <code>b.js</code> 模块，但是 <code>b</code> 模块也只加载了一次。<br>执行顺序是子 -&gt; 父</p>
 <p>效果如下：</p>
@@ -625,13 +649,13 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> num = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">addNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num++;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>main.js</code>中</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br>num = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br>num = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
 
 <p>如果直接修改，那么会报错。如下所示：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">Uncaught Error: <span class="hljs-string">&quot;num&quot;</span> is read-only.<br></code></pre></td></tr></table></figure>
 
 <h5 id="属性绑定"><a href="#属性绑定" class="headerlink" title="属性绑定"></a>属性绑定</h5><p>所以可以在 <code>main.js</code> 中这么修改。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 1</span><br><span class="hljs-title function_">addNumber</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 2</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 1</span><br><span class="hljs-title function_">addNumber</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 2</span><br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如上属性 num 的导入是绑定的。</p>
@@ -644,10 +668,10 @@
 </ul>
 <h4 id="import-动态引入"><a href="#import-动态引入" class="headerlink" title="import() 动态引入"></a>import() 动态引入</h4><p><code>import()</code> 返回一个 <code>Promise</code> 对象， 返回的 <code>Promise</code> 的 <code>then</code> 成功回调中，可以获取模块的加载成功信息。我们来简单看一下 <code>import()</code> 是如何使用的。</p>
 <p><code>main.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./b&#x27;</span>);<br>  result.<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<br>  &#125;);<br>&#125;, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>  result.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<br>  &#125;);<br>&#125;, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
 
 <p><code>b.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&#x27;alien&#x27;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;hello,world&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;alien&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello,world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>打印如下：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-attr">default</span>: f <span class="hljs-title function_">sayhello</span>()<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;alien&#x27;</span><br>    <span class="hljs-attr">_esModule</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
@@ -658,12 +682,12 @@
 <li><code>import()</code> 返回一个 <code>Promise</code> ，成功回调 <code>then</code> 中可以获取模块对应的信息。<code>name</code> 对应 <code>name</code> 属性， <code>default</code> 代表 <code>export default</code> 。<code>__esModule</code> 为 <code>es module</code> 的标识。</li>
 </ul>
 <h5 id="import-可以做一些什么"><a href="#import-可以做一些什么" class="headerlink" title="import() 可以做一些什么"></a>import() 可以做一些什么</h5><h6 id="动态加载"><a href="#动态加载" class="headerlink" title="动态加载"></a>动态加载</h6><p>首先 <code>import()</code> 动态加载一些内容，可以放在条件语句或者函数执行上下文中。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (isRequire) &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./b&#x27;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (isRequire) &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h6 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h6><p><code>import()</code> 可以实现懒加载，举个例子 <code>vue</code> 中的路由懒加载；</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">[<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;home&#x27;</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;首页&#x27;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./home&#x27;</span>),<br>  &#125;,<br>];<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">[<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;home&quot;</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;首页&quot;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./home&quot;</span>),<br>  &#125;,<br>];<br></code></pre></td></tr></table></figure>
 
-<h6 id="React-中动态加载"><a href="#React-中动态加载" class="headerlink" title="React 中动态加载"></a>React 中动态加载</h6><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">LazyComponent</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&#x27;./text&#x27;</span>));<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">index</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          &lt;<span class="hljs-attr">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;icon&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">SyncOutlinespin</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        &#125;</span><br><span class="language-xml">      &gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">LazyComponent</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h6 id="React-中动态加载"><a href="#React-中动态加载" class="headerlink" title="React 中动态加载"></a>React 中动态加载</h6><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">LazyComponent</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./text&quot;</span>));<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">index</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          &lt;<span class="hljs-attr">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;icon&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">SyncOutlinespin</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        &#125;</span><br><span class="language-xml">      &gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">LazyComponent</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p><code>React.lazy</code> 和 <code>Suspense</code> 配合一起用，能够有动态加载组件的效果。<code>React.lazy</code> 接受一个函数，这个函数需要动态调用 <code>import()</code> 。</p>
 <p><code>import()</code> 这种加载效果，可以很轻松的实现代码分割。避免一次性加载大量 <code>js</code> 文件，造成首次加载白屏时间过长的情况。</p>
@@ -672,7 +696,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> num = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">addNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num++;<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">delNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num--;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
 <p><code>main.js</code>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./a&#x27;</span>;<br><span class="hljs-title function_">addNumber</span>();<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-title function_">addNumber</span>();<br></code></pre></td></tr></table></figure>
 
 <blockquote>
 <p>如上 <code>a.js</code> 中暴露两个方法，<code>addNumber</code> 和 <code>delNumber</code>，但是整个应用中，只用到了 <code>addNumber</code>，那么构建打包的时候，<code>delNumber</code> 将作为没有引用的方法，不被打包进来。</p>
@@ -1002,6 +1026,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
               </li>
              
@@ -1014,11 +1046,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1027,10 +1055,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1058,11 +1082,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">html</a>
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
               </li>
              
               <li class="article-tag-list-item">

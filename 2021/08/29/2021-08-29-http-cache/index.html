@@ -19,7 +19,7 @@
       },
     });
   </script>
-  <script async src="/main/js/slider.5bd9ed.js"></script><script async src="/main/js/main.3d9955.js"></script><script async src="/main/js/mobile.fdba68.js"></script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script>
 
   <link rel="dns-prefetch" href="https://luckyship.github.io">
   <title>前端缓存 | luckyship</title>
@@ -34,7 +34,7 @@
 <meta property="og:description" content="缓存，这是一个老生常谈的话题，也常被作为前端面试的一个知识点。 本文，重点在与探讨在实际项目中，如何进行缓存的设置，并给出一个较为合理的方案。 在介绍缓存的时候，我们习惯将缓存分为强缓存和协商缓存两种。两者的主要区别是使用本地缓存的时候，是否需要向服务器验证本地缓存是否依旧有效。顾名思义，协商缓存，就是需要和服务器进行协商，最终确定是否使用本地缓存。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-08-29T07:25:04.000Z">
-<meta property="article:modified_time" content="2025-06-25T14:36:01.935Z">
+<meta property="article:modified_time" content="2025-07-05T08:18:14.925Z">
 <meta property="article:author" content="luckyship">
 <meta property="article:tag" content="web">
 <meta name="twitter:card" content="summary">
@@ -47,7 +47,7 @@
   
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
   
-  <link rel="stylesheet" type="text/css" href="/main/css/index.3d9955.css">
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
   <style type="text/css">
     
     #container.show {
@@ -147,7 +147,7 @@
 			
   <div id="toc" class="toc-article">
     <div class="toc-title">目录</div>
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">强缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="toc-number">2.</span> <span class="toc-text">协商缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E4%B9%9F%E6%9C%89%E8%AE%B2%E7%A9%B6"><span class="toc-number">3.1.</span> <span class="toc-text">哈希也有讲究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETag-%E8%AE%A1%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">ETag 计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ETag-%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">4.1.</span> <span class="toc-text">ETag 的用处</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E5%90%AF%E7%94%A8-ETag-%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">4.1.1.</span> <span class="toc-text">站点启用 ETag 的好处</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">后端需要怎么设置</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E7%BC%93%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">强缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98"><span class="toc-number">2.</span> <span class="toc-text">协商缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E4%B9%9F%E6%9C%89%E8%AE%B2%E7%A9%B6"><span class="toc-number">3.1.</span> <span class="toc-text">哈希也有讲究</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETag-%E8%AE%A1%E7%AE%97"><span class="toc-number">4.</span> <span class="toc-text">ETag 计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ETag-%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">4.1.</span> <span class="toc-text">ETag 的用处</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AB%99%E7%82%B9%E5%90%AF%E7%94%A8-ETag-%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-number">4.1.1.</span> <span class="toc-text">站点启用 ETag 的好处</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE"><span class="toc-number">5.</span> <span class="toc-text">后端需要怎么设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5-1"><span class="toc-number">6.</span> <span class="toc-text">实践</span></a></li></ol>
   </div>
 
 
@@ -245,22 +245,46 @@
 
 
   
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
 
 
 <a href="/2021/08/29/2021-08-29-http-cache/" class="archive-article-date">
-        <!-- <time datetime="2021-08-29T07:25:04.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-29</time>
-        <time datetime="2025-06-25T14:36:01.935Z" title="最后更新" itemprop="datePublished">
+  <!-- <time datetime="2021-08-29T07:25:04.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-29</time>
+        <time datetime="2025-07-05T08:18:14.925Z" title="最后更新" itemprop="datePublished">
                 <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
-                2025-06-25</time> -->
+                2025-07-05</time> -->
 
-        
-                <time datetime="2021-08-29T07:25:04.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-29</time>
-        
+  
+  <time datetime="2025-07-05T08:18:14.925Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-08-29
+      <span style="font-size: 10px"> (更新于2025-07-05)
+    </span>
+  </time>
+  
 </a>
 
   
@@ -273,7 +297,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.8k字</span>
+      <span class="post-count">2.1k字</span>
     </span>
   </span>
 
@@ -282,7 +306,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">7分</span>
     </span>
   </span>
 </div>
@@ -352,10 +376,23 @@
 <h5 id="站点启用-ETag-的好处"><a href="#站点启用-ETag-的好处" class="headerlink" title="站点启用 ETag 的好处"></a>站点启用 <code>ETag</code> 的好处</h5><p>1、<code>Sitemap</code> 启用 <code>ETag</code> 后，百度就可以快速的知道 <code>Sitemap</code> 的更新。在内容没有做更改的情况下，服务器只发回 304 应答头，对流量的消耗极小。平均每个 head 在 227B 大小的通常下，如果 24 个小时每秒回应的流量消耗仅为 18.7M。</p>
 <p>2、站长平台对每个站点的 <code>Sitemap</code> 主动抓取次数是有上限的，且 这项功能没有对所有站点开放，如果你的站点 <code>Sitemap</code> 开启了 <code>ETag</code>，并通过了测试，就可以用较小的流量享受百度及时更新网站的 <code>Sitemap</code> 的功能。</p>
 <h3 id="后端需要怎么设置"><a href="#后端需要怎么设置" class="headerlink" title="后端需要怎么设置"></a>后端需要怎么设置</h3><p>上文主要说的是前端如何进行打包，那后端怎么做呢？我们知道，浏览器是根据响应头的相关字段来决定缓存的方案的。所以，后端的关键就在于，根据不同的请求返回对应的缓存字段。以 <code>nodejs</code> 为例，如果需要浏览器强缓存，我们可以这样设置：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Cache-Control&#x27;</span>, <span class="hljs-string">&#x27;public, max-age=xxx&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&quot;Cache-Control&quot;</span>, <span class="hljs-string">&quot;public, max-age=xxx&quot;</span>);<br></code></pre></td></tr></table></figure>
 
 <p>如果需要协商缓存，则可以这样设置：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Cache-Control&#x27;</span>, <span class="hljs-string">&#x27;public, max-age=0&#x27;</span>);<br>res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Last-Modified&#x27;</span>, <span class="hljs-string">&#x27;xxx&#x27;</span>);<br>res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;ETag&#x27;</span>, <span class="hljs-string">&#x27;xxx&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&quot;Cache-Control&quot;</span>, <span class="hljs-string">&quot;public, max-age=0&quot;</span>);<br>res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&quot;Last-Modified&quot;</span>, <span class="hljs-string">&quot;xxx&quot;</span>);<br>res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&quot;ETag&quot;</span>, <span class="hljs-string">&quot;xxx&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="实践-1"><a href="#实践-1" class="headerlink" title="实践"></a>实践</h3><p>实际使用的时候，我们通常会 2 种缓存都使用，比如 github pages</p>
+<p>这是这篇博客的请求示例，下面是返回头的参数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">cache-control          max-age=600<br>etag                   W/<span class="hljs-string">&quot;6868c122-420c1&quot;</span><br>expires                Sat, 05 Jul 2025 06:34:39 GMT<br>last-modified          Sat, 05 Jul 2025 06:07:30 GMT<br></code></pre></td></tr></table></figure>
+
+<p>既设置了 cache-control 又设置了 etag，那浏览器会根据 cache-control 来判断是否需要强缓存,<br>这里的有效时间是 600s，所以在 600s 内，浏览器都不会请求服务器，而是会在状态码里面有一个（from memory cache），表示强缓存</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">Status Code 200 OK (from memory cache)<br></code></pre></td></tr></table></figure>
+
+<p>而一旦超过了 600s，浏览器就会在请求头里面添加<code>if-modified-since</code>、<code>if-none-match</code>这两个字段</p>
+<p>下面是超过 600s 后，浏览器请求头的参数</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">if-modified-since   Sat, 05 Jul 2025 06:07:30 GMT<br>if-none-match       W/<span class="hljs-string">&quot;6868c122-420c1&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>后端服务器接收到这个请求，会根据 <code>if-modified-since</code>、<code>if-none-match</code> 这两个字段来判断是否命中协商缓存，如果命中则直接返回 304 状态码，<br>此时客户端的请求接口状态就会变成 304，依然是使用缓存的情况</p>
 
     
 
@@ -663,6 +700,14 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
               </li>
              
@@ -675,11 +720,7 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -688,10 +729,6 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">network</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">base</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -719,11 +756,11 @@
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">html</a>
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
               </li>
              
               <li class="article-tag-list-item">
