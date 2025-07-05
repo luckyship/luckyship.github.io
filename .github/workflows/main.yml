@@ -25,10 +25,10 @@ jobs:
       - name: pull Project ()
         run: |
           cd luckyship.github.io
+          rm -rf themes
           git checkout dev
           git pull --rebase
           git submodule update --init --recursive
-          git submodule update --remote --merge
 
       - name: Save Project to Cache
         uses: actions/cache@v4
