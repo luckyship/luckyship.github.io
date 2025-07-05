@@ -31,12 +31,6 @@ jobs:
           git stash
           git pull --rebase
 
-      - name: Save Project to Cache
-        uses: actions/cache@v4
-        with:
-          path: luckyship.github.io
-          key: hexo-project-cache
-
       - name: update submodule
         run: |
           cd luckyship.github.io
@@ -75,3 +69,9 @@ jobs:
           git config --global user.email '304093931@qq.com'
 
           yarn deploy
+
+      - name: Save Project to Cache
+        uses: actions/cache@v4
+        with:
+          path: luckyship.github.io
+          key: hexo-project-cache
