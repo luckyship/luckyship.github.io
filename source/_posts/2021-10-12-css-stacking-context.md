@@ -88,6 +88,46 @@ date: 2021-10-12 11:06:48
 </iframe>
 <!-- /* md-file-format-disable */ -->
 
+> 上图的代码
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
+  </head>
+  <body>
+    <style type="text/css">
+      .z-index div {
+        width: 200px;
+        height: 100px;
+        color: white;
+        border: 1px solid white;
+      }
+    </style>
+    <body>
+      <div class="z-index">
+        <div id="background" style="background-color:violet; transform: translate(0px, 0px);">
+          <span style="position: absolute;">层叠上下文background/border</span>
+          <div style="background-color:blueviolet;  z-index: -1; margin-left: 50px; margin-top: 50px;">负index</div>
+          <div style="background-color:steelblue; margin: -50px 0 0 100px;">block块状盒子</div>
+          <div style="background-color:springgreen; float: left; margin: -50px 0 -50px 150px">float浮动盒子</div>
+          <div style="background-color:greenyellow; display: inline-block; margin: -50px 0 0 200px;">
+            inline/inline-block盒子
+          </div>
+          <div style="background-color:orange; position: relative; z-index: auto; margin: -50px 0 0 250px;">
+            z-index:auto/z-index:0
+          </div>
+          <div style="background-color:red; position: relative; z-index: 1; margin: -50px 0 0 300px;">正z-index</div>
+        </div>
+      </div>
+    </body>
+  </body>
+</html>
+```
+
 在不考虑 CSS3 的情况下，当元素发生层叠时，层叠顺讯遵循上面途中的规则。 这里值得注意的是：
 
 - 左上角"层叠上下文 `background/border`"指的是层叠上下文元素的背景和边框。
