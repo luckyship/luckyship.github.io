@@ -4,7 +4,7 @@ title: 浏览器从输入URL到渲染完页面的整个过程
 tags: [web]
 categories: review
 comments: true
-date: 2020-12-29 10:22:02
+date: 2020-12-29 10:22:01
 ---
 
 从输入 URL 到渲染出整个页面的过程包括以下部分：
