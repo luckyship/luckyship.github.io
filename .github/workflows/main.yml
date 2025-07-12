@@ -5,6 +5,10 @@ on:
     branches: [dev]
   workflow_dispatch:
 
+  # 配置 GITHUB_TOKEN 的权限
+permissions:
+  actions: write # 赋予操作 Actions 缓存的写权限
+
 jobs:
   deploy-blog:
     runs-on: ubuntu-latest
@@ -71,6 +75,21 @@ jobs:
           git config --global user.email '304093931@qq.com'
 
           yarn deploy
+
+      - name: Delete existing cache
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 获取缓存 ID
+          CACHE_ID=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/caches?key_prefix=hexo-project-cache-${{ runner.os }}" | \
+            jq -r '.actions_caches[0].id')
+
+          # 删除缓存
+          if [ "$CACHE_ID" != "null" ]; then
+            curl -X DELETE -H "Authorization: Bearer $GITHUB_TOKEN" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/caches/$CACHE_ID"
+          fi
 
       - name: Save Project to Cache
         uses: actions/cache@v4
