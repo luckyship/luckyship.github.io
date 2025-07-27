@@ -1,7 +1,7 @@
 ---
 layout: post
-title: 2025-07-27-vite-plugin
-tags: []
+title: vite 插件 实现为catch自动添加console.error
+tags: [vue, vite, javascript]
 comments: true
 date: 2025-07-27 15:56:54
 ---
