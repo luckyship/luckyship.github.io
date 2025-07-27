@@ -1,6 +1,6 @@
 ---
 layout: post
-title: vite 插件 实现为catch自动添加console.error
+title: Babel AST 魔法：Vite 插件如何让你的 try...catch 不再“裸奔”？
 tags: [vue, vite, javascript]
 comments: true
 date: 2025-07-27 15:56:54
