@@ -14,15 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Restore Project Cache
-        id: project-cache
-        uses: actions/cache@v4
-        with:
-          path: luckyship.github.io
-          key: hexo-project-cache-${{ runner.os }}-
+      # - name: Restore Project Cache
+      #   id: project-cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: luckyship.github.io
+      #     key: hexo-project-cache-${{ runner.os }}-
 
       - name: Clone Project (if cache miss)
-        if: steps.project-cache.outputs.cache-hit != 'true'
         run: |
           # 检查 luckyship.github.io 目录是否存在
           if [ ! -d "luckyship.github.io" ]; then
@@ -92,10 +91,10 @@ jobs:
               "https://api.github.com/repos/${{ github.repository }}/actions/caches/$CACHE_ID"
           fi
 
-      - name: Save Project to Cache
-        uses: actions/cache@v4
-        with:
-          path: luckyship.github.io
-          key: hexo-project-cache-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: |
-            hexo-project-cache-${{ runner.os }}-
+      # - name: Save Project to Cache
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: luckyship.github.io
+      #     key: hexo-project-cache-${{ runner.os }}-${{ github.run_id }}
+      #     restore-keys: |
+      #       hexo-project-cache-${{ runner.os }}-
