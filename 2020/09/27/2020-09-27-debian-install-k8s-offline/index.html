@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>在debian上离线使用kubeadm搭建 v1.16.3版本Kubernetes集群 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="在debian上离线所有k8s资源，不需要网络安装kubernetes环境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在debian上离线使用kubeadm搭建 v1.16.3版本Kubernetes集群">
+<meta property="og:url" content="https://luckyship.github.io/2020/09/27/2020-09-27-debian-install-k8s-offline/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="在debian上离线所有k8s资源，不需要网络安装kubernetes环境">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.172Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="debian">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85docker"><span class="toc-number">1.1.</span> <span class="toc-text">首先安装docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%97%ADswap%E3%80%81selinux%E3%80%81%E9%98%B2%E7%81%AB%E5%A2%99"><span class="toc-number">1.2.</span> <span class="toc-text">关闭swap、selinux、防火墙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0k8s%E5%AE%98%E6%96%B9%E6%BA%90"><span class="toc-number">1.3.</span> <span class="toc-text">添加k8s官方源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%A6%BB%E7%BA%BF%E5%8C%85"><span class="toc-number">1.4.</span> <span class="toc-text">配置离线包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BC%E5%87%BAdocker-%E7%A6%BB%E7%BA%BF%E5%8C%85"><span class="toc-number">1.5.</span> <span class="toc-text">导出docker 离线包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8kubeadm%E9%83%A8%E7%BD%B2k8s"><span class="toc-number">2.</span> <span class="toc-text">使用kubeadm部署k8s</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">初始化环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEk8s%E7%9A%84%E7%BD%91%E7%BB%9C%E6%8F%92%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">设置k8s的网络插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85helm"><span class="toc-number">2.3.</span> <span class="toc-text">安装helm</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E9%99%A4%E8%8A%82%E7%82%B9%E6%B1%A1%E7%82%B9"><span class="toc-number">2.3.1.</span> <span class="toc-text">去除节点污点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">2.3.2.</span> <span class="toc-text">下载客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%8E%8B%E7%BC%A9%E5%B9%B6%E6%8B%B7%E8%B4%9Dhelm%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.3.</span> <span class="toc-text">解压缩并拷贝helm二进制文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BAtiller%E9%95%9C%E5%83%8F"><span class="toc-number">2.3.4.</span> <span class="toc-text">导出tiller镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96helm%EF%BC%8C%E9%83%A8%E7%BD%B2tiller"><span class="toc-number">2.3.5.</span> <span class="toc-text">初始化helm，部署tiller</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85openebs%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.4.</span> <span class="toc-text">安装openebs存储服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#yaml%E6%96%87%E4%BB%B6"><span class="toc-number">2.4.1.</span> <span class="toc-text">yaml文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA%E6%89%80%E6%9C%89openebs%E9%95%9C%E5%83%8F"><span class="toc-number">2.4.2.</span> <span class="toc-text">导出所有openebs镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E5%AD%98%E5%82%A8"><span class="toc-number">2.4.3.</span> <span class="toc-text">设置默认存储</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85kubesphere"><span class="toc-number">2.5.</span> <span class="toc-text">安装kubesphere</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%85%A5%E6%9C%80%E5%B0%8F%E5%8C%96%E9%95%9C%E5%83%8F"><span class="toc-number">2.5.1.</span> <span class="toc-text">导入最小化镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85kubesphere-1"><span class="toc-number">2.5.2.</span> <span class="toc-text">安装kubesphere</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2020-09-27-debian-install-k8s-offline" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      在debian上离线使用kubeadm搭建 v1.16.3版本Kubernetes集群
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2020/09/27/2020-09-27-debian-install-k8s-offline/" class="archive-article-date">
+  <!-- <time datetime="2020-09-26T16:00:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-27</time>
+        <time datetime="2025-08-02T05:46:04.172Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.172Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2020-09-27
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">5分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h1 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h1><p>debian 9 机器一台，作为master节点和node节点</p>
+<h2 id="首先安装docker"><a href="#首先安装docker" class="headerlink" title="首先安装docker"></a>首先安装docker</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/luoSteel/p/10038954.html">离线安装docker</a><br><a target="_blank" rel="noopener" href="https://download.docker.com/linux/static/stable/x86_64/">docker 安装包</a></p>
+<h2 id="关闭swap、selinux、防火墙"><a href="#关闭swap、selinux、防火墙" class="headerlink" title="关闭swap、selinux、防火墙"></a>关闭swap、selinux、防火墙</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">swapoff -a<br><br>systemctl stop firewalld<br></code></pre></td></tr></table></figure>
+
+<h2 id="添加k8s官方源"><a href="#添加k8s官方源" class="headerlink" title="添加k8s官方源"></a>添加k8s官方源</h2><p>需要科学上网</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | <span class="hljs-built_in">sudo</span> apt-key add<br><span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cat</span> &lt;&lt;<span class="hljs-string">EOF &gt;/etc/apt/sources.list.d/kubernetes.list</span><br><span class="hljs-string">deb http://apt.kubernetes.io/ kubernetes-xenial main</span><br><span class="hljs-string">EOF</span><br><span class="hljs-built_in">sudo</span> apt-get update<br><span class="hljs-built_in">sudo</span> apt-get install -y kubelet kubeadm kubectl kubernetes-cni<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置离线包"><a href="#配置离线包" class="headerlink" title="配置离线包"></a>配置离线包</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ apt-get download kubeadm=1.16.3-00 <br>$ apt-get download kubelet=1.16.3-00 kubectl=1.16.3-00 kubernetes-cni<br>$ apt-get download socat ebtables conntrack<br>$ apt-get download cri-tools<br>$ apt-get download libnetfilter-conntrack3<br>$ apt-get download libssl1.1<br><br>$ dpkg -i xxxx.deb<br></code></pre></td></tr></table></figure>
+
+<h2 id="导出docker-离线包"><a href="#导出docker-离线包" class="headerlink" title="导出docker 离线包"></a>导出docker 离线包</h2><p>列出所有镜像</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubeadm config images list --image-repository registry.aliyuncs.com/google_containers --kubernetes-version v1.16.3<br>registry.aliyuncs.com/google_containers/kube-apiserver:v1.16.3<br>registry.aliyuncs.com/google_containers/kube-controller-manager:v1.16.3<br>registry.aliyuncs.com/google_containers/kube-scheduler:v1.16.3<br>registry.aliyuncs.com/google_containers/kube-proxy:v1.16.3<br>registry.aliyuncs.com/google_containers/pause:3.1<br>registry.aliyuncs.com/google_containers/etcd:3.3.15-0<br>registry.aliyuncs.com/google_containers/coredns:1.6.2<br><br>$ docker save xxx xxx xxx &gt; k8s.tar<br>$ docker load &lt; k8s.tar<br></code></pre></td></tr></table></figure>
+
+<h1 id="使用kubeadm部署k8s"><a href="#使用kubeadm部署k8s" class="headerlink" title="使用kubeadm部署k8s"></a>使用kubeadm部署k8s</h1><h2 id="初始化环境"><a href="#初始化环境" class="headerlink" title="初始化环境"></a>初始化环境</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubeadm init \<br>    --image-repository registry.aliyuncs.com/google_containers \<br>    --kubernetes-version v1.16.3 \<br>    --pod-network-cidr=10.244.0.0/16<br>...<br>Your Kubernetes control-plane has initialized successfully!<br><br>To start using your cluster, you need to run the following as a regular user:<br><br>  <span class="hljs-built_in">mkdir</span> -p <span class="hljs-variable">$HOME</span>/.kube<br>  <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">cp</span> -i /etc/kubernetes/admin.conf <span class="hljs-variable">$HOME</span>/.kube/config<br>  <span class="hljs-built_in">sudo</span> <span class="hljs-built_in">chown</span> $(<span class="hljs-built_in">id</span> -u):$(<span class="hljs-built_in">id</span> -g) <span class="hljs-variable">$HOME</span>/.kube/config<br><br>You should now deploy a pod network to the cluster.<br>Run <span class="hljs-string">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:<br>  https://kubernetes.io/docs/concepts/cluster-administration/addons/<br><br>You can now <span class="hljs-built_in">join</span> any number of control-plane nodes by copying certificate authorities <br>and service account keys on each node and <span class="hljs-keyword">then</span> running the following as root:<br><br>  kubeadm <span class="hljs-built_in">join</span> 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44 \<br>    --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 \<br>    --control-plane 	  <br><br>Then you can <span class="hljs-built_in">join</span> any number of worker nodes by running the following on each as root:<br><br>kubeadm <span class="hljs-built_in">join</span> 192.168.9.10:6443 --token px979r.mphk9ee5ya8fgy44 \<br>    --discovery-token-ca-cert-hash sha256:5e7c7cd1cc1f86c0761e54b9380de22968b6b221cb98939c14ab2942223f6f51 <br><br></code></pre></td></tr></table></figure>
+
+<p>根据提示设置 <code>kubeconfig</code> ，或者添加子节点</p>
+<h2 id="设置k8s的网络插件"><a href="#设置k8s的网络插件" class="headerlink" title="设置k8s的网络插件"></a>设置k8s的网络插件</h2><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubectl apply -f <span class="hljs-string">&quot;https://cloud.weave.works/k8s/net?k8s-version=<span class="hljs-subst">$(kubectl version | base64 | tr -d &#x27;\n&#x27;)</span>&quot;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ docker save weaveworks/weave-npc:2.7.0 weaveworks/weave-kube:2.7.0 &gt; weave.tar<br>$ docker load &lt; weave.tar<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装helm"><a href="#安装helm" class="headerlink" title="安装helm"></a>安装helm</h2><h3 id="去除节点污点"><a href="#去除节点污点" class="headerlink" title="去除节点污点"></a>去除节点污点</h3><p>只有一个master节点的情况下，master节点不允许运行资源，需要去掉污点</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubectl get nodes<br>NAME       STATUS   ROLES    AGE    VERSION<br>linx-dev   Ready    master   138m   v1.16.3<br><br>$ kubectl describe node linx-dev  | grep Taint<br>Taints:             node-role.kubernetes.io/master:NoSchedule<br><br>// 如果Taints是none，则不需要去除污点<br>kubectl taint nodes linx-dev node-role.kubernetes.io/master:NoSchedule-<br></code></pre></td></tr></table></figure>
+
+<h3 id="下载客户端"><a href="#下载客户端" class="headerlink" title="下载客户端"></a>下载客户端</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">wget https://get.helm.sh/helm-v2.16.3-linux-amd64.tar.gz<br></code></pre></td></tr></table></figure>
+
+<h3 id="解压缩并拷贝helm二进制文件"><a href="#解压缩并拷贝helm二进制文件" class="headerlink" title="解压缩并拷贝helm二进制文件"></a>解压缩并拷贝helm二进制文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">tar xf helm-v2.16.3-linux-amd64.tar.gz<br><span class="hljs-built_in">cp</span> linux-amd64/helm /usr/local/bin<br></code></pre></td></tr></table></figure>
+
+<h3 id="导出tiller镜像"><a href="#导出tiller镜像" class="headerlink" title="导出tiller镜像"></a>导出tiller镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker save registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.3 &gt; helm.tar<br>docker load &lt; helm.tar<br></code></pre></td></tr></table></figure>
+
+<h3 id="初始化helm，部署tiller"><a href="#初始化helm，部署tiller" class="headerlink" title="初始化helm，部署tiller"></a>初始化helm，部署tiller</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubectl -n kube-system create serviceaccount tiller<br>$ kubectl create clusterrolebinding tiller --clusterrole cluster-admin –serviceaccount=kube-system:tiller<br></code></pre></td></tr></table></figure>
+
+<p><code>--stable-repo-url http://10.16.48.44/</code> 需要起一个http 服务，apache或者node都可以，这儿下面放了一个文件index.yaml文件，可以从这儿下载到<a target="_blank" rel="noopener" href="https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts/index.yaml">https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts/index.yaml</a></p>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><code class="hljs livecodeserver">$ helm init <span class="hljs-comment">--service-account tiller --tiller-image=registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.16.3 --upgrade --stable-repo-url http://193.160.57.100</span><br>Creating /root/.helm/repository/repositories.yaml <br>Adding stable repo <span class="hljs-keyword">with</span> <span class="hljs-built_in">URL</span>: <span class="hljs-keyword">http</span>://<span class="hljs-number">193.160</span><span class="hljs-number">.57</span><span class="hljs-number">.100</span> <br>Adding <span class="hljs-built_in">local</span> repo <span class="hljs-keyword">with</span> <span class="hljs-built_in">URL</span>: <span class="hljs-keyword">http</span>://<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8879</span>/charts <br>$HELM_HOME has been configured <span class="hljs-keyword">at</span> /root/.helm.<br><br>Tiller (<span class="hljs-keyword">the</span> Helm server-side component) has been installed <span class="hljs-keyword">into</span> your Kubernetes Cluster.<br><br>Please note: <span class="hljs-keyword">by</span> default, Tiller is deployed <span class="hljs-keyword">with</span> <span class="hljs-keyword">an</span> insecure <span class="hljs-string">&#x27;allow unauthenticated users&#x27;</span> policy.<br>To prevent this, run `helm init` <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> <span class="hljs-comment">--tiller-tls-verify flag.</span><br>For more information <span class="hljs-keyword">on</span> <span class="hljs-title">securing</span> <span class="hljs-title">your</span> <span class="hljs-title">installation</span> <span class="hljs-title">see</span>: <span class="hljs-title">https</span>://<span class="hljs-title">docs</span>.<span class="hljs-title">helm</span>.<span class="hljs-title">sh</span>/<span class="hljs-title">using_helm</span>/#<span class="hljs-title">securing-your-helm-installation</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="安装openebs存储服务"><a href="#安装openebs存储服务" class="headerlink" title="安装openebs存储服务"></a>安装openebs存储服务</h2><h3 id="yaml文件"><a href="#yaml文件" class="headerlink" title="yaml文件"></a>yaml文件</h3><p>将其中的 <code>imagePullPolicy</code> 改为 <code>IfNotPresent</code> ，这样可以优先选择本地镜像，而不会去请求网络</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">https://openebs.github.io/charts/openebs-operator-1.5.0.yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="导出所有openebs镜像"><a href="#导出所有openebs镜像" class="headerlink" title="导出所有openebs镜像"></a>导出所有openebs镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ docker save quay.io/openebs/m-apiserver:1.5.0 quay.io/openebs/openebs-k8s-provisioner:1.5.0 quay.io/openebs/snapshot-controller:1.5.0 quay.io/openebs/snapshot-provisioner:1.5.0 quay.io/openebs/node-disk-manager-amd64:v0.4.5 quay.io/openebs/node-disk-operator-amd64:v0.4.5 quay.io/openebs/admission-server:1.5.0 quay.io/openebs/provisioner-localpv:1.5.0 quay.io/openebs/linux-utils:1.5.0 &gt; openebs.tar<br><br>$ docker load &lt; openebs.tar<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">kubectl apply -f openebs-operator-1.5.0.yaml<br></code></pre></td></tr></table></figure>
+
+<h3 id="设置默认存储"><a href="#设置默认存储" class="headerlink" title="设置默认存储"></a>设置默认存储</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ kubectl patch storageclass openebs-hostpath -p <span class="hljs-string">&#x27;&#123;&quot;metadata&quot;: &#123;&quot;annotations&quot;:&#123;&quot;storageclass.kubernetes.io/is-default-class&quot;:&quot;true&quot;&#125;&#125;&#125;&#x27;</span><br>storageclass.storage.k8s.io/openebs-hostpath patched<br></code></pre></td></tr></table></figure>
+
+<h2 id="安装kubesphere"><a href="#安装kubesphere" class="headerlink" title="安装kubesphere"></a>安装kubesphere</h2><h3 id="导入最小化镜像"><a href="#导入最小化镜像" class="headerlink" title="导入最小化镜像"></a>导入最小化镜像</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker load &lt; ks_minimal_images.tar<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装kubesphere-1"><a href="#安装kubesphere-1" class="headerlink" title="安装kubesphere"></a>安装kubesphere</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">kubectl apply -f kubesphere-minimal.yaml<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2bb1dfdadee8">Helm离线安装</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2020/09/27/2020-09-27-debian-install-k8s-offline/" title="在debian上离线使用kubeadm搭建 v1.16.3版本Kubernetes集群" target="_blank">https://luckyship.github.io/2020/09/27/2020-09-27-debian-install-k8s-offline/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">linux</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">kubernetes</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">debian</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2020/09/27/2020-09-27-debian-install-k8s-offline/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/09/27/2020-09-27-node-http-server/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          使用node快速起一个http服务器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/17/2020-09-17-k8s-add-new-domain-name/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">kubernetes集群中访问外部域名</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>Vite介绍 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="Vite 是什么？Vite是新一代的前端构建工具，在尤雨溪开发Vue3.0的时候诞生。类似于Webpack+ Webpack-dev-server。其主要利用浏览器ESM特性导入组织代码，在服务器端按需编译返回，完全跳过了打包这个概念，服务器随起随用。生产中利用Rollup作为打包工具，号称下一代的前端构建工具。 Vite有如下特点：  快速的冷启动: No Bundle + esbuild 预构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vite介绍">
+<meta property="og:url" content="https://luckyship.github.io/2022/02/26/2022-02-26-vite/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="Vite 是什么？Vite是新一代的前端构建工具，在尤雨溪开发Vue3.0的时候诞生。类似于Webpack+ Webpack-dev-server。其主要利用浏览器ESM特性导入组织代码，在服务器端按需编译返回，完全跳过了打包这个概念，服务器随起随用。生产中利用Rollup作为打包工具，号称下一代的前端构建工具。 Vite有如下特点：  快速的冷启动: No Bundle + esbuild 预构">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/vite-compare.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/js-import-support.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/bundle-based-dev-serve.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/native-esm.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/flow-chart.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/module-graph.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/module-node.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/record-import.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/flow-chart2.jpg">
+<meta property="og:image" content="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7fc364f458444311bb7f0982d762b77a~tplv-k3u1fbpfcp-watermark.awebp">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/flow-chart3.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/esbuild-speed-compare.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/flow-chart4.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-26-vite/hook-order.jpg">
+<meta property="article:published_time" content="2022-02-26T02:42:45.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.179Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyship.github.io/img/2022-02-26-vite/vite-compare.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vite-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">Vite 是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Vite-%E5%92%8C%E4%BC%A0%E7%BB%9F%E6%89%93%E5%8C%85%E6%96%B9%E5%BC%8F%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">2.</span> <span class="toc-text">Vite 和传统打包方式的对比</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#VS-Webapck"><span class="toc-number">2.1.</span> <span class="toc-text">VS Webapck</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#VS-SnowPack"><span class="toc-number">2.2.</span> <span class="toc-text">VS SnowPack</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number"></span> <span class="toc-text">前置知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ESM"><span class="toc-number">1.</span> <span class="toc-text">ESM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Esbuild"><span class="toc-number">2.</span> <span class="toc-text">Esbuild</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rollup"><span class="toc-number">3.</span> <span class="toc-text">Rollup</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="toc-number"></span> <span class="toc-text">核心原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-ESM-%E7%9A%84-Dev-server"><span class="toc-number">1.</span> <span class="toc-text">基于 ESM 的 Dev server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-ESM-%E7%9A%84-HMR-%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">基于 ESM 的 HMR 热更新</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#VS-Webpack"><span class="toc-number">2.1.</span> <span class="toc-text">VS Webpack</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B"><span class="toc-number">2.2.</span> <span class="toc-text">核心流程</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%83%AD%E6%9B%B4%E6%96%B0%EF%BC%9AcreateWebSocketServer"><span class="toc-number">2.2.1.</span> <span class="toc-text">启动热更新：createWebSocketServer</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E7%83%AD%E6%9B%B4%E6%96%B0%EF%BC%9AmoduleGraph-handleHMRUpdate-%E6%A8%A1%E5%9D%97"><span class="toc-number">2.2.2.</span> <span class="toc-text">执行热更新：moduleGraph+handleHMRUpdate 模块</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9Awebsocket-%E9%80%9A%E4%BF%A1%E5%92%8C%E6%9B%B4%E6%96%B0%E5%A4%84%E7%90%86"><span class="toc-number">2.2.3.</span> <span class="toc-text">客户端：websocket 通信和更新处理</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5%E6%8F%90%E9%AB%98%E5%93%8D%E5%BA%94%E9%80%9F%E5%BA%A6"><span class="toc-number">2.2.4.</span> <span class="toc-text">优化：浏览器的缓存策略提高响应速度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-esbuild-%E7%9A%84%E4%BE%9D%E8%B5%96%E9%A2%84%E7%BC%96%E8%AF%91%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">基于 esbuild 的依赖预编译优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E9%A2%84%E6%9E%84%E5%BB%BA%EF%BC%9F"><span class="toc-number">3.1.</span> <span class="toc-text">为什么需要预构建？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8Esbuild"><span class="toc-number">3.2.</span> <span class="toc-text">为什么使用Esbuild?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="toc-number">3.3.</span> <span class="toc-text">实现原理？</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">核心代码实现</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E7%9A%84%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">3.3.2.</span> <span class="toc-text">整体的流程图</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E-Rollup-%E7%9A%84-Plugins"><span class="toc-number">4.</span> <span class="toc-text">基于 Rollup 的 Plugins</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Vite-%E6%8F%92%E4%BB%B6%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">4.1.</span> <span class="toc-text">Vite 插件是什么</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Vite-%E7%8B%AC%E6%9C%89%E9%92%A9%E5%AD%90"><span class="toc-number">4.2.</span> <span class="toc-text">Vite 独有钩子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E9%92%A9%E5%AD%90"><span class="toc-number">4.3.</span> <span class="toc-text">通用钩子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%92%A9%E5%AD%90%E7%9A%84%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F"><span class="toc-number">4.4.</span> <span class="toc-text">钩子的调用顺序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8F%92%E4%BB%B6"><span class="toc-number">4.5.</span> <span class="toc-text">自定义插件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number"></span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%BD%95"><span class="toc-number"></span> <span class="toc-text">附录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number"></span> <span class="toc-text">转载</span></a>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2022-02-26-vite" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      Vite介绍
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2022/02/26/2022-02-26-vite/" class="archive-article-date">
+  <!-- <time datetime="2022-02-26T02:42:45.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-26</time>
+        <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2022-02-26
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">5.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">20分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h4 id="Vite-是什么？"><a href="#Vite-是什么？" class="headerlink" title="Vite 是什么？"></a>Vite 是什么？</h4><p><code>Vite</code>是新一代的前端构建工具，在尤雨溪开发<code>Vue3.0</code>的时候诞生。类似于<code>Webpack</code>+ <code>Webpack-dev-server</code>。其主要利用浏览器<code>ESM</code>特性导入组织代码，在服务器端按需编译返回，完全跳过了打包这个概念，服务器随起随用。生产中利用<code>Rollup</code>作为打包工具，号称下一代的前端构建工具。</p>
+<p><code>Vite</code>有如下特点：</p>
+<ul>
+<li><p>快速的冷启动: <code>No Bundle</code> + <code>esbuild</code> 预构建</p>
+</li>
+<li><p>即时的模块热更新: 基于<code>ESM</code>的<code>HMR</code>，同时利用浏览器缓存策略提升速度</p>
+</li>
+<li><p>真正的按需加载: 利用浏览器<code>ESM</code>支持，实现真正的按需加载</p>
+</li>
+</ul>
+<span id="more"></span>
+
+<h4 id="Vite-和传统打包方式的对比"><a href="#Vite-和传统打包方式的对比" class="headerlink" title="Vite 和传统打包方式的对比"></a>Vite 和传统打包方式的对比</h4><p><img src="/img/2022-02-26-vite/vite-compare.jpg"></p>
+<h5 id="VS-Webapck"><a href="#VS-Webapck" class="headerlink" title="VS Webapck"></a>VS Webapck</h5><p><code>Webpack</code>是近年来使用量最大，同时社区最完善的前端打包构建工具，新出的<code>5.x</code>版本对构建细节进行了优化，在部分场景下打包速度提升明显。<code>Webpack</code>在启动时，会先构建项目模块的依赖图，如果在项目中的某个地方改动了代码，<code>Webpack</code>则会对相关的依赖重新打包，随着项目的增大，其打包速度也会下降。</p>
+<p><code>Vite</code>相比于<code>Webpack</code>而言，没有打包的过程，而是直接启动了一个开发服务器 devServer。<code>Vite</code>劫持浏览器的<code>HTTP</code>请求，在后端进行相应的处理将项目中使用的文件通过简单的分解与整合，然后再返回给浏览器(整个过程没有对文件进行打包编译)。所以编译速度很快。</p>
+<h5 id="VS-SnowPack"><a href="#VS-SnowPack" class="headerlink" title="VS SnowPack"></a>VS SnowPack</h5><p><code>Snowpack</code> 首次提出利用浏览器原生<code>ESM</code>能力的打包工具，其理念就是减少或避免整个<code>bundle</code>的打包。默认在 <code>dev</code> 和 <code>production</code> 环境都使用 <code>unbundle</code> 的方式来部署应用。但是它的构建时却是交给用户自己选择，整体的打包体验显得有点支离破碎。</p>
+<p>而 <code>Vite</code> 直接整合了 <code>Rollup</code>，为用户提供了完善、开箱即用的解决方案，并且由于这些集成，也方便扩展更多的高级功能。</p>
+<p>两者较大的区别是在需要<code>bundle</code>打包的时候<code>Vite</code> 使用 <code>Rollup</code> 内置配置，而 <code>Snowpack</code> 通过其他插件将其委托给 <code>Parcel/``webpack</code>。</p>
+<h3 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h3><h4 id="ESM"><a href="#ESM" class="headerlink" title="ESM"></a>ESM</h4><p>在了解<code>Vite</code>之前，需要先了解下<code>ESM</code></p>
+<p><code>ESM</code>是<code>JavaScript</code>提出的官方标准化模块系统，不同于之前的<code>CJS</code>，<code>AMD</code>，<code>CMD</code>等等，<code>ESM</code>提供了更原生以及更动态的模块加载方案，最重要的就是它是浏览器原生支持的，也就是说我们可以直接在浏览器中去执行<code>import</code>，动态引入我们需要的模块，而不是把所有模块打包在一起。</p>
+<p>目前<code>ESM</code>模块化已经支持 92%以上的浏览器，而且且作为 <code>ECMA</code> 标准，未来会有更多浏览器支持<code>ECMA</code>规范</p>
+<p><img src="/img/2022-02-26-vite/js-import-support.jpg"></p>
+<p>当我们在使用模块开发时，其实就是在构建一张模块依赖关系图，当模块加载时，就会从入口文件开始，最终生成完整的模块实例图。</p>
+<p><code>ESM</code>的执行可以分为三个步骤：</p>
+<ul>
+<li><p>构建: 确定从哪里下载该模块文件、下载并将所有的文件解析为模块记录</p>
+</li>
+<li><p>实例化: 将模块记录转换为一个模块实例，为所有的模块分配内存空间，依照导出、导入语句把模块指向对应的内存地址。</p>
+</li>
+<li><p>运行：运行代码，将内存空间填充</p>
+</li>
+</ul>
+<p>从上面实例化的过程可以看出，<code>ESM</code>使用实时绑定的模式，导出和导入的模块都指向相同的内存地址，也就是值引用。而<code>CJS</code>采用的是值拷贝，即所有导出值都是拷贝值。</p>
+<h4 id="Esbuild"><a href="#Esbuild" class="headerlink" title="Esbuild"></a>Esbuild</h4><p><code>Vite</code>底层使用<code>Esbuild</code>实现对<code>.``ts</code>、<code>jsx</code>、<code>.``js</code>代码文件的转化，所以先看下什么是<code>es-build</code>。</p>
+<p><code>Esbuild</code>是一个<code>JavaScript Bundler</code> 打包和压缩工具，它提供了与<code>Webpack</code>、<code>Rollup</code>等工具相似的资源打包能力。可以将<code>JavaScript</code> 和<code>TypeScript</code>代码打包分发在网页上运行。但其打包速度却是其他工具的 10 ～ 100 倍。</p>
+<p>目前他支持以下的功能：</p>
+<ul>
+<li><p>加载器</p>
+</li>
+<li><p>压缩</p>
+</li>
+<li><p>打包</p>
+</li>
+<li><p><code>Tree shaking</code></p>
+</li>
+<li><p><code>Source map</code>生成</p>
+</li>
+</ul>
+<p><code>esbuild</code>总共提供了四个函数：<code>transform</code>、<code>build</code>、<code>buildSync</code>、<code>Service</code>。有兴趣的可以移步<a href="https://link.juejin.cn/?target=https://esbuild.github.io/api/" title="https://esbuild.github.io/api/">官方文档</a>了解。</p>
+<h4 id="Rollup"><a href="#Rollup" class="headerlink" title="Rollup"></a>Rollup</h4><p>在生产环境下，<code>Vite</code>使用<code>Rollup</code>来进行打包</p>
+<p><code>Rollup</code>是基于<code>ESM</code>的<code>JavaScript</code>打包工具。相比于其他打包工具如<code>Webpack</code>，他总是能打出更小、更快的包。因为 <code>Rollup</code> 基于 <code>ESM</code> 模块，比 <code>Webpack</code> 和 <code>Browserify</code> 使用的 <code>CommonJS</code>模块机制更高效。<code>Rollup</code>的亮点在于同一个地方，一次性加载。能针对源码进行 <code>Tree Shaking</code>(去除那些已被定义但没被使用的代码)，以及 <code>Scope Hoisting</code> 以减小输出文件大小提升运行性能。</p>
+<p><code>Rollup</code>分为<code>build</code>（构建）阶段和<code>output generate</code>（输出生成）阶段。主要过程如下：</p>
+<ul>
+<li><p>获取入口文件的内容，包装成<code>module</code>，生成抽象语法树</p>
+</li>
+<li><p>对入口文件抽象语法树进行依赖解析</p>
+</li>
+<li><p>生成最终代码</p>
+</li>
+<li><p>写入目标文件</p>
+</li>
+</ul>
+<p>如果你的项目（特别是类库）只有<code>JavaScript</code>，而没有其他的静态资源文件，使用<code>Webpack</code>就有点大才小用了。因为<code>Webpack</code> 打包的文件的体积略大，运行略慢，可读性略低。这时候<code>Rollup</code>也不失为一个好选择。</p>
+<p>这里想对 Rollp 进行更深入的学习可以看看<a href="https://link.juejin.cn/?target=https://rollupjs.org/guide/en/" title="https://rollupjs.org/guide/en/">官网的介绍</a>。</p>
+<h3 id="核心原理"><a href="#核心原理" class="headerlink" title="核心原理"></a>核心原理</h3><p>详细阐述下：</p>
+<ol>
+<li>当声明一个 <code>script</code>标签类型为 <code>module</code> 时,如</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml">  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;module&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;/src/main.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>复制代码<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>当浏览器解析资源时，会往当前域名发起一个<code>GET</code>请求<code>main.js</code>文件</li>
+</ol>
+<figure class="highlight clean"><table><tr><td class="code"><pre><code class="hljs clean"><span class="hljs-comment">// main.js</span><br><span class="hljs-keyword">import</span> &#123; createApp &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span><br><span class="hljs-keyword">import</span> App <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App.vue&#x27;</span><br>createApp(App).mount(<span class="hljs-string">&#x27;#app&#x27;</span>)<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>请求到了<code>main.js</code>文件，会检测到内部含有<code>import</code>引入的包，又会<code>import</code> 引用发起<code>HTTP</code>请求获取模块的内容文件，如<code>App.vue</code>、<code>vue</code>文件</li>
+</ol>
+<p><code>Vite</code>其核心原理是利用浏览器现在已经支持<code>ES6</code>的<code>import</code>,碰见<code>import</code>就会发送一个<code>HTTP</code>请求去加载文件，<code>Vite</code>启动一个 <code>koa</code> 服务器拦截这些请求，并在后端进行相应的处理将项目中使用的文件通过简单的分解与整合，然后再以<code>ESM</code>格式返回返回给浏览器。<code>Vite</code>整个过程中没有对文件进行打包编译，做到了真正的按需加载，所以其运行速度比原始的<code>webpack</code>开发编译速度快出许多！</p>
+<h4 id="基于-ESM-的-Dev-server"><a href="#基于-ESM-的-Dev-server" class="headerlink" title="基于 ESM 的 Dev server"></a>基于 ESM 的 Dev server</h4><p>在<code>Vite</code>出来之前，传统的打包工具如<code>Webpack</code>是先解析依赖、打包构建再启动开发服务器，<code>Dev Server</code> 必须等待所有模块构建完成，当我们修改了 <code>bundle</code>模块中的一个子模块， 整个 <code>bundle</code> 文件都会重新打包然后输出。项目应用越大，启动时间越长。</p>
+<p><img src="/img/2022-02-26-vite/bundle-based-dev-serve.jpg"></p>
+<p>而<code>Vite</code>利用浏览器对<code>ESM</code>的支持，当 <code>import</code> 模块时，浏览器就会下载被导入的模块。先启动开发服务器，当代码执行到模块加载时再请求对应模块的文件,本质上实现了动态加载。灰色部分是暂时没有用到的路由，所有这部分不会参与构建过程。随着项目里的应用越来越多，增加<code>route</code>，也不会影响其构建速度。</p>
+<p><img src="/img/2022-02-26-vite/native-esm.jpg"></p>
+<h4 id="基于-ESM-的-HMR-热更新"><a href="#基于-ESM-的-HMR-热更新" class="headerlink" title="基于 ESM 的 HMR 热更新"></a>基于 ESM 的 HMR 热更新</h4><p>目前所有的打包工具实现热更新的思路都大同小异：主要是通过<code>WebSocket</code>创建浏览器和服务器的通信监听文件的改变，当文件被修改时，服务端发送消息通知客户端修改相应的代码，客户端对应不同的文件进行不同的操作的更新。</p>
+<h5 id="VS-Webpack"><a href="#VS-Webpack" class="headerlink" title="VS Webpack"></a>VS Webpack</h5><p><code>Webpack</code>: 重新编译，请求变更后模块的代码，客户端重新加载</p>
+<p><code>Vite</code>: 请求变更的模块，再重新加载</p>
+<p><code>Vite</code> 通过 <code>chokidar</code> 来监听文件系统的变更，只用对发生变更的模块重新加载， 只需要精确的使相关模块与其临近的 <code>HMR</code>边界连接失效即可，这样<code>HMR</code> 更新速度就不会因为应用体积的增加而变慢而 <code>Webpack</code> 还要经历一次打包构建。所以 <code>HMR</code> 场景下，<code>Vite</code> 表现也要好于 <code>Webpack</code>。</p>
+<h5 id="核心流程"><a href="#核心流程" class="headerlink" title="核心流程"></a>核心流程</h5><p><code>Vite</code>整个热更新过程可以分成四步</p>
+<ol>
+<li><p>创建一个<code>websocket</code>服务端和<code>client</code>文件，启动服务</p>
+</li>
+<li><p>通过<code>chokidar</code>监听文件变更</p>
+</li>
+<li><p>当代码变更后，服务端进行判断并推送到客户端</p>
+</li>
+<li><p>客户端根据推送的信息执行不同操作的更新</p>
+</li>
+</ol>
+<p>整体流程图：</p>
+<p><img src="/img/2022-02-26-vite/flow-chart.jpg" alt="流程图"></p>
+<h6 id="启动热更新：createWebSocketServer"><a href="#启动热更新：createWebSocketServer" class="headerlink" title="启动热更新：createWebSocketServer"></a>启动热更新：createWebSocketServer</h6><p>在 <code>Vite`` dev server</code> 启动之前，<code>Vite</code> 会为 <code>HMR</code> 做一些准备工作：比如创建<code>websocket</code>服务，利用<code>chokidar</code>创建一个监听对象 <code>watcher</code> 用于对文件修改进行监听等等，具体核心代码：</p>
+<blockquote>
+<p>源码位置：packages/vite/src/node/server/index.ts</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createServer</span>(<span class="hljs-params"></span><br><span class="hljs-params">  inlineConfig: InlineConfig = &#123;&#125;</span><br><span class="hljs-params"></span>): <span class="hljs-title class_">Promise</span>&lt;<span class="hljs-title class_">ViteDevServer</span>&gt; &#123;<br>  ....<br>  <span class="hljs-keyword">const</span> ws = <span class="hljs-title function_">createWebSocketServer</span>(httpServer, config, httpsOptions)<br>  <span class="hljs-keyword">const</span> &#123; ignored = [], ...watchOptions &#125; = serverConfig.<span class="hljs-property">watch</span> || &#123;&#125;<br>  <span class="hljs-keyword">const</span> watcher = chokidar.<span class="hljs-title function_">watch</span>(path.<span class="hljs-title function_">resolve</span>(root), &#123;<br>    <span class="hljs-attr">ignored</span>: [<br>      <span class="hljs-string">&#x27;**/node_modules/**&#x27;</span>,<br>      <span class="hljs-string">&#x27;**/.git/**&#x27;</span>,<br>      ...(<span class="hljs-title class_">Array</span>.<span class="hljs-title function_">isArray</span>(ignored) ? ignored : [ignored])<br>    ],<br>    <span class="hljs-attr">ignoreInitial</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">ignorePermissionErrors</span>: <span class="hljs-literal">true</span>,<br>    <span class="hljs-attr">disableGlobbing</span>: <span class="hljs-literal">true</span>,<br>    ...watchOptions<br>  &#125;) <span class="hljs-keyword">as</span> <span class="hljs-title class_">FSWatcher</span><br>  ....<br>  watcher.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-title function_">async</span> (file) =&gt; &#123;<br><br>  &#125;)<br>  watcher.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;add&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">file</span>) =&gt;</span> &#123;<br>  &#125;)<br>  watcher.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;unlink&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">file</span>) =&gt;</span> &#123;<br>  &#125;)<br>  ...<br>  <span class="hljs-keyword">return</span> server<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p><code>createWebSocketServer</code>这个方法主是创建<code>WebSocket</code>服务并对错误进行一些处理，最后返回封装好的<code>on</code>、<code>off</code>、 <code>send</code> 和 <code>close</code> 方法，用于后续服务端推送消息和关闭服务。</p>
+<blockquote>
+<p>源码位置：packages/vite/src/node/server/ws.ts</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">createWebSocketServer</span>(<span class="hljs-params"></span><br><span class="hljs-params">  server: Server | <span class="hljs-literal">null</span>,</span><br><span class="hljs-params">  config: ResolvedConfig,</span><br><span class="hljs-params">  httpsOptions?: HttpsServerOptions</span><br><span class="hljs-params"></span>): <span class="hljs-title class_">WebSocketServer</span> &#123;<br>  <span class="hljs-keyword">let</span> <span class="hljs-attr">wss</span>: <span class="hljs-title class_">WebSocket</span><br>  <span class="hljs-keyword">let</span> <span class="hljs-attr">httpsServer</span>: <span class="hljs-title class_">Server</span> | <span class="hljs-literal">undefined</span> = <span class="hljs-literal">undefined</span><br>  <span class="hljs-comment">// 热更新配置</span><br>  <span class="hljs-keyword">const</span> hmr = <span class="hljs-title function_">isObject</span>(config.<span class="hljs-property">server</span>.<span class="hljs-property">hmr</span>) &amp;&amp; config.<span class="hljs-property">server</span>.<span class="hljs-property">hmr</span><br>  <span class="hljs-keyword">const</span> wsServer = (hmr &amp;&amp; hmr.<span class="hljs-property">server</span>) || server<br>  <span class="hljs-comment">// 普通模式</span><br>  <span class="hljs-keyword">if</span> (wsServer) &#123;<br>    wss = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(&#123; <span class="hljs-attr">noServer</span>: <span class="hljs-literal">true</span> &#125;)<br>    wsServer.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;upgrade&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, socket, head</span>) =&gt;</span> &#123;<br>      <span class="hljs-comment">// 监听通过vite客户端发送的websocket消息，通过HMR_HEADER区分</span><br>      <span class="hljs-keyword">if</span> (req.<span class="hljs-property">headers</span>[<span class="hljs-string">&#x27;sec-websocket-protocol&#x27;</span>] === <span class="hljs-variable constant_">HMR_HEADER</span>) &#123;<br>        wss.<span class="hljs-title function_">handleUpgrade</span>(req, socket <span class="hljs-keyword">as</span> <span class="hljs-title class_">Socket</span>, head, <span class="hljs-function">(<span class="hljs-params">ws</span>) =&gt;</span> &#123;<br>          wss.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, ws, req)<br>        &#125;)<br>      &#125;<br>    &#125;)<br>  &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// 中间件模式</span><br>    <span class="hljs-comment">// vite dev server in middleware mode</span><br>    wss = <span class="hljs-keyword">new</span> <span class="hljs-title class_">WebSocket</span>(websocketServerOptions)<br>  &#125;<br>  wss.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;connection&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">socket</span>) =&gt;</span> &#123;<br>    ...<br>  &#125;)<br>  <span class="hljs-comment">// 错误处理</span><br>  wss.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">e: <span class="hljs-built_in">Error</span> &amp; &#123; code: string &#125;</span>) =&gt;</span> &#123;<br>    ...<br>  &#125;)<br>  <span class="hljs-comment">// 返回</span><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">on</span>: wss.<span class="hljs-property">on</span>.<span class="hljs-title function_">bind</span>(wss),<br>    <span class="hljs-attr">off</span>: wss.<span class="hljs-property">off</span>.<span class="hljs-title function_">bind</span>(wss),<br>    <span class="hljs-title function_">send</span>(<span class="hljs-params">payload: HMRPayload</span>) &#123;<br>      ...<br>    &#125;,<br>    <span class="hljs-title function_">close</span>(<span class="hljs-params"></span>) &#123;<br>      ...<br>    &#125;<br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h6 id="执行热更新：moduleGraph-handleHMRUpdate-模块"><a href="#执行热更新：moduleGraph-handleHMRUpdate-模块" class="headerlink" title="执行热更新：moduleGraph+handleHMRUpdate 模块"></a>执行热更新：moduleGraph+handleHMRUpdate 模块</h6><p>接收到文件改动执行的回调，这里主要两个操作：<code>moduleGraph.onFileChange</code>修改文件的缓存和<code>handleHMRUpdate</code>执行热更新</p>
+<blockquote>
+<p>源码位置：packages/vite/src/node/server/index.ts</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">watcher.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;change&#x27;</span>, <span class="hljs-keyword">async</span> file =&gt; &#123;<br>  file = <span class="hljs-title function_">normalizePath</span>(file);<br>  <span class="hljs-keyword">if</span> (file.<span class="hljs-title function_">endsWith</span>(<span class="hljs-string">&#x27;/package.json&#x27;</span>)) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">invalidatePackageData</span>(packageCache, file);<br>  &#125;<br>  <span class="hljs-comment">// invalidate module graph cache on file change</span><br>  moduleGraph.<span class="hljs-title function_">onFileChange</span>(file);<br>  <span class="hljs-keyword">if</span> (serverConfig.<span class="hljs-property">hmr</span> !== <span class="hljs-literal">false</span>) &#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>      <span class="hljs-keyword">await</span> <span class="hljs-title function_">handleHMRUpdate</span>(file, server);<br>    &#125; <span class="hljs-keyword">catch</span> (err) &#123;<br>      ws.<span class="hljs-title function_">send</span>(&#123;<br>        <span class="hljs-attr">type</span>: <span class="hljs-string">&#x27;error&#x27;</span>,<br>        <span class="hljs-attr">err</span>: <span class="hljs-title function_">prepareError</span>(err),<br>      &#125;);<br>    &#125;<br>  &#125;<br>&#125;);<br>复制代码;<br></code></pre></td></tr></table></figure>
+
+<p>3.2.2.2.1 moduleGraph</p>
+<p><code>moduleGraph</code> 是<code>Vite</code>定义的用来记录整个应用的模块依赖图的类，除此之外还有<code>moduleNode</code>。</p>
+<blockquote>
+<p>源码位置：packages/vite/src/node/server/moduleGraph.ts</p>
+</blockquote>
+<p><img src="/img/2022-02-26-vite/module-graph.jpg" alt="源码1"><br><img src="/img/2022-02-26-vite/module-node.jpg" alt="源码2"></p>
+<p><code>moduleGraph</code>是由一系列 <code>map</code> 组成，而这些<code>map</code>分别是<code>url</code>、<code>id</code>、<code>file</code>等与<code>ModuleNode</code>的映射，而<code>ModuleNode</code> 是 <code>Vite</code>中定义的最小模块单位。通过这两个类可以构建下面的模块依赖图：</p>
+<p><img src="/img/2022-02-26-vite/record-import.jpg" alt="模块依赖图"></p>
+<p>可以看看<code>moduleGraph.``onFileChange</code>这个函数：主要是用来清空被修改文件对应的<code>ModuleNode</code>对象的 <code>transformResult</code> 属性，使之前的模块已有的转换缓存失效。这块也就是<code>Vite</code>在热更新里的缓存机制。可以看看官网的<a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/dep-pre-bundling.html%23customizing-the-behavior" title="https://cn.vitejs.dev/guide/dep-pre-bundling.html#customizing-the-behavior">介绍</a>。</p>
+<blockquote>
+<p>源码位置：packages/vite/src/node/server/moduleGraph.ts</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">onFileChange</span>(<span class="hljs-attr">file</span>: string): <span class="hljs-keyword">void</span> &#123;<br>    <span class="hljs-keyword">const</span> mods = <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">getModulesByFile</span>(file)<br>    <span class="hljs-keyword">if</span> (mods) &#123;<br>      <span class="hljs-keyword">const</span> seen = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>&lt;<span class="hljs-title class_">ModuleNode</span>&gt;()<br>      mods.<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">mod</span>) =&gt;</span> &#123;<br>        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">invalidateModule</span>(mod, seen)<br>      &#125;)<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-title function_">invalidateModule</span>(<span class="hljs-attr">mod</span>: <span class="hljs-title class_">ModuleNode</span>, <span class="hljs-attr">seen</span>: <span class="hljs-title class_">Set</span>&lt;<span class="hljs-title class_">ModuleNode</span>&gt; = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>()): <span class="hljs-keyword">void</span> &#123;<br>    mod.<span class="hljs-property">info</span> = <span class="hljs-literal">undefined</span><br>    mod.<span class="hljs-property">transformResult</span> = <span class="hljs-literal">null</span><br>    mod.<span class="hljs-property">ssrTransformResult</span> = <span class="hljs-literal">null</span><br>    <span class="hljs-title function_">invalidateSSRModule</span>(mod, seen)<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p>3.2.2.2.2 handleHMRUpdate</p>
+<p><code>handleHMRUpdate</code> 模块主要是监听文件的更改，进行处理和判断通过<code>WebSocket</code>给客户端发送消息通知客户端去请求新的模块代码。</p>
+<blockquote>
+<p>源码位置：packages/vite/packages/vite/src/node/server/hmr.ts</p>
+</blockquote>
+<p><img src="/img/2022-02-26-vite/flow-chart2.jpg" alt="流程图2.jpg"></p>
+<h6 id="客户端：websocket-通信和更新处理"><a href="#客户端：websocket-通信和更新处理" class="headerlink" title="客户端：websocket 通信和更新处理"></a>客户端：websocket 通信和更新处理</h6><p>客户端：当我们配置了热更新且不是<code>ssr</code>的时候，<code>Vite</code>底层在处理 html 的时候会把<code>HMR</code>相关的客户端代码写入在我们的代码中，如下：</p>
+<p><img src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7fc364f458444311bb7f0982d762b77a~tplv-k3u1fbpfcp-watermark.awebp"></p>
+<p>当接收到服务端推送的消息，通过不同的消息类型做相应的处理，如(<code>connected</code>、<code>update</code>、<code>custom</code>…)，在实际开发热更新中使用最频繁的是<code>update</code>(动态加载热更新模块)和<code>full-reload</code>(刷新整个页面)事件。</p>
+<blockquote>
+<p>源码位置：packages/vite/packages/vite/src/client/client.ts</p>
+</blockquote>
+<p>核心代码实现</p>
+<p><img src="/img/2022-02-26-vite/flow-chart3.jpg" alt="流程图3.jpg"></p>
+<h6 id="优化：浏览器的缓存策略提高响应速度"><a href="#优化：浏览器的缓存策略提高响应速度" class="headerlink" title="优化：浏览器的缓存策略提高响应速度"></a>优化：浏览器的缓存策略提高响应速度</h6><p>同时，<code>Vite</code> 还利用<code>HTTP</code>加速整个页面的重新加载。设置响应头使得依赖模块(<code>dependency module</code>)进行强缓存，而源码文件通过设置 <code>304 Not Modified</code> 而变成可依据条件而进行更新。</p>
+<p>若需要对依赖代码模块做改动可手动操作使缓存失效:</p>
+<figure class="highlight ada"><table><tr><td class="code"><pre><code class="hljs ada">vite <span class="hljs-comment">--force</span><br>复制代码<br></code></pre></td></tr></table></figure>
+
+<p>或者手动删除 <code>node_modules/.``vite</code> 中的缓存文件。</p>
+<h4 id="基于-esbuild-的依赖预编译优化"><a href="#基于-esbuild-的依赖预编译优化" class="headerlink" title="基于 esbuild 的依赖预编译优化"></a>基于 esbuild 的依赖预编译优化</h4><h5 id="为什么需要预构建？"><a href="#为什么需要预构建？" class="headerlink" title="为什么需要预构建？"></a>为什么需要预构建？</h5><ol>
+<li><p>支持<code>commonJS</code>依赖</p>
+</li>
+<li><p>上面提到<code>Vite</code>是基于浏览器原生支持<code>ESM</code>的能力实现的，但要求用户的代码模块必须是<code>ESM</code>模块，因此必须将<code>commonJs</code>的文件提前处理，转化成 <code>ESM</code> 模块并缓存入 <code>node_modules/.vite</code></p>
+</li>
+<li><p>减少模块和请求数量</p>
+</li>
+</ol>
+<p>除此之外，我们常用的<code>lodash</code>工具库，里面有很多包通过单独的文件相互导入，而 <code>lodash-es</code>这种包会有几百个子模块，当代码中出现 <code>import &#123; debounce &#125; from &#39;lodash-es&#39;</code> 会发出几百个 <code>HTTP</code> 请求，这些请求会造成网络堵塞，影响页面的加载。</p>
+<p><code>Vite</code> 将有许多内部模块的 <code>ESM</code> 依赖关系转换为单个模块，以提高后续页面加载性能。</p>
+<p>通过预构建  <code>lodash-es</code>  成为一个模块，也就只需要一个 <code>HTTP</code> 请求了！</p>
+<h5 id="为什么使用Esbuild"><a href="#为什么使用Esbuild" class="headerlink" title="为什么使用Esbuild?"></a>为什么使用<code>Esbuild</code>?</h5><p><img src="/img/2022-02-26-vite/esbuild-speed-compare.jpg" alt="esbuild打包速度对比"></p>
+<p>引用尤大的一句话：“快”就一个字</p>
+<p>这是<code>Esbuild</code>首页的图。新一代的打包工具，提供了与<code>Webpack</code>、<code>Rollup</code>、<code>Parcel</code> 等工具相似的资源打包能力，但在时速上达到 10 ～ 100 倍的差距，耗时是<code>Webpack</code>2%~3%</p>
+<ol>
+<li>编译运行 VS 解释运行</li>
+</ol>
+<ul>
+<li>大多数前端打包工具都是基于 <code>JavaScript</code> 实现的，大家都知道<code>JavaScript</code>是解释型语言，边运行边解释。而 <code>Esbuild</code> 则选择使用 <code>Go</code> 语言编写，该语言可以编译为原生代码,在编译的时候都将语言转为机器语言，在启动的时候直接执行即可，在 <code>CPU</code> 密集场景下，<code>Go</code> 更具性能优势。</li>
+</ul>
+<ol start="2">
+<li><p>多线程 VS 单线程</p>
+</li>
+<li><p><code>JavaScript</code> 本质上是一门单线程语言，直到引入 <code>WebWorker</code> 之后才有可能在浏览器、<code>Node</code> 中实现多线程操作。就我对<code>Webpack</code>的源码理解，其源码也并未使用 <code>WebWorker</code> 提供的多线程能力。而<code>GO</code>天生的多线程优势。</p>
+</li>
+<li><p>对构建流程进行了优化，充分利用 <code>CPU</code> 资源</p>
+</li>
+</ol>
+<h5 id="实现原理？"><a href="#实现原理？" class="headerlink" title="实现原理？"></a>实现原理？</h5><p><code>Vite</code>预编译之后，将文件缓存在<code>node_modules/.vite/</code>文件夹下。根据以下地方来决定是否需要重新执行预构建。</p>
+<ul>
+<li><p><code>package.json</code>中：<code>dependencies</code>发生变化</p>
+</li>
+<li><p>包管理器的<code>lockfile</code></p>
+</li>
+</ul>
+<p>如果想强制让<code>Vite</code>重新预构建依赖，可以使用<code>--force</code>启动开发服务器，或者直接删掉<code>node_modules/.vite/</code>文件夹。</p>
+<h6 id="核心代码实现"><a href="#核心代码实现" class="headerlink" title="核心代码实现"></a>核心代码实现</h6><ol>
+<li><p>通过<code>createServer</code>创建<code>server</code>对象后，当服务器启动会执行<code>httpServer.listen</code>方法</p>
+</li>
+<li><p>在执行<code>createServer</code>时，<code>Vite</code>底层会重写<code>server.listen</code>方法:首先调用插件的<code>buildStart</code>再执行<code>runOptimize()</code>方法</p>
+</li>
+<li><p><code>runOptimize()</code>调用<code>optimizeDeps()</code>和<code>createMissingImporterRegisterFn()</code>方法</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title function_">runOptimize</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-keyword">if</span> (config.<span class="hljs-property">cacheDir</span>) &#123;<br>      server.<span class="hljs-property">_isRunningOptimizer</span> = <span class="hljs-literal">true</span><br>      <span class="hljs-keyword">try</span> &#123;<br>        server.<span class="hljs-property">_optimizeDepsMetadata</span> = <span class="hljs-keyword">await</span> <span class="hljs-title function_">optimizeDeps</span>(<br>          config,<br>          config.<span class="hljs-property">server</span>.<span class="hljs-property">force</span> || server.<span class="hljs-property">_forceOptimizeOnRestart</span><br>        )<br>      &#125; <span class="hljs-keyword">finally</span> &#123;<br>        server.<span class="hljs-property">_isRunningOptimizer</span> = <span class="hljs-literal">false</span><br>      &#125;<br>      server.<span class="hljs-property">_registerMissingImport</span> = <span class="hljs-title function_">createMissingImporterRegisterFn</span>(server)<br>    &#125;<br>  &#125;<br><span class="hljs-keyword">if</span> (!middlewareMode &amp;&amp; httpServer) &#123;<br>  <span class="hljs-keyword">let</span> isOptimized = <span class="hljs-literal">false</span><br>  <span class="hljs-comment">// overwrite listen to run optimizer before server start</span><br>  <span class="hljs-keyword">const</span> listen = httpServer.<span class="hljs-property">listen</span>.<span class="hljs-title function_">bind</span>(httpServer)<br>  httpServer.<span class="hljs-property">listen</span> = (<span class="hljs-title function_">async</span> (<span class="hljs-attr">port</span>: number, ...<span class="hljs-attr">args</span>: any[]) =&gt; &#123;<br>    <span class="hljs-keyword">if</span> (!isOptimized) &#123;<br>      <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">await</span> container.<span class="hljs-title function_">buildStart</span>(&#123;&#125;)<br>        <span class="hljs-keyword">await</span> <span class="hljs-title function_">runOptimize</span>()<br>        isOptimized = <span class="hljs-literal">true</span><br>      &#125; <span class="hljs-keyword">catch</span> (e) &#123;<br>        httpServer.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&#x27;error&#x27;</span>, e)<br>        <span class="hljs-keyword">return</span><br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title function_">listen</span>(port, ...args)<br>  &#125;) <span class="hljs-keyword">as</span> any<br>&#125; <span class="hljs-keyword">else</span> &#123;<br>  <span class="hljs-keyword">await</span> container.<span class="hljs-title function_">buildStart</span>(&#123;&#125;)<br>  <span class="hljs-keyword">await</span> <span class="hljs-title function_">runOptimize</span>()<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><code>optimizeDeps()</code>主要是根据配置文件生成<code>hash</code>，获取上次预购建的内容(存放在<code>_metadata.json</code>文件)。如果不是强预构建就对比<code>_metadata.json</code>文件的<code>hash</code>和新生成的<code>hash</code>：一致就返回<code>_metadata.json</code>文件的内容，否则清空缓存文件调用<code>Esbuild</code>构建模块再次存入<code>_metadata.json</code>文件</li>
+</ol>
+<h6 id="整体的流程图"><a href="#整体的流程图" class="headerlink" title="整体的流程图"></a>整体的流程图</h6><p>核心代码都在<code>packages/``vite``/``src``/``node``/optimizer/index.ts</code>里面</p>
+<ul>
+<li><p>自动搜寻依赖主要模块：<code>esbuildScanPlugin</code></p>
+</li>
+<li><p>预构建编译主要模块：<code>esbuildDepPlugin</code></p>
+</li>
+</ul>
+<p><img src="/img/2022-02-26-vite/flow-chart4.jpg" alt="流程图 4.jpg"></p>
+<h4 id="基于-Rollup-的-Plugins"><a href="#基于-Rollup-的-Plugins" class="headerlink" title="基于 Rollup 的 Plugins"></a>基于 Rollup 的 Plugins</h4><p><code>Vite</code> 从 <code>preact</code> 的 <code>WMR</code> 中得到了启发，将<code>Vite Plugins</code>继承<code>Rollup`` Plugins `` ``API</code>，在其基础上进行了一些扩展(如<code>Vite</code>特有的钩子等)，同时<code>Vite</code>也基于<code>Rollup plugins</code>机制提供了强大的插件<code>API</code>。目前和 <code>Vite</code> 兼容或者内置的插件，可以查看<code>vite-rollup-plugins</code></p>
+<h5 id="Vite-插件是什么"><a href="#Vite-插件是什么" class="headerlink" title="Vite 插件是什么"></a>Vite 插件是什么</h5><p>使用<code>Vite</code>插件可以扩展<code>Vite</code>能力，通过暴露一些构建打包过程的一些时机配合工具函数，让用户可以自定义地写一些配置代码，执行在打包过程中。比如解析用户自定义的文件输入，在打包代码前转译代码，或者查找。</p>
+<p>在实际的实现中，<code>Vite</code> 仅仅需要基于<code>Rollup</code>设计的接口进行扩展，在保证兼容 <code>Rollup</code>插件的同时再加入一些<code>Vite</code>特有的钩子和属性来进行扩展。</p>
+<h5 id="Vite-独有钩子"><a href="#Vite-独有钩子" class="headerlink" title="Vite 独有钩子"></a>Vite 独有钩子</h5><p>对于各个钩子的具体使用可以<a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html%23vite-specific-hooks" title="https://cn.vitejs.dev/guide/api-plugin.html#vite-specific-hooks">移步这里</a></p>
+<ul>
+<li><p><code>config</code>：可以在<code>Vite</code>被解析之前修改<code>Vite</code>的相关配置。钩子接收原始用户配置<code>config</code>和一个描述配置环境的变量<code>env</code></p>
+</li>
+<li><p><code>configResolved</code>：解析<code>Vite</code>配置后调用，配置确认</p>
+</li>
+<li><p><code>configureserver</code>：主要用来配置开发服务器，为<code>dev-server</code>添加自定义的中间件</p>
+</li>
+<li><p><code>transformindexhtml</code>：主要用来转换<code>index.html</code>，钩子接收当前的 <code>HTML</code> 字符串和转换上下文</p>
+</li>
+<li><p><code>handlehotupdate</code>：执行自定义<code>HMR</code>更新，可以通过<code>ws</code>往客户端发送自定义的事件</p>
+</li>
+</ul>
+<h5 id="通用钩子"><a href="#通用钩子" class="headerlink" title="通用钩子"></a>通用钩子</h5><p>这里举一些常用的通用钩子，其余的通用钩子可以<a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html%23universal-hooks" title="https://cn.vitejs.dev/guide/api-plugin.html#universal-hooks">移步这里</a></p>
+<ul>
+<li><p>服务启动时调用一次</p>
+<ul>
+<li><code>options</code>: 获取、操纵<code>Rollup</code>选项</li>
+<li><code>buildstart</code>：开始创建</li>
+</ul>
+</li>
+<li><p>在每个传入模块请求时被调用</p>
+<ul>
+<li><code>resolveId</code>: 创建自定义确认函数，可以用来定位第三方依赖</li>
+<li><code>load</code>：可以自定义加载器，可用来返回自定义的内容</li>
+<li><code>transform</code>：在每个传入模块请求时被调用，主要是用来转换单个模块</li>
+</ul>
+</li>
+<li><p>服务关闭时调用一次</p>
+<ul>
+<li><code>buildend</code>：在服务器关闭时被调用</li>
+<li><code>closeBundle</code></li>
+</ul>
+</li>
+</ul>
+<h5 id="钩子的调用顺序"><a href="#钩子的调用顺序" class="headerlink" title="钩子的调用顺序"></a>钩子的调用顺序</h5><p>引用@young 村长的一个图:</p>
+<p><img src="/img/2022-02-26-vite/hook-order.jpg" alt="流程图 4.jpg"></p>
+<p><code>Vite</code><a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html%23plugin-ordering" title="https://cn.vitejs.dev/guide/api-plugin.html#plugin-ordering">的官网</a>可以看出：<code>Vite</code>插件可以用一个  <code>enforce</code>  属性（类似于 <code>Webpack</code>加载器）来调整它的应用顺序。<code>enforce</code>  的值可以是<code>pre</code>  或  <code>post</code>。解析后的插件将按照以下顺序排列：</p>
+<ul>
+<li><p><code>Alias</code></p>
+</li>
+<li><p><code>enforce:&#39;pre&#39;</code>的自定义插件</p>
+</li>
+<li><p><code>Vite</code>核心插件</p>
+</li>
+<li><p>没有<code>enforce</code>的自定义插件</p>
+</li>
+<li><p><code>Vite</code>构建用的插件</p>
+</li>
+<li><p><code>enforce:&#39;post&#39;</code>的自定义插件</p>
+</li>
+<li><p><code>Vite</code>后置构建插件</p>
+</li>
+</ul>
+<h5 id="自定义插件"><a href="#自定义插件" class="headerlink" title="自定义插件"></a>自定义插件</h5><ul>
+<li>编写插件代码</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">myVitePlugin</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// 定义vite插件唯一id</span><br>  <span class="hljs-keyword">const</span> virtualFileId = <span class="hljs-string">&#x27;@my-vite-plugin&#x27;</span><br>  <span class="hljs-comment">// 返回的整个插件对象</span><br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-comment">// 必须的，将会显示在 warning 和 error 中</span><br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;vite-plugin&#x27;</span>,<br>    <span class="hljs-comment">// 钩子</span><br>    <span class="hljs-comment">// config</span><br>    <span class="hljs-attr">config</span>: <span class="hljs-function">(<span class="hljs-params">config, env</span>) =&gt;</span> (&#123;<br>       <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;config&#x27;</span>,config)<br>       <span class="hljs-keyword">return</span> &#123;&#125;<br>    &#125;),<br>    <span class="hljs-comment">// 确认config</span><br>    <span class="hljs-attr">configResolved</span>: <span class="hljs-function"><span class="hljs-params">config</span> =&gt;</span> (&#123;&#125;),<br>    <span class="hljs-attr">options</span>: <span class="hljs-function"><span class="hljs-params">options</span> =&gt;</span> (&#123;&#125;),<br>    <span class="hljs-attr">buildStart</span>: <span class="hljs-function"><span class="hljs-params">options</span> =&gt;</span> (&#123;&#125;),<br>    <span class="hljs-attr">transformIndexHtml</span>: <span class="hljs-function">(<span class="hljs-params">html, ctx</span>) =&gt;</span> (&#123;<br>        <span class="hljs-keyword">return</span> html<br>    &#125;),<br>    <span class="hljs-comment">//确认</span><br>    <span class="hljs-attr">resolveId</span>: <span class="hljs-function">(<span class="hljs-params">source, importer</span>) =&gt;</span> (&#123;&#125;),<br>    <span class="hljs-comment">// 转换</span><br>    <span class="hljs-attr">transform</span>: <span class="hljs-function">(<span class="hljs-params">code, id</span>) =&gt;</span> (&#123;&#125;)<br>  &#125;<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>引入插件：<code>vite.config.js/ts</code> 中引用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// vite.config.js/ts</span><br><span class="hljs-keyword">import</span> myVitePlugin <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;...&#x27;</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> defineConfig&#123;<br>    <span class="hljs-attr">plugins</span>:[<span class="hljs-title function_">vue</span>(),<span class="hljs-title function_">myVitePlugin</span>()]<br>&#125;<br>复制代码<br></code></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>最后总结下<code>Vite</code>相关的优缺点：</p>
+<ul>
+<li><p>优点：</p>
+<ul>
+<li>快速的冷启动: 采用<code>No Bundle</code>和<code>esbuild</code>预构建，速度远快于<code>Webpack</code></li>
+<li>高效的热更新：基于<code>ESM</code>实现，同时利用<code>HTTP</code>头来加速整个页面的重新加载，增加缓存策略</li>
+<li>真正的按需加载: 基于浏览器<code>ESM</code>的支持，实现真正的按需加载</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>生态：目前<code>Vite</code>的生态不如<code>Webapck</code>，不过我觉得生态也只是时间上的问题。</li>
+<li>生产环境由于<code>esbuild</code>对<code>css</code>和代码分割不友好使用<code>Rollup</code>进行打包</li>
+</ul>
+</li>
+</ul>
+<p><code>Vite.js</code>虽然才在构建打包场景兴起，但在很多场景下基本都会优于现有的解决方案。如果有生态、想要丰富的<code>loader</code>、<code>plugins</code>的要求可以考虑成熟的<code>Webpack</code>。在其余情况下，<code>Vite.js</code>不失为一个打包构建工具的好选择。</p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><ul>
+<li><p><a href="https://link.juejin.cn/?target=https://vitejs.dev/guide/" title="https://vitejs.dev/guide/">官方文档</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://esbuild.github.io/getting-started/" title="https://esbuild.github.io/getting-started/">Esbuild</a><a href="https://link.juejin.cn/?target=https://esbuild.github.io/getting-started/" title="https://esbuild.github.io/getting-started/">官网</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html" title="https://cn.vitejs.dev/guide/api-plugin.html">Vite</a> <a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html" title="https://cn.vitejs.dev/guide/api-plugin.html">插件</a> <a href="https://link.juejin.cn/?target=https://cn.vitejs.dev/guide/api-plugin.html" title="https://cn.vitejs.dev/guide/api-plugin.html">API</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://rollupjs.org/guide/en/%23plugin-development" title="https://rollupjs.org/guide/en/#plugin-development">Rollup</a><a href="https://link.juejin.cn/?target=https://rollupjs.org/guide/en/%23plugin-development" title="https://rollupjs.org/guide/en/#plugin-development">官方文档</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://github.com/xitu/gold-miner/blob/master/TODO/rollup-interview.md" title="https://github.com/xitu/gold-miner/blob/master/TODO/rollup-interview.md">Rollup - Next-generation ES6 module bundler - Interview with Rich Harris</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://github.com/vitejs/vite" title="https://github.com/vitejs/vite">Vite</a><a href="https://link.juejin.cn/?target=https://github.com/vitejs/vite" title="https://github.com/vitejs/vite">源码</a></p>
+</li>
+<li><p><a href="https://link.juejin.cn/?target=https://zhuanlan.zhihu.com/p/364275970" title="https://zhuanlan.zhihu.com/p/364275970">Vite2 插件开发指南</a></p>
+</li>
+</ul>
+<h3 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h3><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7064853960636989454">深入理解 Vite 核心原理</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2022/02/26/2022-02-26-vite/" title="Vite介绍" target="_blank">https://luckyship.github.io/2022/02/26/2022-02-26-vite/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2022/02/26/2022-02-26-vite/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2022/03/13/2022-03-13-time-complexity/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          算法中的时间复杂度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/23/2022-02-23-common-regex/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">常用正则表达式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

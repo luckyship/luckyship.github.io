@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>http和https | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="HTTP 的特点和缺点特点：无连接、无状态、灵活、简单快速  无连接：每一次请求都要连接一次，请求结束就会断掉，不会保持连接 无状态：每一次请求都是独立的，请求结束不会记录连接的任何信息(提起裤子就不认人的意思)，减少了网络开销，这是优点也是缺点 灵活：通过 http 协议中头部的Content-Type标记，可以传输任意数据类型的数据对象(文本、图片、视频等等)，非常灵活 简单快速：发送请求访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http和https">
+<meta property="og:url" content="https://luckyship.github.io/2021/10/16/2021-10-16-http-and-https/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="HTTP 的特点和缺点特点：无连接、无状态、灵活、简单快速  无连接：每一次请求都要连接一次，请求结束就会断掉，不会保持连接 无状态：每一次请求都是独立的，请求结束不会记录连接的任何信息(提起裤子就不认人的意思)，减少了网络开销，这是优点也是缺点 灵活：通过 http 协议中头部的Content-Type标记，可以传输任意数据类型的数据对象(文本、图片、视频等等)，非常灵活 简单快速：发送请求访问">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/1.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/2.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/3.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/4.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/5.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/6.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/7.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/8.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/9.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/10.jpg">
+<meta property="article:published_time" content="2021-10-16T08:26:06.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.178Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyship.github.io/img/2021-10-16-http-and-https/1.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E7%9A%84%E7%89%B9%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9"><span class="toc-number">1.</span> <span class="toc-text">HTTP 的特点和缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E6%8A%A5%E6%96%87%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">HTTP 报文组成部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95-9-%E7%A7%8D"><span class="toc-number">3.</span> <span class="toc-text">HTTP 请求方法(9 种)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET-%E5%92%8C-POST-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">4.</span> <span class="toc-text">GET 和 POST 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81-HTTP-%E7%8A%B6%E6%80%81%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">常见 HTTP 状态码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5-%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="toc-number">6.</span> <span class="toc-text">什么是持久连接&#x2F;长连接</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E8%BF%9E%E6%8E%A5%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">6.1.</span> <span class="toc-text">长连接优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E9%95%BF%E8%BF%9E%E6%8E%A5%E8%B5%84%E6%BA%90%E6%B5%AA%E8%B4%B9%EF%BC%9F"><span class="toc-number">6.2.</span> <span class="toc-text">如何避免长连接资源浪费？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%AE%A1%E7%BA%BF%E5%8C%96-%E7%AE%A1%E9%81%93%E5%8C%96"><span class="toc-number">7.</span> <span class="toc-text">什么是管线化(管道化)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-HTTP-%E7%9A%84%E9%98%9F%E5%A4%B4%E9%98%BB%E5%A1%9E%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">如何解决 HTTP 的队头阻塞问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">8.1.</span> <span class="toc-text">并发连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%9F%E5%90%8D%E5%88%86%E7%89%87"><span class="toc-number">8.2.</span> <span class="toc-text">域名分片</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B-HTTP-%E4%BB%A3%E7%90%86"><span class="toc-number">9.</span> <span class="toc-text">说一下 HTTP 代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E4%BB%A3%E7%90%86-%E4%B8%AD%E9%97%B4%E4%BA%BA%E4%BB%A3%E7%90%86"><span class="toc-number">9.1.</span> <span class="toc-text">普通代理(中间人代理)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%A7%E9%81%93%E4%BB%A3%E7%90%86"><span class="toc-number">9.2.</span> <span class="toc-text">隧道代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%88%B0%E5%BA%95%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84%E5%91%A2%EF%BC%9F"><span class="toc-number">9.3.</span> <span class="toc-text">代理服务器，到底有什么好处呢？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E8%AF%B7%E6%B1%82%E5%A4%B4"><span class="toc-number">9.4.</span> <span class="toc-text">代理最常见的请求头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E4%B8%AD%E5%AE%A2%E6%88%B7%E7%AB%AF-IP-%E4%BC%AA%E9%80%A0%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E9%A2%84%E9%98%B2%EF%BC%9F"><span class="toc-number">9.5.</span> <span class="toc-text">代理中客户端 IP 伪造问题以及如何预防？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">10.</span> <span class="toc-text">正向代理和反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">10.1.</span> <span class="toc-text">正向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-number">10.2.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%90%86%E4%B8%AD%E7%9A%84%E9%95%BF%E8%BF%9E%E6%8E%A5"><span class="toc-number">10.3.</span> <span class="toc-text">代理中的长连接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%B4%E4%B8%80%E4%B8%8B-HTTP-%E7%BC%93%E5%AD%98%E5%8F%8A%E7%BC%93%E5%AD%98%E4%BB%A3%E7%90%86"><span class="toc-number">11.</span> <span class="toc-text">说一下 HTTP 缓存及缓存代理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS"><span class="toc-number">12.</span> <span class="toc-text">HTTPS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SSL-TLS"><span class="toc-number">12.1.</span> <span class="toc-text">SSL&#x2F;TLS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS-%E4%B8%AD-TLS-%E7%9A%84%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95"><span class="toc-number">13.</span> <span class="toc-text">HTTPS 中 TLS 的加密算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81%E6%95%B0%E6%8D%AE%E4%B8%8D%E8%A2%AB%E7%AF%A1%E6%94%B9%EF%BC%9F%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E5%92%8C%E8%AF%81%E4%B9%A6"><span class="toc-number">14.</span> <span class="toc-text">如何保证数据不被篡改？签名原理和证书?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS-%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B%E5%92%8C%E4%BC%98%E5%8C%96"><span class="toc-number">15.</span> <span class="toc-text">HTTPS 连接过程和优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RSA-%E6%8F%A1%E6%89%8B"><span class="toc-number">15.1.</span> <span class="toc-text">RSA 握手</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-1-2-%E7%89%88"><span class="toc-number">15.2.</span> <span class="toc-text">TLS 1.2 版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLS-1-3-%E7%89%88"><span class="toc-number">15.3.</span> <span class="toc-text">TLS 1.3 版</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E5%A4%8D%E7%94%A8"><span class="toc-number">15.4.</span> <span class="toc-text">会话复用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">16.</span> <span class="toc-text">HTTPS 优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E5%92%8C-HTTPS-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">17.</span> <span class="toc-text">HTTP 和 HTTPS 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTPS-%E7%9A%84%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">18.</span> <span class="toc-text">HTTPS 的性能优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BF%E9%97%AE%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96"><span class="toc-number">18.1.</span> <span class="toc-text">访问速度优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96"><span class="toc-number">18.2.</span> <span class="toc-text">计算性能优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-%E7%89%88%E6%9C%AC"><span class="toc-number">19.</span> <span class="toc-text">HTTP 版本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-1-0-1996-%E5%B9%B4"><span class="toc-number">19.1.</span> <span class="toc-text">HTTP 1.0(1996 年)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-1-1-1997-%E5%B9%B4"><span class="toc-number">19.2.</span> <span class="toc-text">HTTP 1.1(1997 年)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPDY-2009-%E5%B9%B4"><span class="toc-number">19.3.</span> <span class="toc-text">SPDY(2009 年)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-2-0-2015-%E5%B9%B4"><span class="toc-number">19.4.</span> <span class="toc-text">HTTP 2.0(2015 年)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPDY-%E5%92%8C-HTTP2-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">19.5.</span> <span class="toc-text">SPDY 和 HTTP2 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP1-%E5%92%8C-HTTP2"><span class="toc-number">19.6.</span> <span class="toc-text">HTTP1 和 HTTP2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-3-0-QUIC"><span class="toc-number">19.7.</span> <span class="toc-text">HTTP 3.0&#x2F;QUIC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number">20.</span> <span class="toc-text">转载</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2021-10-16-http-and-https" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      http和https
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2021/10/16/2021-10-16-http-and-https/" class="archive-article-date">
+  <!-- <time datetime="2021-10-16T08:26:06.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-16</time>
+        <time datetime="2025-08-02T05:46:04.178Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.178Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-10-16
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">9.9k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">35分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="HTTP-的特点和缺点"><a href="#HTTP-的特点和缺点" class="headerlink" title="HTTP 的特点和缺点"></a>HTTP 的特点和缺点</h2><p><strong>特点</strong>：<code>无连接</code>、<code>无状态</code>、<code>灵活</code>、<code>简单快速</code></p>
+<ul>
+<li><strong>无连接</strong>：每一次请求都要连接一次，请求结束就会断掉，不会保持连接</li>
+<li><strong>无状态</strong>：每一次请求都是独立的，请求结束不会记录连接的任何信息(<strong>提起裤子就不认人的意思</strong>)，减少了网络开销，这<code>是优点也是缺点</code></li>
+<li><strong>灵活</strong>：通过 http 协议中头部的<code>Content-Type</code>标记，可以传输任意数据类型的数据对象(文本、图片、视频等等)，非常灵活</li>
+<li><strong>简单快速</strong>：发送请求访问某个资源时，只需传送请求方法和 URL 就可以了，使用简单，正由于 http 协议简单，使得 http 服务器的程序规模小，因而通信速度很快</li>
+</ul>
+<span id="more"></span>
+
+<p><strong>缺点</strong>：<code>无状态</code>、<code>不安全</code>、<code>明文传输</code>、<code>队头阻塞</code></p>
+<ul>
+<li><strong>无状态</strong>：请求不会记录任何连接信息，没有记忆，就无法区分多个请求发起者身份是不是同一个客户端的，意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大</li>
+<li><strong>不安全</strong>：<code>明文传输</code>可能被窃听不安全，缺少<code>身份认证</code>也可能遭遇伪装，还有缺少<code>报文完整性验证</code>可能遭到篡改</li>
+<li><strong>明文传输</strong>：报文(header 部分)使用的是明文，直接将信息暴露给了外界，<code>WIFI陷阱</code>就是复用明文传输的特点，诱导你连上热点，然后疯狂抓取你的流量，从而拿到你的敏感信息</li>
+<li><strong>队头阻塞</strong>：开启<code>长连接</code>(下面有讲)时，只建立一个 TCP 连接，同一时刻只能处理一个请求，那么当请求耗时过长时，其他请求就只能阻塞状态(如何解决下面有讲)</li>
+</ul>
+<h2 id="HTTP-报文组成部分"><a href="#HTTP-报文组成部分" class="headerlink" title="HTTP 报文组成部分"></a>HTTP 报文组成部分</h2><p><strong>http 报文</strong>：由<code>请求报文</code>和<code>响应报文</code>组成</p>
+<p><strong>请求报文</strong>：由<code>请求行</code>、<code>请求头</code>、<code>空行</code>、<code>请求体</code>四部分组成</p>
+<p><strong>响应报文</strong>：由<code>状态行</code>、<code>响应头</code>、<code>空行</code>、<code>响应体</code>四部分组成</p>
+<ul>
+<li><strong>请求行</strong>：包含 http 方法，请求地址，http 协议以及版本</li>
+<li><strong>请求头/响应头</strong>：就是一些 key:value 来告诉服务端我要哪些内容，要注意什么类型等，请求头/响应头每一个字段详解</li>
+<li><strong>空行</strong>：用来区分首部与实体，因为请求头都是 key:value 的格式，当解析遇到空行时，服务端就知道下一个不再是请求头部分，就该当作请求体来解析了</li>
+<li><strong>请求体</strong>：请求的参数</li>
+<li><strong>状态行</strong>：包含 http 协议及版本、数字状态码、状态码英文名称</li>
+<li><strong>响应体</strong>：服务端返回的数据</li>
+</ul>
+<h2 id="HTTP-请求方法-9-种"><a href="#HTTP-请求方法-9-种" class="headerlink" title="HTTP 请求方法(9 种)"></a>HTTP 请求方法(9 种)</h2><p><strong>HTTP1.0：</strong> <code>GET</code>、<code>POST</code>、<code>HEAD</code></p>
+<p><strong>HTTP1.1：</strong> <code>PUT</code>、<code>PATCH</code>、<code>DELETE</code>、<code>OPTIONS</code>、<code>TRACE</code>、<code>CONNECT</code></p>
+<table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">GET</td>
+<td align="center">获取资源</td>
+</tr>
+<tr>
+<td align="center">POST</td>
+<td align="center">传输资源，通常会造成服务器资源的修改</td>
+</tr>
+<tr>
+<td align="center">HEAD</td>
+<td align="center">获得报文首部</td>
+</tr>
+<tr>
+<td align="center">PUT</td>
+<td align="center">更新资源</td>
+</tr>
+<tr>
+<td align="center">PATCH</td>
+<td align="center">对 PUT 的补充，对已知资源部分更新 菜鸟</td>
+</tr>
+<tr>
+<td align="center">DELETE</td>
+<td align="center">删除资源</td>
+</tr>
+<tr>
+<td align="center">OPTIONS</td>
+<td align="center">列出请求资源支持的请求方法，用来跨域请求</td>
+</tr>
+<tr>
+<td align="center">TRACE</td>
+<td align="center">追踪请求/响应路径，用于测试或诊断</td>
+</tr>
+<tr>
+<td align="center">CONNECT</td>
+<td align="center">将连接改为管道方式用于代理服务器(隧道代理下面有讲)</td>
+</tr>
+</tbody></table>
+<h2 id="GET-和-POST-的区别"><a href="#GET-和-POST-的区别" class="headerlink" title="GET 和 POST 的区别"></a>GET 和 POST 的区别</h2><ul>
+<li><code>GET</code>在浏览器回退时是无害的，而<code>POST</code>会再次发起请求</li>
+<li><code>GET</code>请求会被浏览器主动缓存，而<code>POST</code>不会，除非手动设置</li>
+<li><code>GET</code>请求参数会被安逗保留在浏览器历史记录里，而<code>POST</code>中的参数不会被保留</li>
+<li><code>GET</code>请求在<code>URL</code>中传递的参数有长度限制(浏览器限制大小不同)，而<code>POST</code>没有限制</li>
+<li><code>GET</code>参数通过<code>URL</code>传递，<code>POST</code>放在<code>Request body</code>中</li>
+<li><code>GET</code>产生的 URL 地址可以被收藏，而<code>POST</code>不可以</li>
+<li><code>GET</code>没有<code>POST</code>安全，因为<code>GET</code>请求参数直接暴露在<code>URL</code>上，所以不能用来传递敏感信息</li>
+<li><code>GET</code>请求只能进行<code>URL</code>编码，而<code>POST</code>支持多种编码方式</li>
+<li>对参数的数据类型，<code>GET</code>只接受<code>ASCII</code>字符，而<code>POST</code>没有限制</li>
+<li><code>GET</code>产生一个 TCP 数据包，<code>POST</code>产生两个数据包(Firefox 只发一次)。GET 浏览器把 http header 和 data 一起发出去，响应成功 200，POST 先发送 header，响应 100 continue，再发送 data，响应成功 200</li>
+</ul>
+<h2 id="常见-HTTP-状态码"><a href="#常见-HTTP-状态码" class="headerlink" title="常见 HTTP 状态码"></a>常见 HTTP 状态码</h2><p><strong>1xx: 指示信息——表示请求已接收，继续处理</strong></p>
+<p><strong>2xx: 成功——表示请求已被成功接收</strong></p>
+<p><strong>3xx: 重定向——表示要完成请求必须进行进一步操作</strong></p>
+<p><strong>4xx: 客户端错误——表示请求有语法错误或请求无法实现</strong></p>
+<p><strong>5xx: 服务端错误——表示服务器未能实现合法的请求</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">状态码</th>
+<th align="center">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">200</td>
+<td align="center">请求成功</td>
+</tr>
+<tr>
+<td align="center">206</td>
+<td align="center">已完成指定范围的请求(带 Range 头的 GET 请求),场景如 video,audio 播放文件较大,文件分片时</td>
+</tr>
+<tr>
+<td align="center">301</td>
+<td align="center">永久重定向</td>
+</tr>
+<tr>
+<td align="center">302</td>
+<td align="center">临时重定向</td>
+</tr>
+<tr>
+<td align="center">304</td>
+<td align="center">请求资源未修改，可以使用缓存的资源，不用在服务器取</td>
+</tr>
+<tr>
+<td align="center">400</td>
+<td align="center">请求有语法错误</td>
+</tr>
+<tr>
+<td align="center">401</td>
+<td align="center">没有权限访问</td>
+</tr>
+<tr>
+<td align="center">403</td>
+<td align="center">服务器拒绝执行请求，场景如不允许直接访问，只能通过服务器访问时</td>
+</tr>
+<tr>
+<td align="center">404</td>
+<td align="center">请求资源不存在</td>
+</tr>
+<tr>
+<td align="center">500</td>
+<td align="center">服务器内部错误，无法完成请求</td>
+</tr>
+<tr>
+<td align="center">503</td>
+<td align="center">请求未完成，因服务器过载、宕机或维护等</td>
+</tr>
+</tbody></table>
+<h2 id="什么是持久连接-长连接"><a href="#什么是持久连接-长连接" class="headerlink" title="什么是持久连接/长连接"></a>什么是持久连接/长连接</h2><p><code>http1.0</code>协议采用的是”请求-应答”模式，当使用普通模式，每个请求/应答客户与服务器都要新建一个连接，完成之后立即断开连接(<code>http</code>协议为<code>无连接</code>的协议)</p>
+<p><code>http1.1</code>版本支持长连接，即请求头添加<code>Connection: Keep-Alive</code>，使用 Keep-Alive 模式(又称持久连接，连接复用)建立一个<code>TCP</code>连接后使客户端到服务端的连接持续有效，可以发送/接受多个<code>http</code>请求/响应，当出现对服务器的后续请求时，Keep-Alive 功能避免了建立或者重新建立连接</p>
+<p><img src="/img/2021-10-16-http-and-https/1.jpg" alt="http链接"></p>
+<p>如图：短连接极大的降低了传输效率</p>
+<h3 id="长连接优缺点"><a href="#长连接优缺点" class="headerlink" title="长连接优缺点"></a>长连接优缺点</h3><p><strong>优点</strong></p>
+<ul>
+<li><code>减少CPU及内存的使用</code>，因为不需要经常建立和关闭连接</li>
+<li><code>支持管道化</code>的请求及响应模式</li>
+<li><code>减少网络堵塞</code>，因为减少了 TCP 请求</li>
+<li><code>减少了后续请求的响应时间</code>，因为不需要等待建立 TCP、握手、挥手、关闭 TCP 的过程</li>
+<li>发生错误时，也<code>可在不关闭连接的情况下进行错误提示</code></li>
+</ul>
+<p><strong>缺点</strong></p>
+<p>一个长连接建立后，如果一直保持连接，对服务器来说是多么的浪费资源呀，而且长连接时间的长短，直接影响到服务器的并发数</p>
+<p>还有就是可能造成<code>队头堵塞</code>(下面有讲)，造成信息延迟</p>
+<h3 id="如何避免长连接资源浪费？"><a href="#如何避免长连接资源浪费？" class="headerlink" title="如何避免长连接资源浪费？"></a>如何避免长连接资源浪费？</h3><ul>
+<li><p><strong>客户端请求头声明</strong>：<code>Connection: close</code>，本次通信后就关闭连接</p>
+</li>
+<li><p><strong>服务端配置</strong>：如 Nginx，设置<code>keepalive_timeout</code>设置长连接超时时间，<code>keepalive_requests</code>设置长连接请求次数上限</p>
+</li>
+<li><p><strong>系统内核参数设置</strong>：</p>
+</li>
+<li><p><code>net.ipv4.tcp_keepalive_time = 60</code>，连接闲置 60 秒后，服务端尝试向客户端发送侦测包，判断 TCP 连接状态，如果没有收到 ack 反馈就在</p>
+</li>
+<li><p><code>net.ipv4.tcp_keepalive_intvl = 10</code>，就在 10 秒后再次尝试发送侦测包，直到收到 ack 反馈，一共会</p>
+</li>
+<li><p><code>net.ipv4.tcp_keepalive_probes = 5</code>，一共会尝试 5 次，要是都没有收到就关闭这个 TCP 连接了</p>
+</li>
+</ul>
+<h2 id="什么是管线化-管道化"><a href="#什么是管线化-管道化" class="headerlink" title="什么是管线化(管道化)"></a>什么是管线化(管道化)</h2><p><code>http1.1</code>在使用<code>长连接</code>的情况下，建立一个连接通道后，连接上消息的传递类似于</p>
+<blockquote>
+<p>请求 1 -&gt; 响应 1 -&gt; 请求 2 -&gt; 响应 2 -&gt; 请求 3 -&gt; 响应 3</p>
+</blockquote>
+<p><code>管理化</code>连接的消息就变成了类似这样</p>
+<blockquote>
+<p>请求 1 -&gt; 请求 2 -&gt; 请求 3 -&gt; 响应 1 -&gt; 响应 2 -&gt; 响应 3</p>
+</blockquote>
+<p><code>管线化</code>是在同一个 TCP 连接里<strong>发一个请求后不必等其回来就可以继续发请求出去</strong>，这可以减少整体的响应时间，但是服务器还是<strong>会按照请求的顺序响应</strong>请求，所以如果有许多请求，而前面的请求响应很慢，就产生一个著名的问题<code>队头堵塞</code>(下面有讲解决方法)</p>
+<p>管线化的特点：</p>
+<ul>
+<li>管线化机制通过持久连接完成，在<code>http1.1</code>版本才支持</li>
+<li>只有<code>GET</code>请求和<code>HEAD</code>请求才可以进行管线化，而<code>POST</code>有所限制</li>
+<li>初次创建连接时不应启动管线化机制，因为服务器不一定支持 http1.1 版本的协议</li>
+<li>管线化不会影响响应到来的顺序，如上面的例子所示，响应返回的顺序就是请求的顺序</li>
+<li>要求<code>客户端</code>和<code>服务端</code>都支持管线化，但并不要求服务端也对响应进行管线化处理，只是要求对于管线化的请求不失败即可</li>
+<li>由于上面提到的服务端问题，开户管线化很可能并不会带来大幅度的性能提升，而且很多服务端和代理程序对管线化的支持并不好，因为浏览器(Chrome/Firefox)默认并未开启管线化支持</li>
+</ul>
+<h2 id="如何解决-HTTP-的队头阻塞问题"><a href="#如何解决-HTTP-的队头阻塞问题" class="headerlink" title="如何解决 HTTP 的队头阻塞问题"></a>如何解决 HTTP 的队头阻塞问题</h2><p><code>http1.0</code>协议采用的是<code>请求-应答</code>模式，报文必须是<code>一发一收</code>，就形成了一个<code>先进先出</code>的串行队列，没有轻重缓急的优先级，只有入队的先后顺序，排在最前面的请求最先处理，就导致如果队首的请求耗时过长，后面的请求就只能处于阻塞状态，这就是著名的<code>队头阻塞</code>问题。解决如下：</p>
+<h3 id="并发连接"><a href="#并发连接" class="headerlink" title="并发连接"></a>并发连接</h3><p>因为一个域名允许分配多个长连接，就相当于增加了任务队列，不至于一个队列里的任务阻塞了其他全部任务。以前在 RFC2616 中规定过客户端最多只能并发 2 个连接，但是现实是很多浏览器不按套路出牌，就是遵守这个标准 T_T，所以在 RFC7230 把这个规定取消掉了，现在的浏览器标准中一个域名<code>并发连接</code>可以有<code>6~8</code>个，记住是 6~8 个，不是 6 个(<strong>Chrome6 个/Firefox8 个</strong>)</p>
+<p>如果这个还不能满足你</p>
+<p>继续，不要停…</p>
+<h3 id="域名分片"><a href="#域名分片" class="headerlink" title="域名分片"></a>域名分片</h3><p>一个域名最多可以并发 6~8 个，那咱就多来几个域名</p>
+<p>比如 a.baidu.com，b.baidu.com，c.baidu.com，多准备几个<code>二级域名</code>，当我们访问 baidu.com 时，可以让不同的资源从不同的二域名中获取，而它们都指向同一台服务器，这样能够并发更多的长连接了</p>
+<p>而在<code>HTTP2.0</code>下，可以一瞬间加载出来很多资源，因为支持多路复用，可以在一个 TCP 连接中发送多个请求</p>
+<h2 id="说一下-HTTP-代理"><a href="#说一下-HTTP-代理" class="headerlink" title="说一下 HTTP 代理"></a>说一下 HTTP 代理</h2><p>常见的代理有两种：<code>普通代理(中间人代理)</code>，<code>隧道代理</code></p>
+<h3 id="普通代理-中间人代理"><a href="#普通代理-中间人代理" class="headerlink" title="普通代理(中间人代理)"></a>普通代理(中间人代理)</h3><p><img src="/img/2021-10-16-http-and-https/2.jpg" alt="普通代理"></p>
+<p>如图：代理服务器相当于一个中间人，一直帮两边传递东西，好可怜~~</p>
+<p>不过它可以在中间可以帮我们过滤、缓存、负载均衡(多台服务器共用一台代理情况下)等一些处理</p>
+<p>注意，实际场景中客户端和服务器之间可能有多个代理服务器</p>
+<h3 id="隧道代理"><a href="#隧道代理" class="headerlink" title="隧道代理"></a>隧道代理</h3><p>客户端通过<code>CONNECT</code>方法请求隧道代理创建一个可以到任意目标服务器和端口号的 TCP 连接，创建成功之后隧道代理只做请求和响应数据的转发，中间它不会做任何处理</p>
+<p><img src="/img/2021-10-16-http-and-https/3.jpg" alt="隧道代理"><br>为什么需要隧道代理呢？</p>
+<p>我们都知道<code>https</code>服务是需要网站有证书的，而代理服务器显然没有，所以浏览器和代理之间无法创建<code>TLS</code>，所以就有了隧道代理，它把浏览器的数据原样透传，这样就实现了通过中间代理和服务端进行 TLS 握手，然后进行加密传输</p>
+<p>可能有人会问，那还要代理干嘛，直接请求服务器不是更好吗</p>
+<h3 id="代理服务器，到底有什么好处呢？"><a href="#代理服务器，到底有什么好处呢？" class="headerlink" title="代理服务器，到底有什么好处呢？"></a>代理服务器，到底有什么好处呢？</h3><ul>
+<li><strong>突破访问限制</strong>：如访问一些单位或集团内部资源，或用国外代理服务器(翻墙)，就可以上国外网站看片等</li>
+<li><strong>安全性更高</strong>：上网者可以通过这种方式隐藏自己的 IP，免受攻击。还可以对数据过滤，对非法 IP 限流等</li>
+<li><strong>负载均衡</strong>：客户端请求先到代理服务器，而代理服务器后面有多少源服务器，IP 是多少，客户端是不知道的。因此，代理服务器收到请求后，通过特定的算法(随机算法、轮询、一致性 hash、LUR(最近最少使用) 算法这里不细说了)把请求分发给不同的源服务器，让各个源服务器负载尽量均衡</li>
+<li><strong>缓存代理</strong>：将内容缓存到代理服务器(这个下面一节详细说)</li>
+</ul>
+<h3 id="代理最常见的请求头"><a href="#代理最常见的请求头" class="headerlink" title="代理最常见的请求头"></a>代理最常见的请求头</h3><p><strong>Via</strong></p>
+<p>是一个能用首部，由代理服务器添加，适用于正向和反向代理，在请求和响应首部均可出现，这个消息首部可以用来追踪消息转发情况，防止循环请求，还可以识别在请求或响应传递链中消息发送者对于协议的支持能力，详情请看 MDN</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Via</span>: <span class="hljs-number">1</span>.<span class="hljs-number">1</span> vegur<br><span class="hljs-attribute">Via</span>: HTTP/<span class="hljs-number">1</span>.<span class="hljs-number">1</span> GWA<br><span class="hljs-attribute">Via</span>: <span class="hljs-number">1</span>.<span class="hljs-number">0</span> fred, <span class="hljs-number">1</span>.<span class="hljs-number">1</span> p.example.net<br></code></pre></td></tr></table></figure>
+
+<p><strong>X-Forwarded-For</strong></p>
+<p>记录客户端请求的来源 IP，每经过一级代理(匿名代理除外)，代理服务器都会把这次请求的来源 IP 追加进去</p>
+<p><code>X-Forwarded-For: client,proxy1,proxy2</code></p>
+<p>注意：与服务器直连的代理服务器的 IP 不会被追加进去，该代理可能过 TCP 连接的<code>Remote Address</code>字段获取到与服务器直连的代理服务器 IP</p>
+<p><strong>X-Real-IP</strong></p>
+<p>一般记录真实发出请求的客户端的 IP，还有<code>X-Forwarded-Host</code>和<code>X-Forwarded-Proto</code>分别记录真实发出请求的客户端的<code>域名</code>和<code>协议名</code></p>
+<h3 id="代理中客户端-IP-伪造问题以及如何预防？"><a href="#代理中客户端-IP-伪造问题以及如何预防？" class="headerlink" title="代理中客户端 IP 伪造问题以及如何预防？"></a>代理中客户端 IP 伪造问题以及如何预防？</h3><p><code>X-Forwarded-For</code>是可以伪造的，比如一些通过 X-Forwarded-For 获取到客户端 IP 来限制刷票的系统就可以通过伪造该请求头达到刷票的目的，如果客户端请求显示指定了</p>
+<p><code>X-Forwarded-For：192.168.1.108</code></p>
+<p>那么服务端收到的这个请求头，第一个 IP 就是伪造的</p>
+<p><strong>预防</strong></p>
+<ol>
+<li>在对外 Nginx 服务器上配置</li>
+</ol>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><code class="hljs crmsh"><span class="hljs-keyword">location</span> <span class="hljs-title">/ &#123;</span><br><span class="hljs-title"> proxy_set_header</span> X-Forwarded-For $remote_addr<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这样第一个 IP 就是从<code>TCP</code>连接客户端的 IP，不会读取伪造的</p>
+<ol start="2">
+<li>从右到左遍历<code>X-Forwarded-For</code>的 IP，排除已知代理服务器 IP 和内网 IP，获取到第一个符合条件的 IP 就可以了</li>
+</ol>
+<h2 id="正向代理和反向代理"><a href="#正向代理和反向代理" class="headerlink" title="正向代理和反向代理"></a>正向代理和反向代理</h2><h3 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h3><p>工作在客户端的代理为正向代理。使用正向代理的时候，需要在客户端配置需要使用的代理服务器，正向代理对服务端透明。比如抓包工具 Fiddler、Charles 以及访问一些外网网站的代理工具都是正向代理</p>
+<p><img src="/img/2021-10-16-http-and-https/4.jpg" alt="正向代理"></p>
+<p><strong>正向代理通常用于</strong></p>
+<ul>
+<li>缓存</li>
+<li>屏蔽某些不健康的网站</li>
+<li>通过代理访问原本无法访问的网站</li>
+<li>上网认证，对用户访问进行授权</li>
+</ul>
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>工作在服务端的代理称为反向代理。使用反向代理的时候，不需要在客户端进行设置，反向代理对客户端透明。如 Nginx 就是反向代理</p>
+<p><img src="/img/2021-10-16-http-and-https/5.jpg" alt="正向代理"></p>
+<p><strong>反向代理通常用于</strong>：<code>负载均衡</code>、<code>服务端缓存</code>、<code>流量隔离</code>、<code>日志</code>、<code>金丝雀发布</code></p>
+<h3 id="代理中的长连接"><a href="#代理中的长连接" class="headerlink" title="代理中的长连接"></a>代理中的长连接</h3><p>在各个代理和服务器、客户端节点之间是一段一段的 TCP 连接，客户端通过代理访问目标服务器也叫逐段传输，用于逐段传输的请求头叫<code>逐段传输头</code>。</p>
+<p><strong>逐段传输头</strong>会在每一段传输的中间代理中处理掉，不会传给下一个代理</p>
+<p>标准的逐段传输头有：<code>Keep-Alive</code>、<code>Transfer-Encoding</code>、<code>TE</code>、<code>Connection</code>、<code>Trailer</code>、<code>Upgrade</code>、<code>Proxy-Authorization</code>、<code>Proxy-Authenticate</code>。</p>
+<p>Connection 头决定当前事务完成后是否关闭连接，如果该值为 keep-alive，则连接是<code>持久连接</code>不会关闭，使得对同一服务器的请求可以继续在该连接上完成</p>
+<h2 id="说一下-HTTP-缓存及缓存代理"><a href="#说一下-HTTP-缓存及缓存代理" class="headerlink" title="说一下 HTTP 缓存及缓存代理"></a>说一下 HTTP 缓存及缓存代理</h2><p>关于 http 缓存在上一篇文章里有了详细介绍 (建议收藏)为什么第二次打开页面快？五步吃透前端缓存，让页面飞起</p>
+<p><code>缓存代理</code>就是让代理服务器接管一部分的服务端的 http 缓存，客户端缓存过期之后就近到代理服务器的缓存中获取，代理缓存过期了才请求源服务器，这样流量大的时候能明显降低源服务器的压力</p>
+<p>注意<code>响应头</code>字段</p>
+<ul>
+<li><strong>Cache-Control：</strong> 值有<code>public</code>时，表示可以被所有终端缓存，包括<code>代理服务器</code>、<code>CDN</code>。值有<code>private</code>时，只能被<code>终端浏览器</code>缓存，CDN、代理等中继服务器都不可以缓存。</li>
+</ul>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p><code>HTTPS</code> 是超文本传输安全协议，即<code>HTTP + SSL/TLS</code>。说白了，就是一个加强版的 HTTP</p>
+<p><img src="/img/2021-10-16-http-and-https/6.jpg" alt="正向代理"></p>
+<p>HTTP 本文开始讲了，所以我们要理解 HTTPS 的精华，就要先弄清楚这个<code>SSL/TLS</code>了</p>
+<h3 id="SSL-TLS"><a href="#SSL-TLS" class="headerlink" title="SSL/TLS"></a>SSL/TLS</h3><p>一张图让你理解 SSL 和 TLS 的关系</p>
+<p><img src="/img/2021-10-16-http-and-https/7.jpg" alt="正向代理"></p>
+<p>如图，TLS 是 SSL 的升级版，而且 TLS1.2 版本以下都已废弃，目前主要用的是<code>TLS 1.2</code>和<code>TLS 1.3</code>。而<strong>OpenSSL</strong>则是<strong>开源版本</strong>的</p>
+<p>那么它到底是个啥呢？</p>
+<p>浏览器和服务器通信之前会先协商，选出它们都支持的<code>加密套件</code>，用来实现安全的通信。常见加密套件</p>
+<p>随便拿出一个加密套件举例，如：<strong>RSA-PSK-AES128-GCM-SHA256</strong>，就是长这样，代表什么意思呢，我们看图</p>
+<p><img src="/img/2021-10-16-http-and-https/8.jpg" alt="正向代理"></p>
+<ul>
+<li>**<code>RSA</code>**：表示握手时用 RSA 算法交换密钥</li>
+<li>**<code>PSK</code>**：表示使用 PSK 算法签名</li>
+<li><strong><code>AES128-GCM</code>**：表示使用 AES256 对称加密算法通信，密钥长度 128，分组模式 GCM。TLS 1.3 中只剩下称加密算法有</strong>AES<strong>和</strong>CHACHA20<strong>，分组模式只剩下</strong>GCM<strong>和</strong>POLY1305**</li>
+<li><strong><code>SHA256</code>**：表示使用 SHA256 算法验证信息完整性并生成随机数。TLS 1.3 中哈希摘要算法只剩下</strong>SHA256<strong>和</strong>SHA384**了</li>
+</ul>
+<p>为什么需要用到这么多算法呢？</p>
+<p>为了保证安全，TLS 需要保证信息的：<code>机密性</code>、<code>可用性</code>、<code>完整性</code>、<code>认证性</code>、<code>不可否认性</code>，每一种算法都有其特定的用处</p>
+<h2 id="HTTPS-中-TLS-的加密算法"><a href="#HTTPS-中-TLS-的加密算法" class="headerlink" title="HTTPS 中 TLS 的加密算法"></a>HTTPS 中 TLS 的加密算法</h2><p>为什么说 https 是安全的？ https 一定是安全的吗？（考察 https 中间人劫持，我另一篇有关于详细介绍网络安全） 有什么解决办法？ https 的证书校验过程是怎么样的？ 证书校验用到了哪些算法？</p>
+<p><strong>对称加密算法</strong></p>
+<p>就是加密和解密使用同一个密钥。如<code>AES、DES</code>。加解密过程：</p>
+<ol>
+<li>浏览器给服务器发送一个随机数<code>client-random</code>和一个支持的加密方法列表</li>
+<li>服务器给浏览器返回另一个随机数<code>server-random</code>和双方都支持的加密方法</li>
+<li>然后两者用加密方法将两个随机数混合生成密钥，这就是通信双上加解密的密钥</li>
+</ol>
+<p>问题是双方如何安全的传递两个随机数和加密方法，直接传给客户端，那过程中就很可能被窃取，别人就能成功解密拿到数据，往下看</p>
+<p><strong>不对称加密算法</strong></p>
+<p>就是一对密钥，有<code>公钥</code>(public key)和<code>私钥</code>(private key)，其中一个密钥加密后的数据，只能让另一个密钥进行解密。如<code>RSA</code>、<code>ECDHE</code>。加解密过程：</p>
+<ol>
+<li>浏览器给服务器发送一个随机数<code>client-random</code>和一个支持的加密方法列表</li>
+<li>服务器把另一个随机数<code>server-random</code>、<code>加密方法</code>、<code>公钥</code>传给浏览器</li>
+<li>然后浏览器用公钥将两个随机数加密，生成密钥，这个密钥只能用<code>私钥</code>解密</li>
+</ol>
+<p>使用公钥反推出私钥是非常困难，但不是做不到，随着计算机运算能力提高，非对称密钥<code>至少要2048位才能保证安全性</code>，这就导致性能上要比对称加密要差很多</p>
+<p><strong>所以！</strong></p>
+<p>TLS 实际用的是<code>两种算法的混合加密</code>。<strong>通过 非对称加密算法 交换 对称加密算法 的密钥，交换完成后，再使用对称加密进行加解密传输数据</strong>。这样就保证了会话的机密性。过程如下</p>
+<ol>
+<li>浏览器给服务器发送一个随机数<code>client-random</code>和一个支持的加密方法列表</li>
+<li>服务器把另一个随机数<code>server-random</code>、<code>加密方法</code>、<code>公钥</code>传给浏览器</li>
+<li>浏览器又生成另一个随机数<code>pre-random</code>，并用公钥加密后传给服务器</li>
+<li>服务器再用私钥解密，得到<code>pre-random</code></li>
+<li>浏览器和服务器都将三个随机数用加密方法混合生成最终密钥</li>
+</ol>
+<p>这样即便被截持，中间人没有私钥就拿不到<code>pre-random</code>，就无法生成最终密钥。</p>
+<p>可又有问题来了，如果一开始就被 DNS 截持，我们拿到的公钥是中间人的，而不是服务器的，数据还是会被窃取，所以<code>数字证书</code>来了，往下看，先简单说一下摘要算法</p>
+<p><strong>摘要算法</strong></p>
+<p>主要用于保证信息的完整性。常见的<strong>MD5 算法</strong>、<strong>散列函数</strong>、<strong>哈希函数</strong>都属于这类算法，其特点就是<code>单向性</code>、<code>无法反推原文</code></p>
+<p>假如信息被截取，并重新生成了摘要，这时候就判断不出来是否被篡改了，所以需要给摘要也通过会话密钥进行加密，这样就看不到明文信息，保证了安全性，同时也保证了完整性</p>
+<h2 id="如何保证数据不被篡改？签名原理和证书"><a href="#如何保证数据不被篡改？签名原理和证书" class="headerlink" title="如何保证数据不被篡改？签名原理和证书?"></a>如何保证数据不被篡改？签名原理和证书?</h2><p><strong>数字证书(数字签名)</strong></p>
+<p>它可以帮我们<code>验证服务器身份</code>。因为如果没有验证的话，就可能被<code>中间人劫持</code>，假如请求被中间人截获，中间人把他自己的公钥给了客户端，客户端收到公钥就把信息发给中间人了，中间人解密拿到数据后，再请求实际服务器，拿到服务器公钥，再把信息发给服务器</p>
+<p>这样不知不觉间信息就被人窃取了，所以在结合对称和非对称加密的基础上，又添加了数字证书认证的步骤，让服务器证明自己的身份</p>
+<p>数字证书需要向有权威的<code>认证机构(CA)</code>获取授权给服务器。首先，<code>服务器</code>和<code>CA</code>机构<code>分别有一对密钥</code>(公钥和私钥)，然后是如何生成数字证书的呢？</p>
+<ul>
+<li>CA 机构通过摘要算法生成服务器公钥的<code>摘要</code>(哈希摘要)</li>
+<li>CA 机构通过<strong>CA 私钥</strong>及特定的签名算法<strong>加密</strong>摘要，生成<code>签名</code></li>
+<li>把<code>签名</code>、<code>服务器公钥</code>等信息打包<code>放入数字证书</code>，并返回给服务器</li>
+</ul>
+<p>服务器配置好证书，以后客户端连接服务器，都先把证书发给客户端验证并获取服务器的公钥。</p>
+<p><strong>证书验证流程</strong>：</p>
+<ul>
+<li>使用<strong>CA 公钥</strong>和声明的签名算法对 CA 中的签名进行<strong>解密</strong>，得到服务器公钥的<code>摘要内容</code></li>
+<li>再用摘要算法对证书里的服务器公钥生成摘要，再把这个摘要和上一步得到的摘要<code>对比</code>，如果一致说明证书合法，里面的公钥也是正确的，否则就是非法的</li>
+</ul>
+<p>证书认证又分为<code>单向认证</code>和<code>双向认证</code></p>
+<p><strong>单向认证</strong>：服务器发送证书，客户端验证证书 <strong>双向认证</strong>：服务器和客户端分别提供证书给对方，并互相验证对方的证书</p>
+<p><strong>不过大多数 https 服务器都是单向认证，如果服务器需要验证客户端的身份，一般通过用户名、密码、手机验证码等之类的凭证来验证。只有更高级别的要求的系统，比如大额网银转账等，就会提供双向认证的场景，来确保对客户身份提供认证性</strong></p>
+<h2 id="HTTPS-连接过程和优化"><a href="#HTTPS-连接过程和优化" class="headerlink" title="HTTPS 连接过程和优化"></a>HTTPS 连接过程和优化</h2><p>我们知道了 https 就只是比 http 多了一步 TLS 连接</p>
+<p>TLS 连接是怎么回事呢，根据 TLS 版本和密钥交换法不同，过程也不一样，有三种方式</p>
+<h3 id="RSA-握手"><a href="#RSA-握手" class="headerlink" title="RSA 握手"></a>RSA 握手</h3><p>早期的 TLS 密钥交换法都是使用 RSA 算法，它的握手流程是这样子的</p>
+<ol>
+<li>浏览器给服务器发送一个随机数<code>client-random</code>和一个支持的加密方法列表</li>
+<li>服务器把另一个随机数<code>server-random</code>、<code>加密方法</code>、<code>公钥</code>传给浏览器</li>
+<li>浏览器又生成另一个随机数<code>pre-random</code>，并用公钥加密后传给服务器</li>
+<li>服务器再用私钥解密，得到<code>pre-random</code>，此时浏览器和服务器都得到三个随机数了，各自将三个随机数用加密方法混合生成最终密钥</li>
+</ol>
+<p>然后开始通信</p>
+<h3 id="TLS-1-2-版"><a href="#TLS-1-2-版" class="headerlink" title="TLS 1.2 版"></a>TLS 1.2 版</h3><p><code>TLS 1.2</code>版的用的是<code>ECDHE密钥交换法</code>，看图</p>
+<p><img src="/img/2021-10-16-http-and-https/9.jpg" alt="正向代理"></p>
+<ol>
+<li>浏览器给服务器发送一个随机数<code>client-random</code>、TLS 版本和一个支持的加密方法列表</li>
+<li>服务器生成一个椭圆曲线参数<code>server-params</code>、随机数<code>server-random</code>、<code>加密方法</code>、<code>证书</code>等传给浏览器</li>
+<li>浏览器又生成椭圆曲线参数<code>client-params</code>，握手数据摘要等信息传给服务器</li>
+<li>服务器再返回摘要给浏览器确认应答</li>
+</ol>
+<p>这个版本不再生成椭圆曲线参数<code>cliend-params</code>和<code>server-params</code>，而是在服务器和浏览器两边都得到<code>server-params</code>和<code>client-params</code>之后，就用 ECDHE 算法直接算出<code>pre-random</code>，这就两边都有了三个随机数，然后各自再将三个随机加密混合生成最终密钥</p>
+<h3 id="TLS-1-3-版"><a href="#TLS-1-3-版" class="headerlink" title="TLS 1.3 版"></a>TLS 1.3 版</h3><p>在 TLS1.3 版本中废弃了 RSA 算法，因为 RSA 算法可能泄露私钥导致历史报文全部被破解，而 ECDHE 算法每次握手都会生成临时的密钥，所以就算私钥被破解，也只能破解一条报文，而不会对之前的历史信息产生影响，，所以在 TLS 1.3 中彻底取代了 RSA。目前主流都是用<code>ECDHE算法</code>来做密钥交换的</p>
+<p>TLS1.3 版本中握手过程是这样子的</p>
+<p><img src="/img/2021-10-16-http-and-https/10.jpg" alt="正向代理"></p>
+<ol>
+<li>浏览器生成<code>client-params</code>、和<code>client-random</code>、TLS 版本和加密方法列表发送给服务器</li>
+<li>服务器返回<code>server-params</code>、<code>server-random</code>、<code>加密方法</code>、<code>证书</code>、<code>摘要</code>等传给浏览器</li>
+<li>浏览器确认应答，返回握手数据摘要等信息传给服务器</li>
+</ol>
+<p>简单说就是简化了握手过程，只有三步，把原来的两个 RTT 打包成一个发送了，所以减少了传输次数。这种握手方式也叫<code>1-RTT</code>握手</p>
+<p>这种握手方还有优化空间吗？</p>
+<p>有的，用会话复用</p>
+<h3 id="会话复用"><a href="#会话复用" class="headerlink" title="会话复用"></a>会话复用</h3><p>会话复用有两种方式：<code>Session ID</code> 和 <code>Session Ticket</code></p>
+<p>**<code>Session ID</code>**：就是客户端和服务器首次连接手各自保存会话 ID，并存储会话密钥，下次再连接时，客户端发送 ID 过来，服务器这边再查找 ID，如果找到了就直接复用会话，密钥也不用重新生成</p>
+<p>可是这样的话，在客户端数量庞大的时候，对服务器的存储压力可就大了</p>
+<p>所以出来了第二种方式 **<code>Session Ticket</code>**：就是双方连接成功后服务器加密会话信息，用 Session Ticket 消息发给客户端存储起来，下次再连接时就把这个 Session Ticket 解密，验证有没有过期，如果没有过期就复用会话。原理就是把存储压力分给客户端。</p>
+<p>这样就万无一失了吗？</p>
+<p>No，这样也存在安全问题。因为每次要用一个固定的密钥来解密 Session Ticket，一旦密钥被窃取，那所有历史记录也就被破解了，所以只能尽量避免这种问题<code>定期更换密钥</code>。毕竟节省了不少生成会话密钥和这些算法的耗时，性能还是提升了嘛</p>
+<p>那刚说了<code>1-RTT</code>，那能不能优化到<code>0-RTT</code>呢</p>
+<p>还真可以，做法就是发送 Session Ticket 的时候带上应用数据，不用等服务端确认。这种方式被称为<code>PSK</code>(Pre-Shared Key)</p>
+<p>这样万无一失了吗？</p>
+<p>尴了个尬，还是不行。这 PSK 要是被窃取，人家不断向服务器重发，就直接增加了服务器被攻击的风险</p>
+<p>虽然不是绝对安全，但是现行架构下最安全的解决文案了，大大增加了中间人的攻击成本</p>
+<h2 id="HTTPS-优缺点"><a href="#HTTPS-优缺点" class="headerlink" title="HTTPS 优缺点"></a>HTTPS 优缺点</h2><p><strong>优点</strong></p>
+<ul>
+<li>内容加密，中间无法查看原始内容</li>
+<li>身份认证，保证用户访问正确。如访问百度，即使 DNS 被劫持到第三方站点，也会提醒用户没有访问百度服务，可能被劫持</li>
+<li>数据完整性，防止内容被第三方冒充或篡改</li>
+<li>虽然不是绝对安全，但是现行架构下最安全的解决文案了，大大增加了中间人的攻击成本</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>要钱，功能越强大的证书费用越贵</li>
+<li>证书需要绑定 IP，不能在同一个 IP 上绑定多个域名</li>
+<li>https 双方加解密，耗费更多服务器资源</li>
+<li>https 握手更耗时，降低一定用户访问速度(优化好就不是缺点了)</li>
+</ul>
+<h2 id="HTTP-和-HTTPS-的区别"><a href="#HTTP-和-HTTPS-的区别" class="headerlink" title="HTTP 和 HTTPS 的区别"></a>HTTP 和 HTTPS 的区别</h2><ul>
+<li>HTTP 是<code>明文传输</code>，不安全的，HTTPS 是<code>加密传输</code>，安全的多</li>
+<li>HTTP 标准端口是<code>80</code>，HTTPS 标准端口是<code>443</code></li>
+<li>HTTP 不用认证证书<code>免费</code>，HTTPS 需要认证证书<code>要钱</code></li>
+<li><code>连接方式不同</code>，HTTP 三次握手，HTTPS 中 TLS1.2 版本 7 次，TLS1.3 版本 6 次</li>
+<li>HTTP 在 OSI 网络模型中是在<code>应用层</code>，而 HTTPS 的 TLS 是在<code>传输层</code></li>
+<li>HTTP 是<code>无状态</code>的，HTTPS 是<code>有状态</code>的</li>
+</ul>
+<h2 id="HTTPS-的性能优化"><a href="#HTTPS-的性能优化" class="headerlink" title="HTTPS 的性能优化"></a>HTTPS 的性能优化</h2><h3 id="访问速度优化"><a href="#访问速度优化" class="headerlink" title="访问速度优化"></a>访问速度优化</h3><ol>
+<li><code>会话复用</code>，上面说了，复用 session 可以减少 CPU 消耗，因为不需要进行非对称密钥交换的计算。可以提升访问速度，不需要进行完全握手阶段二，节省了一个 RTT 和计算耗时。</li>
+<li>使用 <code>SPDY</code> 或者 <code>HTTP2</code>。SPDY 最大的特性就是多路复用，能将多个 HTTP 请求在同一个连接上一起发出去，不像目前的 HTTP 协议一样，只能串行地逐个发送请求。Pipeline 虽然支持多个请求一起发送，但是接收时依然得按照顺序接收，本质上无法解决并发的问题。HTTP2 支持多路复用，有同样的效果。</li>
+<li>设置<code>HSTS</code>，服务端返回一个 HSTS 的 http header，浏览器获取到 HSTS 头部之后，在一段时间内，不管用户输入<a target="_blank" rel="noopener" href="http://www.baidu.com还是http//www.baidu.com">www.baidu.com还是http://www.baidu.com</a> ，都会默认将请求内部跳转成 <a target="_blank" rel="noopener" href="https://www.baidu.com.chrome/">https://www.baidu.com。Chrome</a>, firefox, ie 都支持了 HSTS。</li>
+<li><code>Nginx</code>设置<code>Ocsp stapling</code>。Ocsp 全称在线证书状态检查协议 (rfc6960)，用来向 CA 站点查询证书状态，比如是否撤销。通常情况下，浏览器使用 OCSP 协议发起查询请求，CA 返回证书状态内容，然后浏览器接受证书是否可信的状态。这个过程非常消耗时间，因为 CA 站点有可能在国外，网络不稳定，RTT 也比较大。如果不需要查询则可节约时间。</li>
+<li><code>False start</code>。简单概括 False start 的原理就是在 clientkeyexchange 发出时将应用层数据一起发出来，能够节省一个 RTT。</li>
+</ol>
+<h3 id="计算性能优化"><a href="#计算性能优化" class="headerlink" title="计算性能优化"></a>计算性能优化</h3><ol>
+<li>优先使用 ECC 椭圆加密算术</li>
+<li>使用最新版的 OpenSSL</li>
+<li>TLS 远程代理计算</li>
+<li>硬件加速方案</li>
+</ol>
+<h2 id="HTTP-版本"><a href="#HTTP-版本" class="headerlink" title="HTTP 版本"></a>HTTP 版本</h2><p>1991 年 HTTP 0.9 版，只有一个 GET，而且只支持纯文本内容，早已过时就不讲了</p>
+<h3 id="HTTP-1-0-1996-年"><a href="#HTTP-1-0-1996-年" class="headerlink" title="HTTP 1.0(1996 年)"></a>HTTP 1.0(1996 年)</h3><ul>
+<li>任意数据类型都可以发送</li>
+<li>有 GET、POST、HEAD 三种方法</li>
+<li>无法复用 TCP 连接(长连接)</li>
+<li>有丰富的请求响应头信息。以 header 中的<code>Last-Modified</code>/<code>If-Modified-Since</code>和<code>Expires</code>作为缓存标识</li>
+</ul>
+<h3 id="HTTP-1-1-1997-年"><a href="#HTTP-1-1-1997-年" class="headerlink" title="HTTP 1.1(1997 年)"></a>HTTP 1.1(1997 年)</h3><ul>
+<li>引入更多的请求方法类型<code>PUT</code>、<code>PATCH</code>、<code>DELETE</code>、<code>OPTIONS</code>、<code>TRACE</code>、<code>CONNECT</code></li>
+<li>引入长连接，就是 TCP 连接默认不关闭，可以被多个请求复用，通过请求头 connection:keep-alive 设置</li>
+<li>引入管道连接机制，可以在同一 TCP 连接里，<code>同时发送</code>多个请求</li>
+<li>强化了缓存管理和控制<code>Cache-Control</code>、<code>ETag</code>/<code>If-None-Match</code></li>
+<li>支持分块响应，断点续传，利于大文件传输，能过请求头中的<code>Range</code>实现</li>
+<li>使用了<code>虚拟网络</code>，在一台物理服务器上可以存在多个虚拟主机，并且共享一个 IP 地址</li>
+</ul>
+<p><strong>缺点</strong>：主要是连接缓慢，服务器只能按顺序响应，如果某个请求花了很长时间，就会出现请求队头阻塞</p>
+<p>虽然出了很多优化技巧：为了增加并发请求，做域名拆分、资源合并、精灵图、资源预取…等等</p>
+<p>最终为了推进从协议上进行优化，Google 跳出来，推出<code>SPDY</code>协议</p>
+<h3 id="SPDY-2009-年"><a href="#SPDY-2009-年" class="headerlink" title="SPDY(2009 年)"></a>SPDY(2009 年)</h3><p>SPDY（读作“SPeeDY”）是 Google 开发的基于 TCP 的<code>会话层协议</code></p>
+<p>主要通过帧、多路复用、请求优先级、HTTP 报头压缩、服务器推送以最小化网络延迟，提升网络速度，优化用户的网络使用体验</p>
+<p>原理是在 SSL 层上增加一个 SPDY 会话层，以在一个 TCP 连接中实现并发流。通常的 HTTP GET 和 POST 格式仍然是一样的，然而 SPDY 为编码和传输数据设计了一个新的帧格式。因为流是双向的，所以可以在客户端和服务端启动</p>
+<p>虽然诞生后很快被所有主流浏览器所采用，并且服务器和代理也提供了支持，但是 SPDY 核心人员后来都参加到 HTTP 2.0 开发中去了，自 HTTP2.0 开发完成就不再支持 SPDY 协议了，并在 Chrome 51 中删掉了 SPDY 的支持</p>
+<h3 id="HTTP-2-0-2015-年"><a href="#HTTP-2-0-2015-年" class="headerlink" title="HTTP 2.0(2015 年)"></a>HTTP 2.0(2015 年)</h3><p>说出 http2 中至少三个新特性？</p>
+<ul>
+<li>使用新的<code>二进制协议</code>，不再是纯文本，避免文本歧义，缩小了请求体积</li>
+<li><code>多路复用</code>，同域名下所有通信都是在单链接(双向数据流)完成，提高连接的复用率，在拥塞控制方面有更好的能力提升</li>
+<li>使用<code>HPACK算法将头部压缩</code>，用<code>哈夫曼编码</code>建立索表，传送索引大大节约了带宽</li>
+<li>允许<code>服务端主动推送</code>数据给客户端</li>
+<li>增加了安全性，使用 HTTP 2.0，要求必须至少 TLS 1.2</li>
+<li>使用虚拟的流传输消息，解决了应用层的队头阻塞问题</li>
+</ul>
+<p><strong>缺点</strong></p>
+<ul>
+<li>TCP 以及 TCP+TLS 建立连接的延时，HTTP2 使用 TCP 协议来传输的，而如果使用 HTTPS 的话，还需要 TLS 协议进行安全传输，而使用 TLS 也需要一个握手过程，在传输数据之前，导致我们花掉 3~4 个 RTT</li>
+<li>TCP 的队头阻塞并没有彻底解决。在 HTTP2 中，多个请求跑在一个 TCP 管道中，但当 HTTP2 出现丢包时，整个 TCP 都要开始等待重传，那么就会阻塞该 TCP 连接中的所有请求</li>
+</ul>
+<h3 id="SPDY-和-HTTP2-的区别"><a href="#SPDY-和-HTTP2-的区别" class="headerlink" title="SPDY 和 HTTP2 的区别"></a>SPDY 和 HTTP2 的区别</h3><ul>
+<li>头部压缩算法，SPDY 是通用的<code>deflate算法</code>，HTTP2 是专门为压缩头部设计的<code>HPACK算法</code></li>
+<li>SPDY 必须在<code>TLS上</code>运行，HTTP2 可在<code>TCP</code>上直接使用，因为增加了 HTTP1.1 的 Upgrade 机制</li>
+<li>SPDY 更加完善的协议商讨和确认流程</li>
+<li>SPDY 更加完善的 Server Push 流程</li>
+<li>SPDY 增加控制帧的种类，并对帧的格式考虑的更细致</li>
+</ul>
+<h3 id="HTTP1-和-HTTP2"><a href="#HTTP1-和-HTTP2" class="headerlink" title="HTTP1 和 HTTP2"></a>HTTP1 和 HTTP2</h3><ul>
+<li>HTTP2 是一个<code>二进制协议</code>，HTTP1 是<code>超文本协议</code>，传输的内容都不是一样的</li>
+<li>HTTP2 报头压缩，可以使用 HPACK 进行<code>头部压缩</code>，HTTP1 则不论什么请求都会发送</li>
+<li>HTTP2<code>服务端推送</code>(Server push)，允许服务器预先将网页所需要的资源 push 到浏览器的内存当中</li>
+<li>HTTP2 遵循<code>多路复用</code>，代替同一域名下的内容，只建立一次连接，HTTP1.x 不是，对域名有 6~8 个连接限制</li>
+<li>HTTP2 引入<code>二进制数据帧</code>和<code>流</code>的概念，其中帧对数据进行顺序标识，这样浏览器收到数据之后，就可以按照序列对数据进行合并，而不会出现合并后数据错乱的情况，同样是因为有了序列，服务器就可以并行的传输数据，这就是流所做的事情。HTTP2 对同一域名下所有请求都是基于流的，也就是说同一域名下不管访问多少文件，只建立一次连接</li>
+</ul>
+<h3 id="HTTP-3-0-QUIC"><a href="#HTTP-3-0-QUIC" class="headerlink" title="HTTP 3.0/QUIC"></a>HTTP 3.0/QUIC</h3><p>由于 HTTP 2.0 依赖于 TCP，TCP 有什么问题那 HTTP2 就会有什么问题。最主要的还是队头阻塞，在应用层的问题解决了，可是在 TCP 协议层的队头阻塞还没有解决。</p>
+<p>TCP 在丢包的时候会进行重传，前面有一个包没收到，就只能把后面的包放到缓冲区，应用层是无法取数据的，也就是说 HTTP2 的多路复用并行性对于 TCP 的丢失恢复机制不管用，因此丢失或重新排序的数据都会导致交互挂掉</p>
+<p>为了解决这个问题，Google 又发明了<code>QUIC协议</code></p>
+<p>并在 2018 年 11 月将 QUIC 正式改名为<code>HTTP 3.0</code></p>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>在传输层直接干掉 TCP，用<code>UDP</code>替代</li>
+<li>实现了一套新的<code>拥塞控制算法</code>，彻底解决 TCP 中队头阻塞的问题</li>
+<li>实现了类似 TCP 的<code>流量控制</code>、传输可靠性的功能。虽然 UDP 不提供可靠性的传输，但 QUIC 在 UDP 的基础之上增加了一层来保证数据可靠性传输。它提供了数据包重传、拥塞控制以及其他一些 TCP 中存在的特性</li>
+<li>实现了<code>快速握手</code>功能。由于 QUIC 是基于 UDP 的，所以 QUIC 可以实现使用 0-RTT 或者 1-RTT 来建立连接，这意味着 QUIC 可以用最快的速度来发送和接收数据。</li>
+<li>集成了 TLS 加密功能。目前 QUIC 使用的是 TLS1.3</li>
+</ul>
+<h2 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h2><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/_A3d6Qh1Paws8cuehFXN-A">真！一文搞定 HTTP 和 HTTPS</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2021/10/16/2021-10-16-http-and-https/" title="http和https" target="_blank">https://luckyship.github.io/2021/10/16/2021-10-16-http-and-https/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2021/10/16/2021-10-16-http-and-https/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/10/25/2021-10-25-moudle/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          commonJS、AMD、CMD、UMD、ES6 module
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/10/13/2021-10-13-vscode-i18n/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">vscode项目国际化插件</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Chao Love Yun</title>
+  <link type="text/css" href="chen/word.css" rel="stylesheet">
+<style type="text/css">
+@font-face {
+	font-family: digit;
+	src: url('digital-7_mono.ttf') format("truetype");
+}
+.pic {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: none;
+}
+</style>
+</head>
+
+<body>
+<audio autoplay>
+	<source src="chen/dzq.mp3" type="audio/mp3" />
+</audio>
+
+<div class="pic">
+	<a href="3d.html"><img width="100" height="100" src="photos/p1.jpg" alt=""></a>
+	<a href="horizon.html"><img width="100" height="100" src="photos/p2.jpg" alt=""></a>
+	<a href="nine.html"><img width="100" height="100" src="photos/p3.jpg" alt=""></a>
+	<a href="rotate.html"><img width="100" height="100" src="photos/p4.jpg" alt=""></a>
+</div>
+
+<div id="mainDiv">
+	<div id="content">
+		<div id="code">
+			<span class="space" ></span>
+			<!-- <span class="comments">// 2020—05-23. </span><br /> -->
+			Boy's name = <span class="keyword">X</span>u <span class="keyword">C</span>hao<br />
+			Girl's name = <span class="keyword">Z</span>hang <span class="keyword">Y</span>un <br /><br />
+
+			<span class="comments">// 2020-04-01 </span><br />
+			第一次 <span class="keyword">聊天</span><br />
+			<span class="comments">// 2020-04-03 </span><br />
+			第一次 <span class="keyword">见面</span><br />
+			<span class="comments">// 2020-05-23 </span><br />
+			彼此<span class="keyword">相爱</span><br />
+
+			<span class="comments">// Fall in love river. </span><br />
+			The boy <span class="keyword">love</span> the girl. <br />
+			<span class="comments">// They love each other. </span><br />
+			The girl <span class="keyword">love</span> the boy. <br />
+			<span class="comments">// As time goes by. </span><br />
+			The boy can not be separated the girl. <br />
+			<span class="comments">// At the same time. </span><br />
+			The girl can not be separated the boy. <br />
+			The boy is very <span class="keyword">happy</span>. <br />
+			The girl is also very <span class="keyword">happy</span>. <br />
+			<span class="comments">// Whether it is right now. </span><br />
+			<span class="comments">// Still in the distant future. </span><br />
+			The boy has but one <span class="keyword">dream</span>. <br />
+			<span class="comments">// The boy wants the girl could well have been happy. </span><br />
+			<br /> <br />
+			I want to say: <br />
+		</div>
+		<div id="loveHeart">
+			<canvas id="garden"></canvas>
+			<div id="words">
+				<div id="messages">
+					Darling: We have loved for: <br />
+					<div id="elapseClock"></div>
+				</div>
+				<div id="loveu">
+					Baby, love you forever! <br/>
+					<div class="signature">- Xu Chao. </div><br />
+				</div>
+                <!-- <div id="ourPic">
+                	<img src="chen/1.jpg" /><br />
+                </div> -->
+			</div>
+		</div>
+	</div>
+</div>
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="chen/garden.js"></script>
+<script type="text/javascript" src="chen/functions.js"></script>
+<script type="text/javascript">
+var offsetX = $("#loveHeart").width() / 2;
+var offsetY = $("#loveHeart").height() / 2 - 55;
+var together = new Date();
+together.setFullYear(2020, 4, 23);/*月份0-11*/
+together.setHours(0);
+together.setMinutes(0);
+together.setSeconds(0);
+together.setMilliseconds(0);
+setTimeout(() => {
+	$('.pic').show();
+}, 5000);
+
+if (!document.createElement('canvas').getContext) {
+	var msg = document.createElement("div");
+	msg.id = "errorMsg";
+	msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+	document.body.appendChild(msg);
+	$("#code").css("display", "none")
+	$("#copyright").css("position", "absolute");
+	$("#copyright").css("bottom", "10px");
+	document.execCommand("stop");
+} else {
+	setTimeout(function () {
+		startHeartAnimation();
+	}, 5000);
+
+	timeElapse(together);
+	setInterval(function () {
+		timeElapse(together);
+	}, 1000);
+
+	adjustCodePosition();
+	$("#code").typewriter();
+}
+</script>
+</body>
+</html>

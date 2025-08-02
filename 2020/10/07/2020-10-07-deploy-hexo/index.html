@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>使用hexo在github上搭建博客 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="hexo搭建博客流程，开发过程介绍.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用hexo在github上搭建博客">
+<meta property="og:url" content="https://luckyship.github.io/2020/10/07/2020-10-07-deploy-hexo/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="hexo搭建博客流程，开发过程介绍.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.173Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">部署应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">开发应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="toc-number">3.1.</span> <span class="toc-text">修改主题代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0md%E6%96%87%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">添加md文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E8%87%B3github"><span class="toc-number">3.3.</span> <span class="toc-text">上传至github</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">修改代码高亮配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Highlight-js"><span class="toc-number">4.1.</span> <span class="toc-text">Highlight.js</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#auto-detect"><span class="toc-number">4.1.1.</span> <span class="toc-text">auto_detect</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#line-number"><span class="toc-number">4.1.2.</span> <span class="toc-text">line_number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tab-replace"><span class="toc-number">4.1.3.</span> <span class="toc-text">tab_replace</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wrap"><span class="toc-number">4.1.4.</span> <span class="toc-text">wrap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hljs"><span class="toc-number">4.1.5.</span> <span class="toc-text">hljs</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PrismJS"><span class="toc-number">4.2.</span> <span class="toc-text">PrismJS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#preprocess"><span class="toc-number">4.2.1.</span> <span class="toc-text">preprocess</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#line-number-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">line_number</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tab-replace-1"><span class="toc-number">4.2.3.</span> <span class="toc-text">tab_replace</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.3.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8F%82%E8%80%83"><span class="toc-number">4.3.1.</span> <span class="toc-text">其他参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD"><span class="toc-number">5.</span> <span class="toc-text">实现搜索功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90-content-json-%E6%96%87%E4%BB%B6"><span class="toc-number">5.1.</span> <span class="toc-text">配置生成 content.json 文件</span></a></li></ol></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2020-10-07-deploy-hexo" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      使用hexo在github上搭建博客
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2020/10/07/2020-10-07-deploy-hexo/" class="archive-article-date">
+  <!-- <time datetime="2020-10-06T16:00:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-07</time>
+        <time datetime="2025-08-02T05:46:04.173Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.173Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2020-10-07
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.9k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ul>
+<li>npm &gt;= 6.14.8</li>
+<li>hexo &gt;= 4.2.0</li>
+<li>hexo主题<a target="_blank" rel="noopener" href="https://github.com/luckyship/myblog.git">yilia</a></li>
+</ul>
+<h2 id="部署应用"><a href="#部署应用" class="headerlink" title="部署应用"></a>部署应用</h2><p>创建目录 <code>hexo</code> ，进入目录，执行命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo init<br>$ <span class="hljs-built_in">ls</span><br>_config.yml  node_modules/  package-lock.json  scaffolds/  themes/<br>db.json      package.json   public/            <span class="hljs-built_in">source</span>/<br></code></pre></td></tr></table></figure>
+
+<p>修改 <code>_config.yml</code> ，将其中的 <code>theme</code> 字段修改为 <code>lucky</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> _config.yml<br>theme: lucky<br></code></pre></td></tr></table></figure>
+
+<p>进入 <code>themes</code> 目录，克隆hexo主题仓库（注意名字为theme字段的修改值）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">clone</span> https://github.com/luckyship/myblog.git ./lucky<br></code></pre></td></tr></table></figure>
+
+<p>退回hexo主目录，执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">hexo generate<br>hexo sever<br></code></pre></td></tr></table></figure>
+
+<p>即可看到web服务已经启动，端口默认为4000，访问 <code>localhost:4000</code> 即可</p>
+<h2 id="开发应用"><a href="#开发应用" class="headerlink" title="开发应用"></a>开发应用</h2><h3 id="修改主题代码"><a href="#修改主题代码" class="headerlink" title="修改主题代码"></a>修改主题代码</h3><p>例如 <code>css, js, html</code> 等，需要重新打包主题代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ npm run dev<br></code></pre></td></tr></table></figure>
+
+<p>再清除hexo缓存，重新打包到hexo上</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo c // 清除所有缓存<br>$ hexo g // 打包格式化md文件<br>$ hexo s // 本地环境<br></code></pre></td></tr></table></figure>
+
+<h3 id="添加md文件"><a href="#添加md文件" class="headerlink" title="添加md文件"></a>添加md文件</h3><p>添加的文件可以实时显现到web上</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo s -g --debug<br></code></pre></td></tr></table></figure>
+
+<h3 id="上传至github"><a href="#上传至github" class="headerlink" title="上传至github"></a>上传至github</h3><p>安装包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install hexo-deployer-git --save<br></code></pre></td></tr></table></figure>
+
+<p>在 <code>_config.yml</code> 中添加</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">deploy:</span><br>  <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>  <span class="hljs-attr">repo:</span> <span class="hljs-string">git@github.com:luckyship/luckyship.github.io.git</span><br>  <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br>  <span class="hljs-attr">message:</span> <span class="hljs-string">&#x27;collect new post&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>执行命令， <code>deploy</code> 上传的每次 <code>generate</code> 过后的文件，所以上传之前需要 <code>generate</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ hexo g<br>$ hexo deploy<br></code></pre></td></tr></table></figure>
+
+<h2 id="修改代码高亮配置"><a href="#修改代码高亮配置" class="headerlink" title="修改代码高亮配置"></a>修改代码高亮配置</h2><h3 id="Highlight-js"><a href="#Highlight-js" class="headerlink" title="Highlight.js"></a>Highlight.js</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># _config.yml</span><br><span class="hljs-attr">highlight:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">auto_detect:</span> <span class="hljs-literal">false</span><br>  <span class="hljs-attr">line_number:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">tab_replace:</span> <span class="hljs-string">&#x27;  &#x27;</span><br>  <span class="hljs-attr">wrap:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">hljs:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">prismjs:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">false</span><br></code></pre></td></tr></table></figure>
+
+<p>highlight.js 默认开启，用作 Hexo 的服务端高亮组件。如果你需要在浏览器端运行 highlight.js，请把它关闭。</p>
+<blockquote>
+<p>「服务端高亮」指语法高亮在 hexo generate 或 hexo server 时完成。</p>
+</blockquote>
+<h4 id="auto-detect"><a href="#auto-detect" class="headerlink" title="auto_detect"></a>auto_detect</h4><p>auto_detect 是 highlight.js 的特性，能够自动检测代码块的语言。</p>
+<blockquote>
+<p>提示：如果你想使用「子语言高亮」功能（例如在高亮 HTML 时同时高亮内部嵌入的 JavaScript 代码），请开启 auto_detect，并且在文章中插入代码块时不要标注语言。<br>警告！auto_detect 十分耗费资源。 如果你不需要使用「子语言高亮」功能，或者不介意在书写代码块时标记语言，请不要启用此功能。</p>
+</blockquote>
+<h4 id="line-number"><a href="#line-number" class="headerlink" title="line_number"></a>line_number</h4><p>highlight.js 不支持行号显示。<br>Hexo 通过用 <code>&lt;figure&gt;</code> 和 <code>&lt;table&gt;</code> 包裹其代码块为其添加了行号显示支持:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">figure</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;highlight yaml&quot;</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">table</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tbody</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;gutter&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;line&quot;</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">td</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;code&quot;</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;line&quot;</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;attr&quot;</span>&gt;</span>hello:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;string&quot;</span>&gt;</span>hexo<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tbody</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">figure</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>这不是 highlight.js 的行为，因此需要为 <code>&lt;figure&gt;</code> 和 <code>&lt;table&gt;</code> 添加自定义 CSS 代码。部分主题对此提供内建支持。<br>你大概也注意到了，所有代码块的 class 都没有 hljs- 前缀</p>
+<h4 id="tab-replace"><a href="#tab-replace" class="headerlink" title="tab_replace"></a>tab_replace</h4><p>用代码内的 tab (\t) 替换为给定值，默认值是两个空格。</p>
+<h4 id="wrap"><a href="#wrap" class="headerlink" title="wrap"></a>wrap</h4><p>为了支持行号显示，Hexo 将输出包裹在了 <code>&lt;figure&gt;</code> 和 <code>&lt;table&gt;</code> 内部。如果要保持 highlight.js 原来的行为，你需要将 line_number 和 wrap 全部关闭。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">code</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yaml&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;comment&quot;</span>&gt;</span># _config.yml<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;attr&quot;</span>&gt;</span>hexo:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;string&quot;</span>&gt;</span>hexo<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>警告！因为 line_number 功能依赖 wrap，你无法在配置中关闭 wrap 而又开启 line_number。如果你将 line_number 设置为 true 的话，wrap 将被自动开启。</p>
+</blockquote>
+<h4 id="hljs"><a href="#hljs" class="headerlink" title="hljs"></a>hljs</h4><p>当 hljs 设置为 true 时，所有代码块的 HTML 输出均会给 class 添加 hljs- 前缀（无论 wrap 是否开启）：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">pre</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">code</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;yaml hljs&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hljs-comment&quot;</span>&gt;</span># _config.yml<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hljs-attr&quot;</span>&gt;</span>hexo:<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;hljs-string&quot;</span>&gt;</span>hexo<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">code</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">pre</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>去 <code>highlight</code> 官网去使用官方的主题，复制其中的css到自己的代码中<br><a target="_blank" rel="noopener" href="https://highlightjs.org/">hightlight</a></p>
+<blockquote>
+<p>提示：当 line_number 和 wrap 为 false，hljs 为 true 的时候，你可以在站点上直接应用 highlight.js 的主题_blank。</p>
+</blockquote>
+<h3 id="PrismJS"><a href="#PrismJS" class="headerlink" title="PrismJS"></a>PrismJS</h3><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-comment"># _config.yml</span><br><span class="hljs-attr">highlight:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">false</span><br><span class="hljs-attr">prismjs:</span><br>  <span class="hljs-attr">enable:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">preprocess:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">line_number:</span> <span class="hljs-literal">true</span><br>  <span class="hljs-attr">tab_replace:</span> <span class="hljs-string">&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>PrismJS 默认禁用。启用 PrimeJS 前应设置 highlight.enable 为 false。</p>
+<h4 id="preprocess"><a href="#preprocess" class="headerlink" title="preprocess"></a>preprocess</h4><p>Hexo 内建的 PrismJS 支持浏览器端高亮（preprocess 设置为 false）和服务器端高亮（preprocess 设置为 true）两种方式。</p>
+<p>使用服务器端高亮时（preprocess 设置为 true），只需要在站点引入 Prismjs 的主题（CSS 样式表）即可；而使用浏览器端高亮时（preprocess 设置为 false），需要将 JavaScript 文件也引入。</p>
+<p>PrismJS 主要是面向浏览器的。因此，在服务器端高亮模式下只有部分插件可用：</p>
+<ul>
+<li>行号显示：需要引入prism-line-numbers.css，无需引入prism-line-numbers.js。Hexo 将生成其所需的 HTML 代码片段。</li>
+<li>语言显示：当代码块有标注语言时，Hexo 总会添加 data-language 属性。</li>
+<li>Hexo 也支持其它不需要特殊 HTML 代码格式的 PrismJS 插件，不过你需要引入它们的 JavaScript 文件</li>
+</ul>
+<p>preprocess 设置为 false 时所有 primejs 插件均可用，只需额外注意以下几点：</p>
+<ul>
+<li>行号显示：当 preprocess 设置为 false 时，Hexo 不会生成插件所需的 HTML 代码格式。prism-line-numbers.css 和 prism-line-numbers.js均需被引入。</li>
+<li>语言显示：当代码块有标注语言时，Hexo 总会添加 data-language 属性。</li>
+<li>高亮特定行: Hexo 的代码块标签插件和反引号代码块标签插件都支持高亮特定行的语法（即 mark 选项）。当 mark 项被设置时，Hexo 将生成其所需的 HTML 代码格式。</li>
+</ul>
+<h4 id="line-number-1"><a href="#line-number-1" class="headerlink" title="line_number"></a>line_number</h4><p>当 preprocess 与 line_number 均设置为 true 时，只需要引入 prism-line-numbers.css 即可启用行号显示。如果 preprocess 和 line_number 均被关闭，则需要将 prism-line-numbers.css 和 prism-line-numbers.js 都引入才能启用行号显示。</p>
+<h4 id="tab-replace-1"><a href="#tab-replace-1" class="headerlink" title="tab_replace"></a>tab_replace</h4><p>用代码内的 tab (\t) 替换为给定值，默认值是两个空格。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.w3cschool.cn/hexodocument/hexodocument-6m483cn4.html">Hexo 代码高亮</a></p>
+<h4 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h4><p><a target="_blank" rel="noopener" href="https://highlightjs.readthedocs.io/en/latest/">Highlight.js</a><br><a target="_blank" rel="noopener" href="https://prismjs.com/">PrismJS</a><br>Hexo 语法高亮部分的源码可参见：<br><a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-util/blob/master/lib/highlight.js">Highlight.js 工具函数</a><br><a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-util/blob/master/lib/prism.js">PrismJS 工具函数</a><br><a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/blob/master/lib/plugins/tag/code.js">代码块标签插件</a><br><a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/blob/master/lib/plugins/filter/before_post_render/backtick_code_block.js">反引号代码块标签插件</a></p>
+<h2 id="实现搜索功能"><a href="#实现搜索功能" class="headerlink" title="实现搜索功能"></a>实现搜索功能</h2><p>hexo在deploy生成文章的时候，会生成一个content.json的文件，里面保存着所有的文章信息，我们可以在网页加载完毕后，利用ajax请求获得该文件的信息，实现搜索功能</p>
+<h3 id="配置生成-content-json-文件"><a href="#配置生成-content-json-文件" class="headerlink" title="配置生成 content.json 文件"></a>配置生成 <code>content.json</code> 文件</h3><p>在 <code>_config.yaml</code> 中加入 <code>jsonContent</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">jsonContent:</span><br>  <span class="hljs-attr">meta:</span> <span class="hljs-literal">false</span><br>  <span class="hljs-attr">pages:</span> <span class="hljs-literal">false</span><br>  <span class="hljs-attr">posts:</span><br>    <span class="hljs-attr">title:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">date:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">path:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">text:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">raw:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">content:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">slug:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">updated:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">comments:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">link:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">permalink:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">excerpt:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">categories:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">tags:</span> <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<p>参数意义可以<a target="_blank" rel="noopener" href="https://github.com/alexbruno/hexo-generator-json-content">参考</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">meta:</span> &#123;<br>  <span class="hljs-attr">title:</span> <span class="hljs-string">hexo.config.title</span>,<br>  <span class="hljs-attr">subtitle:</span> <span class="hljs-string">hexo.config.subtitle</span>,<br>  <span class="hljs-attr">description:</span> <span class="hljs-string">hexo.config.description</span>,<br>  <span class="hljs-attr">author:</span> <span class="hljs-string">hexo.config.author</span>,<br>  <span class="hljs-attr">url:</span> <span class="hljs-string">hexo.config.url</span><br>&#125;<span class="hljs-string">,</span><br><span class="hljs-attr">pages:</span> [&#123; <span class="hljs-string">//-&gt;</span> <span class="hljs-string">all</span> <span class="hljs-string">pages</span><br>  <span class="hljs-attr">title:</span> <span class="hljs-string">page.title</span>,<br>  <span class="hljs-attr">slug:</span> <span class="hljs-string">page.slug</span>,<br>  <span class="hljs-attr">date:</span> <span class="hljs-string">page.date</span>,<br>  <span class="hljs-attr">updated:</span> <span class="hljs-string">page.updated</span>,<br>  <span class="hljs-attr">comments:</span> <span class="hljs-string">page.comments</span>,<br>  <span class="hljs-attr">permalink:</span> <span class="hljs-string">page.permalink</span>,<br>  <span class="hljs-attr">path:</span> <span class="hljs-string">page.path</span>,<br>  <span class="hljs-attr">excerpt:</span> <span class="hljs-string">page.excerpt</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">text</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">keywords:</span> <span class="hljs-literal">null</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">it</span> <span class="hljs-string">needs</span> <span class="hljs-string">settings</span><br>  <span class="hljs-attr">text:</span> <span class="hljs-string">page.content</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">text</span> <span class="hljs-string">minified</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">raw:</span> <span class="hljs-string">page.raw</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">original</span> <span class="hljs-string">MD</span> <span class="hljs-string">content</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">page.content</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">final</span> <span class="hljs-string">HTML</span> <span class="hljs-string">content</span><br>  <span class="hljs-attr">author:</span> <span class="hljs-string">page.author</span>,<br>  <span class="hljs-attr">categories:</span> [&#123;<br>    <span class="hljs-attr">name:</span> <span class="hljs-string">category.name</span>,<br>    <span class="hljs-attr">slug:</span> <span class="hljs-string">category.slug</span>,<br>    <span class="hljs-attr">permalink:</span> <span class="hljs-string">category.permalink</span><br>  &#125;],<br>  <span class="hljs-attr">tags:</span> [&#123;<br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tag.name</span>,<br>    <span class="hljs-attr">slug:</span> <span class="hljs-string">tag.slug</span>,<br>    <span class="hljs-attr">permalink:</span> <span class="hljs-string">tag.permalink</span><br>  &#125;]<br>&#125;]<span class="hljs-string">,</span><br><span class="hljs-attr">posts:</span> [&#123; <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">published</span> <span class="hljs-string">posts</span><br>  <span class="hljs-attr">title:</span> <span class="hljs-string">post.title</span>,<br>  <span class="hljs-attr">slug:</span> <span class="hljs-string">post.slug</span>,<br>  <span class="hljs-attr">date:</span> <span class="hljs-string">post.date</span>,<br>  <span class="hljs-attr">updated:</span> <span class="hljs-string">post.updated</span>,<br>  <span class="hljs-attr">comments:</span> <span class="hljs-string">post.comments</span>,<br>  <span class="hljs-attr">permalink:</span> <span class="hljs-string">post.permalink</span>,<br>  <span class="hljs-attr">path:</span> <span class="hljs-string">post.path</span>,<br>  <span class="hljs-attr">excerpt:</span> <span class="hljs-string">post.excerpt</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">text</span> <span class="hljs-string">minified</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">description:</span> <span class="hljs-string">post.description</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">text</span> <span class="hljs-string">minified</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">keywords:</span> <span class="hljs-literal">null</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">it</span> <span class="hljs-string">needs</span> <span class="hljs-string">settings</span><br>  <span class="hljs-attr">text:</span> <span class="hljs-string">post.content</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">only</span> <span class="hljs-string">text</span> <span class="hljs-string">minified</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">raw:</span> <span class="hljs-string">post.raw</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">original</span> <span class="hljs-string">MD</span> <span class="hljs-string">content</span><br>  <span class="hljs-attr">content:</span> <span class="hljs-string">post.content</span>, <span class="hljs-string">//-&gt;</span> <span class="hljs-string">final</span> <span class="hljs-string">HTML</span> <span class="hljs-string">content</span><br>  <span class="hljs-attr">author:</span> <span class="hljs-string">post.author</span>,<br>  <span class="hljs-attr">categories:</span> [&#123;<br>    <span class="hljs-attr">name:</span> <span class="hljs-string">category.name</span>,<br>    <span class="hljs-attr">slug:</span> <span class="hljs-string">category.slug</span>,<br>    <span class="hljs-attr">permalink:</span> <span class="hljs-string">category.permalink</span><br>  &#125;],<br>  <span class="hljs-attr">tags:</span> [&#123;<br>    <span class="hljs-attr">name:</span> <span class="hljs-string">tag.name</span>,<br>    <span class="hljs-attr">slug:</span> <span class="hljs-string">tag.slug</span>,<br>    <span class="hljs-attr">permalink:</span> <span class="hljs-string">tag.permalink</span><br>  &#125;]<br>&#125;]<span class="hljs-string">,</span><br><span class="hljs-attr">categories:</span> [&#123; <span class="hljs-string">//-&gt;</span> <span class="hljs-string">Posts</span> <span class="hljs-string">categories</span> <span class="hljs-string">index</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">category.name</span>,<br>  <span class="hljs-attr">slug:</span> <span class="hljs-string">category.slug</span>,<br>  <span class="hljs-attr">permalink:</span> <span class="hljs-string">category.permalink</span><br>&#125;]<span class="hljs-string">,</span><br><span class="hljs-attr">tags:</span> [&#123; <span class="hljs-string">//-&gt;</span> <span class="hljs-string">Posts</span> <span class="hljs-string">tags</span> <span class="hljs-string">index</span> <span class="hljs-string">;)</span><br>  <span class="hljs-attr">name:</span> <span class="hljs-string">tag.name</span>,<br>  <span class="hljs-attr">slug:</span> <span class="hljs-string">tag.slug</span>,<br>  <span class="hljs-attr">permalink:</span> <span class="hljs-string">tag.permalink</span><br>&#125;]<br></code></pre></td></tr></table></figure>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2020/10/07/2020-10-07-deploy-hexo/" title="使用hexo在github上搭建博客" target="_blank">https://luckyship.github.io/2020/10/07/2020-10-07-deploy-hexo/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2020/10/07/2020-10-07-deploy-hexo/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/10/11/2020-10-11-gitee-update-pages-auto/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          gitee pages 自动更新
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/09/30/2020-09-30-hexo-add-article-nav/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">hexo 添加文章导航</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

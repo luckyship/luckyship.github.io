@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>深入理解 React 的 Fiber 架构 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="传统 React 架构的局限性React 最初的架构在处理 UI 更新时采用了同步的、阻塞的方式。即一次更新会从根节点开始递归遍历整棵组件树，直至完成所有组件的渲染。这种方式在处理简单的 UI 时表现良好，但随着应用的复杂性增加，特别是在处理大量节点更新或频繁用户交互时，传统架构暴露出了以下几个主要局限性：  单次渲染时间过长：当组件树较大时，一次完整的渲染更新可能会占用大量的时间，这会导致主线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解 React 的 Fiber 架构">
+<meta property="og:url" content="https://luckyship.github.io/2025/07/06/2025-07-06-react-fiber-node/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="传统 React 架构的局限性React 最初的架构在处理 UI 更新时采用了同步的、阻塞的方式。即一次更新会从根节点开始递归遍历整棵组件树，直至完成所有组件的渲染。这种方式在处理简单的 UI 时表现良好，但随着应用的复杂性增加，特别是在处理大量节点更新或频繁用户交互时，传统架构暴露出了以下几个主要局限性：  单次渲染时间过长：当组件树较大时，一次完整的渲染更新可能会占用大量的时间，这会导致主线程">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/0e195735c8324a6cbb4cdfee5dc1b688~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=OHHxNqkqe9hriAcXT/7g8hjFyOM=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/8c0b4721884c40f4befd0bfa6fcd848e~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=jQzXv54+G1tFheFIVQBcY94WRc4=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/5f0de9b7b0f545e5b9df6b1522cbaff5~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=ZALLUlP0elBZFc1vaxjUS2CmsSw=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/9a8dfaf33d8b4f979261897e7c789526~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=CEQBYr9VQXp2gZZ68P8zsDUVX3o=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/c9f8bd649fc646279124fa28783a0513~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=gLZ7zKHWJ6Hmh0lzrhic5rN+BJM=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/c27e2b79192b4fe3abba419ec91f73ef~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=7FkBWuXPeo8oo94qKW0NSMumWrc=">
+<meta property="og:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/942f1c06c45b4b3783aca8e685b5de34~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=aZZ8feQACa2UQsVGU4Y7ZYwZ0mw=">
+<meta property="article:published_time" content="2025-07-06T11:19:15.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.182Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/0e195735c8324a6cbb4cdfee5dc1b688~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=OHHxNqkqe9hriAcXT/7g8hjFyOM=">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F-React-%E6%9E%B6%E6%9E%84%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">传统 React 架构的局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-Fiber%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">为什么需要 Fiber？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88"><span class="toc-number">2.1.</span> <span class="toc-text">性能瓶颈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E9%97%AE%E9%A2%98"><span class="toc-number">2.2.</span> <span class="toc-text">用户体验问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fiber-%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="toc-number">3.</span> <span class="toc-text">Fiber 的目标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber-%E6%9E%B6%E6%9E%84%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number"></span> <span class="toc-text">Fiber 架构的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Fiber%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是 Fiber？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fiber-%E6%98%AF%E4%B8%80%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">Fiber 是一种数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fiber-%E6%A0%91"><span class="toc-number">3.</span> <span class="toc-text">Fiber 树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fiber-%E6%A0%91%E7%9A%84%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">Fiber 树的创建过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E7%9A%84%E6%9B%B4%E6%96%B0"><span class="toc-number">3.2.</span> <span class="toc-text">树的更新</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E8%B0%83%EF%BC%88Reconciliation%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">协调（Reconciliation）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A7%E7%9A%84%E5%8D%8F%E8%B0%83%E7%AE%97%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">旧的协调算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B0%E7%9A%84%E5%8D%8F%E8%B0%83%E7%AE%97%E6%B3%95%EF%BC%9A%E5%A2%9E%E9%87%8F%E6%B8%B2%E6%9F%93"><span class="toc-number">4.2.</span> <span class="toc-text">新的协调算法：增量渲染</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiber-%E6%9E%B6%E6%9E%84%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-number"></span> <span class="toc-text">Fiber 架构的工作原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BC%93%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">双缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8C%E7%BC%93%E5%AD%98"><span class="toc-number">1.1.</span> <span class="toc-text">什么是双缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8C%E7%BC%93%E5%AD%98-Fiber-%E6%A0%91"><span class="toc-number">1.2.</span> <span class="toc-text">双缓存 Fiber 树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mount-%E6%97%B6"><span class="toc-number">1.3.</span> <span class="toc-text">mount 时</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#update-%E6%97%B6"><span class="toc-number">1.4.</span> <span class="toc-text">update 时</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%88%87%E7%89%87"><span class="toc-number">2.</span> <span class="toc-text">时间切片</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%B6%E9%97%B4%E5%88%87%E7%89%87"><span class="toc-number">2.1.</span> <span class="toc-text">什么是时间切片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7%E8%B0%83%E5%BA%A6"><span class="toc-number">3.</span> <span class="toc-text">优先级调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E4%BC%98%E5%85%88%E7%BA%A7%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="toc-number">3.1.</span> <span class="toc-text">不同优先级的任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="toc-number">3.2.</span> <span class="toc-text">调度器的工作方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#React-Fiber-%E4%B8%8E-Concurrent-Mode"><span class="toc-number"></span> <span class="toc-text">React Fiber 与 Concurrent Mode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Concurrent-Mode"><span class="toc-number">1.</span> <span class="toc-text">什么是 Concurrent Mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Concurrent-Mode-%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8-Fiber"><span class="toc-number">2.</span> <span class="toc-text">Concurrent Mode 如何利用 Fiber</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Concurrent-Mode-%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Concurrent Mode 的实际应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#batchedUpdates"><span class="toc-number">3.1.</span> <span class="toc-text">batchedUpdates</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Suspense"><span class="toc-number">3.2.</span> <span class="toc-text">Suspense</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lazy-Loading"><span class="toc-number">3.3.</span> <span class="toc-text">Lazy Loading</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#useDeferredValue"><span class="toc-number">3.4.</span> <span class="toc-text">useDeferredValue</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number"></span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number"></span> <span class="toc-text">转载</span></a>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2025-07-06-react-fiber-node" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      深入理解 React 的 Fiber 架构
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2025/07/06/2025-07-06-react-fiber-node/" class="archive-article-date">
+  <!-- <time datetime="2025-07-06T11:19:15.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-07-06</time>
+        <time datetime="2025-08-02T05:46:04.182Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.182Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2025-07-06
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.6k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">16分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="传统-React-架构的局限性"><a href="#传统-React-架构的局限性" class="headerlink" title="传统 React 架构的局限性"></a>传统 React 架构的局限性</h3><p>React 最初的架构在处理 UI 更新时采用了同步的、阻塞的方式。即一次更新会从根节点开始递归遍历整棵组件树，直至完成所有组件的渲染。这种方式在处理简单的 UI 时表现良好，但随着应用的复杂性增加，特别是在处理大量节点更新或频繁用户交互时，传统架构暴露出了以下几个主要局限性：</p>
+<ul>
+<li><strong>单次渲染时间过长</strong>：当组件树较大时，一次完整的渲染更新可能会占用大量的时间，这会导致主线程被阻塞，无法响应用户的输入，进而影响用户体验。</li>
+<li><strong>缺乏优先级管理</strong>：传统架构无法根据任务的重要性分配优先级，所有更新一视同仁，这意味着关键任务（如用户输入处理）可能会被不重要的任务（如低优先级的动画或日志更新）阻塞。</li>
+<li><strong>中断和恢复困难</strong>：在传统架构中，一旦开始渲染更新，就无法中途中断并恢复，这使得在处理高优先级任务时非常不灵活。</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="为什么需要-Fiber？"><a href="#为什么需要-Fiber？" class="headerlink" title="为什么需要 Fiber？"></a>为什么需要 Fiber？</h3><p>为了克服传统 React 架构的局限性，React 团队提出了 Fiber 架构。Fiber 是 React 的一种新的协调引擎，它通过将更新过程拆分为多个小任务来解决性能瓶颈和用户体验问题。</p>
+<h4 id="性能瓶颈"><a href="#性能瓶颈" class="headerlink" title="性能瓶颈"></a>性能瓶颈</h4><ul>
+<li><strong>增量渲染</strong>：Fiber 将渲染过程分成多个可以中断的小任务，这样即使组件树非常庞大，每个任务的执行时间也会较短，避免了长时间的阻塞。</li>
+<li><strong>任务分片</strong>：通过任务分片（Time Slicing）技术，Fiber 可以在空闲时间片段内执行渲染任务，从而最大限度地利用浏览器的空闲时间，提升整体性能。</li>
+</ul>
+<h4 id="用户体验问题"><a href="#用户体验问题" class="headerlink" title="用户体验问题"></a>用户体验问题</h4><ul>
+<li><strong>响应性提升</strong>：通过将任务拆分并分配优先级，Fiber 可以确保高优先级的用户交互任务能够尽快得到处理，而不会被低优先级任务阻塞。</li>
+<li><strong>平滑的用户体验</strong>：由于渲染过程可以中断并恢复，Fiber 可以更灵活地处理动画和过渡效果，提供更加平滑的用户体验。</li>
+</ul>
+<h3 id="Fiber-的目标"><a href="#Fiber-的目标" class="headerlink" title="Fiber 的目标"></a>Fiber 的目标</h3><p>React 团队设计 Fiber 架构的主要目标是：</p>
+<ul>
+<li><strong>提升性能</strong>：通过增量渲染和任务分片等技术，显著降低长时间渲染任务对用户体验的影响。</li>
+<li><strong>灵活性和扩展性</strong>：Fiber 架构为未来的新特性和优化奠定了基础，例如 Concurrent Mode 和 Suspense，这些特性能够进一步提升 React 应用的性能和开发体验。</li>
+<li><strong>可维护性和可调试性</strong>：新的架构不仅提升了性能，还改进了 React 内部的代码结构，使得调试和维护更加容易。</li>
+</ul>
+<p>通过引入 Fiber 架构，React 在处理复杂和高频更新场景下的性能和用户体验方面取得了显著进步。接下来，我们将深入探讨 Fiber 的基本概念和工作原理。</p>
+<h2 id="Fiber-架构的基本概念"><a href="#Fiber-架构的基本概念" class="headerlink" title="Fiber 架构的基本概念"></a>Fiber 架构的基本概念</h2><h3 id="什么是-Fiber？"><a href="#什么是-Fiber？" class="headerlink" title="什么是 Fiber？"></a>什么是 Fiber？</h3><p>在 React 中，Fiber 是一种用于描述组件树的数据结构，它代表了一个可中断的、可恢复的渲染任务。传统的渲染过程是递归式的，一旦开始渲染，就无法中断，直到渲染完成或发生错误。而 Fiber 架构将渲染过程分解成多个小任务，使得在渲染过程中可以中断，并且可以根据需要重新调度任务。Fiber 的引入使得 React 应用能够更好地利用浏览器的空闲时间，提升性能和用户体验。</p>
+<h3 id="Fiber-是一种数据结构"><a href="#Fiber-是一种数据结构" class="headerlink" title="Fiber 是一种数据结构"></a>Fiber 是一种数据结构</h3><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-attr">stateNode</span>: <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClickCounter</span>(),<br>  <span class="hljs-attr">type</span>: clickCounter,<br>  <span class="hljs-attr">alternate</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">key</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">updateQueue</span>: <span class="hljs-literal">null</span>,<br>  <span class="hljs-attr">memoizedstate</span>: &#123; <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> &#125;,<br>  <span class="hljs-attr">pendingProps</span>: &#123;&#125;,<br>  <span class="hljs-attr">memoizedProps</span>: &#123;&#125;,<br>  <span class="hljs-attr">tag</span>: <span class="hljs-number">1</span>,<br>  <span class="hljs-attr">effectTag</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-attr">nextEffect</span>: <span class="hljs-literal">null</span>,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>Fiber 节点是一个 JavaScript 对象，用于描述组件树的结构和状态。每个 Fiber 节点包含了与组件相关的信息，如类型、props、state、效果标记（effect tag）等。Fiber 节点还包含了指向其子节点、兄弟节点和父节点的引用，以构建组件树的层级结构。Fiber 节点的数据结构设计使得 React 能够更高效地管理组件树的更新和渲染过程。</p>
+<h3 id="Fiber-树"><a href="#Fiber-树" class="headerlink" title="Fiber 树"></a>Fiber 树</h3><h4 id="Fiber-树的创建过程"><a href="#Fiber-树的创建过程" class="headerlink" title="Fiber 树的创建过程"></a>Fiber 树的创建过程</h4><p>Fiber 树的创建过程主要包括以下几个步骤：</p>
+<ol>
+<li><strong>根据 JSX 构建虚拟 DOM 树</strong>：React 会根据 JSX 语法构建虚拟 DOM 树，表示整个组件树的结构。</li>
+<li><strong>生成 Fiber 节点</strong>：对于每个虚拟 DOM 节点，React 会生成对应的 Fiber 节点，并建立起 Fiber 树的层级结构。</li>
+<li><strong>执行初次渲染</strong>：React 会从根节点开始递归遍历 Fiber 树，执行组件的生命周期方法和渲染函数，将组件树渲染到 DOM 中。</li>
+</ol>
+<p>Fiber 节点之间通过不同类型的指针（如 child、sibling、return 等）相互连接，构成了 Fiber 树，表示了组件树的结构。</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/0e195735c8324a6cbb4cdfee5dc1b688~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=OHHxNqkqe9hriAcXT/7g8hjFyOM=" alt="Fiber树"></p>
+<p>在 Fiber 架构中，Fiber 树的构建是一个增量的过程，即渲染过程可以在任意时刻中断，并在下一个空闲时间片段内恢复。这种设计使得 React 能够更灵活地处理大型组件树的更新，并且可以根据需要调整更新的优先级。</p>
+<h4 id="树的更新"><a href="#树的更新" class="headerlink" title="树的更新"></a>树的更新</h4><p>更新过程是指在组件状态或属性发生变化时，React 如何更新组件树以反映这些变化。树的协调和更新过程主要包括以下几个步骤：</p>
+<ol>
+<li><strong>触发更新</strong>：当组件的状态或属性发生变化时，React 会调用相应的更新函数，标记组件为需要更新状态。</li>
+<li><strong>生成新的虚拟 DOM 树</strong>：React 会根据新的状态或属性生成一棵新的虚拟 DOM 树，表示组件树的更新后状态。</li>
+<li><strong>协调新旧树</strong>：React 使用协调算法比较新旧两棵虚拟 DOM 树的差异，找出需要更新的部分。</li>
+<li><strong>执行更新</strong>：根据协调算法的结果，React 会更新 Fiber 树的相应节点，执行组件的生命周期方法和渲染函数，将更新后的组件树渲染到 DOM 中。</li>
+</ol>
+<h3 id="协调（Reconciliation）"><a href="#协调（Reconciliation）" class="headerlink" title="协调（Reconciliation）"></a>协调（Reconciliation）</h3><p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/8c0b4721884c40f4befd0bfa6fcd848e~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=jQzXv54+G1tFheFIVQBcY94WRc4=" alt="reconciliation"></p>
+<p>在 React 中，协调是指确定组件树的更新方式，即如何将新的状态映射到 UI 上。传统的协调算法是递归式的深度优先遍历，即通过递归遍历虚拟 DOM 树来查找需要更新的节点，并进行相应的更新操作。然而，这种算法在处理大型组件树或高频更新时效率较低，可能导致界面卡顿或响应缓慢。</p>
+<h4 id="旧的协调算法"><a href="#旧的协调算法" class="headerlink" title="旧的协调算法"></a>旧的协调算法</h4><p>传统的协调算法采用深度优先遍历虚拟 DOM 树的方式来进行更新。这种算法的问题在于，一旦开始更新，就无法中断，直到所有节点都完成更新或者发生错误。这导致在更新过程中无法处理其他任务，从而影响了用户体验。</p>
+<h4 id="新的协调算法：增量渲染"><a href="#新的协调算法：增量渲染" class="headerlink" title="新的协调算法：增量渲染"></a>新的协调算法：增量渲染</h4><p>为了解决传统协调算法的局限性，React 引入了一种新的协调算法：增量渲染。增量渲染的核心思想是将协调过程分解为多个小任务，并使用任务调度器（Scheduler）来动态地调度这些任务。这种方式使得在更新过程中可以中断，并在下一个空闲时间片段内恢复，从而提高了渲染的灵活性和效率。</p>
+<p>通过增量渲染，React 能够更好地利用浏览器的空闲时间，提升界面的响应速度和用户体验。同时，增量渲染还为 React 引入了一些新的特性，如时间切片（Time Slicing）和任务优先级调度，使得 React 应用能够更好地适应不同的网络环境和设备性能。</p>
+<h2 id="Fiber-架构的工作原理"><a href="#Fiber-架构的工作原理" class="headerlink" title="Fiber 架构的工作原理"></a>Fiber 架构的工作原理</h2><h3 id="双缓存"><a href="#双缓存" class="headerlink" title="双缓存"></a>双缓存</h3><h4 id="什么是双缓存"><a href="#什么是双缓存" class="headerlink" title="什么是双缓存"></a>什么是双缓存</h4><p>在 React 中，双缓存是一种用于解决 UI 渲染过程中闪烁和视觉不连续的技术。传统的渲染过程中，更新操作会直接修改 DOM，导致在更新过程中用户可能会看到中间状态的 UI，造成视觉上的不连续和不稳定。双缓存技术通过在内存中维护两份 UI 状态，一份用于渲染当前帧，另一份用于计算下一帧的状态，从而避免了直接在 DOM 上进行更新操作。</p>
+<h4 id="双缓存-Fiber-树"><a href="#双缓存-Fiber-树" class="headerlink" title="双缓存 Fiber 树"></a>双缓存 Fiber 树</h4><p>在<code>React</code>中最多会同时存在两棵<code>Fiber树</code>。当前屏幕上显示内容对应的<code>Fiber树</code>称为<code>current Fiber树</code>，正在内存中构建的<code>Fiber树</code>称为<code>workInProgress Fiber树</code>。</p>
+<p><code>current Fiber树</code>中的<code>Fiber节点</code>被称为<code>current fiber</code>，<code>workInProgress Fiber树</code>中的<code>Fiber节点</code>被称为<code>workInProgress fiber</code>，他们通过<code>alternate</code>属性连接。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">currentFiber.<span class="hljs-property">alternate</span> === workInProgressFiber;<br>workInProgressFiber.<span class="hljs-property">alternate</span> === currentFiber;<br></code></pre></td></tr></table></figure>
+
+<p><code>React</code>应用的根节点通过使<code>current</code>指针在不同<code>Fiber树</code>的<code>rootFiber</code>间切换来完成<code>current Fiber</code>树指向的切换。</p>
+<p>即当<code>workInProgress Fiber树</code>构建完成交给<code>Renderer</code>渲染在页面上后，应用根节点的<code>current</code>指针指向<code>workInProgress Fiber树</code>，此时<code>workInProgress Fiber树</code>就变为<code>current Fiber树</code>。</p>
+<p>每次状态更新都会产生新的<code>workInProgress Fiber树</code>，通过<code>current</code>与<code>workInProgress</code>的替换，完成<code>DOM</code>更新。</p>
+<p>接下来我们以具体例子讲解<code>mount</code>、<code>update</code>的构建/替换流程。</p>
+<h4 id="mount-时"><a href="#mount-时" class="headerlink" title="mount 时"></a>mount 时</h4><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> [count, add] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br>  <span class="hljs-keyword">return</span> <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;()</span> =&gt;</span> add(count + 1)&#125;&gt;&#123;count&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>;<br>&#125;<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>, <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;root&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li><p>首次创建时</p>
+<p>首次执行<code>ReactDOM.render</code>会创建<code>fiberRootNode</code>（源码中叫<code>fiberRoot</code>）和<code>rootFiber</code>。其中<code>fiberRootNode</code>是整个应用的根节点，<code>rootFiber</code>是<code>&lt;App/&gt;</code>所在组件树的根节点。</p>
+<p>之所以要区分<code>fiberRootNode</code>与<code>rootFiber</code>，是因为在应用中我们可以多次调用<code>ReactDOM.render</code>渲染不同的组件树，他们会拥有不同的<code>rootFiber</code>。但是整个应用的根节点只有一个，那就是<code>fiberRootNode</code>。</p>
+<p><code>fiberRootNode</code>的<code>current</code>会指向当前页面上已渲染内容对应<code>Fiber树</code>，即<code>current Fiber树</code>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fiberRootNode.<span class="hljs-property">current</span> = rootFiber;<br></code></pre></td></tr></table></figure>
+
+<p>由于是首屏渲染，页面中还没有挂载任何<code>DOM</code>，所以<code>fiberRootNode.current</code>指向的<code>rootFiber</code>没有任何<code>子Fiber节点</code>（即<code>current Fiber树</code>为空）。</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/5f0de9b7b0f545e5b9df6b1522cbaff5~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=ZALLUlP0elBZFc1vaxjUS2CmsSw=" alt="1"></p>
+</li>
+<li><p>渲染阶段</p>
+<p>接下来进入 <code>render 阶段</code>，根据组件返回的 <code>JSX</code> 在内存中<code>依次创建 Fiber 节点</code>并<code>连接</code>在一起构建 Fiber 树，被称为 <code>workInProgress Fiber 树</code> 。</p>
+<p>在构建 workInProgress Fiber 树时会<code>尝试复用</code> current Fiber 树中已有的 Fiber 节点内的属性，在首屏渲染时只有 rootFiber 存在对应的 current fiber (即 <code>rootFiber.alternate</code> ) 。</p>
+<p>下图中<code>左侧</code>为页面显示的树，<code>右侧</code>为内存中构建的树：</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/9a8dfaf33d8b4f979261897e7c789526~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=CEQBYr9VQXp2gZZ68P8zsDUVX3o=" alt="2"></p>
+</li>
+<li><p>提交阶段</p>
+<p>已构建完的 <code>workInProgress Fiber 树</code> 在 <code>commit 阶段</code> 渲染到页面。</p>
+<p>此时 DOM 更新为<code>右侧树</code>对应的样子。fiberRootNode 的 current 指针指向 <code>workInProgress Fiber 树</code> 使其变为 <code>current Fiber 树</code> 。</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/c9f8bd649fc646279124fa28783a0513~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=gLZ7zKHWJ6Hmh0lzrhic5rN+BJM=" alt="3"></p>
+</li>
+</ol>
+<h4 id="update-时"><a href="#update-时" class="headerlink" title="update 时"></a>update 时</h4><hr>
+<ol>
+<li><p>点击 div 节点，触发状态改变</p>
+<p>接下来我们点击 div 节点触发状态改变，这会开启一次<code>新的 render 阶段</code>并构建一棵新的 workInProgress Fiber 树。</p>
+<p>和 mount 时一样，workInProgress fiber 的创建可以<code>复用</code> current Fiber 树对应的节点数据。</p>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/c27e2b79192b4fe3abba419ec91f73ef~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=7FkBWuXPeo8oo94qKW0NSMumWrc=" alt="1"></p>
+</li>
+<li><p>渲染之后，提交</p>
+<p>workInProgress Fiber 树在 <code>render 阶段</code> 完成构建后进入 <code>commit 阶段</code> 渲染到页面上。渲染完毕后，workInProgress Fiber 树变为 current Fiber 树。</p>
+</li>
+</ol>
+<p><img src="https://p9-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/942f1c06c45b4b3783aca8e685b5de34~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg5rSe56qd5oqA5pyv:q75.awebp?rk3s=f64ab15b&x-expires=1752100498&x-signature=aZZ8feQACa2UQsVGU4Y7ZYwZ0mw=" alt="2"></p>
+<p>双缓存技术能够有效地解决 UI 渲染过程中的闪烁和不连续问题，提升用户体验和界面稳定性。</p>
+<h3 id="时间切片"><a href="#时间切片" class="headerlink" title="时间切片"></a>时间切片</h3><h4 id="什么是时间切片"><a href="#什么是时间切片" class="headerlink" title="什么是时间切片"></a>什么是时间切片</h4><p>时间切片是一种将任务拆分成多个小片段，在浏览器空闲时间执行的技术。在 React 中，时间切片被用于将渲染任务拆分成多个小任务，并在多个帧之间动态调度执行，以提高页面的响应速度和用户体验。</p>
+<ol>
+<li><strong>任务队列（Task Queue）</strong>: React 将所有的更新操作（如状态更新或属性更改）封装成任务，并放入一个任务队列中。</li>
+<li><strong>执行任务</strong>: React 从任务队列中取出任务并执行。在执行过程中，React 会检查当前任务的执行时间。</li>
+<li><strong>时间检查</strong>: 如果任务的执行时间超过了一个预设的阈值（默认是 5 毫秒），React 会中断当前任务的执行。</li>
+<li><strong>让出线程</strong>: React 使用 <code>MessageChannel</code> 和 <code>postMessage</code> API 来让出执行线程。这意味着浏览器可以在此时处理其他任务，如用户输入或动画。</li>
+<li><strong>继续执行</strong>: 一旦浏览器处理完其他任务，它将通过 <code>onmessage</code> 事件来继续执行之前中断的任务。</li>
+<li><strong>循环执行</strong>: 这个过程会一直重复，直到任务队列中的所有任务都被执行完毕。</li>
+</ol>
+<h3 id="优先级调度"><a href="#优先级调度" class="headerlink" title="优先级调度"></a>优先级调度</h3><h4 id="不同优先级的任务"><a href="#不同优先级的任务" class="headerlink" title="不同优先级的任务"></a>不同优先级的任务</h4><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 无优先级任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">NoPriority</span> = <span class="hljs-number">0</span>;<br><span class="hljs-comment">// 立即执行任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">ImmediatePriority</span> = <span class="hljs-number">1</span>;<br><span class="hljs-comment">// 用户阻塞任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">UserBlockingPriority</span> = <span class="hljs-number">2</span>;<br><span class="hljs-comment">// 正常任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">NormalPriority</span> = <span class="hljs-number">3</span>;<br><span class="hljs-comment">// 低优先级任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">LowPriority</span> = <span class="hljs-number">4</span>;<br><span class="hljs-comment">// 空闲执行任务</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title class_">IdlePriority</span> = <span class="hljs-number">5</span>;<br></code></pre></td></tr></table></figure>
+
+<p>在 React 中，任务被划分为不同的优先级，以便根据任务的重要性进行调度。通常情况下，React 将任务分为以下几个优先级：</p>
+<ul>
+<li><strong>同步任务</strong>：最高优先级的任务，通常用于处理用户交互事件和页面加载过程中的同步操作。</li>
+<li><strong>异步任务</strong>：中等优先级的任务，包括普通的更新任务和网络请求等异步操作。</li>
+<li><strong>空闲任务</strong>：最低优先级的任务，通常用于执行一些不紧急的任务，如日志记录或统计信息收集等。</li>
+</ul>
+<h4 id="调度器的工作方式"><a href="#调度器的工作方式" class="headerlink" title="调度器的工作方式"></a>调度器的工作方式</h4><p>调度器是 React 中负责任务调度的核心组件，它根据任务的优先级和类型来动态地安排任务的执行顺序。调度器会监视浏览器的空闲时间，并根据当前任务队列中的任务优先级，决定在何时执行哪些任务。</p>
+<h2 id="React-Fiber-与-Concurrent-Mode"><a href="#React-Fiber-与-Concurrent-Mode" class="headerlink" title="React Fiber 与 Concurrent Mode"></a>React Fiber 与 Concurrent Mode</h2><h3 id="什么是-Concurrent-Mode"><a href="#什么是-Concurrent-Mode" class="headerlink" title="什么是 Concurrent Mode"></a>什么是 Concurrent Mode</h3><p>Concurrent Mode 是 React Fiber 的一项重要特性，它是一种新的渲染模式，旨在提高 React 应用的性能和用户体验。在 Concurrent Mode 下，React 能够在多个优先级任务之间动态地调度执行，使得高优先级任务能够优先得到处理，从而提高了页面的响应速度和用户交互的流畅度。</p>
+<h3 id="Concurrent-Mode-如何利用-Fiber"><a href="#Concurrent-Mode-如何利用-Fiber" class="headerlink" title="Concurrent Mode 如何利用 Fiber"></a>Concurrent Mode 如何利用 Fiber</h3><p>Concurrent Mode 利用了 Fiber 架构的增量渲染和时间切片技术，实现了多优先级任务的动态调度。通过 Fiber 架构，React 能够将渲染任务拆分成多个小任务，并在浏览器空闲时间执行，从而最大限度地利用浏览器的资源，提高了渲染效率和用户体验。</p>
+<h3 id="Concurrent-Mode-的实际应用"><a href="#Concurrent-Mode-的实际应用" class="headerlink" title="Concurrent Mode 的实际应用"></a>Concurrent Mode 的实际应用</h3><h4 id="batchedUpdates"><a href="#batchedUpdates" class="headerlink" title="batchedUpdates"></a>batchedUpdates</h4><p>在 React 的事件处理过程中，如果连续触发多次状态更新，这些更新可能会被智能地合并为单一的更新操作，以避免不必要的渲染。例如，以下代码片段：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// class</span><br><span class="hljs-title function_">onClick</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; <span class="hljs-attr">count</span>: <span class="hljs-number">1</span> &#125;);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; <span class="hljs-attr">flag</span>: <span class="hljs-literal">false</span> &#125;);<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">setState</span>(&#123; <span class="hljs-attr">count</span>: <span class="hljs-number">2</span> &#125;);<br>&#125;<br><br><span class="hljs-comment">// function</span><br><span class="hljs-keyword">const</span> [count, setCount] = <span class="hljs-title function_">useState</span>(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">const</span> [flag, setFlag] = <span class="hljs-title function_">useState</span>(<span class="hljs-literal">false</span>);<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">handleClick</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">setCount</span>(<span class="hljs-function">(<span class="hljs-params">c</span>) =&gt;</span> c + <span class="hljs-number">1</span>); <span class="hljs-comment">// 不会重新render</span><br>  <span class="hljs-title function_">setFlag</span>(<span class="hljs-function">(<span class="hljs-params">f</span>) =&gt;</span> !f); <span class="hljs-comment">// 不会重新render</span><br>  <span class="hljs-comment">//   // 合并后才会 重新render</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>尽管看起来我们进行了三次状态更新，实际上，React 会将这些更新合并，只触发一次组件的重新渲染。这种优化策略被称为 <code>batchedUpdates</code>。</p>
+<p><code>batchedUpdates</code> 在 React 早期版本就已经存在，但其早期实现有一定的局限性，主要是它不能合并那些脱离当前上下文环境的更新。</p>
+<p>在 <code>Concurrent Mode</code> 这种模式下，状态更新的合并不再局限于当前上下文，而是根据更新的优先级来决定是否合并。这意味着，即使更新操作发生在不同的上下文或异步操作中，只要它们的优先级允许，这些更新仍然可以被有效地合并。 这种基于优先级的更新合并策略，不仅提高了应用的响应速度，还使得状态管理更加高效和灵活。</p>
+<h4 id="Suspense"><a href="#Suspense" class="headerlink" title="Suspense"></a>Suspense</h4><p><a href="https://link.juejin.cn/?target=https://react.dev/reference/react/Suspense%23" title="https://react.dev/reference/react/Suspense#">Suspense</a> 是一种用于在组件树中等待异步加载内容的机制，能够在数据加载完成之前显示占位符或 loading 界面，从而提高用户体验。</p>
+<h4 id="Lazy-Loading"><a href="#Lazy-Loading" class="headerlink" title="Lazy Loading"></a>Lazy Loading</h4><p><a href="https://link.juejin.cn/?target=https://react.dev/reference/react/lazy%23" title="https://react.dev/reference/react/lazy#">Lazy Loading</a> 是一种延迟加载组件或资源的技术，能够提高页面的加载速度和响应速度，减少初次加载时的资源占用和等待时间。</p>
+<h4 id="useDeferredValue"><a href="#useDeferredValue" class="headerlink" title="useDeferredValue"></a>useDeferredValue</h4><p><a href="https://link.juejin.cn/?target=https://react.dev/reference/react/useDeferredValue" title="https://react.dev/reference/react/useDeferredValue">useDeferredValue</a>是一个 React Hook，返回一个延后更新的值。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> deferredValue = <span class="hljs-title function_">useDeferredValue</span>(value);<br></code></pre></td></tr></table></figure>
+
+<p>在<code>useDeferredValue</code>内部会调用<code>useState</code>并触发一次<code>更新</code>。</p>
+<p>这次<code>更新</code>的<code>优先级</code>很低，所以当前如果有正在进行中的<code>更新</code>，不会受<code>useDeferredValue</code>产生的<code>更新</code>影响。所以<code>useDeferredValue</code>能够返回延迟的值。</p>
+<p>Concurrent Mode 还提供了一种优雅降级的机制，用于处理低优先级任务无法立即执行的情况。在任务无法立即执行时，Concurrent Mode 能够自动调整任务的优先级，保证高优先级任务能够得到及时处理，从而避免页面加载和渲染的阻塞，提高用户体验的稳定性和流畅度。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>Fiber 架构作为 React 的核心架构之一，为 React 应用的性能和用户体验带来了重大改进和优势：</p>
+<ul>
+<li><strong>增量渲染和时间切片</strong>：Fiber 架构通过增量渲染和时间切片技术，将渲染任务拆分成多个小任务，在浏览器空闲时间执行，提高了页面的响应速度和用户交互的流畅度。</li>
+<li><strong>优先级调度</strong>：Fiber 架构根据任务的优先级动态调度任务的执行顺序，确保高优先级任务能够优先得到处理，提高了系统的响应速度和稳定性。</li>
+<li><strong>Concurrent Mode 和 Suspense</strong>：Concurrent Mode 和 Suspense 是 Fiber 架构的重要特性，能够提高页面加载速度和性能表现，优化用户的交互体验。</li>
+</ul>
+<h2 id="转载"><a href="#转载" class="headerlink" title="转载"></a><a target="_blank" rel="noopener" href="https://juejin.cn/post/7395079370795663414?searchId=2025070618443745F8DF1C195D10191417#heading-17">转载</a></h2>
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2025/07/06/2025-07-06-react-fiber-node/" title="深入理解 React 的 Fiber 架构" target="_blank">https://luckyship.github.io/2025/07/06/2025-07-06-react-fiber-node/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2025/07/06/2025-07-06-react-fiber-node/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2025/07/12/2025-07-12-angular-signal/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          angular 最新状态变更检测 signal
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/07/06/2025-07-06-js-string/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">为什么 JavaScript 中 `&#39;str&#39;` 不是对象，却能调用方法？</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

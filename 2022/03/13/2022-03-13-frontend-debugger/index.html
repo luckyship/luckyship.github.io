@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>前端debugger技巧 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="导言开发环境 debug 是每个程序员上岗的必备技能。生产环境呢？虽然生产环境 debug 是一件非常不优雅的行为，但是由于种种原因，我们又不得不这么干。 那我们今天讲一讲如何使用 chrome 在生产环境进行 debug 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端debugger技巧">
+<meta property="og:url" content="https://luckyship.github.io/2022/03/13/2022-03-13-frontend-debugger/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="导言开发环境 debug 是每个程序员上岗的必备技能。生产环境呢？虽然生产环境 debug 是一件非常不优雅的行为，但是由于种种原因，我们又不得不这么干。 那我们今天讲一讲如何使用 chrome 在生产环境进行 debug 。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/demo.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/source-map.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/format.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/source-map-debugger.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/source-map-file.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/source-map-file2.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/source-page.jpg">
+<meta property="article:published_time" content="2022-03-13T13:26:16.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.179Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyship.github.io/img/2022-03-13-frontend-debugger/demo.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">导言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83-debug-%E6%AD%A5%E9%AA%A4"><span class="toc-number"></span> <span class="toc-text">生产环境 debug 步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E9%94%99%E8%AF%AF%E6%98%AF%E5%89%8D%E7%AB%AF%E8%BF%98%E6%98%AF%E5%90%8E%E7%AB%AF%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E7%9A%84%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何快速定位错误是前端还是后端接口返回的？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E6%A0%B9%E6%8D%AE%E5%AF%B9%E4%BB%A3%E7%A0%81%E7%9A%84%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%BA%86%E8%A7%A3%EF%BC%8C%E5%88%A4%E6%96%AD%E6%8A%A5%E9%94%99%E5%B1%9E%E4%BA%8E%E5%89%8D%E7%AB%AF%E8%BF%98%E6%98%AF%E5%90%8E%E7%AB%AF%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">方案一：根据对代码的实现的了解，判断报错属于前端还是后端。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9A%E5%89%8D%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%85%A8%E5%B1%80%E6%90%9C%E7%B4%A2%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%8C%E5%B7%A5%E7%A8%8B%E4%BB%A3%E7%A0%81%E9%87%8C%E6%90%9C%E7%B4%A2-%E6%8E%A7%E5%88%B6%E5%8F%B0%E6%89%93%E5%BC%80%E6%90%9C%E7%B4%A2%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">方案二：前端代码全局搜索关键字，工程代码里搜索&#x2F;控制台打开搜索。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%89%EF%BC%9A%E7%BF%BB%E9%98%85-network-%E9%9D%A2%E6%9D%BF%E4%B8%AD%E7%9A%84%E8%AF%B7%E6%B1%82%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">方案三：翻阅 network 面板中的请求。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E5%9B%9B%EF%BC%9A%E4%BD%BF%E7%94%A8-network-search-%E8%BF%9B%E8%A1%8C%E6%90%9C%E7%B4%A2%E3%80%82"><span class="toc-number">4.</span> <span class="toc-text">方案四：使用 network search 进行搜索。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%BF%AB%E9%80%9F%E5%AE%9A%E4%BD%8D%E5%88%B0%E9%97%AE%E9%A2%98%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number"></span> <span class="toc-text">如何快速定位到问题相关的代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#global-search-%EF%BC%8C%E5%85%A8%E5%B1%80%E6%90%9C%E7%B4%A0%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%8C%E5%86%8D%E5%AE%9A%E4%BD%8D%E5%88%B0%E5%85%B3%E9%94%AE%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">global search ，全局搜素关键字，再定位到关键的代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95-debug-%E6%B7%B7%E6%B7%86%E5%90%8E%E7%9A%84-js-%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何 debug 混淆后的 js ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0-sourceMap-%E8%B0%83%E8%AF%95%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何在生产环境使用本地 sourceMap 调试？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8-chrome-%E4%B8%AD%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%B9%B6%E8%B0%83%E8%AF%95%EF%BC%9F"><span class="toc-number"></span> <span class="toc-text">如何在 chrome 中修改代码并调试？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#local-overrides-%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">local overrides 如何工作的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#local-overrides-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">local overrides 如何使用？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number"></span> <span class="toc-text">总结</span></a>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2022-03-13-frontend-debugger" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      前端debugger技巧
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2022/03/13/2022-03-13-frontend-debugger/" class="archive-article-date">
+  <!-- <time datetime="2022-03-13T13:26:16.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-03-13</time>
+        <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2022-03-13
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.9k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="导言"><a href="#导言" class="headerlink" title="导言"></a>导言</h3><p>开发环境 debug 是每个程序员上岗的必备技能。生产环境呢？虽然生产环境 debug 是一件非常不优雅的行为，但是由于种种原因，我们又不得不这么干。</p>
+<p>那我们今天讲一讲如何使用 chrome 在生产环境进行 debug 。</p>
+<span id="more"></span>
+
+<h2 id="生产环境-debug-步骤"><a href="#生产环境-debug-步骤" class="headerlink" title="生产环境 debug 步骤"></a>生产环境 debug 步骤</h2><p>生产环境 debug 需要几步？这问题和“把大象装进冰箱拢共分几步”一样简单。</p>
+<p>第一步，把冰箱门打开。F12 打开 devTools；</p>
+<p>第二步，把大象装进冰箱。找到需要 debug 的前端文件，格式化，打断点，调试上下文，定位问题；</p>
+<p>第三步，关闭冰箱门。解决问题。</p>
+<h2 id="如何快速定位错误是前端还是后端接口返回的？"><a href="#如何快速定位错误是前端还是后端接口返回的？" class="headerlink" title="如何快速定位错误是前端还是后端接口返回的？"></a>如何快速定位错误是前端还是后端接口返回的？</h2><p>在把大象装进冰箱之前，先初步判断下，是否真的需要由你将大象装进冰箱。</p>
+<p>首先我们需要判断，错误是前端还是后端报的，那么如何快速判断？</p>
+<h3 id="方案一：根据对代码的实现的了解，判断报错属于前端还是后端。"><a href="#方案一：根据对代码的实现的了解，判断报错属于前端还是后端。" class="headerlink" title="方案一：根据对代码的实现的了解，判断报错属于前端还是后端。"></a>方案一：根据对代码的实现的了解，判断报错属于前端还是后端。</h3><p>这个方案前提是需要你对代码实现很熟悉，也是最简单的方式。</p>
+<h3 id="方案二：前端代码全局搜索关键字，工程代码里搜索-控制台打开搜索。"><a href="#方案二：前端代码全局搜索关键字，工程代码里搜索-控制台打开搜索。" class="headerlink" title="方案二：前端代码全局搜索关键字，工程代码里搜索/控制台打开搜索。"></a>方案二：前端代码全局搜索关键字，工程代码里搜索/控制台打开搜索。</h3><p>对应工程 gitlab 或者 vscode 或者 devTools global search 里去进行全局搜索。</p>
+<h3 id="方案三：翻阅-network-面板中的请求。"><a href="#方案三：翻阅-network-面板中的请求。" class="headerlink" title="方案三：翻阅 network 面板中的请求。"></a>方案三：翻阅 network 面板中的请求。</h3><p>翻阅 network 面板中的请求，看下返回的 <code>response</code> 是否携带错误提示，有则表示后端返回的；如果报错的接口刚好是以非<code>200</code> 的状态返回，或者是由新的操作触发调用接口，我们很快就能查找到对应的接口</p>
+<h3 id="方案四：使用-network-search-进行搜索。"><a href="#方案四：使用-network-search-进行搜索。" class="headerlink" title="方案四：使用 network search 进行搜索。"></a>方案四：使用 network search 进行搜索。</h3><p>但是很多情况，接口业务错误会以 http status  <code>200</code> 的状态码返回，如果此时请求了大量的接口（举个例子：进入页面调用了大量的接口，其中有一个接口返回了错误信息），那么除了逐个翻阅 network 这种低效的方式，chrome devTools 还提供了 network search 面板这种更便捷的方式，可以搜索接口详细信息（包括详细的返回信息），返回匹配结果。</p>
+<p><strong>如何打开 network search 面板？</strong></p>
+<p>在 network 面板中，按快捷键  <code>⌘ + F</code>（Mac）、 <code>CTRL + F</code>（Windows）可呼出 network search 面板。<br>如果确定需要你把大象装进冰箱，那把大象装进冰箱的技巧有哪些？</p>
+<h2 id="如何快速定位到问题相关的代码"><a href="#如何快速定位到问题相关的代码" class="headerlink" title="如何快速定位到问题相关的代码"></a>如何快速定位到问题相关的代码</h2><h3 id="global-search-，全局搜素关键字，再定位到关键的代码"><a href="#global-search-，全局搜素关键字，再定位到关键的代码" class="headerlink" title="global search ，全局搜素关键字，再定位到关键的代码"></a>global search ，全局搜素关键字，再定位到关键的代码</h3><p>chrome devTools 的 global search 是一个非常实用的一个功能，当你不知道需要调试的代码在哪个文件时，当你是一个非常大的系统，引用了很多的资源文件，你可以使用 global search 进行搜索关键字，这个操作会搜索所有加载进来的资源，点击搜索结果，就可以使用 source 面板打开对应的资源文件，然后格式化代码，再然后在当前的文件内 再次搜索关键字，打断点。</p>
+<p><strong>打开 global search 快捷键：</strong></p>
+<p><code>⌘ + ⌥ + F</code> （Mac），<code>CTRL + SHIFT + F</code> （Windows）</p>
+<p>看下图例子，我们随便找个页面根据提示搜索代码：</p>
+<p>可以尝试使用哪些关键字进行搜索：</p>
+<p>(1) 页面存在明确的报错信息，且已经明确该错误文案是写在前端代码中错误信息文案。提示信息在 coding 过程中一般是使用 字符串，压缩混淆过程中一般是不会进行处理的，会保留原文，当然代码打包构建过程中，对代码压缩混淆也可以选择对中文进行 unicode 转码，此时如果关键字是中文，就需要先转码再搜索了。</p>
+<p>(2) 已知相关代码中存在的编译混淆后依然还保留的的关键代码，会向外暴露的方法名；</p>
+<h2 id="如何-debug-混淆后的-js-？"><a href="#如何-debug-混淆后的-js-？" class="headerlink" title="如何 debug 混淆后的 js ？"></a>如何 debug 混淆后的 js ？</h2><p>生产环境的 js 基本上都是混淆过的（点击了解前端代码的压缩混淆 (<a target="_blank" rel="noopener" href="https://todo.com/)%EF%BC%89%EF%BC%8C%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86%E7%9A%84%E4%BC%98%E7%82%B9%E5%B0%B1%E4%B8%8D%E8%B5%98%E8%BF%B0%E4%BA%86%EF%BC%8C%E5%8E%8B%E7%BC%A9%E6%B7%B7%E6%B7%86%E5%90%8E%E9%9A%8F%E4%B9%8B%E6%9D%A5%E7%9A%84%E6%98%AF%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E8%B0%83%E8%AF%95%E7%9A%84%E9%9A%BE%E5%BA%A6%EF%BC%8C%E8%99%BD%E7%84%B6%E9%80%9A%E8%BF%87%E6%89%93%E6%96%AD%E7%82%B9%EF%BC%8C%E5%8B%89%E5%BC%BA%E8%BF%98%E8%83%BD%E7%9C%8B%E7%9A%84%E6%87%82%EF%BC%8C%E4%BD%86%E6%98%AF%E5%B7%B2%E7%BB%8F%E5%BE%88%E5%8F%8D%E4%BA%BA%E7%B1%BB%E4%BA%86%E3%80%82">https://todo.com/)），压缩混淆的优点就不赘述了，压缩混淆后随之来的是生产环境调试的难度，虽然通过打断点，勉强还能看的懂，但是已经很反人类了。</a></p>
+<p>我们用一个最简单的 demo ，对比一下代码生产环境构建编译前后的差距。</p>
+<p>这里选择用 vue-cli 创建了一个最简单的 demo ，看下源代码和编译后的代码。</p>
+<p>源代码：</p>
+<p><img src="/img/2022-03-13-frontend-debugger/demo.jpg" alt="图片"></p>
+<p>构建编译后的代码（此处关闭了 sourceMap ）：</p>
+<p><img src="/img/2022-03-13-frontend-debugger/source-map.jpg" alt="图片"></p>
+<p>这里我们看到构建编译后的代码做了压缩混淆，出现了出现了大量大的 <code>a</code> 、<code>b</code> 、 <code>c</code> 、 <code>d</code> 替换了原有的函数方法名、变量名，编译后的代码已经不是能通过单纯的读代码码能读懂的了。但是我们通过 debug ，大概还是能看得懂。</p>
+<p><img src="/img/2022-03-13-frontend-debugger/format.jpg" alt="图片"></p>
+<p>那么有没有方式使用本地的 sourceMap 调试生产环境的代码？答案当然是有的。</p>
+<p><img src="/img/2022-03-13-frontend-debugger/source-map-debugger.jpg" alt="图片"></p>
+<h2 id="如何在生产环境使用本地-sourceMap-调试？"><a href="#如何在生产环境使用本地-sourceMap-调试？" class="headerlink" title="如何在生产环境使用本地 sourceMap 调试？"></a><strong>如何在生产环境使用本地 sourceMap 调试？</strong></h2><p>第一步：打开混淆代码</p>
+<p>第二步：右键 -&gt; 选择【Add source map】</p>
+<p>第三步：输入本地 sourceMap 的地址（此处需要启用一个静态资源服务，可以使用 http-server (<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/http-server)%EF%BC%89%EF%BC%8C%E5%AE%8C%E6%88%90%E3%80%82%E6%9C%AC%E5%9C%B0%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%EF%BC%8C%E6%B3%A8%E6%84%8F%E9%9C%80%E8%A6%81%E6%89%93%E5%BC%80">https://www.npmjs.com/package/http-server)），完成。本地代码执行构建命令，注意需要打开</a> sourceMap 配置，编译产生出构建后的代码，此时构建后的结果会包含 sourceMap 文件。</p>
+<p><img src="/img/2022-03-13-frontend-debugger/source-map-file.jpg" alt="图片"></p>
+<p><img src="/img/2022-03-13-frontend-debugger/source-map-file2.jpg" alt="图片"></p>
+<p>关联上 sourceMap 后，我们就可以看到 sources -&gt; page 面板上的变化了</p>
+<p><img src="/img/2022-03-13-frontend-debugger/source-page.jpg" alt="图片"></p>
+<h2 id="如何在-chrome-中修改代码并调试？"><a href="#如何在-chrome-中修改代码并调试？" class="headerlink" title="如何在 chrome 中修改代码并调试？"></a>如何在 chrome 中修改代码并调试？</h2><p>开发环境中，我们可以直接在 IDE 中修改代码，代码的变更就直接更新到了浏览器中了。那么生产环境，我们可以直接在 chrome   中修改代码，然后立马看代码修改后的效果吗？</p>
+<p>当然，你想要的 chrome devTools 都有。chrome devTools 提供了 local overrides 能力。</p>
+<h3 id="local-overrides-如何工作的？"><a href="#local-overrides-如何工作的？" class="headerlink" title="local overrides 如何工作的？"></a><strong>local overrides 如何工作的？</strong></h3><p>指定修改后的文件的本地保存目录，当修改完代码保存的时候，就会将修改后的文件保存到你指定的目录目录下，当再次加载页面的时候，对应的文件不再读取网络上的文件，而是读取存储在本地修改过的文件。</p>
+<h3 id="local-overrides-如何使用？"><a href="#local-overrides-如何使用？" class="headerlink" title="local overrides 如何使用？"></a><strong>local overrides 如何使用？</strong></h3><p>首先，打开 sources 下的 overrides 面板；</p>
+<p>然后，点击【select folder overrides】选择修改后的文件存储地址；</p>
+<p>再然后，点击顶部的授权，确认同意；</p>
+<p>最后，我们就可以打开文件修改，修改完成后保存，重新刷新页面后，修改后的代码就被执行到了。</p>
+<p>⚠️ 注意，原 js 文件直接 format 是无法修改的；在代码 format 之前先添加无效代码进行代码变更进行保存，然后再 format 就可以修改</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>chrome 调试技巧远远当然不只这些，以上只是生产环境 debug 的小技巧，祝愿大家用不到，最好的 bug 处理方式当然是事前，在上线前得到就解决；如果真的发生问题，如果做好监控和日志，在问题发生的第一时间发现并解决。</p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2022/03/13/2022-03-13-frontend-debugger/" title="前端debugger技巧" target="_blank">https://luckyship.github.io/2022/03/13/2022-03-13-frontend-debugger/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2022/03/13/2022-03-13-frontend-debugger/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2022/05/01/2022-05-01-typescript-type-of-var/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          typescript中private、public、protected、static、abstract、readonly
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/13/2022-03-13-time-complexity/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法中的时间复杂度</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

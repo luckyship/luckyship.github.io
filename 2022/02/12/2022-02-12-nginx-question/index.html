@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>nginx 问答 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="什么是 Nginx？Nginx 是一个 轻量级&#x2F;高性能的反向代理 Web 服务器，他实现非常高效的反向代理、负载平衡，他可以处理 2-3 万并发连接数，官方监测能支持 5 万并发，现在中国使用 nginx 网站用户有很多，例如：新浪、网易、 腾讯等。 为什么要用 Nginx？跨平台、配置简单、方向代理、高并发连接：处理 2-3 万并发连接数，官方监测能支持 5 万并发，内存消耗小：开启 10 个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx 问答">
+<meta property="og:url" content="https://luckyship.github.io/2022/02/12/2022-02-12-nginx-question/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="什么是 Nginx？Nginx 是一个 轻量级&#x2F;高性能的反向代理 Web 服务器，他实现非常高效的反向代理、负载平衡，他可以处理 2-3 万并发连接数，官方监测能支持 5 万并发，现在中国使用 nginx 网站用户有很多，例如：新浪、网易、 腾讯等。 为什么要用 Nginx？跨平台、配置简单、方向代理、高并发连接：处理 2-3 万并发连接数，官方监测能支持 5 万并发，内存消耗小：开启 10 个">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-12-nginx-question/2.jpg">
+<meta property="og:image" content="https://luckyship.github.io/img/2022-02-12-nginx-question/3.jpg">
+<meta property="article:published_time" content="2022-02-12T11:14:39.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.179Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="review">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyship.github.io/img/2022-02-12-nginx-question/2.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Nginx%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是 Nginx？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-Nginx%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">为什么要用 Nginx？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-Nginx-%E6%80%A7%E8%83%BD%E8%BF%99%E4%B9%88%E9%AB%98%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">为什么 Nginx 性能这么高？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E7%9A%84%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">Nginx 怎么处理请求的？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">什么是正向代理和反向代理？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E2%80%9C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E4%BC%98%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">6.</span> <span class="toc-text">使用“反向代理服务器的优点是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">Nginx 的优缺点？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">Nginx 应用场景？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">Nginx 目录结构有哪些？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-nginx-conf-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B1%9E%E6%80%A7%E6%A8%A1%E5%9D%97"><span class="toc-number">10.</span> <span class="toc-text">Nginx 配置文件 nginx.conf 有哪些属性模块?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90"><span class="toc-number">11.</span> <span class="toc-text">Nginx 静态资源?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%94%A8-Nginx-%E8%A7%A3%E5%86%B3%E5%89%8D%E7%AB%AF%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-number">12.</span> <span class="toc-text">如何用 Nginx 解决前端跨域问题？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE"><span class="toc-number">13.</span> <span class="toc-text">Nginx 虚拟主机怎么配置?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#location-%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">14.</span> <span class="toc-text">location 的作用是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E6%B5%81%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%EF%BC%9F"><span class="toc-number">15.</span> <span class="toc-text">限流怎么做的？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%89%E7%A7%8D%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95"><span class="toc-number">15.1.</span> <span class="toc-text">实现三种限流算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%A1%B6%E6%B5%81%E7%AE%97%E6%B3%95%E5%92%8C%E4%BB%A4%E7%89%8C%E6%A1%B6%E7%AE%97%E6%B3%95%E7%9F%A5%E9%81%93%EF%BC%9F"><span class="toc-number">16.</span> <span class="toc-text">漏桶流算法和令牌桶算法知道？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%EF%BC%9F"><span class="toc-number">17.</span> <span class="toc-text">为什么要做动静分离？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%EF%BC%9F"><span class="toc-number">18.</span> <span class="toc-text">Nginx 怎么做的动静分离？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E7%AE%97%E6%B3%95%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84-%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">19.</span> <span class="toc-text">Nginx 负载均衡的算法怎么实现的?策略有哪些?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BD%AE%E8%AF%A2-%E9%BB%98%E8%AE%A4"><span class="toc-number">19.1.</span> <span class="toc-text">1 轮询(默认)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9D%83%E9%87%8D-weight"><span class="toc-number">19.2.</span> <span class="toc-text">2 权重 weight</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ip-hash-IP-%E7%BB%91%E5%AE%9A"><span class="toc-number">19.3.</span> <span class="toc-text">3 ip_hash( IP 绑定)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-fair-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%8F%92%E4%BB%B6"><span class="toc-number">19.4.</span> <span class="toc-text">4 fair(第三方插件)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81url-hash-%E7%AC%AC%E4%B8%89%E6%96%B9%E6%8F%92%E4%BB%B6"><span class="toc-number">19.5.</span> <span class="toc-text">5、url_hash(第三方插件)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E9%85%8D%E7%BD%AE%E9%AB%98%E5%8F%AF%E7%94%A8%E6%80%A7%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE%EF%BC%9F"><span class="toc-number">20.</span> <span class="toc-text">Nginx 配置高可用性怎么配置？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx-%E6%80%8E%E4%B9%88%E5%88%A4%E6%96%AD%E5%88%AB-IP-%E4%B8%8D%E5%8F%AF%E8%AE%BF%E9%97%AE%EF%BC%9F"><span class="toc-number">21.</span> <span class="toc-text">Nginx 怎么判断别 IP 不可访问？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%99%90%E5%88%B6%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE%EF%BC%9F"><span class="toc-number">22.</span> <span class="toc-text">怎么限制浏览器访问？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rewrite-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">23.</span> <span class="toc-text">Rewrite 全局变量是什么？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number">24.</span> <span class="toc-text">转载</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2022-02-12-nginx-question" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      nginx 问答
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2022/02/12/2022-02-12-nginx-question/" class="archive-article-date">
+  <!-- <time datetime="2022-02-12T11:14:39.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-02-12</time>
+        <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.179Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2022-02-12
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">5k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">18分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="什么是-Nginx？"><a href="#什么是-Nginx？" class="headerlink" title="什么是 Nginx？"></a>什么是 Nginx？</h3><p>Nginx 是一个 轻量级/高性能的反向代理 Web 服务器，他实现非常高效的反向代理、负载平衡，他可以处理 2-3 万并发连接数，官方监测能支持 5 万并发，现在中国使用 nginx 网站用户有很多，例如：新浪、网易、 腾讯等。</p>
+<h3 id="为什么要用-Nginx？"><a href="#为什么要用-Nginx？" class="headerlink" title="为什么要用 Nginx？"></a>为什么要用 Nginx？</h3><p>跨平台、配置简单、方向代理、高并发连接：处理 2-3 万并发连接数，官方监测能支持 5 万并发，内存消耗小：开启 10 个 nginx 才占 150M 内存 ，nginx 处理静态文件好，耗费内存少，</p>
+<p>而且 Nginx 内置的健康检查功能：如果有一个服务器宕机，会做一个健康检查，再发送的请求就不会发送到宕机的服务器了。重新将请求提交到其他的节点上。</p>
+<p>使用 Nginx 的话还能：</p>
+<ul>
+<li>节省宽带：支持 GZIP 压缩，可以添加浏览器本地缓存</li>
+<li>稳定性高：宕机的概率非常小</li>
+<li>接收用户请求是异步的</li>
+</ul>
+<span id="more"></span>
+
+<h3 id="为什么-Nginx-性能这么高？"><a href="#为什么-Nginx-性能这么高？" class="headerlink" title="为什么 Nginx 性能这么高？"></a>为什么 Nginx 性能这么高？</h3><p>因为他的事件处理机制：异步非阻塞事件处理机制：运用了 epoll 模型，提供了一个队列，排队解决</p>
+<h3 id="Nginx-怎么处理请求的？"><a href="#Nginx-怎么处理请求的？" class="headerlink" title="Nginx 怎么处理请求的？"></a>Nginx 怎么处理请求的？</h3><p>nginx 接收一个请求后，首先由 listen 和 server_name 指令匹配 server 模块，再匹配 server 模块里的 location，location 就是实际地址</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">server &#123;                            <br>    <span class="hljs-comment"># 第一个Server区块开始，表示一个独立的虚拟主机站点        </span><br>    listen       80；                      <br>    <span class="hljs-comment"># 提供服务的端口，默认80       </span><br>    server_name  localhost；            <br>    <span class="hljs-comment"># 提供服务的域名主机名        </span><br>    location / &#123;                        <br>        <span class="hljs-comment"># 第一个location区块开始            </span><br>        root   html；               <br>        <span class="hljs-comment"># 站点的根目录，相当于Nginx的安装目录           </span><br>        index  index.html index.htm；        <br>        <span class="hljs-comment"># 默认的首页文件，多个用空格分开        </span><br>    &#125;                          <br>    <span class="hljs-comment"># 第一个location区块结果    </span><br>&#125;           <br></code></pre></td></tr></table></figure>
+
+<h3 id="什么是正向代理和反向代理？"><a href="#什么是正向代理和反向代理？" class="headerlink" title="什么是正向代理和反向代理？"></a>什么是正向代理和反向代理？</h3><ul>
+<li>正向代理就是一个人发送一个请求直接就到达了目标的服务器</li>
+<li>反方代理就是请求统一被 Nginx 接收，nginx 反向代理服务器接收到之后，按照一定的规则分发给了后端的业务处理服务器进行处理了</li>
+</ul>
+<h3 id="使用“反向代理服务器的优点是什么"><a href="#使用“反向代理服务器的优点是什么" class="headerlink" title="使用“反向代理服务器的优点是什么?"></a>使用“反向代理服务器的优点是什么?</h3><p>反向代理服务器可以隐藏源服务器的存在和特征。它充当互联网云和 web 服务器之间的中间层。这对于安全方面来说是很好的，特别是当您使用 web 托管服务时。</p>
+<h3 id="Nginx-的优缺点？"><a href="#Nginx-的优缺点？" class="headerlink" title="Nginx 的优缺点？"></a>Nginx 的优缺点？</h3><p>优点：</p>
+<ul>
+<li>占内存小，可实现高并发连接，处理响应快</li>
+<li>可实现 http 服务器、虚拟主机、方向代理、负载均衡</li>
+<li>Nginx 配置简单</li>
+<li>可以不暴露正式的服务器 IP 地址</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>动态处理差：nginx 处理静态文件好,耗费内存少，但是处理动态页面则很鸡肋，现在一般前端用 nginx 作为反向代理抗住压力，</li>
+</ul>
+<h3 id="Nginx-应用场景？"><a href="#Nginx-应用场景？" class="headerlink" title="Nginx 应用场景？"></a>Nginx 应用场景？</h3><ul>
+<li>http 服务器。Nginx 是一个 http 服务可以独立提供 http 服务。可以做网页静态服务器。</li>
+<li>虚拟主机。可以实现在一台服务器虚拟出多个网站，例如个人网站使用的虚拟机。</li>
+<li>反向代理，负载均衡。当网站的访问量达到一定程度后，单台服务器不能满足用户的请求时，需要用多台服务器集群可以使用 nginx 做反向代理。并且多台服务器可以平均分担负载，不会应为某台服务器负载高宕机而某台服务器闲置的情况。</li>
+<li>nginz 中也可以配置安全管理、比如可以使用 Nginx 搭建 API 接口网关,对每个接口服务进行拦截。</li>
+</ul>
+<h3 id="Nginx-目录结构有哪些？"><a href="#Nginx-目录结构有哪些？" class="headerlink" title="Nginx 目录结构有哪些？"></a>Nginx 目录结构有哪些？</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">[root@localhost ~]# tree /usr/local/nginx<br>/usr/local/nginx<br>├── client_body_temp<br>├── conf                             <span class="hljs-comment"># Nginx所有配置文件的目录</span><br>│   ├── fastcgi.conf                 <span class="hljs-comment"># fastcgi相关参数的配置文件</span><br>│   ├── fastcgi.conf.default         <span class="hljs-comment"># fastcgi.conf的原始备份文件</span><br>│   ├── fastcgi_params               <span class="hljs-comment"># fastcgi的参数文件</span><br>│   ├── fastcgi_params.default<br>│   ├── koi-utf<br>│   ├── koi-win<br>│   ├── mime.types                   <span class="hljs-comment"># 媒体类型</span><br>│   ├── mime.types.default<br>│   ├── nginx.conf                   <span class="hljs-comment"># Nginx主配置文件</span><br>│   ├── nginx.conf.default<br>│   ├── scgi_params                  <span class="hljs-comment"># scgi相关参数文件</span><br>│   ├── scgi_params.default<br>│   ├── uwsgi_params                 <span class="hljs-comment"># uwsgi相关参数文件</span><br>│   ├── uwsgi_params.default<br>│   └── win-utf<br>├── fastcgi_temp                     <span class="hljs-comment"># fastcgi临时数据目录</span><br>├── html                             <span class="hljs-comment"># Nginx默认站点目录</span><br>│   ├── 50x.html                     <span class="hljs-comment"># 错误页面优雅替代显示文件，例如当出现502错误时会调用此页面</span><br>│   └── index.html                   <span class="hljs-comment"># 默认的首页文件</span><br>├── logs                             <span class="hljs-comment"># Nginx日志目录</span><br>│   ├── access.log                   <span class="hljs-comment"># 访问日志文件</span><br>│   ├── error.log                    <span class="hljs-comment"># 错误日志文件</span><br>│   └── nginx.pid                    <span class="hljs-comment"># pid文件，Nginx进程启动后，会把所有进程的ID号写到此文件</span><br>├── proxy_temp                       <span class="hljs-comment"># 临时目录</span><br>├── sbin                             <span class="hljs-comment"># Nginx命令目录</span><br>│   └── nginx                        <span class="hljs-comment"># Nginx的启动命令</span><br>├── scgi_temp                        <span class="hljs-comment"># 临时目录</span><br>└── uwsgi_temp                       <span class="hljs-comment"># 临时目录</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Nginx-配置文件-nginx-conf-有哪些属性模块"><a href="#Nginx-配置文件-nginx-conf-有哪些属性模块" class="headerlink" title="Nginx 配置文件 nginx.conf 有哪些属性模块?"></a>Nginx 配置文件 nginx.conf 有哪些属性模块?</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">orker_processes  1；                            <span class="hljs-comment"># worker进程的数量</span><br>events &#123;                                          <span class="hljs-comment"># 事件区块开始</span><br>    worker_connections  1024；                  <span class="hljs-comment"># 每个worker进程支持的最大连接数</span><br>&#125;                                           <span class="hljs-comment"># 事件区块结束</span><br>http &#123;                                       <span class="hljs-comment"># HTTP区块开始</span><br>    include       mime.types；                     <span class="hljs-comment"># Nginx支持的媒体类型库文件</span><br>    default_type  application/octet-stream；            <span class="hljs-comment"># 默认的媒体类型</span><br>    sendfile        on；                       <span class="hljs-comment"># 开启高效传输模式</span><br>    keepalive_timeout  65；                   <span class="hljs-comment"># 连接超时</span><br>    server &#123;                                    <span class="hljs-comment"># 第一个Server区块开始，表示一个独立的虚拟主机站点</span><br>        listen       80；                          <span class="hljs-comment"># 提供服务的端口，默认80</span><br>        server_name  localhost；                <span class="hljs-comment"># 提供服务的域名主机名</span><br>        location / &#123;                            <span class="hljs-comment"># 第一个location区块开始</span><br>            root   html；                   <span class="hljs-comment"># 站点的根目录，相当于Nginx的安装目录</span><br>            index  index.html index.htm；           <span class="hljs-comment"># 默认的首页文件，多个用空格分开</span><br>        &#125;                                  <span class="hljs-comment"># 第一个location区块结果</span><br>        error_page   500502503504  /50x.html；          <span class="hljs-comment"># 出现对应的http状态码时，使用50x.html回应客户</span><br>        location = /50x.html &#123;                      <span class="hljs-comment"># location区块开始，访问50x.html</span><br>            root   html；                              <span class="hljs-comment"># 指定对应的站点目录为html</span><br>        &#125;<br>    &#125;<br>    ......<br></code></pre></td></tr></table></figure>
+
+<h3 id="Nginx-静态资源"><a href="#Nginx-静态资源" class="headerlink" title="Nginx 静态资源?"></a>Nginx 静态资源?</h3><p>静态资源访问，就是存放在 nginx 的 html 页面，我们可以自己编写</p>
+<h3 id="如何用-Nginx-解决前端跨域问题？"><a href="#如何用-Nginx-解决前端跨域问题？" class="headerlink" title="如何用 Nginx 解决前端跨域问题？"></a>如何用 Nginx 解决前端跨域问题？</h3><p>使用 Nginx 转发请求。把跨域的接口写成调本域的接口，然后将这些接口转发到真正的请求地址。</p>
+<h3 id="Nginx-虚拟主机怎么配置"><a href="#Nginx-虚拟主机怎么配置" class="headerlink" title="Nginx 虚拟主机怎么配置?"></a>Nginx 虚拟主机怎么配置?</h3><p>1、基于域名的虚拟主机，通过域名来区分虚拟主机——应用：外部网站</p>
+<p>2、基于端口的虚拟主机，通过端口来区分虚拟主机——应用：公司内部网站，外部网站的管理后台</p>
+<p>3、基于 ip 的虚拟主机。</p>
+<p><strong>基于虚拟主机配置域名</strong></p>
+<p>需要建立/data/www /data/bbs 目录，windows 本地 hosts 添加虚拟机 ip 地址对应的域名解析；对应域名网站目录下新增 index.html 文件；</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#当客户端访问www.lijie.com,监听端口号为80,直接跳转到data/www目录下文件</span><br>server &#123;<br>    listen       80;<br>    server_name  www.lijie.com;<br>    location / &#123;<br>        root   data/www;<br>        index  index.html index.htm;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">#当客户端访问www.lijie.com,监听端口号为80,直接跳转到data/bbs目录下文件</span><br>server &#123;<br>    listen       80;<br>    server_name  bbs.lijie.com;<br>    location / &#123;<br>        root   data/bbs;<br>        index  index.html index.htm;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>基于端口的虚拟主机</strong></p>
+<p>使用端口来区分，浏览器使用域名或 ip 地址:端口号 访问</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#当客户端访问www.lijie.com,监听端口号为8080,直接跳转到data/www目录下文件</span><br>server &#123;<br>    listen       8080;<br>    server_name  8080.lijie.com;<br>    location / &#123;<br>        root   data/www;<br>        index  index.html index.htm;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">#当客户端访问www.lijie.com,监听端口号为80直接跳转到真实ip服务器地址 127.0.0.1:8080</span><br>server &#123;<br>    listen       80;<br>    server_name  www.lijie.com;<br>    location / &#123;<br>    proxy_pass http://127.0.0.1:8080;<br>            index  index.html index.htm;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="location-的作用是什么？"><a href="#location-的作用是什么？" class="headerlink" title="location 的作用是什么？"></a>location 的作用是什么？</h3><p>location 指令的作用是根据用户请求的 URI 来执行不同的应用，也就是根据用户请求的网站 URL 进行匹配，匹配成功即进行相关的操作。更多面试题，欢迎关注公众号 Java 面试题精选</p>
+<p><strong>location 的语法能说出来吗？</strong></p>
+<p>注意：~ 代表自己输入的英文字母</p>
+<table>
+<thead>
+<tr>
+<th>匹配符</th>
+<th>匹配规则</th>
+<th>优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>=</td>
+<td>精确匹配</td>
+<td>1</td>
+</tr>
+<tr>
+<td>^~</td>
+<td>以某个字符串开头</td>
+<td>2</td>
+</tr>
+<tr>
+<td>~</td>
+<td>区分大小写的正则匹配</td>
+<td>3</td>
+</tr>
+<tr>
+<td>~*</td>
+<td>不区分大小写的正则匹配</td>
+<td>4</td>
+</tr>
+<tr>
+<td>!~</td>
+<td>区分大小写不匹配的正则</td>
+<td>5</td>
+</tr>
+<tr>
+<td>!~*</td>
+<td>不区分大小写不匹配的正则</td>
+<td>6</td>
+</tr>
+<tr>
+<td>/</td>
+<td>通用匹配，任何请求都会匹配到</td>
+<td>7</td>
+</tr>
+</tbody></table>
+<p><strong>Location 正则案例</strong></p>
+<p>示例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#优先级1,精确匹配，根路径</span><br>location =/ &#123;<br>    <span class="hljs-built_in">return</span> 400;<br>&#125;<br><br><span class="hljs-comment">#优先级2,以某个字符串开头,以av开头的，优先匹配这里，区分大小写</span><br>location ^~ /av &#123;<br>    root /data/av/;<br>&#125;<br><br><span class="hljs-comment">#优先级3，区分大小写的正则匹配，匹配/media*****路径</span><br>location ~ /media &#123;<br>        <span class="hljs-built_in">alias</span> /data/static/;<br>&#125;<br><br><span class="hljs-comment">#优先级4 ，不区分大小写的正则匹配，所有的****.jpg|gif|png 都走这里</span><br>location ~* .*\.(jpg|gif|png|js|css)$ &#123;<br>    root  /data/av/;<br>&#125;<br><br><span class="hljs-comment">#优先7，通用匹配</span><br>location / &#123;<br>    <span class="hljs-built_in">return</span> 403;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="限流怎么做的？"><a href="#限流怎么做的？" class="headerlink" title="限流怎么做的？"></a>限流怎么做的？</h3><p>Nginx 限流就是限制用户请求速度，防止服务器受不了</p>
+<p>限流有 3 种</p>
+<ul>
+<li>正常限制访问频率（正常流量）</li>
+<li>突发限制访问频率（突发流量）</li>
+<li>限制并发连接数</li>
+</ul>
+<p>Nginx 的限流都是基于漏桶流算法，底下会说道什么是桶铜流</p>
+<h4 id="实现三种限流算法"><a href="#实现三种限流算法" class="headerlink" title="实现三种限流算法"></a>实现三种限流算法</h4><p><strong>1、正常限制访问频率（正常流量）：</strong></p>
+<p>限制一个用户发送的请求，我 Nginx 多久接收一个请求。</p>
+<p>Nginx 中使用 ngx_http_limit_req_module 模块来限制的访问频率，限制的原理实质是基于漏桶算法原理来实现的。在 nginx.conf 配置文件中可以使用 limit_req_zone 命令及 limit_req 命令限制单个 IP 的请求处理频率。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#定义限流维度，一个用户一分钟一个请求进来，多余的全部漏掉</span><br>limit_req_zone <span class="hljs-variable">$binary_remote_addr</span> zone=one:10m rate=1r/m;<br><br><span class="hljs-comment">#绑定限流维度</span><br>server&#123;<br><br>    location/seckill.html&#123;<br>        limit_req zone=zone;<br>        proxy_pass http://lj_seckill;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>1r/s 代表 1 秒一个请求，1r/m 一分钟接收一个请求， 如果 Nginx 这时还有别人的请求没有处理完，Nginx 就会拒绝处理该用户请求。</p>
+<p><strong>2、突发限制访问频率（突发流量）：</strong></p>
+<p>限制一个用户发送的请求，我 Nginx 多久接收一个。</p>
+<p>上面的配置一定程度可以限制访问频率，但是也存在着一个问题：如果突发流量超出请求被拒绝处理，无法处理活动时候的突发流量，这时候应该如何进一步处理呢？</p>
+<p>Nginx 提供 burst 参数结合 nodelay 参数可以解决流量突发的问题，可以设置能处理的超过设置的请求数外能额外处理的请求数。我们可以将之前的例子添加 burst 参数以及 nodelay 参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#定义限流维度，一个用户一分钟一个请求进来，多余的全部漏掉</span><br>limit_req_zone <span class="hljs-variable">$binary_remote_addr</span> zone=one:10m rate=1r/m;<br><br><span class="hljs-comment">#绑定限流维度</span><br>server&#123;<br><br>    location/seckill.html&#123;<br>        limit_req zone=zone burst=5 nodelay;<br>        proxy_pass http://lj_seckill;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>为什么就多了一个 burst=5 nodelay; 呢，多了这个可以代表 Nginx 对于一个用户的请求会立即处理前五个，多余的就慢慢来落，没有其他用户的请求我就处理你的，有其他的请求的话我 Nginx 就漏掉不接受你的请求</p>
+<p><strong>3、 限制并发连接数</strong></p>
+<p>Nginx 中的 ngx_http_limit_conn_module 模块提供了限制并发连接数的功能，可以使用 limit_conn_zone 指令以及 limit_conn 执行进行配置。接下来我们可以通过一个简单的例子来看下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">http &#123;<br>    limit_conn_zone <span class="hljs-variable">$binary_remote_addr</span> zone=myip:10m;<br>    limit_conn_zone <span class="hljs-variable">$server_name</span> zone=myServerName:10m;<br>&#125;<br><br>server &#123;<br>    location / &#123;<br>        limit_conn myip 10;<br>        limit_conn myServerName 100;<br>        rewrite / http://www.lijie.net permanent;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面配置了单个 IP 同时并发连接数最多只能 10 个连接，并且设置了整个虚拟服务器同时最大并发数最多只能 100 个链接。当然，只有当请求的 header 被服务器处理后，虚拟服务器的连接数才会计数。</p>
+<p>刚才有提到过 Nginx 是基于漏桶算法原理实现的，实际上限流一般都是基于漏桶算法和令牌桶算法实现的。接下来我们来看看两个算法的介绍：</p>
+<h3 id="漏桶流算法和令牌桶算法知道？"><a href="#漏桶流算法和令牌桶算法知道？" class="headerlink" title="漏桶流算法和令牌桶算法知道？"></a>漏桶流算法和令牌桶算法知道？</h3><p><strong>漏桶算法</strong></p>
+<p>漏桶算法是网络世界中流量整形或速率限制时经常使用的一种算法，它的主要目的是控制数据注入到网络的速率，平滑网络上的突发流量。漏桶算法提供了一种机制，通过它，突发流量可以被整形以便为网络提供一个稳定的流量。</p>
+<p>也就是我们刚才所讲的情况。漏桶算法提供的机制实际上就是刚才的案例：突发流量会进入到一个漏桶，漏桶会按照我们定义的速率依次处理请求，如果水流过大也就是突发流量过大就会直接溢出，则多余的请求会被拒绝。所以漏桶算法能控制数据的传输速率。</p>
+<p><img src="/img/2022-02-12-nginx-question/2.jpg" alt="图片"></p>
+<p><strong>令牌桶算法</strong></p>
+<p>令牌桶算法是网络流量整形和速率限制中最常使用的一种算法。典型情况下，令牌桶算法用来控制发送到网络上的数据的数目，并允许突发数据的发送。Google 开源项目 Guava 中的 RateLimiter 使用的就是令牌桶控制算法。</p>
+<p>令牌桶算法的机制如下：存在一个大小固定的令牌桶，会以恒定的速率源源不断产生令牌。如果令牌消耗速率小于生产令牌的速度，令牌就会一直产生直至装满整个令牌桶。更多面试题，欢迎关注公众号 Java 面试题精选</p>
+<p><img src="/img/2022-02-12-nginx-question/3.jpg" alt="图片"></p>
+<h3 id="为什么要做动静分离？"><a href="#为什么要做动静分离？" class="headerlink" title="为什么要做动静分离？"></a>为什么要做动静分离？</h3><ul>
+<li>Nginx 是当下最热的 Web 容器，网站优化的重要点在于静态化网站，网站静态化的关键点则是是动静分离，动静分离是让动态网站里的动态网页根据一定规则把不变的资源和经常变的资源区分开来，动静资源做好了拆分以后，我们则根据静态资源的特点将其做缓存操作。</li>
+<li>让静态的资源只走静态资源服务器，动态的走动态的服务器</li>
+<li>Nginx 的静态处理能力很强，但是动态处理能力不足，因此，在企业中常用动静分离技术。</li>
+<li>对于静态资源比如图片，js，css 等文件，我们则在反向代理服务器 nginx 中进行缓存。这样浏览器在请求一个静态资源时，代理服务器 nginx 就可以直接处理，无需将请求转发给后端服务器 tomcat。</li>
+<li>若用户请求的动态文件，比如 servlet,jsp 则转发给 Tomcat 服务器处理，从而实现动静分离。这也是反向代理服务器的一个重要的作用。</li>
+</ul>
+<h3 id="Nginx-怎么做的动静分离？"><a href="#Nginx-怎么做的动静分离？" class="headerlink" title="Nginx 怎么做的动静分离？"></a>Nginx 怎么做的动静分离？</h3><p>只需要指定路径对应的目录。location/可以使用正则表达式匹配。并指定对应的硬盘中的目录。如下：（操作都是在 Linux 上）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">location /image/ &#123;<br>    root   /usr/local/static/;<br>    autoindex on;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>1.创建目录</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><code class="hljs arduino">mkdir /usr/local/<span class="hljs-type">static</span>/image<br></code></pre></td></tr></table></figure>
+
+<p>2.进入目录</p>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><code class="hljs arduino">cd  /usr/local/<span class="hljs-type">static</span>/image<br></code></pre></td></tr></table></figure>
+
+<p>3.放一张照片上去</p>
+<figure class="highlight"><table><tr><td class="code"><pre><code class="hljs">1.jpg<br></code></pre></td></tr></table></figure>
+
+<p>4.重启 nginx</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">sudo</span> nginx -s reload<br></code></pre></td></tr></table></figure>
+
+<p>打开浏览器 输入 server_name/image/1.jpg 就可以访问该静态图片了</p>
+<h3 id="Nginx-负载均衡的算法怎么实现的-策略有哪些"><a href="#Nginx-负载均衡的算法怎么实现的-策略有哪些" class="headerlink" title="Nginx 负载均衡的算法怎么实现的?策略有哪些?"></a>Nginx 负载均衡的算法怎么实现的?策略有哪些?</h3><p>为了避免服务器崩溃，大家会通过负载均衡的方式来分担服务器压力。将对台服务器组成一个集群，当用户访问时，先访问到一个转发服务器，再由转发服务器将访问分发到压力更小的服务器。</p>
+<p>Nginx 负载均衡实现的策略有以下五种：</p>
+<h4 id="1-轮询-默认"><a href="#1-轮询-默认" class="headerlink" title="1 轮询(默认)"></a>1 轮询(默认)</h4><p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某个服务器宕机，能自动剔除故障系统。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">upstream</span> backserver &#123;  <span class="hljs-attribute">server</span> <span class="hljs-number">192.168.0.12</span>;  <span class="hljs-attribute">server</span> <span class="hljs-number">192.168.0.13</span>; &#125; <br></code></pre></td></tr></table></figure>
+
+<h4 id="2-权重-weight"><a href="#2-权重-weight" class="headerlink" title="2 权重 weight"></a>2 权重 weight</h4><p>weight 的值越大分配</p>
+<p>到的访问概率越高，主要用于后端每台服务器性能不均衡的情况下。其次是为在主从的情况下设置不同的权值，达到合理有效的地利用主机资源。</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><code class="hljs routeros">upstream backserver &#123; <span class="hljs-built_in"> server </span>192.168.0.12 <span class="hljs-attribute">weight</span>=2; <span class="hljs-built_in"> server </span>192.168.0.13 <span class="hljs-attribute">weight</span>=8; &#125; <br></code></pre></td></tr></table></figure>
+
+<p>权重越高，在被访问的概率越大，如上例，分别是 20%，80%。</p>
+<h4 id="3-ip-hash-IP-绑定"><a href="#3-ip-hash-IP-绑定" class="headerlink" title="3 ip_hash( IP 绑定)"></a>3 ip_hash( IP 绑定)</h4><p>每个请求按访问 IP 的哈希结果分配，使来自同一个 IP 的访客固定访问一台后端服务器，并且可以有效解决动态网页存在的 session 共享问题</p>
+<figure class="highlight roboconf"><table><tr><td class="code"><pre><code class="hljs roboconf">upstream backserver &#123;  <span class="hljs-attribute">ip_hash;  server 192.168.0.12</span>:88;  <span class="hljs-attribute">server 192.168.0.13</span>:80; &#125; <br></code></pre></td></tr></table></figure>
+
+<h4 id="4-fair-第三方插件"><a href="#4-fair-第三方插件" class="headerlink" title="4 fair(第三方插件)"></a>4 fair(第三方插件)</h4><p>必须安装 upstream_fair 模块。</p>
+<p>对比 weight、ip_hash 更加智能的负载均衡算法，fair 算法可以根据页面大小和加载时间长短智能地进行负载均衡，响应时间短的优先分配。</p>
+<figure class="highlight axapta"><table><tr><td class="code"><pre><code class="hljs axapta">upstream backserver &#123;  <span class="hljs-keyword">server</span> server1;  <span class="hljs-keyword">server</span> server2;  fair; &#125; <br></code></pre></td></tr></table></figure>
+
+<p>哪个服务器的响应速度快，就将请求分配到那个服务器上。</p>
+<h4 id="5、url-hash-第三方插件"><a href="#5、url-hash-第三方插件" class="headerlink" title="5、url_hash(第三方插件)"></a>5、url_hash(第三方插件)</h4><p>必须安装 Nginx 的 hash 软件包</p>
+<p>按访问 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，可以进一步提高后端缓存服务器的效率。</p>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">upstream</span> backserver &#123;  <span class="hljs-attribute">server</span> squid1:<span class="hljs-number">3128</span>;  <span class="hljs-attribute">server</span> squid2:<span class="hljs-number">3128</span>;  <span class="hljs-attribute">hash</span> <span class="hljs-variable">$request_uri</span>;  <span class="hljs-attribute">hash_method</span> crc32; &#125; <br></code></pre></td></tr></table></figure>
+
+<h3 id="Nginx-配置高可用性怎么配置？"><a href="#Nginx-配置高可用性怎么配置？" class="headerlink" title="Nginx 配置高可用性怎么配置？"></a>Nginx 配置高可用性怎么配置？</h3><p>当上游服务器(真实访问服务器)，一旦出现故障或者是没有及时相应的话，应该直接轮训到下一台服务器，保证服务器的高可用</p>
+<p>Nginx 配置代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">server &#123;<br>        listen       80;<br>        server_name  www.lijie.com;<br>        location / &#123;<br>            <span class="hljs-comment">### 指定上游服务器负载均衡服务器</span><br>            proxy_pass http://backServer;<br>            <span class="hljs-comment">###nginx与上游服务器(真实访问的服务器)超时时间 后端服务器连接的超时时间_发起握手等候响应超时时间</span><br>            proxy_connect_timeout 1s;<br>            <span class="hljs-comment">###nginx发送给上游服务器(真实访问的服务器)超时时间</span><br>            proxy_send_timeout 1s;<br>            <span class="hljs-comment">### nginx接受上游服务器(真实访问的服务器)超时时间</span><br>            proxy_read_timeout 1s;<br>            index  index.html index.htm;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Nginx-怎么判断别-IP-不可访问？"><a href="#Nginx-怎么判断别-IP-不可访问？" class="headerlink" title="Nginx 怎么判断别 IP 不可访问？"></a>Nginx 怎么判断别 IP 不可访问？</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash"> 如果访问的ip地址为192.168.9.115,则返回403if  (<span class="hljs-variable">$remote_addr</span> = 192.168.9.115) &#123;       <span class="hljs-built_in">return</span> 403;  &#125;</span>  <br></code></pre></td></tr></table></figure>
+
+<h3 id="怎么限制浏览器访问？"><a href="#怎么限制浏览器访问？" class="headerlink" title="怎么限制浏览器访问？"></a>怎么限制浏览器访问？</h3><figure class="highlight clean"><table><tr><td class="code"><pre><code class="hljs clean">## 不允许谷歌浏览器访问 如果是谷歌浏览器返回<span class="hljs-number">500</span><span class="hljs-keyword">if</span> ($http_user_agent ~ Chrome) &#123;       return <span class="hljs-number">500</span>;  &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Rewrite-全局变量是什么？"><a href="#Rewrite-全局变量是什么？" class="headerlink" title="Rewrite 全局变量是什么？"></a>Rewrite 全局变量是什么？</h3><figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk">- <span class="hljs-variable">$args</span> ： <span class="hljs-comment">#这个变量等于请求行中的参数，同$query_string</span><br>- <span class="hljs-variable">$content_length</span> ： 请求头中的Content-length字段。<br>- <span class="hljs-variable">$content_type</span> ： 请求头中的Content-Type字段。<br>- <span class="hljs-variable">$document_root</span> ： 当前请求在root指令中指定的值。<br>- <span class="hljs-variable">$host</span> ： 请求主机头字段，否则为服务器名称。<br>- <span class="hljs-variable">$http_user_agent</span> ： 客户端agent信息<br>- <span class="hljs-variable">$http_cookie</span> ： 客户端cookie信息<br>- <span class="hljs-variable">$limit_rate</span> ： 这个变量可以限制连接速率。<br>- <span class="hljs-variable">$request_method</span> ： 客户端请求的动作，通常为GET或POST。<br>- <span class="hljs-variable">$remote_addr</span> ： 客户端的IP地址。<br>- <span class="hljs-variable">$remote_port</span> ： 客户端的端口。<br>- <span class="hljs-variable">$remote_user</span> ： 已经经过Auth Basic Module验证的用户名。<br>- <span class="hljs-variable">$request_filename</span> ： 当前请求的文件路径，由root或alias指令与URI请求生成。<br>- <span class="hljs-variable">$scheme</span> ： HTTP方法（如http，https）。<br>- <span class="hljs-variable">$server_protocol</span> ： 请求使用的协议，通常是HTTP<span class="hljs-regexp">/1.0或HTTP/</span><span class="hljs-number">1.1</span>。<br>- <span class="hljs-variable">$server_addr</span> ： 服务器地址，在完成一次系统调用后可以确定这个值。<br>- <span class="hljs-variable">$server_name</span> ： 服务器名称。<br>- <span class="hljs-variable">$server_port</span> ： 请求到达服务器的端口号。<br>- <span class="hljs-variable">$request_uri</span> ： 包含请求参数的原始URI，不包含主机名，如：”<span class="hljs-regexp">/foo/</span>bar.php?arg=baz”。<br>- <span class="hljs-variable">$uri</span> ： 不带请求参数的当前URI，<span class="hljs-variable">$uri</span>不包含主机名，如”<span class="hljs-regexp">/foo/</span>bar.html”。<br>- <span class="hljs-variable">$document_uri</span> ： 与<span class="hljs-variable">$uri</span>相同<br></code></pre></td></tr></table></figure>
+
+<h3 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzIyNDU2ODA4OQ==&mid=2247484472&idx=1&sn=93903f6677356a739beb92ab8ea1b6fe&chksm=e80db24edf7a3b5831a7a9448697522c7d3e5085174d37e2bd8074f7dcd8bf383619aae18d1f&scene=21#wechat_redirect">盘点那些关于 Nginx 的常考面试题</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2022/02/12/2022-02-12-nginx-question/" title="nginx 问答" target="_blank">https://luckyship.github.io/2022/02/12/2022-02-12-nginx-question/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">nginx</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">review</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2022/02/12/2022-02-12-nginx-question/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2022/02/20/2022-02-20-chrome-extend-develop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          chrome插件开发指南
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/02/12/2022-02-12-nginx-use/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">nginx使用场景</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

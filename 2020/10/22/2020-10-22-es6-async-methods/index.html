@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>es6异步的写法 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="由于有些业务逻辑的有序性，代码需要按顺序执行，这就需要用到异步的操作，es6中提供多种异步操作的方法，例如：promise函数，Generator函数，async函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6异步的写法">
+<meta property="og:url" content="https://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="由于有些业务逻辑的有序性，代码需要按顺序执行，这就需要用到异步的操作，es6中提供多种异步操作的方法，例如：promise函数，Generator函数，async函数">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-22T07:21:00.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.173Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="es6">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Promise"><span class="toc-number">1.</span> <span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.1.</span> <span class="toc-text">注意</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">Generator函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#async%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">async函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%86%85%E7%BD%AE%E6%89%A7%E8%A1%8C%E5%99%A8%E3%80%82"><span class="toc-number">3.1.</span> <span class="toc-text">（1）内置执行器。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%AD%E4%B9%89%E3%80%82"><span class="toc-number">3.2.</span> <span class="toc-text">（2）更好的语义。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E6%9B%B4%E5%B9%BF%E7%9A%84%E9%80%82%E7%94%A8%E6%80%A7%E3%80%82"><span class="toc-number">3.3.</span> <span class="toc-text">（3）更广的适用性。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E8%BF%94%E5%9B%9E%E5%80%BC%E6%98%AF-Promise%E3%80%82"><span class="toc-number">3.4.</span> <span class="toc-text">（4）返回值是 Promise。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96"><span class="toc-number">3.5.</span> <span class="toc-text">Promise对象的状态变化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#await-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.6.</span> <span class="toc-text">await 命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2020-10-22-es6-async-methods" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      es6异步的写法
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2020/10/22/2020-10-22-es6-async-methods/" class="archive-article-date">
+  <!-- <time datetime="2020-10-22T07:21:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-22</time>
+        <time datetime="2025-08-02T05:46:04.173Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.173Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2020-10-22
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">8分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h2><p>新界 <code>promise</code> 对象，在其中写入需要异步的代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> p1 = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">resolve, reject</span>) &#123;<br>  <span class="hljs-comment">//做一些异步操作</span><br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;执行完成Promise&#x27;</span>);<br>    <span class="hljs-title function_">resolve</span>(<span class="hljs-string">&#x27;要返回的数据可以任何数据例如接口返回数据&#x27;</span>);<br>  &#125;, <span class="hljs-number">2000</span>);<br>&#125;);<br>p1.<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data)<br>&#125;);<br><br>执行完成<span class="hljs-title class_">Promise</span><br>要返回的数据可以任何数据例如接口返回数据<br></code></pre></td></tr></table></figure>
+
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>  <span class="hljs-title function_">resolve</span>(<span class="hljs-number">1</span>);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>&#125;).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(r);<br>&#125;);<br><span class="hljs-comment">// 2</span><br><span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码中，调用 <code>resolve(1)</code> 以后，后面的 <code>console.log(2)</code> 还是会执行，并且会首先打印出来。这是因为立即 <code>resolved</code> 的 <code>Promise</code> 是在本轮事件循环的末尾执行，总是晚于本轮循环的同步任务。<br>一般来说，调用 <code>resolve</code> 或 <code>reject</code> 以后， <code>Promise</code> 的使命就完成了，后继操作应该放到 <code>then</code> 方法里面，而不应该直接写在 <code>resolve</code> 或 <code>reject</code> 的后面。所以，最好在它们前面加上 <code>return</code> 语句，这样就不会有意外。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-function">(<span class="hljs-params">resolve, reject</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-number">1</span>);<br>  <span class="hljs-comment">// 后面的语句不会执行</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">2</span>);<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h2 id="Generator函数"><a href="#Generator函数" class="headerlink" title="Generator函数"></a>Generator函数</h2><p>Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span>* <span class="hljs-title function_">helloWorldGenerator</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">yield</span> <span class="hljs-string">&#x27;hello&#x27;</span>;<br>  <span class="hljs-keyword">yield</span> <span class="hljs-string">&#x27;world&#x27;</span>;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;ending&#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码定义了一个 Generator 函数helloWorldGenerator，它内部有两个yield表达式（hello和world），即该函数有三个状态：hello，world 和 return 语句（结束执行）。</p>
+<p>然后，Generator 函数的调用方法与普通函数一样，也是在函数名后面加上一对圆括号。不同的是，调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是一个指向内部状态的指针对象，也就是上一章介绍的遍历器对象（Iterator Object）。</p>
+<p>下一步，必须调用遍历器对象的next方法，使得指针移向下一个状态。也就是说，每次调用next方法，内部指针就从函数头部或上一次停下来的地方开始执行，直到遇到下一个yield表达式（或return语句）为止。换言之，Generator 函数是分段执行的，yield表达式是暂停执行的标记，而next方法可以恢复执行。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">hw.<span class="hljs-title function_">next</span>()<br><span class="hljs-comment">// &#123; value: &#x27;hello&#x27;, done: false &#125;</span><br><br>hw.<span class="hljs-title function_">next</span>()<br><span class="hljs-comment">// &#123; value: &#x27;world&#x27;, done: false &#125;</span><br><br>hw.<span class="hljs-title function_">next</span>()<br><span class="hljs-comment">// &#123; value: &#x27;ending&#x27;, done: true &#125;</span><br><br>hw.<span class="hljs-title function_">next</span>()<br><span class="hljs-comment">// &#123; value: undefined, done: true &#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码一共调用了四次next方法。</p>
+<p>第一次调用， <code>Generator</code> 函数开始执行，直到遇到第一个 <code>yield</code> 表达式为止。 <code>next</code> 方法返回一个对象，它的 <code>value</code> 属性就是当前 <code>yield</code> 表达式的值 <code>hello</code> ， <code>done</code> 属性的值 <code>false</code> ，表示遍历还没有结束。</p>
+<p>第二次调用， <code>Generator</code> 函数从上次 <code>yield</code> 表达式停下的地方，一直执行到下一个 <code>yield</code> 表达式。 <code>next</code> 方法返回的对象的 <code>value</code> 属性就是当前 <code>yield</code> 表达式的值 <code>world</code> ， <code>done</code> 属性的值 <code>false</code> ，表示遍历还没有结束。</p>
+<p>第三次调用， <code>Generator</code> 函数从上次 <code>yield</code> 表达式停下的地方，一直执行到 <code>return</code> 语句（如果没有 <code>return</code> 语句，就执行到函数结束）。 <code>next</code> 方法返回的对象的 <code>value</code> 属性，就是紧跟在 <code>return</code> 语句后面的表达式的值（如果没有 <code>return</code> 语句，则 <code>value</code> 属性的值为 <code>undefined</code> ）， <code>done</code> 属性的值 <code>true</code> ，表示遍历已经结束。</p>
+<p>第四次调用，此时 <code>Generator</code> 函数已经运行完毕， <code>next</code> 方法返回对象的 <code>value</code> 属性为 <code>undefined</code> ， <code>done</code> 属性为 <code>true</code> 。以后再调用 <code>next</code> 方法，返回的都是这个值。</p>
+<p>总结一下，调用 <code>Generator</code> 函数，返回一个遍历器对象，代表 <code>Generator </code> 函数的内部指针。以后，每次调用遍历器对象的 <code>next</code> 方法，就会返回一个有着 <code>value</code> 和 <code>done</code> 两个属性的对象。 <code>value</code> 属性表示当前的内部状态的值，是 <code>yield</code> 表达式后面那个表达式的值； <code>done</code> 属性是一个布尔值，表示是否遍历结束。</p>
+<h2 id="async函数"><a href="#async函数" class="headerlink" title="async函数"></a>async函数</h2><p>async 函数是什么？一句话，它就是 Generator 函数的语法糖。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><br><span class="hljs-keyword">const</span> readFile = <span class="hljs-keyword">function</span>(<span class="hljs-params">fileName</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Promise</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">resolve, reject</span>) &#123;<br>    fs.<span class="hljs-title function_">readFile</span>(fileName, <span class="hljs-keyword">function</span>(<span class="hljs-params">error, data</span>) &#123;<br>      <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">return</span> <span class="hljs-title function_">reject</span>(error);<br>      <span class="hljs-title function_">resolve</span>(data);<br>    &#125;);<br>  &#125;);<br>&#125;;<br><br><span class="hljs-keyword">const</span> gen = <span class="hljs-keyword">function</span>*() &#123;<br>  <span class="hljs-keyword">const</span> f1 = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;/etc/fstab&#x27;</span>);<br>  <span class="hljs-keyword">const</span> f2 = <span class="hljs-keyword">yield</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;/etc/shells&#x27;</span>);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(f1.<span class="hljs-title function_">toString</span>());<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(f2.<span class="hljs-title function_">toString</span>());<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>上面代码的函数 <code>gen</code> 可以写成 <code>async</code> 函数，就是下面这样。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> asyncReadFile = <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> f1 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;/etc/fstab&#x27;</span>);<br>  <span class="hljs-keyword">const</span> f2 = <span class="hljs-keyword">await</span> <span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;/etc/shells&#x27;</span>);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(f1.<span class="hljs-title function_">toString</span>());<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(f2.<span class="hljs-title function_">toString</span>());<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>一比较就会发现， <code>async</code> 函数就是将 <code>Generator</code> 函数的星号 <code>（*）</code> 替换成 <code>async</code> ，将 <code>yield</code> 替换成 <code>await</code> ，仅此而已。<br><code>async</code> 函数对 <code>Generator</code> 函数的改进，体现在以下四点。  </p>
+<h3 id="（1）内置执行器。"><a href="#（1）内置执行器。" class="headerlink" title="（1）内置执行器。"></a>（1）内置执行器。</h3><p>Generator 函数的执行必须靠执行器，所以才有了co模块，而async函数自带执行器。也就是说，async函数的执行，与普通函数一模一样，只要一行。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">asyncReadFile</span>();<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码调用了 <code>asyncReadFile</code> 函数，然后它就会自动执行，输出最后结果。这完全不像 <code>Generator</code> 函数，需要调用 <code>next</code> 方法，或者用 <code>co</code> 模块，才能真正执行，得到最后结果。</p>
+<h3 id="（2）更好的语义。"><a href="#（2）更好的语义。" class="headerlink" title="（2）更好的语义。"></a>（2）更好的语义。</h3><p><code>async</code> 和 <code>await</code> ，比起星号和 <code>yield</code> ，语义更清楚了。 <code>async</code> 表示函数里有异步操作， <code>await</code> 表示紧跟在后面的表达式需要等待结果。</p>
+<h3 id="（3）更广的适用性。"><a href="#（3）更广的适用性。" class="headerlink" title="（3）更广的适用性。"></a>（3）更广的适用性。</h3><p><code>co</code> 模块约定， <code>yield</code> 命令后面只能是 <code>Thunk </code> 函数或 <code>Promise</code> 对象，而 <code>async</code> 函数的 <code>await</code> 命令后面，可以是 <code>Promise </code> 对象和原始类型的值（数值、字符串和布尔值，但这时会自动转成立即 <code>resolved </code> 的 <code> Promise</code> 对象）。</p>
+<h3 id="（4）返回值是-Promise。"><a href="#（4）返回值是-Promise。" class="headerlink" title="（4）返回值是 Promise。"></a>（4）返回值是 Promise。</h3><p><code>async</code> 函数的返回值是 <code> Promise</code> 对象，这比 <code> Generator</code> 函数的返回值是 <code>Iterator</code> 对象方便多了。你可以用 <code>then</code> 方法指定下一步的操作。</p>
+<p>进一步说， <code>async</code> 函数完全可以看作多个异步操作，包装成的一个 <code>Promise </code> 对象，而 <code>await</code> 命令就是内部then命令的语法糖。</p>
+<p>下面是一个例子。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getStockPriceByName</span>(<span class="hljs-params">name</span>) &#123;<br>  <span class="hljs-keyword">const</span> symbol = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getStockSymbol</span>(name);<br>  <span class="hljs-keyword">const</span> stockPrice = <span class="hljs-keyword">await</span> <span class="hljs-title function_">getStockPrice</span>(symbol);<br>  <span class="hljs-keyword">return</span> stockPrice;<br>&#125;<br><br><span class="hljs-title function_">getStockPriceByName</span>(<span class="hljs-string">&#x27;goog&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="Promise对象的状态变化"><a href="#Promise对象的状态变化" class="headerlink" title="Promise对象的状态变化"></a>Promise对象的状态变化</h3><p><code>async</code> 函数返回的 <code>Promise </code> 对象，必须等到内部所有 <code>await</code> 命令后面的 <code>Promise</code> 对象执行完，才会发生状态改变，除非遇到 <code>return</code> 语句或者抛出错误。也就是说，只有 <code>async</code> 函数内部的异步操作执行完，才会执行 <code>then</code> 方法指定的回调函数。</p>
+<p>下面是一个例子。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">getTitle</span>(<span class="hljs-params">url</span>) &#123;<br>  <span class="hljs-keyword">let</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(url);<br>  <span class="hljs-keyword">let</span> html = <span class="hljs-keyword">await</span> response.<span class="hljs-title function_">text</span>();<br>  <span class="hljs-keyword">return</span> html.<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/&lt;title&gt;([\s\S]+)&lt;\/title&gt;/i</span>)[<span class="hljs-number">1</span>];<br>&#125;<br><span class="hljs-title function_">getTitle</span>(<span class="hljs-string">&#x27;https://tc39.github.io/ecma262/&#x27;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-variable language_">console</span>.<span class="hljs-property">log</span>)<br><span class="hljs-comment">// &quot;ECMAScript 2017 Language Specification&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码中，函数 <code>getTitle</code> 内部有三个操作：抓取网页、取出文本、匹配页面标题。只有这三个操作全部完成，才会执行 <code>then</code> 方法里面的 <code>console.log</code> 。</p>
+<h3 id="await-命令"><a href="#await-命令" class="headerlink" title="await 命令"></a>await 命令</h3><p>正常情况下， <code>await</code> 命令后面是一个 <code>Promise </code> 对象，返回该对象的结果。如果不是 <code>Promise </code> 对象，就直接返回对应的值。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// 等同于</span><br>  <span class="hljs-comment">// return 123;</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> <span class="hljs-number">123</span>;<br>&#125;<br><br><span class="hljs-title function_">f</span>().<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v))<br><span class="hljs-comment">// 123</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码中， <code>await</code> 命令的参数是数值 <code>123</code> ，这时等同于 <code>return 123</code> 。</p>
+<p>另一种情况是， <code>await</code> 命令后面是一个 <code>thenable</code> 对象（即定义了 <code>then</code> 方法的对象），那么 <code>await</code> 会将其等同于 <code>Promise</code> 对象。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Sleep</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params">timeout</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">timeout</span> = timeout;<br>  &#125;<br>  <span class="hljs-title function_">then</span>(<span class="hljs-params">resolve, reject</span>) &#123;<br>    <span class="hljs-keyword">const</span> startTime = <span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>();<br>    <span class="hljs-built_in">setTimeout</span>(<br>      <span class="hljs-function">() =&gt;</span> <span class="hljs-title function_">resolve</span>(<span class="hljs-title class_">Date</span>.<span class="hljs-title function_">now</span>() - startTime),<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">timeout</span><br>    );<br>  &#125;<br>&#125;<br><br>(<span class="hljs-title function_">async</span> () =&gt; &#123;<br>  <span class="hljs-keyword">const</span> sleepTime = <span class="hljs-keyword">await</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Sleep</span>(<span class="hljs-number">1000</span>);<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(sleepTime);<br>&#125;)();<br><span class="hljs-comment">// 1000</span><br></code></pre></td></tr></table></figure>
+
+<p>上面代码中， <code>await</code> 命令后面是一个 <code>Sleep</code> 对象的实例。这个实例不是 <code>Promise</code> 对象，但是因为定义了 <code>then</code> 方法， <code>await</code> 会将其视为 <code>Promise</code> 处理。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/promise">Promise 对象</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/generator">Generator 函数的语法</a><br><a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/async">async函数</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/" title="es6异步的写法" target="_blank">https://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">es6</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2020/10/22/2020-10-22-es6-async-methods/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/10/23/2021-07-10-js-loop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          js循环
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/21/2020-10-21-browser-window-size/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">各种js、jquery浏览器高度、宽度</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

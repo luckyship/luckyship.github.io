@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>PostgreSQL数据库备份还原 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="前言 逻辑备份 即 SQL 转储方式，使用 pg_dump 和 pg_dumpall 进行备份。逻辑备份在恢复时，介于逻辑备份与故障时间点之间的数据难以恢复，所以逻辑备份适用于留存某个时间点的备份或进行跨平台跨版本的数据迁移。 文件系统级备份 即拷贝数据文件的完整目录，备份时需要关闭数据库。恢复数据库时，只需将数据目录复制到原来的位置。该方式实际工作中很少使用。 连续归档 该方式是把一个文件系统级">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PostgreSQL数据库备份还原">
+<meta property="og:url" content="https://luckyship.github.io/2025/01/11/2025-01-11-postgresql-backup/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="前言 逻辑备份 即 SQL 转储方式，使用 pg_dump 和 pg_dumpall 进行备份。逻辑备份在恢复时，介于逻辑备份与故障时间点之间的数据难以恢复，所以逻辑备份适用于留存某个时间点的备份或进行跨平台跨版本的数据迁移。 文件系统级备份 即拷贝数据文件的完整目录，备份时需要关闭数据库。恢复数据库时，只需将数据目录复制到原来的位置。该方式实际工作中很少使用。 连续归档 该方式是把一个文件系统级">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/b6002e9bd4e4fe4a31bc26149a469311.png">
+<meta property="article:published_time" content="2025-01-11T08:01:25.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.182Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="sql">
+<meta property="article:tag" content="postgresql">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/b6002e9bd4e4fe4a31bc26149a469311.png">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%A4%87%E4%BB%BD"><span class="toc-number">2.</span> <span class="toc-text">逻辑备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8sql%E5%91%BD%E4%BB%A4%E5%A4%87%E4%BB%BD%E9%83%A8%E5%88%86%E6%95%B0%E6%8D%AE%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8E%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4%E6%9F%90%E4%BA%9B%E7%89%B9%E5%AE%9A%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%87%E4%BB%BD%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pg-dump-%E5%B7%A5%E5%85%B7"><span class="toc-number">2.2.</span> <span class="toc-text">pg_dump 工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pg-dumpall-%E5%B7%A5%E5%85%B7"><span class="toc-number">2.3.</span> <span class="toc-text">pg_dumpall 工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F"><span class="toc-number">3.</span> <span class="toc-text">逻辑备份还原</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%BD%92%E6%A1%A3%E5%A4%87%E4%BB%BD"><span class="toc-number">4.</span> <span class="toc-text">连续归档备份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%BD%92%E6%A1%A3%E6%81%A2%E5%A4%8D"><span class="toc-number">5.</span> <span class="toc-text">连续归档恢复</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2025-01-11-postgresql-backup" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      PostgreSQL数据库备份还原
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2025/01/11/2025-01-11-postgresql-backup/" class="archive-article-date">
+  <!-- <time datetime="2025-01-11T08:01:25.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-01-11</time>
+        <time datetime="2025-08-02T05:46:04.182Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.182Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2025-01-11
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">9分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><ul>
+<li>逻辑备份<br> 即 SQL 转储方式，使用 pg_dump 和 pg_dumpall 进行备份。逻辑备份在恢复时，介于逻辑备份与故障时间点之间的数据难以恢复，所以逻辑备份适用于留存某个时间点的备份或进行跨平台跨版本的数据迁移。</li>
+<li>文件系统级备份<br> 即拷贝数据文件的完整目录，备份时需要关闭数据库。恢复数据库时，只需将数据目录复制到原来的位置。该方式实际工作中很少使用。</li>
+<li>连续归档<br> 该方式是把一个文件系统级别的全量备份和 WAL(预写式日志)级别的增量备份结合起来。当需要恢复时，我们先恢复文件系统级别的备份，然后重放备份的 WAL 文件，把系统恢复到之前的某个状态。</li>
+</ul>
+<p><strong>本文主要介绍逻辑备份和连续归档方式的备份及还原，文件系统级备份由于比较简单，这里不在赘述。<br>以下操作使用的数据库版本为 PostgreSQL 12.5，不同的数据库版本在进行连续归档操作时会有细微差异。</strong></p>
+<span id="more"></span>
+
+<h2 id="逻辑备份"><a href="#逻辑备份" class="headerlink" title="逻辑备份"></a>逻辑备份</h2><h3 id="使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）"><a href="#使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）" class="headerlink" title="使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）"></a>使用sql命令备份部分数据（适用于修改删除某些特定数据的备份）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 备份到指定csv表格</span><br>psql -h localhost  -U username -d database -p 5433   -c <span class="hljs-string">&quot;\copy (select * from test_table  oc where id = 139375) TO &#x27;~/test.csv&#x27; WITH (FORMAT CSV, HEADER);&quot;</span><br><br><span class="hljs-comment"># 从csv表格恢复数据到数据库</span><br>psql -h localhost  -U username -d database -p 5433    -c <span class="hljs-string">&quot;\copy test_table FROM &#x27;~/test.csv&#x27; WITH (FORMAT CSV, HEADER);&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="pg-dump-工具"><a href="#pg-dump-工具" class="headerlink" title="pg_dump 工具"></a>pg_dump 工具</h3><p>以下为 pg_dump 工具的常用参数选项（更多参数可使用 pg_dump –help 查看）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">联接选项:<br>-h, --host=主机名  数据库服务器的主机名或套接字目录<br>-U, --username=名字  以指定的数据库用户联接<br>-d, --dbname=DBNAME  对数据库 DBNAME备份<br>-p, --port=端口号  数据库服务器的端口号<br>-w, --no-password  永远不提示输入口令<br>-W, --password   强制口令提示 (自动)<br>--role=ROLENAME   在转储前运行SET ROLE<br><br>一般选项:<br>-f, --file=FILENAME   输出文件或目录名，导出到指定文件<br>-F, --format= p|c|d|t 导出文件格式（p|c|d|t）<br>		p：plain-输出普通文字SQL脚本（默认）；<br>		c：custom-输出自定义归档格式，适用于pg_restore导入，该格式是最灵活导出方式，允许在导入时自定义选择和重			排序归档条目。该格式默认启用压缩；<br>		d：directory-输出文件夹归档格式，适用于pg_restore导入。该格式会创建一个文件夹，一个表对应一个文件。该格式默认启用压缩，并且支持并行导出；<br>		t：tar-输出tar压缩归档格式，适用于pg_restore导入。该格式将文件夹归档格式产生的文件夹压缩成tar压缩包。但该格式不支持压缩（文件夹归档已经压缩了），并且在导入时也不能更改相关的表顺序。<br>控制输出内容选项:<br>-s, --schema-only   只转储模式, 不包括数据<br>-a, --data-only    只转储数据,不包括模式<br>-t, --table=TABLE   只转储指定名称的表<br>-T, --exclude-table=TABLE 不转储指定名称的表<br>-C, --create     在转储中包括创建数据库语句<br>-c, --clean：包含drop删除语句，建议与--if-exists同时使用；<br>--if-exists，drop删除语句时带上IF EXISTS指令<br>-n, --schema=SCHEMA   只转储指定名称的模式<br>-N, --exclude-schema=SCHEMA 不转储已命名的模式<br>-O, --no-owner    在明文格式中, 忽略恢复对象所属者<br>-S, --superuser=NAME   在明文格式中使用指定的超级用户名<br>--column-inserts    以带有列名的INSERT命令形式转储数据<br>--inserts     以INSERT命令，而不是COPY命令的形式转储数据<br>--disable-triggers   在只恢复数据的过程中禁用触发器<br>--exclude-table-data=TABLE 不转储指定名称的表中的数据<br>--no-synchronized-snapshots 在并行工作集中不使用同步快照<br>--no-tablespaces    不转储表空间分配信息<br>--no-unlogged-table-data  不转储没有日志的表数据<br>--quote-all-identifiers  所有标识符加引号，即使不是关键字<br>--section=SECTION   备份命名的节 (数据前, 数据, 及 数据后)<br>--serializable-deferrable 等到备份可以无异常运行<br>--snapshot=SNAPSHOT   为转储使用给定的快照<br>--strict-names    要求每个表和/或schema包括模式以匹配至少一个实体<br></code></pre></td></tr></table></figure>
+
+<p><strong>常用示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#备份schema及数据，指定数据库pg_hive，指定文件为pg_hive20210108.sql</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#只备份schema</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive -s -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#只备份数据</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive -a -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#备份单个表</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive –t table1 -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#备份多个表</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive –t table1 –t table2 -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#以带有列名的INSERT命令形式转储数据</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive --column-inserts -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#指定导出格式为自定义格式(二进制形式)</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive -Fc -f /opt/pg_hive20210108.dump<br><br><span class="hljs-comment">#使用gzip压缩转储（针对大型数据库）</span><br>pg_dump -h 127.0.0.1 -U postgres -d pg_hive | gzip &gt; /opt/pg_hive20210108_gz.sql.gz<br><br><span class="hljs-comment">#使用split切片文件（针对大型数据库）</span><br>/pg_dump -h 127.0.0.1 -U postgres -d pg_hive | <span class="hljs-built_in">split</span> -b 100m - /opt/pg_hive20210108_sp.sql<br></code></pre></td></tr></table></figure>
+
+<h3 id="pg-dumpall-工具"><a href="#pg-dumpall-工具" class="headerlink" title="pg_dumpall 工具"></a>pg_dumpall 工具</h3><p>相对于 pg_dump 只能备份单个库，pg_dumpall 可以备份整个<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=PostgreSql&spm=1001.2101.3001.7020">PostgreSql</a>实例中所有的数据，包括角色和表空间定义。</p>
+<p><strong>使用示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#备份整个postgresql实例中所有的数</span><br>pg_dumpall -h 127.0.0.1 -U postgres  -f /opt/pg_hive20210108_all.sql<br></code></pre></td></tr></table></figure>
+
+<h2 id="逻辑备份还原"><a href="#逻辑备份还原" class="headerlink" title="逻辑备份还原"></a>逻辑备份还原</h2><p><strong>逻辑备份的还原命令为 psql 和 pg_restore：</strong><br>如果使用 pg_dump 未指定 format（即未使用-F 参数），则导出的是 SQL 脚本，导入时需用 psql 命令，否则用 pg_restore 还原。因这 2 个还原工具大部分参数与 pg_dump 含义相近，可使用命令后加–help 查看详细参数。</p>
+<p><strong>常用示例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#pg_dump备份时未指定format，还原时用psql</span><br>psql -h 127.0.0.1 -U postgres -d pg_hive -f /opt/pg_hive20210108.sql<br><br><span class="hljs-comment">#pg_dump备份时候使用-F参数指定format，还原时用pg_restore</span><br>pg_restore -h 127.0.0.1 -U postgres -d pg_hive /opt/pg_hive20210108.dump<br><br><span class="hljs-comment">#还原gzip压缩数据库备份</span><br>gunzip -c /opt/pg_hive20210108_gz.sql.gz | psql -h 127.0.0.1 -U postgres -d pg_hive<br><br><span class="hljs-comment">#还原切片数据库备份</span><br><span class="hljs-built_in">cat</span> /opt/pg_hive20210108_sp.sql* | psql -h 127.0.0.1 -U postgres -d pg_hive<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="连续归档备份"><a href="#连续归档备份" class="headerlink" title="连续归档备份"></a>连续归档备份</h2><p>连续归档是通过基础备份和 wal 日志相结合的方式进行备份，恢复的时候可以选择恢复到指定的时间点、指定事务点、或者完全恢复到 wal 日志的最新位置。</p>
+<p><strong>操作步骤如下：</strong><br>1、创建备份目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#创建基础备份目录</span><br><span class="hljs-built_in">mkdir</span> -p /data/pg_base<br><span class="hljs-comment">#创建wal日志备份目录</span><br><span class="hljs-built_in">mkdir</span> -p /data/pg_archive<br></code></pre></td></tr></table></figure>
+
+<p>注意新建备份文件夹的权限及所有者，否则会备份失败</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#更新备份文件夹的所有者</span><br><span class="hljs-built_in">chown</span> postgres:postgres /data/pg_base<br><span class="hljs-built_in">chown</span> postgres:postgres /data/pg_archive<br></code></pre></td></tr></table></figure>
+
+<p>2、修改配置文件</p>
+<p>打开 postgresql.conf 配置文件，修改以下 3 个参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vi postgresql.conf<br><br><span class="hljs-comment">#wal_level中有三个主要的参数：minimal、archive和hot_standby。1.minimal是默认的值，它仅写入崩溃或者突发关机时所需要的信息（不建议使用）。2.archive是增加wal归档所需的日志（最常用）。3.hot_standby是在备用服务器上增加了运行只读查询所需的信息，一般实在流复制的时候使用到</span><br>wal_level = archive<br><span class="hljs-comment">#开启归档模式</span><br>archive_mode = on<br><span class="hljs-comment">#备份wal日志，每天生成一个日期命名的文件夹</span><br>archive_command = <span class="hljs-string">&#x27;DIR=/data/pg_archive/`date +%F`; test ! -d $DIR &amp;&amp; mkdir -p $DIR; test ! -f $DIR/%f &amp;&amp; cp %p $DIR/%f&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>3、重启 pg 数据库</p>
+<p>命令为：pg_ctl restart<br><img src="https://i-blog.csdnimg.cn/blog_migrate/b6002e9bd4e4fe4a31bc26149a469311.png" alt="在这里插入图片描述"><br>4、创建表<br>该步骤为测试备份及恢复效果使用</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">--创建表，插入10条测试数据：</span><br><span class="hljs-keyword">create table</span> test (id <span class="hljs-type">integer</span>);<br><span class="hljs-keyword">insert into</span> test <span class="hljs-keyword">values</span>(generate_series(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>));<br></code></pre></td></tr></table></figure>
+
+<p>5、做基础备份</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">pg_basebackup -Ft -Pv -Xf -z -Z5 -D /data/pg_base/`<span class="hljs-built_in">date</span> +%F`<br></code></pre></td></tr></table></figure>
+
+<p>为了测试备份和恢复效果，再插入 10 条数据，并进行手动切换 wal 日志，执行如下 sql：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql">#插入数据<br><span class="hljs-keyword">insert into</span> test <span class="hljs-keyword">values</span>(generate_series(<span class="hljs-number">1</span>,<span class="hljs-number">10</span>));<br>#切换wal日志<br><span class="hljs-keyword">select</span> pg_switch_wal();<br></code></pre></td></tr></table></figure>
+
+<h2 id="连续归档恢复"><a href="#连续归档恢复" class="headerlink" title="连续归档恢复"></a>连续归档恢复</h2><p>1、创建 data 文件夹</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#重命名原来的data文件夹</span><br><span class="hljs-built_in">mv</span> /pgsql/postgresql/data   /pgsql/postgresql/data.bak<br><span class="hljs-comment">#创建新的data文件夹</span><br><span class="hljs-built_in">mkdir</span> data<br><br></code></pre></td></tr></table></figure>
+
+<p>2、解压基础备份至新建的 data 文件夹</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#拷贝基础备份到新建data文件夹</span><br><span class="hljs-built_in">cp</span> /data/pg_base/2021-01-15/base.tar.gz /pgsql/postgresql/data<br><span class="hljs-comment">#解压文件</span><br>tar -zxvf base.tar.gz<br><span class="hljs-comment">#删除基础备份中的wal日志和postmaster.pid文件</span><br>Cd /pgsql/postgresql/data<br><span class="hljs-built_in">rm</span> -rf pg_wal<br><span class="hljs-built_in">rm</span> -rf postmaster.pid<br><span class="hljs-comment">#创建archive_status文件夹</span><br><span class="hljs-built_in">mkdir</span> -p pg_wal/archive_status<br><br></code></pre></td></tr></table></figure>
+
+<p>3、修改配置文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">vi postgresql.conf<br><br><span class="hljs-comment">#修改restore_command为要恢复的wal日志目录</span><br>restore_command = <span class="hljs-string">&#x27;cp /data/pg_archive/2021-01-15/%f %p&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>4、新建 recovery.signal 文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#恢复时依赖该文件，恢复至最新wal位置，文件无需添加内容</span><br><span class="hljs-built_in">touch</span> recovery.signal<br></code></pre></td></tr></table></figure>
+
+<p>5、赋权并启动数据库</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#新建的data文件夹更改所有者</span><br><span class="hljs-built_in">chown</span> -R  postgres:postgres /pgsql/postgresql/data<br><span class="hljs-comment">#修改data目录权限，否则会因为目录权限过大无法启动数据库</span><br><span class="hljs-built_in">chmod</span> 0700 data -R<br><span class="hljs-comment">#启动数据库</span><br>pg_ctl start<br></code></pre></td></tr></table></figure>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2025/01/11/2025-01-11-postgresql-backup/" title="PostgreSQL数据库备份还原" target="_blank">https://luckyship.github.io/2025/01/11/2025-01-11-postgresql-backup/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">sql</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">postgresql</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2025/01/11/2025-01-11-postgresql-backup/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2025/06/23/2025-06-23-mini-pinia/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          自己实现一个简单版 Pinia（miniPinia）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/07/01/2024-07-01-linux-command/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">linux-command</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>剖析commonjs与es module | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="前言今天我们来深度分析一下 Commonjs 和 Es Module，希望通过本文的学习，能够让大家彻底明白 Commonjs 和 Es Module 原理，能够一次性搞定面试中遇到的大部分有关 Commonjs 和 Es Module 的问题。 老规矩我们带上疑问开始今天的分析 🤔🤔🤔：  Commonjs 和 Es Module 有什么区别 ？ Commonjs 如何解决的循环引用问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="剖析commonjs与es module">
+<meta property="og:url" content="https://luckyship.github.io/2021/09/05/2021-09-05-commonjs-es-module/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="前言今天我们来深度分析一下 Commonjs 和 Es Module，希望通过本文的学习，能够让大家彻底明白 Commonjs 和 Es Module 原理，能够一次性搞定面试中遇到的大部分有关 Commonjs 和 Es Module 的问题。 老规矩我们带上疑问开始今天的分析 🤔🤔🤔：  Commonjs 和 Es Module 有什么区别 ？ Commonjs 如何解决的循环引用问题">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-05T01:12:00.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.177Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%B1%A1%E6%9F%93"><span class="toc-number">2.1.</span> <span class="toc-text">全局污染</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commonjs"><span class="toc-number">3.</span> <span class="toc-text">Commonjs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#commonjs-%E4%BD%BF%E7%94%A8%E4%B8%8E%E5%8E%9F%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">commonjs 使用与原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commonjs-%E4%BD%BF%E7%94%A8%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toc-number">3.2.</span> <span class="toc-text">commonjs 使用初体验</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#commonjs-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="toc-number">3.3.</span> <span class="toc-text">commonjs 实现原理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#require-%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">require 文件加载流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#require-%E5%8A%A0%E8%BD%BD%E6%A0%87%E8%AF%86%E7%AC%A6%E5%8E%9F%E5%88%99"><span class="toc-number">4.1.</span> <span class="toc-text">require 加载标识符原则</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E7%9A%84%E5%A4%84%E7%90%86%EF%BC%9A"><span class="toc-number">4.1.1.</span> <span class="toc-text">核心模块的处理：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B7%AF%E5%BE%84%E5%BD%A2%E5%BC%8F%E7%9A%84%E6%96%87%E4%BB%B6%E6%A8%A1%E5%9D%97%E5%A4%84%E7%90%86%EF%BC%9A"><span class="toc-number">4.1.2.</span> <span class="toc-text">路径形式的文件模块处理：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9D%97%E5%A4%84%E7%90%86%EF%BC%9A"><span class="toc-number">4.1.3.</span> <span class="toc-text">自定义模块处理：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#require-%E6%A8%A1%E5%9D%97%E5%BC%95%E5%85%A5%E4%B8%8E%E5%A4%84%E7%90%86"><span class="toc-number">4.2.</span> <span class="toc-text">require 模块引入与处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#require-%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%90%86"><span class="toc-number">4.3.</span> <span class="toc-text">require 加载原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#require-%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.3.1.</span> <span class="toc-text">require 避免重复加载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#require-%E9%81%BF%E5%85%8D%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="toc-number">4.3.2.</span> <span class="toc-text">require 避免循环引用</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#require-%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.4.</span> <span class="toc-text">require 动态加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#module-exports-%E4%BD%BF%E7%94%A8"><span class="toc-number">4.5.</span> <span class="toc-text">module.exports 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Q-amp-A"><span class="toc-number">4.5.1.</span> <span class="toc-text">Q &amp; A</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Es-Module"><span class="toc-number">5.</span> <span class="toc-text">Es Module</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA-export-%E5%92%8C%E5%AF%BC%E5%85%A5-import"><span class="toc-number">5.1.</span> <span class="toc-text">导出 export 和导入 import</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#export-%E6%AD%A3%E5%B8%B8%E5%AF%BC%E5%87%BA%EF%BC%8Cimport-%E5%AF%BC%E5%85%A5"><span class="toc-number">5.1.1.</span> <span class="toc-text">export 正常导出，import 导入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%87%BA-export-default"><span class="toc-number">5.1.2.</span> <span class="toc-text">默认导出 export default</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E5%AF%BC%E5%85%A5%EF%BD%9C%E5%AF%BC%E5%87%BA"><span class="toc-number">5.1.3.</span> <span class="toc-text">混合导入｜导出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%B1%9E%E5%90%8D%E5%AF%BC%E5%85%A5"><span class="toc-number">5.1.4.</span> <span class="toc-text">重属名导入</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E5%AE%9A%E5%90%91%E5%AF%BC%E5%87%BA"><span class="toc-number">5.1.5.</span> <span class="toc-text">重定向导出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E9%9C%80%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%8F%AA%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%9D%97"><span class="toc-number">5.1.6.</span> <span class="toc-text">无需导入模块，只运行模块</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%AF%BC%E5%85%A5"><span class="toc-number">5.1.7.</span> <span class="toc-text">动态导入</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ES6-module-%E7%89%B9%E6%80%A7"><span class="toc-number">5.2.</span> <span class="toc-text">ES6 module 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%9D%99%E6%80%81%E8%AF%AD%E6%B3%95"><span class="toc-number">5.2.1.</span> <span class="toc-text">1 静态语法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%89%A7%E8%A1%8C%E7%89%B9%E6%80%A7"><span class="toc-number">5.2.2.</span> <span class="toc-text">2 执行特性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%AF%BC%E5%87%BA%E7%BB%91%E5%AE%9A"><span class="toc-number">5.2.3.</span> <span class="toc-text">3 导出绑定</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A"><span class="toc-number">5.2.4.</span> <span class="toc-text">属性绑定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#import-%E5%8A%A8%E6%80%81%E5%BC%95%E5%85%A5"><span class="toc-number">5.3.</span> <span class="toc-text">import() 动态引入</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#import-%E5%8F%AF%E4%BB%A5%E5%81%9A%E4%B8%80%E4%BA%9B%E4%BB%80%E4%B9%88"><span class="toc-number">5.3.1.</span> <span class="toc-text">import() 可以做一些什么</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.3.1.1.</span> <span class="toc-text">动态加载</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.3.1.2.</span> <span class="toc-text">懒加载</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#React-%E4%B8%AD%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-number">5.3.1.3.</span> <span class="toc-text">React 中动态加载</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tree-shaking-%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.4.</span> <span class="toc-text">tree shaking 实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commonjs-%E5%92%8C-Es-Module-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">Commonjs 和 Es Module 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Commonjs-%E6%80%BB%E7%BB%93"><span class="toc-number">6.1.</span> <span class="toc-text">Commonjs 总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#es-module-%E6%80%BB%E7%BB%93"><span class="toc-number">6.2.</span> <span class="toc-text">es module 总结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number">7.</span> <span class="toc-text">转载</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2021-09-05-commonjs-es-module" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      剖析commonjs与es module
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2021/09/05/2021-09-05-commonjs-es-module/" class="archive-article-date">
+  <!-- <time datetime="2021-09-05T01:12:00.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-05</time>
+        <time datetime="2025-08-02T05:46:04.177Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.177Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-05
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">7.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">29分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>今天我们来深度分析一下 <code>Commonjs</code> 和 <code>Es Module</code>，希望通过本文的学习，能够让大家彻底明白 <code>Commonjs</code> 和 <code>Es Module</code> 原理，能够一次性搞定面试中遇到的大部分有关 <code>Commonjs</code> 和 <code>Es Module</code> 的问题。</p>
+<p>老规矩我们带上疑问开始今天的分析 🤔🤔🤔：</p>
+<ol>
+<li><code>Commonjs</code> 和 <code>Es Module</code> 有什么区别 ？</li>
+<li><code>Commonjs</code> 如何解决的循环引用问题 ？</li>
+<li>既然有了 <code>exports</code>，为何又出了 <code>module.exports</code>? 既生瑜，何生亮 ？</li>
+<li><code>require</code> 模块查找机制 ？</li>
+<li><code>Es Module</code> 如何解决循环引用问题 ？</li>
+<li><code>exports = &#123;&#125;</code> 这种写法为何无效 ？</li>
+<li>关于 <code>import()</code> 的动态引入 ？</li>
+<li><code>Es Module</code> 如何改变模块下的私有变量 ？</li>
+<li>…<span id="more"></span>
+
+</li>
+</ol>
+<h3 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h3><p>早期 <code>JavaScript</code> 开发很容易存在全局污染和依赖管理混乱问题。这些问题在多人开发前端应用的情况下变得更加棘手。我这里例举一个很常见的场景：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./index.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./home.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;./list.js&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>如上在没有模块化的前提下，如果在 <code>html</code> 中这么写，那么就会暴露一系列问题。</p>
+<h4 id="全局污染"><a href="#全局污染" class="headerlink" title="全局污染"></a>全局污染</h4><p>没有模块化，那么 <code>script</code> 内部的变量是可以相互污染的。比如有一种场景，如上 <code>./index.js</code> 文件和 <code>./list.js</code> 文件为小 A 开发的，<code>./home.js</code> 为小 B 开发的。</p>
+<p>小 A 在 <code>index.js</code>中声明 <code>name</code> 属性是一个字符串。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>然后小 A 在 <code>list.js</code> 中，引用 <code>name</code> 属性，</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(name); <span class="hljs-comment">// ƒ name()&#123;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>打印却发现 <code>name</code> 竟然变成了一个函数。刚开始小 A 不知所措，后来发现在小 B 开发的 <code>home.js</code> 文件中这么写道：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">name</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>而且这个 <code>name</code> 方法被引用了多次，导致一系列的连锁反应。</p>
+<p>上述例子就是没有使用模块化开发，造成的全局污染的问题，每个加载的 <code>js</code> 文件都共享变量。当然在实际的项目开发中，可以使用匿名函数自执行的方式，形成独立的块级作用域解决这个问题。</p>
+<p>只需要在 <code>home.js</code> 中这么写道：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">name</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">//...</span><br>  &#125;<br>&#125;)();<br></code></pre></td></tr></table></figure>
+
+<p>这样小 A 就能正常在 <code>list.js</code> 中获取 <code>name</code> 属性。但是这只是一个 <code>demo</code> ，我们不能保证在实际开发中情况会更加复杂。所以不使用模块开发会暴露出很多风险。</p>
+<p><code>所以就需要模块化来解决上述的问题，今天我们就重点讲解一下前端模块化的两个重要方案：Commonjs</code> 和 <code>Es Module</code></p>
+<h3 id="Commonjs"><a href="#Commonjs" class="headerlink" title="Commonjs"></a>Commonjs</h3><p><code>Commonjs</code> 的提出，弥补 <code>Javascript</code> 对于模块化，没有统一标准的缺陷。<code>nodejs</code> 借鉴了 <code>Commonjs</code> 的 <code>Module</code> ，实现了良好的模块化管理。</p>
+<p>目前 <code>commonjs</code> 广泛应用于以下几个场景：</p>
+<ul>
+<li><code>Node</code> 是 <code>CommonJS</code> 在服务器端一个具有代表性的实现；</li>
+<li><code>Browserify</code> 是 <code>CommonJS</code> 在浏览器中的一种实现；</li>
+<li><code>webpack</code> 打包工具对 <code>CommonJS</code> 的支持和转换；也就是前端应用也可以在编译之前，尽情使用<code>CommonJS</code> 进行开发。</li>
+</ul>
+<h4 id="commonjs-使用与原理"><a href="#commonjs-使用与原理" class="headerlink" title="commonjs 使用与原理"></a>commonjs 使用与原理</h4><p>在使用 规范下，有几个显著的特点。</p>
+<ul>
+<li>在 <code>commonjs</code> 中每一个 <code>js</code> 文件都是一个单独的模块，我们可以称之为 <code>module</code>；</li>
+<li>该模块中，包含 <code>CommonJS</code> 规范的核心变量: <code>exports</code>、<code>module.exports</code>、<code>require</code>；</li>
+<li><code>exports</code> 和 <code>module.exports</code> 可以负责对模块中的内容进行导出；</li>
+<li><code>require</code> 函数可以帮助我们导入其他模块（自定义模块、系统模块、第三方库模块）中的内容；</li>
+</ul>
+<h4 id="commonjs-使用初体验"><a href="#commonjs-使用初体验" class="headerlink" title="commonjs 使用初体验"></a>commonjs 使用初体验</h4><p>我们先尝试这导出一个模块：<br><code>hello.js</code>中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayName</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> name;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>导入：接下来简单的导入：</p>
+<p><code>home.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>    <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  &#125;;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>如上就是 <code>Commonjs</code> 最简单的实现，那么暴露出两个问题：</p>
+<ul>
+<li>如何解决变量污染的问题。</li>
+<li><code>module.exports</code>，<code>exports</code>，<code>require</code> 三者是如何工作的？又有什么关系？</li>
+</ul>
+<h4 id="commonjs-实现原理"><a href="#commonjs-实现原理" class="headerlink" title="commonjs 实现原理"></a>commonjs 实现原理</h4><p>首先从上述得知每个模块文件上存在 <code>module</code>，<code>exports</code>，<code>require</code> 三个变量，然而这三个变量是没有被定义的，但是我们可以在 <code>Commonjs</code> 规范下每一个 <code>js</code> 模块上直接使用它们。在 <code>nodejs</code> 中还存在 <code>**filename</code> 和 <code>**dirname</code> 变量。</p>
+<p>如上每一个变量代表什么意思呢：</p>
+<ul>
+<li><code>module</code> 记录当前模块信息。</li>
+<li><code>require</code> 引入模块的方法。</li>
+<li><code>exports</code> 当前模块导出的属性</li>
+</ul>
+<p>在编译的过程中，实际 <code>Commonjs</code> 对 <code>js</code> 的代码块进行了首尾包装， 我们以上述的 <code>home.js</code> 为例子 🌰，它被包装之后的样子如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">(<span class="hljs-keyword">function</span> (<span class="hljs-params"><span class="hljs-built_in">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname</span>) &#123;<br>  <span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>);<br>  <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">name</span>: <span class="hljs-title function_">sayName</span>(),<br>      <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>    &#125;;<br>  &#125;;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在 <code>Commonjs</code> 规范下模块中，会形成一个包装函数，我们写的代码将作为包装函数的执行上下文，使用的 <code>require</code> ，<code>exports</code> ，<code>module</code> 本质上是通过形参的方式传递到包装函数中的。</p>
+</blockquote>
+<p>那么包装函数本质上是什么样子的呢？</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapper</span>(<span class="hljs-params">script</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;(function (exports, require, module, __filename, __dirname) &#123;&quot;</span> + script + <span class="hljs-string">&quot;\n&#125;)&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>包装函数执行。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> modulefunction = <span class="hljs-title function_">wrapper</span>(<span class="hljs-string">`</span><br><span class="hljs-string">  const sayName = require(&#x27;./hello.js&#x27;)</span><br><span class="hljs-string">    module.exports = function say()&#123;</span><br><span class="hljs-string">        return &#123;</span><br><span class="hljs-string">            name:sayName(),</span><br><span class="hljs-string">            author:&#x27;我不是外星人&#x27;</span><br><span class="hljs-string">        &#125;</span><br><span class="hljs-string">    &#125;</span><br><span class="hljs-string">`</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如上模拟了一个包装函数功能， script 为我们在 js 模块中写的内容，最后返回的就是如上包装之后的函数。当然这个函数暂且是一个字符串。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">runInThisContext</span>(modulefunction)(<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在模块加载的时候，会通过 <code>runInThisContext</code> (可以理解成 <code>eval</code> ) 执行 <code>modulefunction</code> ，传入<code>require</code> ，<code>exports</code> ，<code>module</code> 等参数。最终我们写的 <code>nodejs</code> 文件就这么执行了。</p>
+</blockquote>
+<p>到此为止，完成了整个模块执行的原理。接下来我们来分析以下 <code>require</code> 文件加载的流程。</p>
+<h3 id="require-文件加载流程"><a href="#require-文件加载流程" class="headerlink" title="require 文件加载流程"></a>require 文件加载流程</h3><p>上述说了 <code>commonjs</code> 规范大致的实现原理，接下来我们分析一下， <code>require</code> 如何进行文件的加载的。</p>
+<p>我们还是以 <code>nodejs</code> 为参考，比如如下代码片段中：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;fs&quot;</span>); <span class="hljs-comment">// ①核心模块</span><br><span class="hljs-keyword">const</span> sayName = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./hello.js&quot;</span>); <span class="hljs-comment">//② 文件模块</span><br><span class="hljs-keyword">const</span> crypto = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;crypto-js&quot;</span>); <span class="hljs-comment">// ③第三方自定义模块</span><br></code></pre></td></tr></table></figure>
+
+<p>如上代码片段中：</p>
+<ul>
+<li>① 为 nodejs 底层的核心模块。</li>
+<li>② 为我们编写的文件模块，比如上述 sayName</li>
+<li>③ 为我们通过 npm 下载的第三方自定义模块，比如 crypto-js。</li>
+</ul>
+<blockquote>
+<p>当 <code>require</code> 方法执行的时候，接收的唯一参数作为一个标识符 ，<code>Commonjs</code> 下对不同的标识符，处理流程不同，但是目的相同，都是找到对应的模块。</p>
+</blockquote>
+<h4 id="require-加载标识符原则"><a href="#require-加载标识符原则" class="headerlink" title="require 加载标识符原则"></a>require 加载标识符原则</h4><p>首先我们看一下 <code>nodejs</code> 中对标识符的处理原则。</p>
+<ul>
+<li>首先像 <code>fs</code> ，<code>http</code> ，<code>path</code> 等标识符，会被作为 <code>nodejs</code> 的核心模块。</li>
+<li><code>./</code> 和 <code>../ </code>作为相对路径的文件模块，<code> /</code> 作为绝对路径的文件模块。</li>
+<li>非路径形式也非核心模块的模块，将作为自定义模块。</li>
+</ul>
+<h5 id="核心模块的处理："><a href="#核心模块的处理：" class="headerlink" title="核心模块的处理："></a>核心模块的处理：</h5><p>核心模块的优先级仅次于缓存加载，在 <code>Node</code> 源码编译中，已被编译成二进制代码，所以加载核心模块，加载过程中速度最快。</p>
+<h5 id="路径形式的文件模块处理："><a href="#路径形式的文件模块处理：" class="headerlink" title="路径形式的文件模块处理："></a>路径形式的文件模块处理：</h5><p>已 <code>./</code> ，<code>../</code> 和 <code>/</code> 开始的标识符，会被当作文件模块处理。<code>require()</code> 方法会将路径转换成真实路径，并以真实路径作为索引，将编译后的结果缓存起来，第二次加载的时候会更快。至于怎么缓存的？我们稍后会讲到。</p>
+<h5 id="自定义模块处理："><a href="#自定义模块处理：" class="headerlink" title="自定义模块处理："></a>自定义模块处理：</h5><p>自定义模块，一般指的是非核心的模块，它可能是一个文件或者一个包，它的查找会遵循以下原则：</p>
+<ul>
+<li>在当前目录下的 <code>node_modules</code> 目录查找。</li>
+<li>如果没有，在父级目录的 <code>node_modules</code> 查找，如果没有在父级目录的父级目录的 <code>node_modules</code> 中查- 找。</li>
+<li>沿着路径向上递归，直到根目录下的 <code>node_modules</code> 目录。</li>
+<li>在查找过程中，会找 <code>package.json</code> 下 <code>main</code> 属性指向的文件，如果没有 <code>package.json</code> ，在 <code>node</code> 环境下会以此查找 <code>index.js</code> ，<code>index.json</code> ，<code>index.node</code>。</li>
+</ul>
+<h4 id="require-模块引入与处理"><a href="#require-模块引入与处理" class="headerlink" title="require 模块引入与处理"></a>require 模块引入与处理</h4><p><code>CommonJS</code> 模块同步加载并执行模块文件，<code>CommonJS</code> 模块在执行阶段分析模块依赖，采用深度优先遍历（<code>depth-first traversal</code>），执行顺序是父 -&gt; 子 -&gt; 父；</p>
+<p>为了搞清除 <code>require</code> 文件引入流程。我们接下来再举一个例子，这里注意一下细节：</p>
+<p><code>a.js</code>文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 a 文件&quot;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>b.js</code>文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 b 文件&quot;</span>);<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>主文件<code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> b = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;node 入口文件&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>接下来终端输入 <code>node main.js</code> 运行 <code>main.js</code>，效果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>我是 b 文件<br>我是 a 文件<br>node 入口文件<br></code></pre></td></tr></table></figure>
+
+<p>从上面的运行结果可以得出以下结论：</p>
+<p><code>main.js</code> 和 <code>a.js</code> 模块都引用了 <code>b.js</code> 模块，但是 <code>b.js</code> 模块只执行了一次。<br><code>a.js</code> 模块 和 <code>b.js</code> 模块互相引用，但是没有造成循环引用的情况。<br>执行顺序是父 -&gt; 子 -&gt; 父；<br>那么 <code>Common.js</code> 规范是如何实现上述效果的呢？</p>
+<h4 id="require-加载原理"><a href="#require-加载原理" class="headerlink" title="require 加载原理"></a>require 加载原理</h4><p>首先为了弄清楚上述两个问题。我们要明白两个感念，那就是 <code>module</code> 和 <code>Module</code>。</p>
+<p><code>module</code> ：在 <code>Node</code> 中每一个 <code>js</code> 文件都是一个 <code>module</code> ，<code>module</code> 上保存了 <code>exports</code> 等信息之外，还有一个 <code>loaded</code> 表示该模块是否被加载。</p>
+<p>为 <code>false</code> 表示还没有加载；<br>为 <code>true</code> 表示已经加载<br><code>Module</code> ：以 <code>nodejs</code> 为例，整个系统运行之后，会用 <code>Module</code> 缓存每一个模块加载的信息。</p>
+<p><code>require</code> 的源码大致长如下的样子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// id 为路径标识符</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">require</span>(<span class="hljs-params">id</span>) &#123;<br>   <span class="hljs-comment">/* 查找  Module 上有没有已经加载的 js  对象*/</span><br>   <span class="hljs-keyword">const</span>  cachedModule = <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[id]<br><br>   <span class="hljs-comment">/* 如果已经加载了那么直接取走缓存的 exports 对象  */</span><br>  <span class="hljs-keyword">if</span>(cachedModule)&#123;<br>    <span class="hljs-keyword">return</span> cachedModule.<span class="hljs-property">exports</span><br>  &#125;<br><br>  <span class="hljs-comment">/* 创建当前模块的 module  */</span><br>  <span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = &#123; <span class="hljs-attr">exports</span>: &#123;&#125; ,<span class="hljs-attr">loaded</span>: <span class="hljs-literal">false</span> , ...&#125;<br><br>  <span class="hljs-comment">/* 将 module 缓存到  Module 的缓存属性中，路径标识符作为 id */</span><br>  <span class="hljs-title class_">Module</span>.<span class="hljs-property">_cache</span>[id] = <span class="hljs-variable language_">module</span><br>  <span class="hljs-comment">/* 加载文件 */</span><br>  <span class="hljs-title function_">runInThisContext</span>(<span class="hljs-title function_">wrapper</span>(<span class="hljs-string">&#x27;module.exports = &quot;123&quot;&#x27;</span>))(<span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>, <span class="hljs-built_in">require</span>, <span class="hljs-variable language_">module</span>, __filename, __dirname)<br>  <span class="hljs-comment">/* 加载完成 */</span>/<br>  <span class="hljs-variable language_">module</span>.<span class="hljs-property">loaded</span> = <span class="hljs-literal">true</span><br>  <span class="hljs-comment">/* 返回值 */</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从上面我们总结出一次 <code>require</code> 大致流程是这样的；</p>
+<ul>
+<li><p><code>require</code> 会接收一个参数——文件标识符，然后分析定位文件，分析过程我们上述已经讲到了，加下来会从 <code>Module</code> 上查找有没有缓存，如果有缓存，那么直接返回缓存的内容。</p>
+</li>
+<li><p>如果没有缓存，会创建一个 <code>module</code> 对象，缓存到 <code>Module</code> 上，然后执行文件，加载完文件，将 <code>loaded</code> 属性设置为 <code>true</code> ，然后返回 <code>module.exports</code> 对象。借此完成模块加载流程。</p>
+</li>
+<li><p>模块导出就是 <code>return</code> 这个变量的其实跟 <code>a = b </code>赋值一样， 基本类型导出的是值， 引用类型导出的是引用地址。</p>
+</li>
+<li><p><code>exports</code> 和 <code>module.exports</code> 持有相同引用，因为最后导出的是 <code>module.exports</code>， 所以对 <code>exports</code> 进行赋值会导致 <code>exports</code> 操作的不再是 <code>module.exports</code> 的引用。</p>
+</li>
+</ul>
+<h5 id="require-避免重复加载"><a href="#require-避免重复加载" class="headerlink" title="require 避免重复加载"></a>require 避免重复加载</h5><p>从上面我们可以直接得出，<code>require</code> 如何避免重复加载的，首先加载之后的文件的 <code>module</code> 会被缓存到 <code>Module</code> 上，比如一个模块已经 <code>require</code> 引入了 <code>a</code> 模块，如果另外一个模块再次引用 <code>a</code> ，那么会直接读取缓存值 <code>module</code> ，所以无需再次执行模块。</p>
+<p>对应 <code>demo</code> 片段中，首先 <code>main.js</code> 引用了 <code>a.js </code>，<code>a.js</code> 中 <code>require</code> 了 <code>b.js</code> 此时 <code>b.js</code> 的 <code>module</code> 放入缓存 <code>Module</code> 中，接下来 <code>main.js</code> 再次引用 <code>b.js</code> ，那么直接走的缓存逻辑。所以 <code>b.js</code> 只会执行一次，也就是在 <code>a.js</code> 引入的时候。</p>
+<h5 id="require-避免循环引用"><a href="#require-避免循环引用" class="headerlink" title="require 避免循环引用"></a>require 避免循环引用</h5><p>那么接下来这个循环引用问题，也就很容易解决了。为了让大家更清晰明白，那么我们接下来一起分析整个流程。</p>
+<ul>
+<li>① 首先执行 <code>node main.js</code> ，那么开始执行第一行 <code>require(a.js)</code>；</li>
+<li>② 那么首先判断 <code>a.js</code> 有没有缓存，因为没有缓存，先加入缓存，然后执行文件 <code>a.js</code> （需要注意 是先加入缓存， 后执行模块内- 容）;</li>
+<li>③ <code>a.js</code> 中执行第一行，引用 <code>b.js</code>。</li>
+<li>④ 那么判断 <code>b.js</code> 有没有缓存，因为没有缓存，所以加入缓存，然后执行 <code>b.js</code> 文件。</li>
+<li>⑤ <code>b.js</code> 执行第一行，再一次循环引用 <code>require(a.js)</code> 此时的 <code>a.js</code> 已经加入缓存，直接读取值。接下来打印 <code>console.log(&#39;我- 是 b 文件&#39;)</code>，导出方法。</li>
+<li>⑥ <code>b.js</code> 执行完毕，回到 <code>a.js</code> 文件，打印 <code>console.log(&#39;我是 a 文件&#39;)</code>，导出方法。</li>
+<li>⑦ 最后回到 <code>main.js</code>，打印 <code>console.log(&#39;node 入口文件&#39;)</code> 完成这个流程。<br>不过这里我们要注意问题：</li>
+</ul>
+<p>如上第 ⑤ 的时候，当执行 <code>b.js</code> 模块的时候，因为 <code>a.js</code> 还没有导出 <code>say</code> 方法，所以 <code>b.js</code> 同步上下文中，获取不到 <code>say</code>。</p>
+<p>为了进一步验证上面所说的，我们改造一下 <code>b.js</code> 如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> say = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br><span class="hljs-keyword">const</span> object = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>&#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 b 文件&quot;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;打印 a 模块&quot;</span>, say);<br><br><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;异步打印 a 模块&quot;</span>, say);<br>&#125;, <span class="hljs-number">0</span>);<br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> object;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>我是 b 文件<br>打印 a 模块<br>我是 a 文件<br>node 入口文件<br>异步打印 a 模块<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第一次打印 <code>say</code> 为空对象。</li>
+<li>第二次打印 <code>say</code> 才看到 <code>b.js</code> 导出的方法。</li>
+</ul>
+<p>那么如何获取到 <code>say</code> 呢，有两种办法：</p>
+<ul>
+<li>一是用动态加载 <code>a.js</code> 的方法，马上就会讲到。</li>
+<li>二个就是如上放在异步中加载。</li>
+</ul>
+<p>我们注意到 <code>a.js</code> 是用 <code>exports.say</code> 方式导出的，如果<code>a.js</code>用 <code>module.exports</code> 结果会有所不同。至于有什么不同，为什么？我接下来会讲到。</p>
+<h4 id="require-动态加载"><a href="#require-动态加载" class="headerlink" title="require 动态加载"></a>require 动态加载</h4><p>上述我们讲了 <code>require</code> 查找文件和加载流程。接下来介绍 <code>commonjs</code> 规范下的 <code>require</code> 的另外一个特性——动态加载。</p>
+<p><code>require</code> 可以在任意的上下文，动态加载模块。我对上述 <code>a.js</code> 修改。</p>
+<p><code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;我是 a 文件&quot;</span>);<br><span class="hljs-built_in">exports</span>.<span class="hljs-property">say</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> getMes = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>  <span class="hljs-keyword">const</span> message = <span class="hljs-title function_">getMes</span>();<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(message);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">require</span>(<span class="hljs-string">&quot;./a&quot;</span>);<br>a.<span class="hljs-title function_">say</span>();<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如上在 <code>a.js</code> 模块的 <code>say</code> 函数中，用 <code>require</code> 动态加载 <code>b.js</code> 模块。然后执行在 <code>main.js</code> 中执行 <code>a.js</code> 模块的 <code>say</code> 方法。</p>
+</blockquote>
+<p>打印结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123; name: <span class="hljs-string">&#x27;aaa&#x27;</span>, author: <span class="hljs-string">&#x27;我不是外星人&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>exports</code> 就是传入到当前模块内的一个对象，本质上就是 <code>module.exports</code>。</p>
+</blockquote>
+<p>问题：为什么 <code>exports=&#123;&#125;</code> 直接赋值一个对象就不可以呢？ 比如我们将如上 <code>a.js</code> 修改一下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;asd&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>打印结果：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p>理想情况下是通过 <code>exports = &#123;&#125;</code> 直接赋值，不需要在 <code>exports.a = xxx</code> 每一个属性，但是如上我们看到了这种方式是无效的。为什么会这样？实际这个是 <code>js</code> 本身的特性决定的。</p>
+<p>通过上述讲解都知道 <code>exports</code> ， <code>module</code> 和 <code>require</code> 作为形参的方式传入到 js 模块中。我们直接 <code>exports = &#123;&#125;</code> 修改 <code>exports</code> ，等于重新赋值了形参，那么会重新赋值一份，但是不会在引用原来的形参。举一个简单的例子</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports = &#123;<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  &#125;;<br>&#125;<br><br><span class="hljs-keyword">let</span> myExports = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;alien&quot;</span>,<br>&#125;;<br><span class="hljs-title function_">wrap</span>(myExports);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(myExports);<br></code></pre></td></tr></table></figure>
+
+<p>打印：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123; name: <span class="hljs-string">&#x27;alien&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们期望修改 <code>myExports</code> ，但是没有任何作用。</p>
+<p>假设 <code>wrap</code> 就是 <code>Commonjs</code> 规范下的包装函数，我们的 <code>js</code> 代码就是包装函数内部的内容。当我们把 <code>myExports</code> 对象传进去，但是直接赋值 <code>myExports = &#123; name:&#39;我不是外星人&#39; &#125;</code> 没有任何作用，相等于内部重新声明一份 <code>myExports</code> 而和外界的 <code>myExports</code> 断绝了关系。所以解释了为什么不能 <code>exports=&#123;...&#125;</code> 直接赋值。</p>
+<p>那么解决上述也容易，只需要函数中像 <code>exports.name</code> 这么写就可以了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrap</span>(<span class="hljs-params">myExports</span>) &#123;<br>  myExports.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>打印:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ node main.js<br>&#123; name: <span class="hljs-string">&#x27;我不是外星人&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="module-exports-使用"><a href="#module-exports-使用" class="headerlink" title="module.exports 使用"></a>module.exports 使用</h4><p><code>module.exports</code> 本质上就是 <code>exports</code> ，我们用 <code>module.exports</code> 来实现如上的导出。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>module.exports</code> 也可以单独导出一个函数或者一个类。比如如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-comment">// ...</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>从上述 <code>require</code> 原理实现中，我们知道了 <code>exports</code> 和 <code>module.exports</code> 持有相同引用，因为最后导出的是 <code>module.exports</code> 。那么这就说明在一个文件中，我们最好选择 <code>exports</code> 和 <code>module.exports</code> 两者之一，如果两者同时存在，很可能会造成覆盖的情况发生。比如如下情况：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">exports</span>.<span class="hljs-property">name</span> = <span class="hljs-string">&quot;alien&quot;</span>; <span class="hljs-comment">// 此时 exports.name 是无效的</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = &#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;aaa&quot;</span>,<br>  <span class="hljs-attr">author</span>: <span class="hljs-string">&quot;我不是外星人&quot;</span>,<br>  <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-number">666</span>);<br>  &#125;,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>上述情况下 <code>exports.name</code> 无效，会被 <code>module.exports</code> 覆盖。</p>
+<h5 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q &amp; A"></a>Q &amp; A</h5><p>1 那么问题来了？既然有了 <code>exports</code>，为何又出了 <code>module.exports</code>?</p>
+<p>答：如果我们不想在 <code>commonjs</code> 中导出对象，而是只导出一个类或者一个函数再或者其他属性的情况，那么 <code>module.exports</code> 就更方便了，如上我们知道 <code>exports</code> 会被初始化成一个对象，也就是我们只能在对象上绑定属性，但是我们可以通过 <code>module.exports</code> 自定义导出出对象外的其他类型元素。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">let</span> a = <span class="hljs-number">1</span>;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = a; <span class="hljs-comment">// 导出函数</span><br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]; <span class="hljs-comment">// 导出数组</span><br><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;&#125;; <span class="hljs-comment">//导出方法</span><br></code></pre></td></tr></table></figure>
+
+<p>2 与 <code>exports</code> 相比，<code>module.exports</code> 有什么缺陷 ？</p>
+<p>答：<code>module.exports</code> 当导出一些函数等非对象属性的时候，也有一些风险，就比如循环引用的情况下。对象会保留相同的内存地址，就算一些属性是后绑定的，也能间接通过异步形式访问到。但是如果 <code>module.exports</code> 为一个非对象其他属性类型，在循环引用的时候，就容易造成属性丢失的情况发生了。</p>
+<h3 id="Es-Module"><a href="#Es-Module" class="headerlink" title="Es Module"></a>Es Module</h3><p><code>Nodejs</code> 借鉴了 <code>Commonjs</code> 实现了模块化 ，从 <code>ES6</code> 开始， <code>JavaScript</code> 才真正意义上有自己的模块化规范，</p>
+<p><code>Es Module</code> 的产生有很多优势，比如:</p>
+<ul>
+<li>借助 <code>Es Module</code> 的静态导入导出的优势，实现了 <code>tree shaking</code>。</li>
+<li><code>Es Module</code> 还可以 <code>import()</code> 懒加载方式实现代码分割。</li>
+</ul>
+<p>在 <code>Es Module</code> 中用 <code>export</code> 用来导出模块，<code>import</code> 用来导入模块。但是 <code>export</code> 配合 <code>import</code> 会有很多种组合情况，接下来我们逐一分析一下。</p>
+<h4 id="导出-export-和导入-import"><a href="#导出-export-和导入-import" class="headerlink" title="导出 export 和导入 import"></a>导出 export 和导入 import</h4><p>所有通过 <code>export</code> 导出的属性，在 <code>import</code> 中可以通过结构的方式，解构出来。</p>
+<h5 id="export-正常导出，import-导入"><a href="#export-正常导出，import-导入" class="headerlink" title="export 正常导出，import 导入"></a>export 正常导出，import 导入</h5><p>导出模块：<code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><span class="hljs-keyword">export</span> &#123; name, author &#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>导入模块：<code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// name , author , say 对应 a.js 中的  name , author , say</span><br><span class="hljs-keyword">import</span> &#123; name, author, say &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>export &#123; &#125;</code>， 与变量名绑定，命名导出。</li>
+<li><code>import &#123; &#125; from &#39;module&#39;</code>， 导入 <code>module</code> 的命名导出 ，<code>module</code> 为如上的 <code>./a.js</code></li>
+<li>这种情况下 <code>import &#123; &#125;</code> 内部的变量名称，要与 <code>export &#123; &#125;</code> 完全匹配。</li>
+</ul>
+<h5 id="默认导出-export-default"><a href="#默认导出-export-default" class="headerlink" title="默认导出 export default"></a>默认导出 export default</h5><p>导出模块：<code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><span class="hljs-keyword">const</span> say = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> &#123;<br>  name,<br>  author,<br>  say,<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p>导入模块：<code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(mes); <span class="hljs-comment">//&#123; name: &#x27;aaa&#x27;,author:&#x27;我不是外星人&#x27;, say:Function &#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>export default anything</code> 导入 <code>module</code> 的默认导出。<code>anything</code> 可以是函数，属性方法，或者对象。</li>
+<li>对于引入默认导出的模块，<code>import anyName from &#39;module&#39;</code>， <code>anyName</code> 可以是自定义名称。</li>
+</ul>
+<h5 id="混合导入｜导出"><a href="#混合导入｜导出" class="headerlink" title="混合导入｜导出"></a>混合导入｜导出</h5><p><code>ES6 module</code> 可以使用 <code>export default</code> 和 <code>export</code> 导入多个属性。</p>
+<p>导出模块：<code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;aaa&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>导入模块：<code>main.js</code> 中有几种导入方式：</p>
+<p>第一种：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, &#123; name, author <span class="hljs-keyword">as</span> bookAuthor &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123;console.log(&#x27;hello , world&#x27;) &#125;</span><br>  name, <span class="hljs-comment">// &quot;aaa&quot;</span><br>  bookAuthor <span class="hljs-comment">// &quot;我不是外星人&quot;</span><br>);<br></code></pre></td></tr></table></figure>
+
+<p>第二种：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> theSay, * <span class="hljs-keyword">as</span> mes <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<br>  theSay, <span class="hljs-comment">// ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125;</span><br>  mes <span class="hljs-comment">// &#123; name:&#x27;aaa&#x27; , author: &quot;我不是外星人&quot; ，default:  ƒ say() &#123; console.log(&#x27;hello , world&#x27;) &#125; &#125;</span><br>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>导出的属性被合并到 <code>mes</code> 属性上， <code>export</code> 被导入到对应的属性上，<code>export default</code> 导出内容被绑定到 <code>default</code> 属性上。<code>theSay</code> 也可以作为被 <code>export default</code> 导出属性。</p>
+</blockquote>
+<h5 id="重属名导入"><a href="#重属名导入" class="headerlink" title="重属名导入"></a>重属名导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; bookName <span class="hljs-keyword">as</span> name, say, bookAuthor <span class="hljs-keyword">as</span> author &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;module&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(bookName, bookAuthor, say); <span class="hljs-comment">//aaa 我不是外星人</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>从 <code>module</code> 模块中引入 <code>name</code> ，并重命名为 <code>bookName</code> ，从 <code>module</code> 模块中引入 <code>author</code> ，并重命名为 <code>bookAuthor</code>。然后在当前模块下，使用被重命名的名字。</p>
+</blockquote>
+<h5 id="重定向导出"><a href="#重定向导出" class="headerlink" title="重定向导出"></a>重定向导出</h5><p>可以把当前模块作为一个中转站，一方面引入 <code>module</code> 内的属性，然后把属性再给导出去。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> * <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span> <span class="hljs-comment">// 第一种方式</span><br><span class="hljs-keyword">export</span> &#123; name, author, ..., say &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span> <span class="hljs-comment">// 第二种方式</span><br><span class="hljs-keyword">export</span> &#123; bookName <span class="hljs-keyword">as</span> name, bookAuthor <span class="hljs-keyword">as</span> author, ..., say &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span> <span class="hljs-comment">//第三种方式</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第一种方式：重定向导出 <code>module</code> 中的所有导出属性， 但是不包括 <code>module</code> 内的 <code>default</code> 属性。</li>
+<li>第二种方式：从 <code>module</code> 中导入 <code>name</code> ，<code>author </code>，<code>say</code> 再以相同的属性名，导出。</li>
+<li>第三种方式：从 <code>module</code> 中导入 <code>name</code> ，重属名为 <code>bookName</code> 导出，从 <code>module</code> 中导入 <code>author</code> ，重属名为 <code>bookAuthor</code> 导出，正常导出 <code>say</code> 。</li>
+</ul>
+<h5 id="无需导入模块，只运行模块"><a href="#无需导入模块，只运行模块" class="headerlink" title="无需导入模块，只运行模块"></a>无需导入模块，只运行模块</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;module&quot;</span>;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>执行 <code>module</code> 不导出值 多次调用 <code>module</code> 只运行一次。</p>
+</blockquote>
+<h5 id="动态导入"><a href="#动态导入" class="headerlink" title="动态导入"></a>动态导入</h5><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> promise = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;module&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>import(&#39;module&#39;)</code>，动态导入返回一个 <code>Promise</code>。为了支持这种方式，需要在 <code>webpack</code> 中做相应的配置处理。</p>
+</blockquote>
+<h4 id="ES6-module-特性"><a href="#ES6-module-特性" class="headerlink" title="ES6 module 特性"></a>ES6 module 特性</h4><p>接下来我们重点分析一下 <code>ES6 module</code> 一些重要特性。</p>
+<h5 id="1-静态语法"><a href="#1-静态语法" class="headerlink" title="1 静态语法"></a>1 静态语法</h5><p><code>ES6 module</code> 的引入和导出是静态的，<code>import</code> 会自动提升到代码的顶层 ，<code>import</code> , <code>export</code> 不能放在块级作用域或条件语句中。<br>🙅 错误写法一：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">import</span> name <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a.js&quot;</span>;<br>  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> author = <span class="hljs-string">&quot;我不是外星人&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>🙅 错误写法二：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">isexport &amp;&amp;  <span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span>  name = <span class="hljs-string">&#x27;aaa&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>这种静态语法，在编译过程中确定了导入和导出的关系，所以更方便去查找依赖，更方便去 <code>tree shaking</code> (摇树) ， 可以使用 <code>lint</code> 工具对模块依赖进行检查，可以对导入导出加上类型信息进行静态的类型检查。</p>
+<p><code>import</code> 的导入名不能为字符串或在判断语句，下面代码是错误的</p>
+<p>🙅 错误写法三：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;defaultExport&#x27;</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span><br><br><span class="hljs-keyword">let</span> name = <span class="hljs-string">&#x27;Export&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;default&#x27;</span> + name <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;module&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<h5 id="2-执行特性"><a href="#2-执行特性" class="headerlink" title="2 执行特性"></a>2 执行特性</h5><p><code>ES6 module</code> 和 <code>Common.js</code> 一样，对于相同的 <code>js</code> 文件，会保存静态属性。</p>
+<p>但是与 <code>Common.js</code> 不同的是 ，<code>CommonJS</code> 模块同步加载并执行模块文件，<code>ES6</code> 模块提前加载并执行模块文件，<code>ES6</code> 模块在预处理阶段分析模块依赖，在执行阶段执行模块，两个阶段都采用深度优先遍历，执行顺序是子 -&gt; 父。</p>
+<p>为了验证这一点，看一下如下 demo。<br><code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;main.js开始执行&quot;</span>);<br><span class="hljs-keyword">import</span> say <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-keyword">import</span> say1 <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./b&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;main.js执行完毕&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p><code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> b <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./b&quot;</span>;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;a模块加载&quot;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">say</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello , world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>b.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;b模块加载&quot;</span>);<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello,world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.js </code>和 <code>a.js</code> 都引用了 <code>b.js</code> 模块，但是 <code>b</code> 模块也只加载了一次。<br>执行顺序是子 -&gt; 父</p>
+<p>效果如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">b模块加载<br>a模块加载<br>main.js开始执行<br>main.js执行完毕<br></code></pre></td></tr></table></figure>
+
+<h5 id="3-导出绑定"><a href="#3-导出绑定" class="headerlink" title="3 导出绑定"></a>3 导出绑定</h5><p>不能修改 <code>import</code> 导入的属性</p>
+<p><code>a.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> num = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">addNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num++;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.js</code>中</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br>num = <span class="hljs-number">2</span>;<br></code></pre></td></tr></table></figure>
+
+<p>如果直接修改，那么会报错。如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">Uncaught Error: <span class="hljs-string">&quot;num&quot;</span> is read-only.<br></code></pre></td></tr></table></figure>
+
+<h5 id="属性绑定"><a href="#属性绑定" class="headerlink" title="属性绑定"></a>属性绑定</h5><p>所以可以在 <code>main.js</code> 中这么修改。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; num, addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 1</span><br><span class="hljs-title function_">addNumber</span>();<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(num); <span class="hljs-comment">// num = 2</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如上属性 num 的导入是绑定的。</p>
+</blockquote>
+<p>接下来对 <code>import</code> 属性作出总结：</p>
+<ul>
+<li>使用 <code>import</code> 被导入的模块运行在严格模式下。</li>
+<li>使用 <code>import</code> 被导入的变量是只读的，可以理解默认为 <code>const</code> 装饰，无法被赋值</li>
+<li>使用 <code>import</code> 被导入的变量是与原变量绑定/引用的，可以理解为 <code>import</code> 导入的变量无论是否为基本类型都是引用传递。</li>
+</ul>
+<h4 id="import-动态引入"><a href="#import-动态引入" class="headerlink" title="import() 动态引入"></a>import() 动态引入</h4><p><code>import()</code> 返回一个 <code>Promise</code> 对象， 返回的 <code>Promise</code> 的 <code>then</code> 成功回调中，可以获取模块的加载成功信息。我们来简单看一下 <code>import()</code> 是如何使用的。</p>
+<p><code>main.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>  result.<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">res</span>) =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(res);<br>  &#125;);<br>&#125;, <span class="hljs-number">0</span>);<br></code></pre></td></tr></table></figure>
+
+<p><code>b.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> name = <span class="hljs-string">&quot;alien&quot;</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">sayhello</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;hello,world&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>打印如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">&#123;<br>  <span class="hljs-attr">default</span>: f <span class="hljs-title function_">sayhello</span>()<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;alien&#x27;</span><br>    <span class="hljs-attr">_esModule</span>: <span class="hljs-literal">true</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>从打印结果可以看出 <code>import()</code>的基本特性。</p>
+<ul>
+<li><code>import()</code> 可以动态使用，加载模块。</li>
+<li><code>import()</code> 返回一个 <code>Promise</code> ，成功回调 <code>then</code> 中可以获取模块对应的信息。<code>name</code> 对应 <code>name</code> 属性， <code>default</code> 代表 <code>export default</code> 。<code>__esModule</code> 为 <code>es module</code> 的标识。</li>
+</ul>
+<h5 id="import-可以做一些什么"><a href="#import-可以做一些什么" class="headerlink" title="import() 可以做一些什么"></a>import() 可以做一些什么</h5><h6 id="动态加载"><a href="#动态加载" class="headerlink" title="动态加载"></a>动态加载</h6><p>首先 <code>import()</code> 动态加载一些内容，可以放在条件语句或者函数执行上下文中。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">if</span> (isRequire) &#123;<br>  <span class="hljs-keyword">const</span> result = <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./b&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h6 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h6><p><code>import()</code> 可以实现懒加载，举个例子 <code>vue</code> 中的路由懒加载；</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">[<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;home&quot;</span>,<br>    <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;首页&quot;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./home&quot;</span>),<br>  &#125;,<br>];<br></code></pre></td></tr></table></figure>
+
+<h6 id="React-中动态加载"><a href="#React-中动态加载" class="headerlink" title="React 中动态加载"></a>React 中动态加载</h6><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-title class_">LazyComponent</span> = <span class="hljs-title class_">React</span>.<span class="hljs-title function_">lazy</span>(<span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./text&quot;</span>));<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">index</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">React.Component</span> &#123;<br>  <span class="hljs-title function_">render</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> (<br>      <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.Suspense</span></span></span><br><span class="hljs-tag"><span class="language-xml">        <span class="hljs-attr">fallback</span>=<span class="hljs-string">&#123;</span></span></span><br><span class="hljs-tag"><span class="language-xml">          &lt;<span class="hljs-attr">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;icon&quot;</span>&gt;</span></span><br><span class="language-xml">            <span class="hljs-tag">&lt;<span class="hljs-name">SyncOutlinespin</span> /&gt;</span></span><br><span class="language-xml">          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">        &#125;</span><br><span class="language-xml">      &gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">LazyComponent</span> /&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">React.Suspense</span>&gt;</span></span><br>    );<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>React.lazy</code> 和 <code>Suspense</code> 配合一起用，能够有动态加载组件的效果。<code>React.lazy</code> 接受一个函数，这个函数需要动态调用 <code>import()</code> 。</p>
+<p><code>import()</code> 这种加载效果，可以很轻松的实现代码分割。避免一次性加载大量 <code>js</code> 文件，造成首次加载白屏时间过长的情况。</p>
+<h4 id="tree-shaking-实现"><a href="#tree-shaking-实现" class="headerlink" title="tree shaking 实现"></a>tree shaking 实现</h4><p><code>Tree Shaking</code> 在 <code>Webpack</code> 中的实现，是用来尽可能的删除没有被使用过的代码，一些被 <code>import</code> 了但其实没有被使用的代码。比如以下场景：</p>
+<p><code>a.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">export</span> <span class="hljs-keyword">let</span> num = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">addNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num++;<br>&#125;;<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-title function_">delNumber</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>  num--;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; addNumber &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./a&quot;</span>;<br><span class="hljs-title function_">addNumber</span>();<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如上 <code>a.js</code> 中暴露两个方法，<code>addNumber</code> 和 <code>delNumber</code>，但是整个应用中，只用到了 <code>addNumber</code>，那么构建打包的时候，<code>delNumber</code> 将作为没有引用的方法，不被打包进来。</p>
+</blockquote>
+<h3 id="Commonjs-和-Es-Module-总结"><a href="#Commonjs-和-Es-Module-总结" class="headerlink" title="Commonjs 和 Es Module 总结"></a>Commonjs 和 Es Module 总结</h3><p>接下来贯穿全文，讲一下 <code>Commonjs</code> 和 <code>Es Module</code> 的特性。</p>
+<h4 id="Commonjs-总结"><a href="#Commonjs-总结" class="headerlink" title="Commonjs 总结"></a><code>Commonjs</code> 总结</h4><p><code>Commonjs</code> 的特性如下：</p>
+<ul>
+<li><code>CommonJS</code> 模块由 <code>JS</code> 运行时实现。</li>
+<li><code>CommonJs</code> 是单个值导出，本质上导出的就是 <code>exports</code> 属性。</li>
+<li><code>CommonJS</code> 是可以动态加载的，对每一个加载都存在缓存，可以有效的解决循环引用问题。</li>
+<li><code>CommonJS</code> 模块同步加载并执行模块文件。</li>
+</ul>
+<h4 id="es-module-总结"><a href="#es-module-总结" class="headerlink" title="es module 总结"></a><code>es module</code> 总结</h4><p><code>Es module</code> 的特性如下：</p>
+<ul>
+<li><code>ES6 Module</code> 静态的，不能放在块级作用域内，代码发生在编译时。</li>
+<li><code>ES6 Module</code> 的值是动态绑定的，可以通过导出方法修改，可以直接访问修改结果。</li>
+<li><code>ES6 Module</code> 可以导出多个属性和方法，可以单个导入导出，混合导入导出。</li>
+<li><code>ES6</code> 模块提前加载并执行模块文件，</li>
+<li><code>ES6 Module</code> 导入模块在严格模式下。</li>
+<li><code>ES6 Module</code> 的特性可以很容易实现 <code>Tree Shaking</code> 和 <code>Code Splitting</code>。</li>
+</ul>
+<h3 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h3><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/dvg8wuJ3p1AAWqTnH3zg6Q">Commonjs 和 Es Module 区别</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2021/09/05/2021-09-05-commonjs-es-module/" title="剖析commonjs与es module" target="_blank">https://luckyship.github.io/2021/09/05/2021-09-05-commonjs-es-module/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2021/09/05/2021-09-05-commonjs-es-module/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/09/12/2021-09-12-diff-calculate/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          diff算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/29/2021-08-29-http-cache/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">前端缓存</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

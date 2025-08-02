@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>diff算法 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="Diff 算法核心原理1、认识虚拟 DOM（Virtual DOM）没有 vue 之前我们都是用 js 和 jq，操作 DOM—&gt;视图更新 有了 vue，数据改变—&gt;生成虚拟 DOM（计算变更）—&gt;操作真实的 DOM—&gt;视图更新">
+<meta property="og:type" content="article">
+<meta property="og:title" content="diff算法">
+<meta property="og:url" content="https://luckyship.github.io/2021/09/12/2021-09-12-diff-calculate/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="Diff 算法核心原理1、认识虚拟 DOM（Virtual DOM）没有 vue 之前我们都是用 js 和 jq，操作 DOM—&gt;视图更新 有了 vue，数据改变—&gt;生成虚拟 DOM（计算变更）—&gt;操作真实的 DOM—&gt;视图更新">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/1.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/11.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/2.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/3.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/15.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/3.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/5.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/6.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/7.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/8.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/9.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/9-1.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/13.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/12.png">
+<meta property="og:image" content="https://luckyship.github.io/img/diff-calculate/14.png">
+<meta property="article:published_time" content="2021-09-12T08:18:15.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.177Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="vue">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luckyship.github.io/img/diff-calculate/1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Diff-%E7%AE%97%E6%B3%95%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">Diff 算法核心原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E8%AE%A4%E8%AF%86%E8%99%9A%E6%8B%9F-DOM%EF%BC%88Virtual-DOM%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1、认识虚拟 DOM（Virtual DOM）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E4%BB%80%E4%B9%88%E6%98%AF-Diff-%E7%AE%97%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">2、什么是 Diff 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Diff-%E7%AE%97%E6%B3%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">3、Diff 算法的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Diff-%E5%AF%B9%E6%AF%94%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">4、Diff 对比流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#patch-%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">patch 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sameVnode-%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.2.</span> <span class="toc-text">sameVnode 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#patchVnode-%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.3.</span> <span class="toc-text">patchVnode 方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#updateChildren-%E6%96%B9%E6%B3%95"><span class="toc-number">1.4.4.</span> <span class="toc-text">updateChildren 方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9AoldS-%E5%92%8C-newE-%E7%9B%B8%E7%AD%89%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8A%8A%E8%8A%82%E7%82%B9a%E7%A7%BB%E5%8A%A8%E5%88%B0newE%E6%89%80%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E6%9C%AB%E5%B0%BE"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">第一步：oldS 和 newE 相等，需要把节点a移动到newE所对应的位置，也就是末尾</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9AoldS-%E5%92%8C-newS%E7%9B%B8%E7%AD%89%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8A%8A%E8%8A%82%E7%82%B9b%E7%A7%BB%E5%8A%A8%E5%88%B0newS%E6%89%80%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.4.4.2.</span> <span class="toc-text">第二步：oldS 和 newS相等，需要把节点b移动到newS所对应的位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9AoldS%E3%80%81oldE-%E5%92%8C-newS%E7%9B%B8%E7%AD%89%EF%BC%8C%E9%9C%80%E8%A6%81%E6%8A%8A%E8%8A%82%E7%82%B9c%E7%A7%BB%E5%8A%A8%E5%88%B0newS%E6%89%80%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">1.4.4.3.</span> <span class="toc-text">第三步：oldS、oldE 和 newS相等，需要把节点c移动到newS所对应的位置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9AoldCh%E5%85%88%E9%81%8D%E5%8E%86%E5%AE%8C%E6%88%90%E4%BA%86%EF%BC%8C%E8%80%8CnewCh%E8%BF%98%E6%B2%A1%E9%81%8D%E5%8E%86%E5%AE%8C%EF%BC%8C%E8%AF%B4%E6%98%8EnewCh%E6%AF%94oldCh%E5%A4%9A%EF%BC%8C%E6%89%80%E4%BB%A5%E9%9C%80%E8%A6%81%E5%B0%86%E5%A4%9A%E5%87%BA%E6%9D%A5%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C%E6%8F%92%E5%85%A5%E5%88%B0%E7%9C%9F%E5%AE%9E-DOM-%E4%B8%8A%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BD%8D%E7%BD%AE%E4%B8%8A"><span class="toc-number">1.4.4.4.</span> <span class="toc-text">第四步：oldCh先遍历完成了，而newCh还没遍历完，说明newCh比oldCh多，所以需要将多出来的节点，插入到真实 DOM 上对应的位置上</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E6%9E%9ColdCh%E6%AF%94newCh%E5%A4%9A%E7%9A%84%E8%AF%9D%EF%BC%8C%E9%82%A3%E5%B0%B1%E6%98%AFnewCh%E5%85%88%E8%B5%B0%E5%AE%8C%E5%BE%AA%E7%8E%AF%EF%BC%8C%E7%84%B6%E5%90%8EoldCh%E4%BC%9A%E6%9C%89%E5%A4%9A%E5%87%BA%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C%E7%BB%93%E6%9E%9C%E4%BC%9A%E5%9C%A8%E7%9C%9F%E5%AE%9E-DOM-%E9%87%8C%E8%BF%9B%E8%A1%8C%E5%88%A0%E9%99%A4%E8%BF%99%E4%BA%9B%E6%97%A7%E8%8A%82%E7%82%B9%E3%80%82"><span class="toc-number">1.4.4.5.</span> <span class="toc-text">如果oldCh比newCh多的话，那就是newCh先走完循环，然后oldCh会有多出的节点，结果会在真实 DOM 里进行删除这些旧节点。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%94%A8-index-%E4%BD%9C%E4%B8%BA%E5%BE%AA%E7%8E%AF%E9%A1%B9%E7%9A%84-key"><span class="toc-number">1.5.</span> <span class="toc-text">5、为什么不建议用 index 作为循环项的 key</span></a></li></ol></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2021-09-12-diff-calculate" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      diff算法
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2021/09/12/2021-09-12-diff-calculate/" class="archive-article-date">
+  <!-- <time datetime="2021-09-12T08:18:15.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
+        <time datetime="2025-08-02T05:46:04.177Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.177Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-09-12
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">9分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="Diff-算法核心原理"><a href="#Diff-算法核心原理" class="headerlink" title="Diff 算法核心原理"></a>Diff 算法核心原理</h2><h3 id="1、认识虚拟-DOM（Virtual-DOM）"><a href="#1、认识虚拟-DOM（Virtual-DOM）" class="headerlink" title="1、认识虚拟 DOM（Virtual DOM）"></a>1、认识虚拟 DOM（Virtual DOM）</h3><p>没有 vue 之前我们都是用 js 和 jq，操作 DOM—&gt;视图更新</p>
+<p>有了 vue，数据改变—&gt;生成虚拟 DOM（计算变更）—&gt;操作真实的 DOM—&gt;视图更新</p>
+<span id="more"></span>
+
+<p>真实 DOM：</p>
+<figure class="highlight stata"><table><tr><td class="code"><pre><code class="hljs stata">&lt;ul id=<span class="hljs-string">&quot;list&quot;</span>&gt;<br>    &lt;<span class="hljs-keyword">li</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;哈哈&lt;/<span class="hljs-keyword">li</span>&gt;<br>    &lt;<span class="hljs-keyword">li</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;呵呵&lt;/<span class="hljs-keyword">li</span>&gt;<br>    &lt;<span class="hljs-keyword">li</span> <span class="hljs-keyword">class</span>=<span class="hljs-string">&quot;item&quot;</span>&gt;嘿嘿&lt;/<span class="hljs-keyword">li</span>&gt;<br>&lt;/ul&gt;<br></code></pre></td></tr></table></figure>
+
+<p>对应的虚拟 DOM 为：</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><code class="hljs perl">let oldVDOM = &#123; <span class="hljs-regexp">//</span> 旧虚拟DOM<br>  tagName: <span class="hljs-string">&#x27;ul&#x27;</span>, <span class="hljs-regexp">//</span> 标签名<br>  props: &#123; <span class="hljs-regexp">//</span> 标签属性<br>    id: <span class="hljs-string">&#x27;list&#x27;</span><br>  &#125;,<br>  children: [ <span class="hljs-regexp">//</span> 标签子节点<br>    &#123;<br>      tagName: <span class="hljs-string">&#x27;li&#x27;</span>, props: &#123; <span class="hljs-class"><span class="hljs-keyword">class</span>: &#x27;<span class="hljs-title">item</span>&#x27; &#125;, <span class="hljs-title">children</span>: [&#x27;哈哈&#x27;]</span><br><span class="hljs-class">    &#125;,</span><br><span class="hljs-class">    </span>&#123;<br>      tagName: <span class="hljs-string">&#x27;li&#x27;</span>, props: &#123; <span class="hljs-class"><span class="hljs-keyword">class</span>: &#x27;<span class="hljs-title">item</span>&#x27; &#125;, <span class="hljs-title">children</span>: [&#x27;呵呵&#x27;]</span><br><span class="hljs-class">    &#125;,</span><br><span class="hljs-class">    </span>&#123;<br>      tagName: <span class="hljs-string">&#x27;li&#x27;</span>, props: &#123; <span class="hljs-class"><span class="hljs-keyword">class</span>: &#x27;<span class="hljs-title">item</span>&#x27; &#125;, <span class="hljs-title">children</span>: [&#x27;嘿嘿&#x27;]</span><br><span class="hljs-class">    &#125;,</span><br><span class="hljs-class">  ]</span><br><span class="hljs-class">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>虚拟 DOM 算法 = 虚拟 DOM + Diff 算法</p>
+<p>好处：<strong>虚拟 DOM 算法操作真实 DOM，性能高于直接操作真实 DOM</strong></p>
+<h3 id="2、什么是-Diff-算法"><a href="#2、什么是-Diff-算法" class="headerlink" title="2、什么是 Diff 算法"></a>2、什么是 Diff 算法</h3><p><img src="/img/diff-calculate/1.png"></p>
+<p>上图中，其实只有一个 li 标签修改了文本，其他都是不变的，所以没必要所有的节点都要更新，只更新这个 li 标签就行，Diff 算法就是查出这个 li 标签的算法。</p>
+<p>总结：<strong>Diff 算法是一种对比算法</strong>。对比两者是<code>旧虚拟DOM和新虚拟DOM</code>，对比出是哪个<code>虚拟节点</code>更改了，找出这个<code>虚拟节点</code>，并只更新这个虚拟节点所对应的<code>真实节点</code>，而不用更新其他数据没发生改变的节点，实现<code>精准</code>地更新真实 DOM，进而<code>提高效率</code>。</p>
+<h3 id="3、Diff-算法的原理"><a href="#3、Diff-算法的原理" class="headerlink" title="3、Diff 算法的原理"></a>3、Diff 算法的原理</h3><p>新旧虚拟 DOM 对比的时候，Diff 算法比较只会在同层级进行, 不会跨层级比较。</p>
+<p><img src="/img/diff-calculate/11.png"></p>
+<p><img src="/img/diff-calculate/2.png"></p>
+<h3 id="4、Diff-对比流程"><a href="#4、Diff-对比流程" class="headerlink" title="4、Diff 对比流程"></a>4、Diff 对比流程</h3><p><img src="/img/diff-calculate/3.png"></p>
+<p>当数据改变时，会触发<code>setter</code>，并且通过<code>Dep.notify</code>去通知所有<code>订阅者Watcher</code>，订阅者们就会调用<code>patch方法</code></p>
+<p><img src="/img/diff-calculate/15.png"></p>
+<p>1、Data 通过 Observer 转换成了 getter/setter 的形式来追踪变化。</p>
+<p>2、当外界通过 Watcher 读取数据时，会触发 getter 从而将 Watcher 添加到依赖中。</p>
+<p>3、当数据发生了变化时，会触发 setter，从而 Dep 中的依赖（Watcher）发送通知。</p>
+<p>4、Watcher 接收到通知后，会向外界发送通知，变化通知到外界后可能会触发视图更新，也有可能会触发用户返回的某个回调函数。</p>
+<h4 id="patch-方法"><a href="#patch-方法" class="headerlink" title="patch 方法"></a>patch 方法</h4><p>对比当前同层的虚拟节点是否为同一种类型的标签：</p>
+<ul>
+<li>是：继续执行<code>patchVnode方法</code>进行深层比对</li>
+<li>否：没必要比对了，直接整个节点替换成<code>新虚拟节点</code></li>
+</ul>
+<p><img src="/img/diff-calculate/3.png"></p>
+<p><code>patch</code>的核心原理代码：</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><code class="hljs stylus">function <span class="hljs-built_in">patch</span>(oldVnode, newVnode) &#123;<br>  <span class="hljs-comment">// 比较是否为一个类型的节点</span><br>  <span class="hljs-keyword">if</span> (<span class="hljs-built_in">sameVnode</span>(oldVnode, newVnode)) &#123;<br>    <span class="hljs-comment">// 是：继续进行深层比较</span><br>    <span class="hljs-built_in">patchVnode</span>(oldVnode, newVnode)<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 否</span><br>    const oldEl = oldVnode<span class="hljs-selector-class">.el</span> <span class="hljs-comment">// 旧虚拟节点的真实DOM节点</span><br>    const parentEle = api<span class="hljs-selector-class">.parentNode</span>(oldEl) <span class="hljs-comment">// 获取父节点</span><br>    <span class="hljs-built_in">createEle</span>(newVnode) <span class="hljs-comment">// 创建新虚拟节点对应的真实DOM节点</span><br>    <span class="hljs-keyword">if</span> (parentEle !== null) &#123;<br>      api<span class="hljs-selector-class">.insertBefore</span>(parentEle, vnode<span class="hljs-selector-class">.el</span>, api<span class="hljs-selector-class">.nextSibling</span>(oEl)) <span class="hljs-comment">// 将新元素添加进父元素</span><br>      api<span class="hljs-selector-class">.removeChild</span>(parentEle, oldVnode.el)  <span class="hljs-comment">// 移除以前的旧元素节点</span><br>      <span class="hljs-comment">// 设置null，释放内存</span><br>      oldVnode = null<br>    &#125;<br>  &#125;<br><br>  return newVnode<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="sameVnode-方法"><a href="#sameVnode-方法" class="headerlink" title="sameVnode 方法"></a>sameVnode 方法</h4><p>patch 关键的一步就是<code>sameVnode方法判断是否为同一类型节点</code>，</p>
+<p>sameVnode 方法的核心原理代码：</p>
+<figure class="highlight 1c"><table><tr><td class="code"><pre><code class="hljs 1c">function sameVnode<span class="hljs-punctuation">(</span>oldVnode<span class="hljs-punctuation">,</span> newVnode<span class="hljs-punctuation">)</span> &#123;<br>  return <span class="hljs-punctuation">(</span><br>    oldVnode.key <span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span> newVnode.key <span class="hljs-meta">&amp;&amp; <span class="hljs-comment">// key值是否一样</span></span><br>    oldVnode.tagName <span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span> newVnode.tagName <span class="hljs-meta">&amp;&amp; <span class="hljs-comment">// 标签名是否一样</span></span><br>    oldVnode.isComment <span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span> newVnode.isComment <span class="hljs-meta">&amp;&amp; <span class="hljs-comment">// 是否都为注释节点</span></span><br>    isDef<span class="hljs-punctuation">(</span>oldVnode.data<span class="hljs-punctuation">)</span> <span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span><span class="hljs-punctuation">=</span> isDef<span class="hljs-punctuation">(</span>newVnode.data<span class="hljs-punctuation">)</span> <span class="hljs-meta">&amp;&amp; <span class="hljs-comment">// 是否都定义了data</span></span><br>    sameInputType<span class="hljs-punctuation">(</span>oldVnode<span class="hljs-punctuation">,</span> newVnode<span class="hljs-punctuation">)</span> <span class="hljs-comment">// 当标签为input时，type必须是否相同</span><br>  <span class="hljs-punctuation">)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="patchVnode-方法"><a href="#patchVnode-方法" class="headerlink" title="patchVnode 方法"></a>patchVnode 方法</h4><p>这个函数做了以下事情：</p>
+<ul>
+<li>找到对应的<code>真实DOM</code>，称为<code>el</code></li>
+<li>判断<code>newVnode</code>和<code>oldVnode</code>是否指向同一个对象，如果是，那么直接<code>return</code></li>
+<li>如果他们都有文本节点并且不相等，那么将<code>el</code>的文本节点设置为<code>newVnode</code>的文本节点。</li>
+<li>如果<code>oldVnode</code>有子节点而<code>newVnode</code>没有，则删除<code>el</code>的子节点</li>
+<li>如果<code>oldVnode</code>没有子节点而<code>newVnode</code>有，则将<code>newVnode</code>的子节点真实化之后添加到<code>el</code></li>
+<li>如果两者都有子节点，则执行<code>updateChildren</code>函数比较子节点，这一步很重要</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">patchVnode</span>(<span class="hljs-params">oldVnode, newVnode</span>) &#123;<br>  const el = newVnode.el = oldVnode.el <span class="hljs-comment">// 获取真实DOM对象</span><br>  <span class="hljs-comment">// 获取新旧虚拟节点的子节点数组</span><br>  const oldCh = oldVnode.children, newCh = newVnode.children<br>  <span class="hljs-comment">// 如果新旧虚拟节点是同一个对象，则终止</span><br>  <span class="hljs-keyword">if</span> (oldVnode === newVnode) <span class="hljs-keyword">return</span><br>  <span class="hljs-comment">// 如果新旧虚拟节点是文本节点，且文本不一样</span><br>  <span class="hljs-keyword">if</span> (oldVnode.<span class="hljs-built_in">text</span> !== <span class="hljs-literal">null</span> &amp;&amp; newVnode.<span class="hljs-built_in">text</span> !== <span class="hljs-literal">null</span> &amp;&amp; oldVnode.<span class="hljs-built_in">text</span> !== newVnode.<span class="hljs-built_in">text</span>) &#123;<br>    <span class="hljs-comment">// 则直接将真实DOM中文本更新为新虚拟节点的文本</span><br>    api.setTextContent(el, newVnode.<span class="hljs-built_in">text</span>)<br>  &#125; <span class="hljs-keyword">else</span> &#123;<br>    <span class="hljs-comment">// 否则</span><br><br>    <span class="hljs-keyword">if</span> (oldCh &amp;&amp; newCh &amp;&amp; oldCh !== newCh) &#123;<br>      <span class="hljs-comment">// 新旧虚拟节点都有子节点，且子节点不一样</span><br><br>      <span class="hljs-comment">// 对比子节点，并更新</span><br>      updateChildren(el, oldCh, newCh)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (newCh) &#123;<br>      <span class="hljs-comment">// 新虚拟节点有子节点，旧虚拟节点没有</span><br><br>      <span class="hljs-comment">// 创建新虚拟节点的子节点，并更新到真实DOM上去</span><br>      createEle(newVnode)<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldCh) &#123;<br>      <span class="hljs-comment">// 旧虚拟节点有子节点，新虚拟节点没有</span><br><br>      <span class="hljs-comment">//直接删除真实DOM里对应的子节点</span><br>      api.removeChild(el)<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="updateChildren-方法"><a href="#updateChildren-方法" class="headerlink" title="updateChildren 方法"></a>updateChildren 方法</h4><p>updateChildren 的核心原理代码：</p>
+<figure class="highlight fsharp"><table><tr><td class="code"><pre><code class="hljs fsharp"><span class="hljs-keyword">function</span> updateChildren(parentElm, oldCh, newCh) &#123;<br>  <span class="hljs-keyword">let</span> oldStartIdx <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, newStartIdx <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>  <span class="hljs-keyword">let</span> oldEndIdx <span class="hljs-operator">=</span> oldCh.length <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">let</span> oldStartVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-number">0</span>]<br>  <span class="hljs-keyword">let</span> oldEndVnode <span class="hljs-operator">=</span> oldCh[oldEndIdx]<br>  <span class="hljs-keyword">let</span> newEndIdx <span class="hljs-operator">=</span> newCh.length <span class="hljs-operator">-</span> <span class="hljs-number">1</span><br>  <span class="hljs-keyword">let</span> newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-number">0</span>]<br>  <span class="hljs-keyword">let</span> newEndVnode <span class="hljs-operator">=</span> newCh[newEndIdx]<br>  <span class="hljs-keyword">let</span> oldKeyToIdx<br>  <span class="hljs-keyword">let</span> idxInOld<br>  <span class="hljs-keyword">let</span> elmToMove<br>  <span class="hljs-keyword">let</span> before<br>  <span class="hljs-keyword">while</span> (oldStartIdx <span class="hljs-operator">&lt;=</span> oldEndIdx <span class="hljs-operator">&amp;&amp;</span> newStartIdx <span class="hljs-operator">&lt;=</span> newEndIdx) &#123;<br>    <span class="hljs-keyword">if</span> (oldStartVnode <span class="hljs-operator">==</span> <span class="hljs-literal">null</span>) &#123;<br>      oldStartVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">++</span>oldStartIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldEndVnode <span class="hljs-operator">==</span> <span class="hljs-literal">null</span>) &#123;<br>      oldEndVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">--</span>oldEndIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (newStartVnode <span class="hljs-operator">==</span> <span class="hljs-literal">null</span>) &#123;<br>      newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">++</span>newStartIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (newEndVnode <span class="hljs-operator">==</span> <span class="hljs-literal">null</span>) &#123;<br>      newEndVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">--</span>newEndIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sameVnode(oldStartVnode, newStartVnode)) &#123;<br>      patchVnode(oldStartVnode, newStartVnode)<br>      oldStartVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">++</span>oldStartIdx]<br>      newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">++</span>newStartIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sameVnode(oldEndVnode, newEndVnode)) &#123;<br>      patchVnode(oldEndVnode, newEndVnode)<br>      oldEndVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">--</span>oldEndIdx]<br>      newEndVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">--</span>newEndIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sameVnode(oldStartVnode, newEndVnode)) &#123;<br>      patchVnode(oldStartVnode, newEndVnode)<br>      api.insertBefore(parentElm, oldStartVnode.el, api.nextSibling(oldEndVnode.el))<br>      oldStartVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">++</span>oldStartIdx]<br>      newEndVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">--</span>newEndIdx]<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (sameVnode(oldEndVnode, newStartVnode)) &#123;<br>      patchVnode(oldEndVnode, newStartVnode)<br>      api.insertBefore(parentElm, oldEndVnode.el, oldStartVnode.el)<br>      oldEndVnode <span class="hljs-operator">=</span> oldCh[<span class="hljs-operator">--</span>oldEndIdx]<br>      newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">++</span>newStartIdx]<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-comment">// 使用key时的比较</span><br>      <span class="hljs-keyword">if</span> (oldKeyToIdx <span class="hljs-operator">===</span> undefined) &#123;<br>        oldKeyToIdx <span class="hljs-operator">=</span> createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx) <span class="hljs-comment">// 有key生成index表</span><br>      &#125;<br>      idxInOld <span class="hljs-operator">=</span> oldKeyToIdx[newStartVnode.key]<br>      <span class="hljs-keyword">if</span> (<span class="hljs-operator">!</span>idxInOld) &#123;<br>        api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)<br>        newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">++</span>newStartIdx]<br>      &#125;<br>      <span class="hljs-keyword">else</span> &#123;<br>        elmToMove <span class="hljs-operator">=</span> oldCh[idxInOld]<br>        <span class="hljs-keyword">if</span> (elmToMove.sel <span class="hljs-operator">!==</span> newStartVnode.sel) &#123;<br>          api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          patchVnode(elmToMove, newStartVnode)<br>          oldCh[idxInOld] <span class="hljs-operator">=</span> <span class="hljs-literal">null</span><br>          api.insertBefore(parentElm, elmToMove.el, oldStartVnode.el)<br>        &#125;<br>        newStartVnode <span class="hljs-operator">=</span> newCh[<span class="hljs-operator">++</span>newStartIdx]<br>      &#125;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">if</span> (oldStartIdx <span class="hljs-operator">&gt;</span> oldEndIdx) &#123;<br>    before <span class="hljs-operator">=</span> newCh[newEndIdx <span class="hljs-operator">+</span> <span class="hljs-number">1</span>] <span class="hljs-operator">==</span> <span class="hljs-literal">null</span> <span class="hljs-operator">?</span> <span class="hljs-literal">null</span> <span class="hljs-operator">:</span> newCh[newEndIdx <span class="hljs-operator">+</span> 1].el<br>    addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx)<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (newStartIdx <span class="hljs-operator">&gt;</span> newEndIdx) &#123;<br>    removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>首尾指针法：</p>
+<p><img src="/img/diff-calculate/5.png"></p>
+<p>会进行互相进行比较，总共有五种比较情况：</p>
+<ul>
+<li><p>1、<code>oldS 和 newS </code>使用<code>sameVnode方法</code>进行比较，<code>sameVnode(oldS, newS)</code></p>
+</li>
+<li><p>2、<code>oldS 和 newE </code>使用<code>sameVnode方法</code>进行比较，<code>sameVnode(oldS, newE)</code></p>
+</li>
+<li><p>3、<code>oldE 和 newS </code>使用<code>sameVnode方法</code>进行比较，<code>sameVnode(oldE, newS)</code></p>
+</li>
+<li><p>4、<code>oldE 和 newE </code>使用<code>sameVnode方法</code>进行比较，<code>sameVnode(oldE, newE)</code></p>
+</li>
+<li><p>5、如果以上逻辑都匹配不到，再把所有旧子节点的 <code>key</code> 做一个映射到旧节点下标的 <code>key -&gt; index</code> 表，然后用新 <code>vnode</code> 的 <code>key</code> 去找出在旧节点中可以复用的位置。</p>
+<p>图例比较：</p>
+</li>
+</ul>
+<p><img src="/img/diff-calculate/6.png"></p>
+<h5 id="第一步：oldS-和-newE-相等，需要把节点a移动到newE所对应的位置，也就是末尾"><a href="#第一步：oldS-和-newE-相等，需要把节点a移动到newE所对应的位置，也就是末尾" class="headerlink" title="第一步：oldS 和 newE 相等，需要把节点a移动到newE所对应的位置，也就是末尾"></a>第一步：<code>oldS 和 newE</code> 相等，需要把<code>节点a</code>移动到<code>newE</code>所对应的位置，也就是末尾</h5><p><img src="/img/diff-calculate/7.png"></p>
+<h5 id="第二步：oldS-和-newS相等，需要把节点b移动到newS所对应的位置"><a href="#第二步：oldS-和-newS相等，需要把节点b移动到newS所对应的位置" class="headerlink" title="第二步：oldS 和 newS相等，需要把节点b移动到newS所对应的位置"></a>第二步：<code>oldS 和 newS</code>相等，需要把<code>节点b</code>移动到<code>newS</code>所对应的位置</h5><p><img src="/img/diff-calculate/8.png"></p>
+<h5 id="第三步：oldS、oldE-和-newS相等，需要把节点c移动到newS所对应的位置"><a href="#第三步：oldS、oldE-和-newS相等，需要把节点c移动到newS所对应的位置" class="headerlink" title="第三步：oldS、oldE 和 newS相等，需要把节点c移动到newS所对应的位置"></a>第三步：<code>oldS、oldE 和 newS</code>相等，需要把<code>节点c</code>移动到<code>newS</code>所对应的位置</h5><p><img src="/img/diff-calculate/9.png"></p>
+<h5 id="第四步：oldCh先遍历完成了，而newCh还没遍历完，说明newCh比oldCh多，所以需要将多出来的节点，插入到真实-DOM-上对应的位置上"><a href="#第四步：oldCh先遍历完成了，而newCh还没遍历完，说明newCh比oldCh多，所以需要将多出来的节点，插入到真实-DOM-上对应的位置上" class="headerlink" title="第四步：oldCh先遍历完成了，而newCh还没遍历完，说明newCh比oldCh多，所以需要将多出来的节点，插入到真实 DOM 上对应的位置上"></a>第四步：<code>oldCh</code>先遍历完成了，而<code>newCh</code>还没遍历完，说明<code>newCh比oldCh多</code>，所以需要将多出来的节点，插入到真实 DOM 上对应的位置上</h5><p><img src="/img/diff-calculate/9-1.png"></p>
+<h5 id="如果oldCh比newCh多的话，那就是newCh先走完循环，然后oldCh会有多出的节点，结果会在真实-DOM-里进行删除这些旧节点。"><a href="#如果oldCh比newCh多的话，那就是newCh先走完循环，然后oldCh会有多出的节点，结果会在真实-DOM-里进行删除这些旧节点。" class="headerlink" title="如果oldCh比newCh多的话，那就是newCh先走完循环，然后oldCh会有多出的节点，结果会在真实 DOM 里进行删除这些旧节点。"></a>如果<code>oldCh比newCh多</code>的话，那就是<code>newCh</code>先走完循环，然后<code>oldCh</code>会有多出的节点，结果会在真实 DOM 里进行删除这些旧节点。</h5><h3 id="5、为什么不建议用-index-作为循环项的-key"><a href="#5、为什么不建议用-index-作为循环项的-key" class="headerlink" title="5、为什么不建议用 index 作为循环项的 key"></a>5、为什么不建议用 index 作为循环项的 key</h3><p><img src="/img/diff-calculate/13.png"></p>
+<p>a，b，c<code>三个li标签都是复用之前的，因为他们三个根本没改变，改变的只是前面新增了一个</code>林三心</p>
+<p>在进行子节点的 <code>diff算法</code> 过程中，会进行 旧首节点和新首节点的<code>sameNode</code>对比，这一步命中了逻辑，因为现在<code>新旧两次首部节点</code> 的 <code>key</code> 都是 <code>0</code>了，同理，key 为 1 和 2 的也是命中了逻辑，导致<code>相同key的节点</code>会去进行<code>patchVnode</code>更新文本，而原本就有的<code>c节点</code>，却因为之前没有 key 为 4 的节点，而被当做了新节点，所以使用 index 做 key，最后新增的居然是本来就已有的 c 节点。所以前三个都进行<code>patchVnode</code>更新文本，最后一个进行了<code>新增</code>，那就解释了为什么所有 li 标签都更新了。</p>
+<p><img src="/img/diff-calculate/12.png"></p>
+<p>我们只要使用一个独一无二的值 id 来当做 key 就行了。</p>
+<p><img src="/img/diff-calculate/14.png"></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2021/09/12/2021-09-12-diff-calculate/" title="diff算法" target="_blank">https://luckyship.github.io/2021/09/12/2021-09-12-diff-calculate/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">react</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/review//" class="article-tag-list-link color2">review</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2021/09/12/2021-09-12-diff-calculate/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/09/12/2021-09-12-vue-knowledge/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Vue你了解哪些
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/09/05/2021-09-05-commonjs-es-module/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">剖析commonjs与es module</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

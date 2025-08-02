@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>angular7基础 | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="开始准备 安装 nodejs  npm -v   安装@angular&#x2F;cli  npm i -g @angular&#x2F;cli   CLI 命令建立项目  ng new ng7demo  选择是否加入路由模块以及哪种 css 预处理器  可 ctrl+c 取消自动安装 node_modules，手动进入项目 npm installnode-sass 安装不上可切换淘宝镜像库或者用 cnpm 安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular7基础">
+<meta property="og:url" content="https://luckyship.github.io/2021/05/12/2021-05-12-angular7-base/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="开始准备 安装 nodejs  npm -v   安装@angular&#x2F;cli  npm i -g @angular&#x2F;cli   CLI 命令建立项目  ng new ng7demo  选择是否加入路由模块以及哪种 css 预处理器  可 ctrl+c 取消自动安装 node_modules，手动进入项目 npm installnode-sass 安装不上可切换淘宝镜像库或者用 cnpm 安装">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-12T14:24:02.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.175Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="angular">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E5%87%86%E5%A4%87"><span class="toc-number">1.</span> <span class="toc-text">开始准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E7%BB%84%E4%BB%B6"><span class="toc-number">2.1.</span> <span class="toc-text">生成组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%BC%95%E7%94%A8"><span class="toc-number">2.2.</span> <span class="toc-text">组件引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%80%BC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">插值表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A"><span class="toc-number">2.4.</span> <span class="toc-text">属性绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%80%BC%E8%BF%90%E7%AE%97-%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5-%E4%B8%89%E5%85%83-%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="toc-number">2.5.</span> <span class="toc-text">插值运算 加减乘除&#x2F;字符串拼接&#x2F;三元&#x2F;方法调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E7%BB%91%E5%AE%9A"><span class="toc-number">2.6.</span> <span class="toc-text">事件绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%8C%87%E4%BB%A4"><span class="toc-number">2.7.</span> <span class="toc-text">模板指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E6%8C%87%E4%BB%A4"><span class="toc-number">2.7.1.</span> <span class="toc-text">判断指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E6%8C%87%E4%BB%A4"><span class="toc-number">2.7.2.</span> <span class="toc-text">样式指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E6%8C%87%E4%BB%A4"><span class="toc-number">2.7.3.</span> <span class="toc-text">循环指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E7%AC%A6"><span class="toc-number">2.8.</span> <span class="toc-text">管道符</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8-ts-%E4%B8%AD%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">2.8.1.</span> <span class="toc-text">在 ts 中的用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AE%A1%E9%81%93"><span class="toc-number">2.8.2.</span> <span class="toc-text">自定义管道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E7%BD%AE%E7%AE%A1%E9%81%93"><span class="toc-number">2.8.3.</span> <span class="toc-text">内置管道</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C"><span class="toc-number">2.9.</span> <span class="toc-text">组件注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E6%8A%96%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.10.</span> <span class="toc-text">防抖方法实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="toc-number">3.</span> <span class="toc-text">父子组件通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Input%E3%80%81Output-%E4%BC%A0%E5%80%BC"><span class="toc-number">3.1.</span> <span class="toc-text">Input、Output 传值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E6%80%BB%E7%BA%BF"><span class="toc-number">3.2.</span> <span class="toc-text">服务总线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E7%AD%BE%E5%8F%98%E9%87%8F%E5%BC%95%E7%94%A8"><span class="toc-number">3.3.</span> <span class="toc-text">标签变量引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><span class="toc-number">4.</span> <span class="toc-text">路由导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="toc-number">4.1.</span> <span class="toc-text">路由懒加载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http-%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">http 服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E4%B8%AD%E5%A4%84%E7%90%86-http-%E7%9A%84-error"><span class="toc-number">5.1.</span> <span class="toc-text">集中处理 http 的 error</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-%E9%80%9A%E8%BF%87-ip-%E8%AE%BF%E9%97%AE"><span class="toc-number">6.</span> <span class="toc-text">angular 通过 ip 访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angular-json"><span class="toc-number">7.</span> <span class="toc-text">angular.json</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2021-05-12-angular7-base" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      angular7基础
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2021/05/12/2021-05-12-angular7-base/" class="archive-article-date">
+  <!-- <time datetime="2021-05-12T14:24:02.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-12</time>
+        <time datetime="2025-08-02T05:46:04.175Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.175Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-05-12
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.8k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">13分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="开始准备"><a href="#开始准备" class="headerlink" title="开始准备"></a>开始准备</h2><ol>
+<li>安装 nodejs</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm -v<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>安装@angular/cli</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm i -g @angular/cli<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>CLI 命令建立项目</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ng new ng7demo<br></code></pre></td></tr></table></figure>
+
+<p>选择是否加入路由模块以及哪种 css 预处理器</p>
+<blockquote>
+<p>可 ctrl+c 取消自动安装 node_modules，手动进入项目 npm install<br>node-sass 安装不上可切换淘宝镜像库或者用 cnpm 安装</p>
+</blockquote>
+<ol>
+<li>npm config set registry <a target="_blank" rel="noopener" href="https://registry.npm.taobao.org/">https://registry.npm.taobao.org</a><br>npm install</li>
+</ol>
+<p>or</p>
+<ol start="2">
+<li><p>npm install -g cnpm<br>cnpm install</p>
+</li>
+<li><p>启动项目</p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ng serve --open // 自动打开浏览器 http://localhost:4200/<br></code></pre></td></tr></table></figure>
+
+<hr>
+<span id="more"></span>
+
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><h3 id="生成组件"><a href="#生成组件" class="headerlink" title="生成组件"></a>生成组件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">// 标签app-article 如果不想要或者自定义前缀可在angular.json里修改prefix属性<br>ng generate component article<br>// 可添加目录<br>ng generate service ./serveices/eventBus<br>//<br></code></pre></td></tr></table></figure>
+
+<h3 id="组件引用"><a href="#组件引用" class="headerlink" title="组件引用"></a>组件引用</h3><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html">// 标签方式引用<br><span class="hljs-tag">&lt;<span class="hljs-name">app-article</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">app-article</span>&gt;</span><br>// 属性方式引用<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">app-article</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>// 类方式引用<br><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;app-article&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// @Component装饰器标识这是一个组件</span><br>@<span class="hljs-title class_">Component</span>(&#123;<br>  <span class="hljs-comment">//selector: &#x27;app-article&#x27;,</span><br>  <span class="hljs-comment">//selector: &#x27;[app-article]&#x27;, //属性方式</span><br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&#x27;.app-article&#x27;</span>, <span class="hljs-comment">//类方式</span><br>  <span class="hljs-attr">templateUrl</span>: <span class="hljs-string">&#x27;./article.component.html&#x27;</span>,<br>  <span class="hljs-attr">styleUrls</span>: [<span class="hljs-string">&#x27;./article.component.css&#x27;</span>]<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h3><p>将业务逻辑中的数据通过插值表达式显示在模板文件，即 html 页面上，或者将 html 页面上的事件传输到业务逻辑。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>标题是&#123;&#123;title&#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="属性绑定"><a href="#属性绑定" class="headerlink" title="属性绑定"></a>属性绑定</h3><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> [<span class="hljs-attr">src</span>]=<span class="hljs-string">&quot;imgSrc&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;value&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="插值运算-加减乘除-字符串拼接-三元-方法调用"><a href="#插值运算-加减乘除-字符串拼接-三元-方法调用" class="headerlink" title="插值运算 加减乘除/字符串拼接/三元/方法调用"></a>插值运算 加减乘除/字符串拼接/三元/方法调用</h3><figure class="highlight handlebars"><table><tr><td class="code"><pre><code class="hljs handlebars"><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">5</span>+<span class="hljs-number">3</span>&#125;&#125;</span><span class="language-xml">,</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">5-3</span>&#125;&#125;</span><span class="language-xml">,</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">5</span>*<span class="hljs-number">3</span>&#125;&#125;</span><span class="language-xml">,</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">5/3</span>&#125;&#125;</span><span class="language-xml">,</span><span class="hljs-template-variable">&#123;&#123; <span class="hljs-name">&quot;a&quot;</span> + <span class="hljs-string">&quot;b&quot;</span>&#125;&#125;</span><span class="language-xml">,</span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">true?1:0</span>&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> (<span class="hljs-attr">click</span>)=<span class="hljs-string">&quot;showModal(&#x27;click&#x27;)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 传递事件参数 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> (<span class="hljs-attr">keyup</span>)=<span class="hljs-string">&quot;updateContent($event)&quot;</span> /&gt;</span><br><span class="hljs-comment">&lt;!-- 双向绑定 视图和数据，只要一方发生变化，另一方跟着变化。 --&gt;</span><br><span class="hljs-comment">&lt;!-- 不需要在代码中手动更新视图，简化开发，增加代码内聚性，代码可读性更强。 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> [(<span class="hljs-attr">ngModel</span>)]=<span class="hljs-string">&quot;title&quot;</span> /&gt;</span><br><span class="hljs-comment">&lt;!-- 为了ngModel能够解析需要引入 import &#123;FormsModule&#125; from &quot;@angular/forms&quot;; --&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="模板指令"><a href="#模板指令" class="headerlink" title="模板指令"></a>模板指令</h3><h4 id="判断指令"><a href="#判断指令" class="headerlink" title="判断指令"></a>判断指令</h4><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> *<span class="hljs-attr">ngIf</span>=<span class="hljs-string">&quot;imgShow;else #p1&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span> #<span class="hljs-attr">p1</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="样式指令"><a href="#样式指令" class="headerlink" title="样式指令"></a>样式指令</h4><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">p</span> [<span class="hljs-attr">ngClass</span>]=<span class="hljs-string">&quot;&#123;bg:true&#125;&quot;</span>&gt;</span>这段内容应用的是类样式。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">p</span> [<span class="hljs-attr">ngStyle</span>]=<span class="hljs-string">&quot;&#123;backgroundColor:pink&#125;&quot;</span>&gt;</span>本段内容样式是内联样式。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="循环指令"><a href="#循环指令" class="headerlink" title="循环指令"></a>循环指令</h4><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> *<span class="hljs-attr">ngFor</span>=<span class="hljs-string">&quot;let race of raceList; let i = index; let l = last&quot;</span>&gt;</span>&#123;&#123; race.name &#125;&#125;-&#123;&#123; i + 1 &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$implicit: T</code></td>
+<td>声明在构造函数中</td>
+</tr>
+<tr>
+<td><code>ngForOf: U</code></td>
+<td>声明在构造函数中</td>
+</tr>
+<tr>
+<td><code>index: number</code></td>
+<td>声明在构造函数中</td>
+</tr>
+<tr>
+<td><code>count: number</code></td>
+<td>声明在构造函数中</td>
+</tr>
+<tr>
+<td><code>first: boolean</code></td>
+<td>只读</td>
+</tr>
+<tr>
+<td><code>last: boolean</code></td>
+<td>只读</td>
+</tr>
+<tr>
+<td><code>even: boolean</code></td>
+<td>只读</td>
+</tr>
+<tr>
+<td><code>odd: boolean</code></td>
+<td>只读</td>
+</tr>
+</tbody></table>
+<h3 id="管道符"><a href="#管道符" class="headerlink" title="管道符"></a>管道符</h3><figure class="highlight handlebars"><table><tr><td class="code"><pre><code class="hljs handlebars"><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">currentTime</span> | date: <span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span> &#125;&#125;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="在-ts-中的用法"><a href="#在-ts-中的用法" class="headerlink" title="在 ts 中的用法"></a>在 ts 中的用法</h4><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">DatePipe</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@angular/common&#x27;</span>;<br><br><span class="hljs-title function_">constructor</span>(<span class="hljs-params">private datePipe: DatePipe</span>) &#123;&#125;<br><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">datePipe</span>.<span class="hljs-title function_">transform</span>()<br></code></pre></td></tr></table></figure>
+
+<h4 id="自定义管道"><a href="#自定义管道" class="headerlink" title="自定义管道"></a>自定义管道</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ng generate pipe search<br></code></pre></td></tr></table></figure>
+
+<p>为了节省性能，<code>angular</code> 内部对管道进行了优化，参数 <code>pure</code> 为 <code>true</code> 时(纯管道)，当只有数据变化时，才会触发管道的执行，<br>基于这样的机制，<code>angular</code> 管道无法检测到数组，对象这样复杂数据类型的值的变化，所以针对这样的数据 <code>pure</code> 应设为 <code>false</code>(非纯管道)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">@<span class="hljs-title class_">Pipe</span>(&#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;flyingHeroesImpure&quot;</span>,<br>  <span class="hljs-attr">pure</span>: <span class="hljs-literal">false</span>,<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FlyingHeroesImpurePipe</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">FlyingHeroesPipe</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://angular.cn/guide/pipes#transforming-data-with-parameters-and-chained-pipes">参考</a></p>
+<h4 id="内置管道"><a href="#内置管道" class="headerlink" title="内置管道"></a>内置管道</h4><table>
+<thead>
+<tr>
+<th align="center">管道名</th>
+<th align="center">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://angular.cn/api/common/DatePipe">date</a></td>
+<td align="center">日期管道，格式化日期</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://angular.cn/api/common/JsonPipe">json</a>(非纯管道)</td>
+<td align="center">将输入数据对象经过，<code>JSON.stringify()</code>方法转换后输出对象的字符串</td>
+</tr>
+<tr>
+<td align="center">uppercase</td>
+<td align="center">将文本所有小写字母转换成大写字母</td>
+</tr>
+<tr>
+<td align="center">lowercase</td>
+<td align="center">将文本所有大写字母转换成小写字母</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://angular.cn/api/common/DecimalPipe">number</a></td>
+<td align="center">将数值按特定的格式显示文本</td>
+</tr>
+<tr>
+<td align="center">percent</td>
+<td align="center">将数值转百分比格式</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://angular.cn/api/common/CurrencyPipe">currentcy</a></td>
+<td align="center">将数值进行货币格式化处理</td>
+</tr>
+<tr>
+<td align="center">slice(非纯管道)</td>
+<td align="center">将数组或者字符串裁剪成新子集</td>
+</tr>
+<tr>
+<td align="center">i18n</td>
+<td align="center">翻译管道</td>
+</tr>
+</tbody></table>
+<h3 id="组件注册"><a href="#组件注册" class="headerlink" title="组件注册"></a>组件注册</h3><ul>
+<li>declarations: 声明该模块中拥有哪些组件、指令和管道。这些组件等都是该模块中的局部组件。</li>
+<li>imports: 声明该模块所依赖的其他模块。在该模块中使用了其他模块导出的组件、指令和服务时，必须先将这些模块引入进来。</li>
+<li>exports: 声明该模块中可被外部访问的组件、指令和管道。这些组件等都是该模块中的全局组件。</li>
+<li>providers: 声明该模块中提供的服务。这些服务可以被该模块以及该模块所依赖的其他模块使用。</li>
+<li>bootstrap: 声明该模块的根组件。通常情况下，只有应用的根模块才会设置该属性。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">BrowserModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/platform-browser&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">NgModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/core&quot;</span>;<br><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">AppRoutingModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./app-routing.module&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">AppComponent</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./app.component&quot;</span>;<br><br>@<span class="hljs-title class_">NgModule</span>(&#123;<br>  <span class="hljs-attr">declarations</span>: [<span class="hljs-title class_">AppComponent</span>],<br>  <span class="hljs-attr">imports</span>: [<span class="hljs-title class_">BrowserModule</span>, <span class="hljs-title class_">AppRoutingModule</span>],<br>  <span class="hljs-attr">providers</span>: [],<br>  <span class="hljs-attr">bootstrap</span>: [<span class="hljs-title class_">AppComponent</span>],<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppModule</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="防抖方法实现"><a href="#防抖方法实现" class="headerlink" title="防抖方法实现"></a>防抖方法实现</h3><figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts">withRefresh = <span class="hljs-literal">false</span>;<br>packages$!: <span class="hljs-title class_">Observable</span>&lt;<span class="hljs-title class_">NpmPackageInfo</span>[]&gt;;<br><span class="hljs-keyword">private</span> searchText$ = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Subject</span>&lt;<span class="hljs-built_in">string</span>&gt;();<br><br><span class="hljs-title function_">search</span>(<span class="hljs-params"><span class="hljs-attr">packageName</span>: <span class="hljs-built_in">string</span></span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchText$</span>.<span class="hljs-title function_">next</span>(packageName);<br>&#125;<br><br><span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">this</span>.<span class="hljs-property">packages$</span> = <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchText$</span>.<span class="hljs-title function_">pipe</span>(<br>    <span class="hljs-title function_">debounceTime</span>(<span class="hljs-number">500</span>),<br>    <span class="hljs-title function_">distinctUntilChanged</span>(),<br>    <span class="hljs-title function_">switchMap</span>(<span class="hljs-function"><span class="hljs-params">packageName</span> =&gt;</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">searchService</span>.<span class="hljs-title function_">search</span>(packageName, <span class="hljs-variable language_">this</span>.<span class="hljs-property">withRefresh</span>))<br>  );<br>&#125;<br><br><span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">searchService</span>: <span class="hljs-title class_">PackageSearchService</span></span>) &#123; &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><code>searchText$</code> 是来自用户的搜索框值的序列。它被定义为 RxJS <code>Subject</code> 类型，这意味着它是一个多播 <code>Observable</code>，它还可以通过调用 <code>next(value)</code> 来自行发出值，就像在 <code>search()</code> 方法中一样。</p>
+<p>除了把每个 <code>searchText</code> 的值都直接转发给 <code>PackageSearchService</code> 之外，<code>ngOnInit()</code> 中的代码还通过下列三个操作符对这些搜索值进行<em>管道</em>处理，以便只有当它是一个新值并且用户已经停止输入时，要搜索的值才会抵达该服务。</p>
+<ul>
+<li><code>debounceTime(500)</code>⁠—等待用户停止输入（本例中为 1/2 秒）。</li>
+<li><code>distinctUntilChanged()</code>⁠—等待搜索文本发生变化。</li>
+<li><code>switchMap()</code>⁠—将搜索请求发送到服务。</li>
+</ul>
+<h2 id="父子组件通信"><a href="#父子组件通信" class="headerlink" title="父子组件通信"></a>父子组件通信</h2><h3 id="Input、Output-传值"><a href="#Input、Output-传值" class="headerlink" title="Input、Output 传值"></a>Input、Output 传值</h3><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 输入</span><br>&lt;child title = <span class="hljs-string">&quot;我的子组件&quot;</span>&gt; &lt;/child&gt;<br>@<span class="hljs-title class_">Input</span><br>public <span class="hljs-attr">title</span>: string = <span class="hljs-string">&quot;&quot;</span>;<br><span class="hljs-comment">// 输出</span><br><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">child</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;我的子组件&quot;</span> (<span class="hljs-attr">follow</span>)=<span class="hljs-string">&quot;getFollow($event)&quot;</span> #<span class="hljs-attr">child</span> &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">child</span>&gt;</span></span><br><br>@<span class="hljs-title class_">Output</span>()<br>public follow = <span class="hljs-keyword">new</span> <span class="hljs-title class_">EventEmitter</span>();<br><span class="hljs-variable language_">this</span>.<span class="hljs-property">follow</span>.<span class="hljs-title function_">emit</span>(<span class="hljs-string">&quot;子组件传来的数据&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="服务总线"><a href="#服务总线" class="headerlink" title="服务总线"></a>服务总线</h3><ol>
+<li>注册服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">ng g s ./services/eventBus<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123;<br>  <span class="hljs-title class_">Injectable</span><br>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/core&quot;</span>;<br><span class="hljs-keyword">import</span> &#123;<br>  <span class="hljs-title class_">Observable</span>,<br>  <span class="hljs-title class_">Subject</span><br>&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;rxjs&quot;</span>;<br><br><span class="hljs-comment">// 服务总线 组件间分享数据</span><br>@<span class="hljs-title class_">Injectable</span>(&#123;<br>  <span class="hljs-attr">providedIn</span>: <span class="hljs-string">&quot;root&quot;</span> <span class="hljs-comment">// 在所有组件共享数据</span><br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EventBusService</span> &#123;<br>  public <span class="hljs-attr">eventBus</span>: <span class="hljs-title class_">Subject</span> &lt; string &gt; = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Subject</span>();<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>) &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>service</code> 也可以指定在某个某块生效，比如下方 <code>service</code> 就只在<code>UserModule</code>中生效</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Injectable</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/core&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">UserModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./user.module&quot;</span>;<br><br>@<span class="hljs-title class_">Injectable</span>(&#123;<br>  <span class="hljs-attr">providedIn</span>: <span class="hljs-title class_">UserModule</span>,<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>组件内发射数据</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">eventBusService</span>.<span class="hljs-property">eventBus</span>.<span class="hljs-title function_">next</span>(<span class="hljs-string">&quot;child组件发送的数据&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>组件接收数据</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-variable language_">this</span>.<span class="hljs-property">eventBusService</span>.<span class="hljs-property">eventBus</span>.<span class="hljs-title function_">subscribe</span>(<span class="hljs-function">(<span class="hljs-params">arg</span>) =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`接收到事件<span class="hljs-subst">$&#123;arg&#125;</span>`</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h3 id="标签变量引用"><a href="#标签变量引用" class="headerlink" title="标签变量引用"></a>标签变量引用</h3><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">child</span> <span class="hljs-attr">title</span>=<span class="hljs-string">&quot;我的子组件&quot;</span> #<span class="hljs-attr">child</span> (<span class="hljs-attr">follow</span>)=<span class="hljs-string">&quot;getFollow($event)&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">child</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">button</span> (<span class="hljs-attr">click</span>)=<span class="hljs-string">&quot;child.sayHello()&quot;</span>&gt;</span>子组件说话<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="路由导航"><a href="#路由导航" class="headerlink" title="路由导航"></a>路由导航</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">NgModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/core&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Routes</span>, <span class="hljs-title class_">RouterModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/router&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">ChildComponent</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./child/child.component&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">BrotherComponent</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;./brother/brother.component&quot;</span>;<br><br><span class="hljs-keyword">const</span> <span class="hljs-attr">routes</span>: <span class="hljs-title class_">Routes</span> = [<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;&quot;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-title class_">ChildComponent</span>,<br>  &#125;,<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;brother&quot;</span>,<br>    <span class="hljs-attr">component</span>: <span class="hljs-title class_">BrotherComponent</span>,<br>  &#125;,<br>];<br><br>@<span class="hljs-title class_">NgModule</span>(&#123;<br>  <span class="hljs-attr">imports</span>: [<span class="hljs-title class_">RouterModule</span>.<span class="hljs-title function_">forRoot</span>(routes)],<br>  <span class="hljs-attr">exports</span>: [<span class="hljs-title class_">RouterModule</span>],<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppRoutingModule</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- RouterOutlet 相当于一个占位符, 在Angular中根据路由状态动态插入视图  --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> [<span class="hljs-attr">routerLink</span>]=<span class="hljs-string">&quot;[&#x27;/&#x27;]&quot;</span>&gt;</span> child <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">a</span> [<span class="hljs-attr">routerLink</span>]=<span class="hljs-string">&quot;[&#x27;/brother&#x27;]&quot;</span>&gt;</span> brother <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">router-outlet</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">router-outlet</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="路由懒加载"><a href="#路由懒加载" class="headerlink" title="路由懒加载"></a>路由懒加载</h3><p>使用<code>loadChildren</code>可以配置路由懒加载</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> <span class="hljs-attr">routes</span>: <span class="hljs-title class_">Routes</span> = [<br>  &#123;<br>    <span class="hljs-attr">path</span>: <span class="hljs-string">&quot;items&quot;</span>,<br>    <span class="hljs-attr">loadChildren</span>: <span class="hljs-function">() =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">&quot;./items/items.module&quot;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">m</span>) =&gt;</span> m.<span class="hljs-property">ItemsModule</span>),<br>  &#125;,<br>];<br></code></pre></td></tr></table></figure>
+
+<h2 id="http-服务"><a href="#http-服务" class="headerlink" title="http 服务"></a>http 服务</h2><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// app.module.ts</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">HttpModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/http&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">HttpClientModule</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/common/http&quot;</span>;<br><span class="hljs-comment">// services</span><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Headers</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/http&quot;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">HttpClient</span>, <span class="hljs-title class_">HttpResponse</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/common/http&quot;</span>;<br><br><span class="hljs-variable language_">this</span>.<span class="hljs-property">httpClient</span>.<span class="hljs-title function_">request</span>(<span class="hljs-title class_">UserService</span>.<span class="hljs-property">METHOD_POST</span>, url, options).<span class="hljs-title function_">subscribe</span>(<br>  <span class="hljs-function">(<span class="hljs-params">next</span>) =&gt;</span> &#123;&#125;,<br>  <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> &#123;&#125;,<br>  <span class="hljs-function">(<span class="hljs-params">complete</span>) =&gt;</span> &#123;&#125; <span class="hljs-comment">// 指next完成后，会执行complete, 并不是finally的意思</span><br>);<br></code></pre></td></tr></table></figure>
+
+<p>如果想使用<code>async</code>语法，可以把<code>angular</code>观察对象转成<code>promise</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-variable language_">this</span>.<span class="hljs-property">httpClient</span>.<span class="hljs-title function_">request</span>(<span class="hljs-title class_">UserService</span>.<span class="hljs-property">METHOD_POST</span>, url, options).<span class="hljs-title function_">toPromise</span>();<br></code></pre></td></tr></table></figure>
+
+<h3 id="集中处理-http-的-error"><a href="#集中处理-http-的-error" class="headerlink" title="集中处理 http 的 error"></a>集中处理 http 的 error</h3><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyErrorHandler</span> implements <span class="hljs-title class_">ErrorHandler</span> &#123;<br>  <span class="hljs-title function_">handleError</span>(<span class="hljs-params">error</span>) &#123;<br>    <span class="hljs-comment">// do something with the exception</span><br>  &#125;<br>&#125;<br><br>@<span class="hljs-title class_">NgModule</span>(&#123;<br>  <span class="hljs-attr">providers</span>: [&#123; <span class="hljs-attr">provide</span>: <span class="hljs-title class_">ErrorHandler</span>, <span class="hljs-attr">useClass</span>: <span class="hljs-title class_">MyErrorHandler</span> &#125;],<br>&#125;)<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModule</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://angular.cn/api/core/ErrorHandler">参考</a></p>
+<h2 id="angular-通过-ip-访问"><a href="#angular-通过-ip-访问" class="headerlink" title="angular 通过 ip 访问"></a>angular 通过 ip 访问</h2><p>绑定到<code>0.0.0.0</code>上</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># ng serve --host 0.0.0.0 --port 4200</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="angular-json"><a href="#angular-json" class="headerlink" title="angular.json"></a>angular.json</h2><figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// angular.json</span><br><span class="hljs-attr">&quot;budgets&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;initial&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;maximumWarning&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2mb&quot;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;maximumError&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;5mb&quot;</span><br><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">]</span><br><span class="hljs-comment">// 这个配置适用于打包文件限制 ng build --prod</span><br><span class="hljs-comment">// 打包生成生产环境时如果包大于2MB,那么CLI工具会提示waning,如果大于5MB,中断打包。</span><br><br><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;project&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ng-admin&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">//项目名称</span><br>    <span class="hljs-attr">&quot;ejected&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span> <span class="hljs-comment">// 标记该应用是否已经执行过eject命令把webpack配置释放出来</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;apps&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;root&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;src&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 源码根目录</span><br>      <span class="hljs-attr">&quot;outDir&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;dist&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 编译后的输出目录，默认是dist/</span><br>      <span class="hljs-attr">&quot;assets&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-comment">// 记录资源文件夹，构建时复制到`outDir`指定的目录</span><br>        <span class="hljs-string">&quot;assets&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;favicon.ico&quot;</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;index&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;index.html&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定首页文件，默认值是&quot;index.html&quot;</span><br>      <span class="hljs-attr">&quot;main&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;main.ts&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定应用的入门文件</span><br>      <span class="hljs-attr">&quot;polyfills&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;polyfills.ts&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定polyfill文件</span><br>      <span class="hljs-attr">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;test.ts&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定测试入门文件</span><br>      <span class="hljs-attr">&quot;tsconfig&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tsconfig.app.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定tsconfig文件</span><br>      <span class="hljs-attr">&quot;testTsconfig&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tsconfig.spec.json&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定TypeScript单测脚本的tsconfig文件</span><br>      <span class="hljs-attr">&quot;tsconfig&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tsconfig.app.json&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;prefix&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;app&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 使用`ng generate`命令时，自动为selector元数据的值添加的前缀名</span><br>      <span class="hljs-attr">&quot;deployUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;//cdn.com.cn&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定站点的部署地址，该值最终会赋给webpack的output.publicPath，常用于CDN部署</span><br>      <span class="hljs-attr">&quot;styles&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-comment">// 引入全局样式，构建时会打包进来，常用于第三方库引入的样式</span><br>        <span class="hljs-string">&quot;styles.css&quot;</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;scripts&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>        <span class="hljs-comment">// 引入全局脚本，构建时会打包进来，常用语第三方库引入的脚本</span><br>      <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;environmentSource&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;environments/environment.ts&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 基础环境配置</span><br>      <span class="hljs-attr">&quot;environments&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-comment">// 子环境配置文件</span><br>        <span class="hljs-attr">&quot;dev&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;environments/environment.ts&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;prod&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;environments/environment.prod.ts&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;e2e&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;protractor&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;config&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./protractor.conf.js&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;lint&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;project&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;src/tsconfig.app.json&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;project&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;src/tsconfig.spec.json&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;project&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;e2e/tsconfig.e2e.json&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;test&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;karma&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;config&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;./karma.conf.js&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-comment">// 执行`ng generate`命令时的一些默认值</span><br>    <span class="hljs-attr">&quot;styleExt&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;scss&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 默认生成的样式文件后缀名</span><br>    <span class="hljs-attr">&quot;component&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;flat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 生成组件时是否新建文件夹包装组件文件，默认为false（即新建文件夹）</span><br>      <span class="hljs-attr">&quot;spec&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 是否生成spec文件，默认为true</span><br>      <span class="hljs-attr">&quot;inlineStyle&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 新建时是否使用内联样式，默认为false</span><br>      <span class="hljs-attr">&quot;inlineTemplate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 新建时是否使用内联模板，默认为false</span><br>      <span class="hljs-attr">&quot;viewEncapsulation&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Emulated&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-comment">// 指定生成的组件的元数据viewEncapsulation的默认值</span><br>      <span class="hljs-attr">&quot;changeDetection&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;OnPush&quot;</span> <span class="hljs-comment">// 指定生成的组件的元数据changeDetection的默认值</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://angular.cn/guide/workspace-config">官网参考</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2021/05/12/2021-05-12-angular7-base/" title="angular7基础" target="_blank">https://luckyship.github.io/2021/05/12/2021-05-12-angular7-base/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">web</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">angular</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2021/05/12/2021-05-12-angular7-base/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/05/12/2021-05-12-typescript-base/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          typescript基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/12/2021-05-12-browser-render/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">浏览器页面渲染过程</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>玩转git | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="git 作为当前最流行的代码管理工具，用好 git 可以有效的提高团队开发效率 常用命令git add# 提交当前目录下的所有变更文件git add .# 提交当前仓库下的所有变更文件git add -all">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转git">
+<meta property="og:url" content="https://luckyship.github.io/2021/05/15/2021-05-15-git-use/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="git 作为当前最流行的代码管理工具，用好 git 可以有效的提高团队开发效率 常用命令git add# 提交当前目录下的所有变更文件git add .# 提交当前仓库下的所有变更文件git add -all">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-15T06:49:47.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.176Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">常用命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-add"><span class="toc-number">1.1.</span> <span class="toc-text">git add</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-commit"><span class="toc-number">1.2.</span> <span class="toc-text">git commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-fetch"><span class="toc-number">1.3.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-pull"><span class="toc-number">1.4.</span> <span class="toc-text">git pull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-push"><span class="toc-number">1.5.</span> <span class="toc-text">git push</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C"><span class="toc-number">1.6.</span> <span class="toc-text">分支操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-%E5%88%86%E6%94%AF%E6%8F%90%E4%BA%A4%E3%80%81%E5%90%88%E5%B9%B6%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">git 分支提交、合并常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%88%86%E6%94%AF%E9%A2%86%E5%85%88%E5%BD%93%E5%89%8D%E5%88%86%E6%94%AF"><span class="toc-number">2.1.</span> <span class="toc-text">主分支领先当前分支</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E5%88%86%E6%94%AF%E5%B7%B2%E7%BB%8F%E6%8F%90%E4%BA%A4-commit"><span class="toc-number">2.1.1.</span> <span class="toc-text">当前分支已经提交 commit</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AA%E6%8F%90%E4%BA%A4-commit"><span class="toc-number">2.1.2.</span> <span class="toc-text">未提交 commit</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-%E5%9B%9E%E9%80%80"><span class="toc-number">3.</span> <span class="toc-text">git 回退</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-reset"><span class="toc-number">3.1.</span> <span class="toc-text">git reset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-revert"><span class="toc-number">3.2.</span> <span class="toc-text">git revert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-revert-%E5%92%8C-git-reset-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">3.3.</span> <span class="toc-text">git revert 和 git reset 的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-commit-%E7%9B%B8%E5%85%B3"><span class="toc-number">4.</span> <span class="toc-text">git commit 相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-commit-%E6%8F%90%E4%BA%A4%E5%A4%9A%E8%A1%8C-commit-%E4%BF%A1%E6%81%AF"><span class="toc-number">4.1.</span> <span class="toc-text">git commit 提交多行 commit 信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E4%BF%AE%E6%94%B9-commit-%E4%BF%A1%E6%81%AF"><span class="toc-number">4.2.</span> <span class="toc-text">git 修改 commit 信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF%E5%87%BA%E9%94%99"><span class="toc-number">4.2.1.</span> <span class="toc-text">1. 提交信息出错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%BC%8F%E6%8F%90%E4%BA%A4"><span class="toc-number">4.2.2.</span> <span class="toc-text">2. 漏提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E5%8E%86%E5%8F%B2%E7%9A%84-commit"><span class="toc-number">4.2.3.</span> <span class="toc-text">修改历史的 commit</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA-commit"><span class="toc-number">4.3.</span> <span class="toc-text">git 合并多个 commit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.3.1.</span> <span class="toc-text">基本步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-push-%E5%88%B0%E8%BF%9C%E7%A8%8B%E7%9A%84-commit"><span class="toc-number">4.3.2.</span> <span class="toc-text">修改 push 到远程的 commit</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Commit-message-%E5%89%8D%E7%BC%80%E8%A7%84%E8%8C%83%E6%8F%90%E8%A6%81"><span class="toc-number">4.4.</span> <span class="toc-text">Commit message 前缀规范提要</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-stash-%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="toc-number">5.</span> <span class="toc-text">git stash(暂存区)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9A%82%E5%AD%98"><span class="toc-number">5.1.</span> <span class="toc-text">暂存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%81%A2%E5%A4%8D%E8%AF%AF%E5%88%A0%E9%99%A4%E7%9A%84-stash"><span class="toc-number">5.2.</span> <span class="toc-text">恢复误删除的 stash</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rebase-%E5%92%8C-mege-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">6.</span> <span class="toc-text">rebase 和 mege 的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8B%89%E5%8F%96%E4%BB%A3%E7%A0%81-pull-%E2%80%93rebase"><span class="toc-number">6.1.</span> <span class="toc-text">1. 拉取代码 pull –rebase</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">6.1.1.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%90%88%E4%BB%A3%E7%A0%81-merge-%E2%80%93no-ff"><span class="toc-number">6.2.</span> <span class="toc-text">2. 合代码 merge –no-ff</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E8%BF%9B%E4%B8%80%E6%AD%A5"><span class="toc-number">6.3.</span> <span class="toc-text">更进一步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.4.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-patch"><span class="toc-number">7.</span> <span class="toc-text">git patch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-cherry-pick"><span class="toc-number">8.</span> <span class="toc-text">git cherry-pick</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5-Github-fork-%E5%87%BA%E6%9D%A5%E7%9A%84%E5%88%86%E6%94%AF"><span class="toc-number">9.</span> <span class="toc-text">同步 Github fork 出来的分支</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81%E9%85%8D%E7%BD%AE-remote%EF%BC%8C%E6%8C%87%E5%90%91%E5%8E%9F%E5%A7%8B%E4%BB%93%E5%BA%93"><span class="toc-number">9.1.</span> <span class="toc-text">1、配置 remote，指向原始仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81%E8%8E%B7%E5%8F%96%E4%B8%8A%E6%B8%B8%E5%88%86%E6%94%AF"><span class="toc-number">9.2.</span> <span class="toc-text">2、获取上游分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81%E5%88%87%E6%8D%A2%E5%88%B0%E6%9C%AC%E5%9C%B0%E7%9A%84-master-%E5%88%86%E6%94%AF"><span class="toc-number">9.3.</span> <span class="toc-text">3、切换到本地的 master 分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="toc-number">9.4.</span> <span class="toc-text">4、合并分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5%E3%80%81%E4%B8%8A%E4%BC%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E4%B8%AD"><span class="toc-number">9.5.</span> <span class="toc-text">5、上传到自己的远程仓库中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-%E9%85%8D%E7%BD%AE"><span class="toc-number">10.</span> <span class="toc-text">git 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%82%AE%E7%AE%B1%E5%92%8C%E7%94%A8%E6%88%B7%E5%90%8D"><span class="toc-number">10.1.</span> <span class="toc-text">邮箱和用户名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">10.1.1.</span> <span class="toc-text">查看</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9"><span class="toc-number">10.1.2.</span> <span class="toc-text">修改</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSH"><span class="toc-number">10.2.</span> <span class="toc-text">SSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-push-%E6%8A%A5-HTTP-Basic-Access-denied-%E9%94%99%E8%AF%AF"><span class="toc-number">10.3.</span> <span class="toc-text">git push 报 HTTP Basic: Access denied 错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%90%8D%E8%BF%87%E9%95%BF%E9%94%99%E8%AF%AF"><span class="toc-number">10.4.</span> <span class="toc-text">文件名过长错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gitignore-%E6%9B%B4%E6%96%B0%E5%90%8E%E7%94%9F%E6%95%88%EF%BC%9A"><span class="toc-number">10.5.</span> <span class="toc-text">.gitignore 更新后生效：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-commit-v-%E4%BD%BF%E7%94%A8-vim"><span class="toc-number">10.6.</span> <span class="toc-text">git commit -v 使用 vim</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-%E7%BB%9F%E8%AE%A1"><span class="toc-number">11.</span> <span class="toc-text">git 统计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B-git-%E4%B8%8A%E4%B8%AA%E4%BA%BA%E4%BB%A3%E7%A0%81%E9%87%8F"><span class="toc-number">11.1.</span> <span class="toc-text">查看 git 上个人代码量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E6%AF%8F%E4%B8%AA%E4%BA%BA%E7%9A%84%E5%A2%9E%E5%88%A0%E8%A1%8C%E6%95%B0"><span class="toc-number">11.2.</span> <span class="toc-text">统计每个人的增删行数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%93%E5%BA%93%E6%8F%90%E4%BA%A4%E8%80%85%E6%8E%92%E5%90%8D%E5%89%8D-5"><span class="toc-number">11.3.</span> <span class="toc-text">查看仓库提交者排名前 5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A1%E7%8C%AE%E8%80%85%E7%BB%9F%E8%AE%A1"><span class="toc-number">11.4.</span> <span class="toc-text">贡献者统计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%90%E4%BA%A4%E6%95%B0%E7%BB%9F%E8%AE%A1"><span class="toc-number">11.5.</span> <span class="toc-text">提交数统计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">12.</span> <span class="toc-text">参考</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-number">12.1.</span> <span class="toc-text">客户端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0"><span class="toc-number">12.2.</span> <span class="toc-text">练习</span></a></li></ol></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2021-05-15-git-use" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      玩转git
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2021/05/15/2021-05-15-git-use/" class="archive-article-date">
+  <!-- <time datetime="2021-05-15T06:49:47.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-05-15</time>
+        <time datetime="2025-08-02T05:46:04.176Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.176Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2021-05-15
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">17分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p><code>git</code> 作为当前最流行的代码管理工具，用好 <code>git</code> 可以有效的提高团队开发效率</p>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="git-add"><a href="#git-add" class="headerlink" title="git add"></a>git add</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 提交当前目录下的所有变更文件</span><br>git add .<br><br><span class="hljs-comment"># 提交当前仓库下的所有变更文件</span><br>git add -all<br></code></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h3 id="git-commit"><a href="#git-commit" class="headerlink" title="git commit"></a>git commit</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 提交commit 信息</span><br>git commit -m <span class="hljs-string">&quot;sss&quot;</span><br><br><span class="hljs-comment"># 提交commit 信息(可以多行)</span><br>git commit -v<br><br><span class="hljs-comment"># 修改上次提交commit的信息</span><br>git commit --amend<br></code></pre></td></tr></table></figure>
+
+<h3 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a>git fetch</h3><p>将某个远程主机的更新，全部/分支 取回本地（此时之更新了 Repository）它取回的代码对你本地的开发代码没有影响，如需彻底更新需合并或使用 <code>git pull</code></p>
+<h3 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h3><p>拉取远程主机某分支的更新，再与本地的指定分支合并（相当与 fetch 加上了合并分支功能的操作）</p>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><p>将本地分支的更新，推送到远程主机，其命令格式与 <code>git pull</code> 相似<br><code>git push -f </code> 强制推送( <code>如果本地commit和远程commit有冲突时，覆盖远程commit</code> )</p>
+<h3 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h3><ul>
+<li>使用 Git 下载指定分支命令为：<code>git clone -b 分支名仓库地址</code></li>
+<li>拉取远程新分支 <code>git checkout -b serverfix origin/serverfix</code></li>
+<li>合并本地分支 <code>git merge hotfix</code>：(将 hotfix 分支合并到当前分支)</li>
+<li>合并远程分支 <code>git merge origin/serverfix</code></li>
+<li>删除本地分支 <code>git branch -d hotfix</code>：(删除本地 hotfix 分支)</li>
+<li>删除远程分支 <code>git push origin --delete serverfix</code></li>
+</ul>
+<p>or</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git branch -D master; //删除本地master分支<br>git push origin :master; //删除远程master分支<br><br>git pull origin master:master // 远程:本地<br>git push origin master:master // 本地:远程<br>git push --set-upstream origin master // 将本地分支与远程同名分支相关联<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>上传新命名的本地分支：<code>git push origin newName</code>;</li>
+<li>创建新分支：<code>git branch branchName</code>：(创建名为 branchName 的本地分支)</li>
+<li>切换到新分支：<code>git checkout branchName</code>：(切换到 branchName 分支)</li>
+<li>创建并切换分支：<code>git checkout -b branchName</code>：(相当于以上两条命令的合并)</li>
+<li>查看本地分支：<code>git branch</code></li>
+<li>查看远程仓库所有分支：<code>git branch -a</code></li>
+<li>本地分支重命名： <code>git branch -m oldName newName</code></li>
+<li>重命名远程分支对应的本地分支：<code>git branch -m oldName newName</code></li>
+<li>把修改后的本地分支与远程分支关联：<code>git branch --set-upstream-to origin/newName</code></li>
+</ul>
+<h2 id="git-分支提交、合并常见问题"><a href="#git-分支提交、合并常见问题" class="headerlink" title="git 分支提交、合并常见问题"></a>git 分支提交、合并常见问题</h2><h3 id="主分支领先当前分支"><a href="#主分支领先当前分支" class="headerlink" title="主分支领先当前分支"></a>主分支领先当前分支</h3><h4 id="当前分支已经提交-commit"><a href="#当前分支已经提交-commit" class="headerlink" title="当前分支已经提交 commit"></a>当前分支已经提交 commit</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git checkout master<br>git pull<br><br>git checkout <span class="hljs-built_in">local</span><br>git rebase master<br></code></pre></td></tr></table></figure>
+
+<p><code>rebase</code> 会自动合并领先的 <code>commit</code></p>
+<h4 id="未提交-commit"><a href="#未提交-commit" class="headerlink" title="未提交 commit"></a>未提交 commit</h4><p>不用切换分支，即可同步主分支最新代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git pull origin master<br><br><span class="hljs-comment"># 有冲突解决冲突</span><br><br>git commit<br></code></pre></td></tr></table></figure>
+
+<h2 id="git-回退"><a href="#git-回退" class="headerlink" title="git 回退"></a>git 回退</h2><h3 id="git-reset"><a href="#git-reset" class="headerlink" title="git reset"></a>git reset</h3><p>删除指定的 commit</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改版本库，保留暂存区，保留工作区</span><br><span class="hljs-comment"># 将版本库软回退1个版本，软回退表示将本地版本库的头指针全部重置到指定版本，且将这次提交之后的所有变更都移动到暂存区。</span><br>git reset --soft HEAD~1<br><br><span class="hljs-comment"># 修改版本库，修改暂存区，修改工作区</span><br><span class="hljs-comment"># 将版本库回退1个版本，不仅仅是将本地版本库的头指针全部重置到指定版本，也会重置暂存区，并且会将工作区代码也回退到这个版本</span><br>git reset --hard HEAD~1<br><span class="hljs-comment"># git版本回退，回退到特定的commit_id版本，可以通过git log查看提交历史，以便确定要回退到哪个版本(commit 之后的即为ID);</span><br>git reset --hard commit_id<br></code></pre></td></tr></table></figure>
+
+<h3 id="git-revert"><a href="#git-revert" class="headerlink" title="git revert"></a>git revert</h3><p>撤销 某次操作，此次操作之前和之后的 commit 和 history 都会保留，并且把这次撤销</p>
+<p>作为一次最新的提交</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 撤销前一次 commit</span><br>git revert HEAD<br><span class="hljs-comment"># 撤销前前一次 commit</span><br>git revert HEAD^<br><span class="hljs-comment"># (比如：fa042ce57ebbe5bb9c8db709f719cec2c58ee7ff）撤销指定的版本，撤销也会作为一次提交进行保存。</span><br>git revert commit<br></code></pre></td></tr></table></figure>
+
+<p><code>git revert</code> 是提交一个新的版本，将需要 <code>revert</code> 的版本的内容再反向修改回去，<br>版本会递增，不影响之前提交的内容</p>
+<h3 id="git-revert-和-git-reset-的区别"><a href="#git-revert-和-git-reset-的区别" class="headerlink" title="git revert 和 git reset 的区别"></a><code>git revert</code> 和 <code>git reset</code> 的区别</h3><ul>
+<li><code>git revert</code>是用一次新的 commit 来回滚之前的 commit，<code>git reset</code>是直接删除指定的 commit。</li>
+<li>在回滚这一操作上看，效果差不多。但是在日后继续 merge 以前的老版本时有区别。因为<code>git revert</code>是用一次逆向的 commit“中和”之前的提交，因此日后合并老的 branch 时，导致这部分改变不会再次出现，但是<code>git reset</code>是之间把某些 commit 在某个 branch 上删除，因而和老的 branch 再次 merge 时，这些被回滚的 commit 应该还会被引入。</li>
+<li><code>git reset</code> 是把 HEAD 向后移动了一下，而<code>git revert</code>是 HEAD 继续前进，只是新的 commit 的内容和要 revert 的内容正好相反，能够抵消要被 revert 的内容。</li>
+</ul>
+<h2 id="git-commit-相关"><a href="#git-commit-相关" class="headerlink" title="git commit 相关"></a>git commit 相关</h2><h3 id="git-commit-提交多行-commit-信息"><a href="#git-commit-提交多行-commit-信息" class="headerlink" title="git commit 提交多行 commit 信息"></a>git commit 提交多行 commit 信息</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git commit -v<br></code></pre></td></tr></table></figure>
+
+<h3 id="git-修改-commit-信息"><a href="#git-修改-commit-信息" class="headerlink" title="git 修改 commit 信息"></a>git 修改 commit 信息</h3><h4 id="1-提交信息出错"><a href="#1-提交信息出错" class="headerlink" title="1. 提交信息出错"></a>1. 提交信息出错</h4><p>更改 commit 信息</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git commit --amend -m “新提交消息”<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-漏提交"><a href="#2-漏提交" class="headerlink" title="2. 漏提交"></a>2. 漏提交</h4><p>commit 时，遗漏提交部分更新，有两种解决方案：</p>
+<ul>
+<li>方案一：再次 commit</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git commit -m <span class="hljs-comment">#提交消息</span><br></code></pre></td></tr></table></figure>
+
+<p>此时，git 上会出现两次 commit</p>
+<ul>
+<li>方案二：遗漏文件提交到之前 commit 上</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git add missed-file <span class="hljs-comment"># missed-file 为遗漏提交文件</span><br>git commit --amend --no-edit<br></code></pre></td></tr></table></figure>
+
+<p><code>--no-edit</code>   表示提交消息不会更改，在 git 上仅为一次提交</p>
+<h4 id="修改历史的-commit"><a href="#修改历史的-commit" class="headerlink" title="修改历史的 commit"></a>修改历史的 commit</h4><p><code>git rebase -i HEAD~3</code><br>表示要修改当前版本的倒数第三次状态.<br>这个命令出来之后，会出来三行东东：</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><code class="hljs markdown">pick:<span class="hljs-strong">****</span><span class="hljs-strong">***</span><br><span class="hljs-strong">pick:**</span><span class="hljs-strong">****</span>*<br>pick:<span class="hljs-strong">****</span><span class="hljs-strong">**<span class="hljs-emphasis">*</span></span><br></code></pre></td></tr></table></figure>
+
+<p>如果你要修改哪个，就把那行的 pick 改成 edit，然后保存退出(点击 esc，输入 ZZ 退出)<br>这时通过<code>git log</code>你可以发现，git 的最后一次提交已经变成你选的那个了，这时再使用：<br><code>git commit --amend</code> 来对 commit 进行修改。<br>修改完成后使用<code>git rebase --continue</code><br>然后将变化 push 到远程：<code>git push origin HEAD:master --force</code></p>
+<h3 id="git-合并多个-commit"><a href="#git-合并多个-commit" class="headerlink" title="git 合并多个 commit"></a>git 合并多个 commit</h3><p>过去总是使用 <code>git reset --soft</code> 回退到之前的状态，再 commit 后 push orgin master -f 强推到远程库，能够覆盖掉之前的 commit 。</p>
+<p>但在团队协作时，每次 commit 前还需要 rebase upstream，这会自动将一些其他人做的修改也自动 merge 到本地的源码中。如果此时希望覆盖前一次 commit ，reset 到之前的状态后，再次 commit 的内容就包含了其他人的修改，这不是我们希望看到的。因此，我们需要使用 git rebase -i 。</p>
+<h4 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h4><ol>
+<li>git log 查看所有 commit 的情况，找到自己想要合并的 commit 之前的那个 commit 的 ssh 码(前 7 位)；</li>
+<li>git rebase -i 43jk2l3，这样会弹出一个文本编辑器；<br>撤销 commit<br>git reset –soft<br>HEAD^ 上个 commit<br>^^上上个 commit<br>HEAD~2 最近 2 次的提交</li>
+<li>修改 pick 为 squash 会将这个 commit 合并到前一个 commit 中，保存退出；</li>
+<li>提示写下新的 commit message，之前的 message 可以用#注释掉，保存退出；</li>
+<li>此时再 git log 就会发现，两个 commit 被合并到一个 commit 中。</li>
+</ol>
+<h4 id="修改-push-到远程的-commit"><a href="#修改-push-到远程的-commit" class="headerlink" title="修改 push 到远程的 commit"></a>修改 push 到远程的 commit</h4><ul>
+<li>git log</li>
+<li>git rebase -i Head~8</li>
+<li>pick 修改为 edit</li>
+<li>git commit –amend 修改新的 commit message 保存 (修改作者信息 –author “luckyship <a href="mailto:&#x78;&#x78;&#x78;&#x40;&#x78;&#120;&#x78;&#x2e;&#x63;&#x6f;&#x6d;">&#x78;&#x78;&#x78;&#x40;&#x78;&#120;&#x78;&#x2e;&#x63;&#x6f;&#x6d;</a>“)</li>
+<li>git rebase –continue // 处理完合并后 然后 git push -f 同理 git merge –continue</li>
+<li>git push -f</li>
+</ul>
+<h3 id="Commit-message-前缀规范提要"><a href="#Commit-message-前缀规范提要" class="headerlink" title="Commit message 前缀规范提要"></a>Commit message 前缀规范提要</h3><table>
+<thead>
+<tr>
+<th>code</th>
+<th>info</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>feat</strong>:msg</td>
+<td>新功能 feature</td>
+</tr>
+<tr>
+<td><strong>fix</strong>:msg</td>
+<td>修复 bug</td>
+</tr>
+<tr>
+<td><strong>merge</strong>:msg</td>
+<td>merge 信息</td>
+</tr>
+<tr>
+<td><strong>docs</strong>:msg</td>
+<td>文档修改</td>
+</tr>
+<tr>
+<td><strong>style</strong>:msg</td>
+<td>格式，不影响代码运行的变动</td>
+</tr>
+<tr>
+<td><strong>refactor</strong>: msg</td>
+<td>重构即不是新增功能，也不是修改 bug 的代码变动</td>
+</tr>
+<tr>
+<td><strong>test</strong>:msg</td>
+<td>增加测试</td>
+</tr>
+<tr>
+<td><strong>chore</strong>:msg</td>
+<td>构建过程或辅助工具的变动</td>
+</tr>
+<tr>
+<td><strong>rm</strong>:msg</td>
+<td>删除文件或代码</td>
+</tr>
+</tbody></table>
+<h2 id="git-stash-暂存区"><a href="#git-stash-暂存区" class="headerlink" title="git stash(暂存区)"></a>git stash(暂存区)</h2><h3 id="暂存"><a href="#暂存" class="headerlink" title="暂存"></a>暂存</h3><p><code>git stash</code> 可用来暂存当前正在进行的工作，比如想 pull 最新代码又不想 commit ， 或者另为了修改一个紧急的 bug ，先 stash，使返回到自己上一个 commit, ，改完 bug 之后再 stash pop , 继续原来的工作；</p>
+<ul>
+<li>添加缓存栈： <code>git stash</code> ;</li>
+<li>查看缓存栈： <code>git stash list</code> ;</li>
+<li>推出缓存栈： <code>git stash pop</code> ;</li>
+<li>取出特定缓存内容： <code>git stash apply stash@&#123;1&#125;</code> ;</li>
+</ul>
+<h3 id="恢复误删除的-stash"><a href="#恢复误删除的-stash" class="headerlink" title="恢复误删除的 stash"></a>恢复误删除的 stash</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 显示所有不可访问对象</span><br>git fask --unreachable<br><br>git show 302063e31742cbce7c5fdb917edf520183154cc1 &gt; D:\recovery\backup.txt<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在使用 git fsck –unreachable 命令输出的很多文件里面，有很多是带有 commit 和 tree 的标识的，这些可以使用 git stash apply 加标记号进行找回。而 blob 的文件是只能手动拷贝的，或者像上面一样使用&gt; 输出到指定的路径去</p>
+</blockquote>
+<h2 id="rebase-和-mege-的区别"><a href="#rebase-和-mege-的区别" class="headerlink" title="rebase 和 mege 的区别"></a>rebase 和 mege 的区别</h2><h3 id="1-拉取代码-pull-–rebase"><a href="#1-拉取代码-pull-–rebase" class="headerlink" title="1. 拉取代码 pull –rebase"></a>1. 拉取代码 pull –rebase</h3><p>在团队协作过程中，假设你和你的同伴在本地中分别有各自的新提交，而你的同伴先于你 <code>push</code> 了代码到远程分支上，所以你必须先执行 <code>git pull</code> 来获取同伴的提交，然后才能 <code> push</code> 自己的提交到远程分支。</p>
+<p>而按照 Git 的默认策略，如果远程分支和本地分支之间的提交线图有分叉的话（即不是 fast-forwarded），Git 会执行一次 <code>merge</code> 操作，因此产生一次没意义的提交记录，从而造成了像上图那样的混乱。</p>
+<p>其实在 pull 操作的时候，，使用 <code>git pull --rebase </code> 选项即可很好地解决上述问题。 加上 <code>--rebase</code> 参数的作用是，提交线图有分叉的话，Git 会 rebase 策略来代替默认的 merge 策略。</p>
+<p>假设提交线图在执行 pull 前是这样的：</p>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><code class="hljs brainfuck">      <span class="hljs-comment">A</span><span class="hljs-literal">---</span><span class="hljs-comment">B</span><span class="hljs-literal">---</span><span class="hljs-comment">C  remotes/origin/master</span><br>     <span class="hljs-comment">/</span><br><span class="hljs-comment">D</span><span class="hljs-literal">---</span><span class="hljs-comment">E</span><span class="hljs-literal">---</span><span class="hljs-comment">F</span><span class="hljs-literal">---</span><span class="hljs-comment">G  master</span><br></code></pre></td></tr></table></figure>
+
+<p>如果是执行 <code>git pull</code> 后，提交线图会变成这样：</p>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><code class="hljs brainfuck">      <span class="hljs-comment">A</span><span class="hljs-literal">---</span><span class="hljs-comment">B</span><span class="hljs-literal">---</span><span class="hljs-comment">C remotes/origin/master</span><br>     <span class="hljs-comment">/         \</span><br><span class="hljs-comment">D</span><span class="hljs-literal">---</span><span class="hljs-comment">E</span><span class="hljs-literal">---</span><span class="hljs-comment">F</span><span class="hljs-literal">---</span><span class="hljs-comment">G</span><span class="hljs-literal">---</span><span class="hljs-comment">H master</span><br></code></pre></td></tr></table></figure>
+
+<p>结果多出了 <code>H</code> 这个没必要的提交记录。如果是执行 <code>git pull --rebase</code> 的话，提交线图就会变成这样：</p>
+<figure class="highlight brainfuck"><table><tr><td class="code"><pre><code class="hljs brainfuck">            <span class="hljs-comment">remotes/origin/master</span><br>                <span class="hljs-comment">|</span><br><span class="hljs-comment">D</span><span class="hljs-literal">---</span><span class="hljs-comment">E</span><span class="hljs-literal">---</span><span class="hljs-comment">A</span><span class="hljs-literal">---</span><span class="hljs-comment">B</span><span class="hljs-literal">---</span><span class="hljs-comment">C</span><span class="hljs-literal">---</span><span class="hljs-comment">F&#x27;</span><span class="hljs-literal">---</span><span class="hljs-comment">G&#x27;  master</span><br></code></pre></td></tr></table></figure>
+
+<p><code>F</code> <code>G</code> 两个提交通过 <code>rebase</code> 方式重新拼接在 <code>C</code> 之后，多余的分叉去掉了，目的达到。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>大多数时候，使用 <code>git pull --rebase </code> 是为了使提交线图更好看，从而方便 code review。</p>
+<p>不过，如果你对使用 git 还不是十分熟练的话，我的建议是 <code>git pull --rebase </code> 多练习几次之后再使用，因为 <strong>rebase 在 git 中，算得上是『危险行为』</strong>。</p>
+<p>另外，还需注意的是，使用 <code>git pull --rebase </code> 比直接 pull 容易导致冲突的产生，如果预期冲突比较多的话，建议还是直接 pull。</p>
+<p>注意：<br>git pull = git fetch + git merge<br>git pull –rebase = git fetch + git rebase</p>
+<h3 id="2-合代码-merge-–no-ff"><a href="#2-合代码-merge-–no-ff" class="headerlink" title="2. 合代码 merge –no-ff"></a>2. 合代码 merge –no-ff</h3><p>上述的 <code>git pull --rebase</code> 策略目的是修整提交线图，使其形成一条直线，而即将要用到的 <code>git merge --no-ff &lt;branch-name&gt;</code> 策略偏偏是反行其道，刻意地弄出提交线图分叉出来。</p>
+<p>假设你在本地准备合并两个分支，而刚好这两个分支是 fast-forwarded 的，那么直接合并后你得到一个直线的提交线图，当然这样没什么坏处，但如果你想更清晰地告诉你同伴：<strong>这一系列的提交都是为了实现同一个目的</strong>，那么你可以刻意地将这次提交内容弄成一次提交线图分叉。</p>
+<p>执行 <code>git merge --no-ff &lt;branch-name&gt;</code> 的结果大概会是这样的：</p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><code class="hljs gherkin">|<span class="hljs-string"></span><br><span class="hljs-string">0 asdasd</span><br><span class="hljs-string"></span>|<br>0 asdasd<br>|<span class="hljs-string">\</span><br><span class="hljs-string"></span>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> /</span><br><span class="hljs-string">0 asdasd</span><br><span class="hljs-string"></span>|<br>0 asdasd<br></code></pre></td></tr></table></figure>
+
+<p>中间的分叉线路图很清晰的显示这些提交都是为了实现 <strong>complete adjusting user domains and tags</strong></p>
+<h3 id="更进一步"><a href="#更进一步" class="headerlink" title="更进一步"></a>更进一步</h3><p>往往我的习惯是，在合并分支之前（假设要在本地将 feature 分支合并到 dev 分支），会先检查 feature 分支是否『部分落后』于<strong>远程 dev 分支</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git checkout dev<br>git pull <span class="hljs-comment"># 更新 dev 分支</span><br>git <span class="hljs-built_in">log</span> feature..dev<br></code></pre></td></tr></table></figure>
+
+<p>如果没有输出任何提交信息的话，即表示 feature 对于 dev 分支是 up-to-date 的。如果有输出的话而马上执行了 <code>git merge --no-ff</code> 的话，提交线图会变成这样：</p>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><code class="hljs gherkin">|<span class="hljs-string"></span><br><span class="hljs-string">0 asdasd</span><br><span class="hljs-string"></span>|<br>0 asdasd<br>|<span class="hljs-string">\</span><br><span class="hljs-string"></span>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>|<span class="hljs-string"> 0 asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>0 |<span class="hljs-string"> asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> </span>|<br>0 |<span class="hljs-string"> asdasd</span><br><span class="hljs-string"></span>|<span class="hljs-string"> /</span><br><span class="hljs-string">0 asdasd</span><br><span class="hljs-string"></span>|<br>0 asdasd<br></code></pre></td></tr></table></figure>
+
+<p>所以这时在合并前，通常我会先执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git checkout feature<br>git rebase dev<br></code></pre></td></tr></table></figure>
+
+<p>这样就可以将 feature 重新拼接到更新了的 dev 之后，然后就可以合并了，最终得到一个干净舒服的提交线图。</p>
+<p><strong>再次提醒：像之前提到的，rebase 是『危险行为』，建议你足够熟悉 git 时才这么做，否则的话是得不偿失的。</strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>使用 <code>git pull --rebase</code> 和 <code>git merge --no-ff</code> 其实和直接使用 <code>git pull</code> <code>git merge</code> 得到的代码应该是一样。</p>
+<p>使用 <code>git pull --rebase</code> 主要是为是将提交的线图平坦化，而 <code>git merge --no-ff</code> 则是刻意制造分叉。</p>
+<p>git rebase 和 git merge 主要的区别在于是否保留分支的 commit 提交节点，rebase 会给你一个简洁的线性历史树。rebase 适合小分支，大分支还是使用 merge –squash。</p>
+<h2 id="git-patch"><a href="#git-patch" class="headerlink" title="git patch"></a>git patch</h2><p><code>git patch</code> 会生成一个补丁文件，这样在不能直接 <code>git pull</code> 和 <code>git push</code> 的情况下，直接把补丁文件合入 <code>git</code> 项目中</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 1为最新commit往前的commit的数量</span><br>$ git format-patch -1<br><br>$ git am xxx.patch<br></code></pre></td></tr></table></figure>
+
+<h2 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h2><p>现网发现了 bug，现网分支需要修改代码出补丁版本；同时，代码也要合入主干，保证主干版本没问题。<br>简言之，相同的代码，要合入两个分支，怎么办</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ git branch<br>* dev<br>  master<br>$ git cherry-pick 4c805e2<br></code></pre></td></tr></table></figure>
+
+<h2 id="同步-Github-fork-出来的分支"><a href="#同步-Github-fork-出来的分支" class="headerlink" title="同步 Github fork 出来的分支"></a>同步 Github fork 出来的分支</h2><h3 id="1、配置-remote，指向原始仓库"><a href="#1、配置-remote，指向原始仓库" class="headerlink" title="1、配置 remote，指向原始仓库"></a>1、配置 remote，指向原始仓库</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git remote add upstream https://github.com/luckyship/jelly.git<br></code></pre></td></tr></table></figure>
+
+<h3 id="2、获取上游分支"><a href="#2、获取上游分支" class="headerlink" title="2、获取上游分支"></a>2、获取上游分支</h3><p>上游仓库获取到分支，及相关的提交信息，它们将被保存在本地的 upstream/master 分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git fetch upstream<br><span class="hljs-comment"># remote: Counting objects: 75, done.</span><br><span class="hljs-comment"># remote: Compressing objects: 100% (53/53), done.</span><br><span class="hljs-comment"># remote: Total 62 (delta 27), reused 44 (delta 9)</span><br><span class="hljs-comment"># Unpacking objects: 100% (62/62), done.</span><br><span class="hljs-comment"># From https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY</span><br><span class="hljs-comment"># * [new branch] master -upstream/master</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3、切换到本地的-master-分支"><a href="#3、切换到本地的-master-分支" class="headerlink" title="3、切换到本地的 master 分支"></a>3、切换到本地的 master 分支</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git checkout master<br><span class="hljs-comment"># Switched to branch &#x27;master&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="4、合并分支"><a href="#4、合并分支" class="headerlink" title="4、合并分支"></a>4、合并分支</h3><p>把 upstream/master 分支合并到本地的 master 分支，本地的 master 分支便跟上游仓库保持同步了，并且没有丢失本地的修改。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git merge upstream/master<br><span class="hljs-comment"># Updating a422352..5fdff0f</span><br><span class="hljs-comment"># Fast-forward</span><br><span class="hljs-comment"># README | 9 -------</span><br><span class="hljs-comment"># README.md | 7 ++++++</span><br><span class="hljs-comment"># 2 files changed, 7 insertions(+), 9 deletions(-)</span><br><span class="hljs-comment"># delete mode 100644 README</span><br><span class="hljs-comment"># create mode 100644 README.md</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5、上传到自己的远程仓库中"><a href="#5、上传到自己的远程仓库中" class="headerlink" title="5、上传到自己的远程仓库中"></a>5、上传到自己的远程仓库中</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git push<br></code></pre></td></tr></table></figure>
+
+<h2 id="git-配置"><a href="#git-配置" class="headerlink" title="git 配置"></a>git 配置</h2><h3 id="邮箱和用户名"><a href="#邮箱和用户名" class="headerlink" title="邮箱和用户名"></a>邮箱和用户名</h3><h4 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git config user.name<br><br>git config user.email<br></code></pre></td></tr></table></figure>
+
+<h4 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git config --global user.name <span class="hljs-string">&quot;username&quot;</span><br><br>git config --global user.email <span class="hljs-string">&quot;email&quot;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h3><ol>
+<li>查看是否生成了 SSH 公钥</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cd</span> ~/.ssh<br>$ <span class="hljs-built_in">ls</span><br>id_rsa      id_rsa.pub      known_hosts<br></code></pre></td></tr></table></figure>
+
+<p>其中 id_rsa 是私钥，id_rsa.pub 是公钥。</p>
+<ol start="2">
+<li>如果没有那就开始生成，设置全局的 user.name 与 user.email</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git config --list <span class="hljs-comment"># 查看是否设置了user.name与user.email，没有的话，去设置</span><br><span class="hljs-comment"># 设置全局的user.name与user.email</span><br>git config --global user.name <span class="hljs-string">&quot;XX&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;XX&quot;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>输入 ssh-keygen 即可（或<code>ssh-keygen -t rsa -C &quot;email&quot;</code>）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ ssh-keygen<br>Generating public/private rsa key pair.<br>Enter file <span class="hljs-keyword">in</span> <span class="hljs-built_in">which</span> to save the key (/Users/schacon/.ssh/id_rsa):<br>Enter passphrase (empty <span class="hljs-keyword">for</span> no passphrase):<br>Enter same passphrase again:<br>Your identification has been saved <span class="hljs-keyword">in</span> /Users/schacon/.ssh/id_rsa.<br>Your public key has been saved <span class="hljs-keyword">in</span> /Users/schacon/.ssh/id_rsa.pub.<br>The key fingerprint is:<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>生成之后获取公钥内容，输入 cat ~/.ssh/id_rsa.pub 即可， 复制 ssh-rsa 一直到 .local 这一整段内容</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> ~/.ssh/id_rsa.pub<br>ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU<br>GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3<br>Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA<br>t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En<br>mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx<br>NrRFi9wrf+M7Q== schacon@agadorlaptop.local<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>打开 GitLab 或者 GitHub，点击头像，找到设置页</li>
+<li>左侧找到 SSH keys 按钮并点击，输入刚刚复制的公钥即可</li>
+</ol>
+<h3 id="git-push-报-HTTP-Basic-Access-denied-错误"><a href="#git-push-报-HTTP-Basic-Access-denied-错误" class="headerlink" title="git push 报 HTTP Basic: Access denied 错误"></a>git push 报 HTTP Basic: Access denied 错误</h3><ul>
+<li>永久记住密码<br><code>git config --global credential.helper store</code></li>
+</ul>
+<p>如果没 <code>--global</code> ，则在当前项目下的.git/config 文件中添加。</p>
+<ul>
+<li>默认记住 15 分钟</li>
+</ul>
+<blockquote>
+<p>git config –global credential.helper cache</p>
+</blockquote>
+<ul>
+<li>自定义配置记住 1 小时：</li>
+</ul>
+<blockquote>
+<p>git config –global credential.helper ‘cache –timeout=3600’</p>
+</blockquote>
+<p>解决方案：</p>
+<ol>
+<li>如果账号密码有变动 用这个命令 <code>git config --system --unset credential.helper</code> (清除用户名密码)重新输入账号密码应该就能解决了</li>
+<li>如果用了第一个命令 还不能解决问题那么 用这个命令：<br><code>git config –global http.emptyAuth true</code></li>
+</ol>
+<h3 id="文件名过长错误"><a href="#文件名过长错误" class="headerlink" title="文件名过长错误"></a>文件名过长错误</h3><p>Filename too long warning: Clone succeeded, but checkout failed.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git config --system core.longpaths <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="gitignore-更新后生效："><a href="#gitignore-更新后生效：" class="headerlink" title=".gitignore 更新后生效："></a><code>.gitignore</code> 更新后生效：</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">rm</span> -r --cached .<br>git add .<br>git commit -m .gitignore is now working<br></code></pre></td></tr></table></figure>
+
+<h3 id="git-commit-v-使用-vim"><a href="#git-commit-v-使用-vim" class="headerlink" title="git commit -v 使用 vim"></a><code>git commit -v</code> 使用 <code>vim</code></h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">cat</span> ~/.gitconfig<br>[user]<br>	email = chaox.a.xu@intel.com<br>	name = Xu Chao<br><br>[core]<br>	editor = vim -U none           <span class="hljs-comment"># git commit -sv 可以用vim</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="git-统计"><a href="#git-统计" class="headerlink" title="git 统计"></a>git 统计</h2><h3 id="查看-git-上个人代码量"><a href="#查看-git-上个人代码量" class="headerlink" title="查看 git 上个人代码量"></a>查看 git 上个人代码量</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --author=<span class="hljs-string">&quot;username&quot;</span> --pretty=tformat: --numstat | awk <span class="hljs-string">&#x27;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&#x27;</span> -<br></code></pre></td></tr></table></figure>
+
+<h3 id="统计每个人的增删行数"><a href="#统计每个人的增删行数" class="headerlink" title="统计每个人的增删行数"></a>统计每个人的增删行数</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --format=<span class="hljs-string">&#x27;%aN&#x27;</span> | <span class="hljs-built_in">sort</span> -u | <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> name; <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> -en <span class="hljs-string">&quot;<span class="hljs-variable">$name</span>\t&quot;</span>; git <span class="hljs-built_in">log</span> --author=<span class="hljs-string">&quot;<span class="hljs-variable">$name</span>&quot;</span> --pretty=tformat: --numstat | awk <span class="hljs-string">&#x27;&#123; add += $1; subs += $2; loc += $1 - $2 &#125; END &#123; printf &quot;added lines: %s, removed lines: %s, total lines: %s\n&quot;, add, subs, loc &#125;&#x27;</span> -; <span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="查看仓库提交者排名前-5"><a href="#查看仓库提交者排名前-5" class="headerlink" title="查看仓库提交者排名前 5"></a>查看仓库提交者排名前 5</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --pretty=<span class="hljs-string">&#x27;%aN&#x27;</span> | <span class="hljs-built_in">sort</span> | <span class="hljs-built_in">uniq</span> -c | <span class="hljs-built_in">sort</span> -k1 -n -r | <span class="hljs-built_in">head</span> -n 5<br></code></pre></td></tr></table></figure>
+
+<h3 id="贡献者统计"><a href="#贡献者统计" class="headerlink" title="贡献者统计"></a>贡献者统计</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --pretty=<span class="hljs-string">&#x27;%aN&#x27;</span> | <span class="hljs-built_in">sort</span> -u | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
+
+<h3 id="提交数统计"><a href="#提交数统计" class="headerlink" title="提交数统计"></a>提交数统计</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">git <span class="hljs-built_in">log</span> --oneline | <span class="hljs-built_in">wc</span> -l<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>本文参考了<br><a target="_blank" rel="noopener" href="https://mydearest.cn/">git 相关问题场景和命令</a></p>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.sourcetreeapp.com/">sourcetree</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.git-tower.com/mac">Tower</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.sublimemerge.com/">sublimemerge</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.gitkraken.com/">gitkraken</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.git-fork.com/">git-fork</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitup.co/">gitup</a></li>
+</ul>
+<h3 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/pcottle/learnGitBranching">Git 命令可视化学习</a></li>
+</ul>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2021/05/15/2021-05-15-git-use/" title="玩转git" target="_blank">https://luckyship.github.io/2021/05/15/2021-05-15-git-use/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2021/05/15/2021-05-15-git-use/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2021/05/20/2021-05-20-export-csv-file/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          导出csv文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/12/2021-05-12-typescript-base/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">typescript基础</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>

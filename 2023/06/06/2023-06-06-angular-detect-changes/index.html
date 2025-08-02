@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <script src="/js/av-min.js"></script>
+
+  <script>
+    AV.init({
+      appId: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      appKey: 'fstd3ABXC89jc5VDSe6ANGV6',
+      serverURLs: {
+        push: "https://leancloud.cn",
+        stats: "https://leancloud.cn",
+        engine: "https://leancloud.cn",
+        api: "https://leancloud.cn",
+      },
+    });
+  </script>
+  <script async src="/main/js/slider.66b399.js"></script><script async src="/main/js/main.a76a5f.js"></script><script async src="/main/js/mobile.57dfe3.js"></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-GWM1JLMFWH"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-GWM1JLMFWH")</script>
+
+  <link rel="dns-prefetch" href="https://luckyship.github.io">
+  <title>angular中的变化检测-zone.js | luckyship</title>
+  <meta name="generator" content="hexo-theme-luckyship">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="description" content="Zone 是跨异步任务而持久存在的执行上下文。你可以将其视为 JavaScript VM 中的线程本地存储。本指南介绍了如何使用 Angular 的 的 NgZone 自动检测组件中的更改以更新 HTML。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angular中的变化检测-zone.js">
+<meta property="og:url" content="https://luckyship.github.io/2023/06/06/2023-06-06-angular-detect-changes/index.html">
+<meta property="og:site_name" content="luckyship">
+<meta property="og:description" content="Zone 是跨异步任务而持久存在的执行上下文。你可以将其视为 JavaScript VM 中的线程本地存储。本指南介绍了如何使用 Angular 的 的 NgZone 自动检测组件中的更改以更新 HTML。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-06-06T07:58:39.000Z">
+<meta property="article:modified_time" content="2025-08-02T05:46:04.181Z">
+<meta property="article:author" content="luckyship">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="angular">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="luckyship" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
+  
+  <link rel="stylesheet" type="text/css" href="/main/css/index.a76a5f.css">
+  <style type="text/css">
+    
+    #container.show {
+      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+    }
+  </style>
+  
+
+  
+
+  
+    
+ 	  <script async src="/lib/clickLove.js"></script>
+  
+  
+
+<script>
+  (function () {
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    } else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+
+</script>
+
+
+
+  
+
+</head>
+
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      
+
+
+<div class="overlay" style="background: #4d4d4d;"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/img/head.jpg" class="js-avatar">
+		</a>
+		<hgroup>
+			<h1 class="header-author"><a href="/">luckyship</a></h1>
+		</hgroup>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/" >主页</a></li>
+			
+				<li><a href="/archives" >归档</a></li>
+			
+				<li><a href="/comment/" >留言板</a></li>
+			
+				<li><a href="/website/" >知识库</a></li>
+			
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+			
+				
+					<a q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">搜索</a>
+				
+			
+				
+					<a q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+				
+			
+            </nav>
+
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" rel="noopener" href="https://github.com/luckyship" title="GitHub" ><i class="icon-github"></i></a>
+				
+					<a class="gitee" target="_blank" rel="noopener" href="https://gitee.com/luckyship" title="gitee" ><i class="icon-gitee"></i></a>
+				
+					<a class="blog" target="_blank" rel="noopener" href="https://juejin.cn/user/730534951787662/posts" title="blog" ><i class="icon-blog"></i></a>
+				
+					<a class="csdn" target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_38319625" title="CSDN" ><i class="icon-csdn"></i></a>
+				
+			</div>
+		
+		</nav>
+
+		
+		  <nav>
+			
+  <div id="toc" class="toc-article">
+    <div class="toc-title">目录</div>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%98%E6%9B%B4%E6%A3%80%E6%B5%8B%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">变更检测的基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Angular-%E4%B8%AD%E6%98%BE%E7%A4%BA%E5%92%8C%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-number">1.1.</span> <span class="toc-text">在 Angular 中显示和更新数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%EF%BC%88Plain%EF%BC%89JavaScript-%E6%A3%80%E6%B5%8B%E6%9B%B4%E6%94%B9"><span class="toc-number">1.2.</span> <span class="toc-text">使用普通（Plain）JavaScript 检测更改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E4%BD%95%E6%97%B6%E6%9B%B4%E6%96%B0-HTML"><span class="toc-number">1.3.</span> <span class="toc-text">应用何时更新 HTML</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Zone-%E5%92%8C%E6%89%A7%E8%A1%8C%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">Zone 和执行上下文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Zone-%E5%92%8C%E5%BC%82%E6%AD%A5%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90"><span class="toc-number">3.</span> <span class="toc-text">Zone 和异步生命周期钩子</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NgZone"><span class="toc-number">4.</span> <span class="toc-text">NgZone</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NgZone-run-%E5%92%8C-runOutsideOfAngular"><span class="toc-number">4.1.</span> <span class="toc-text">NgZone run() 和 runOutsideOfAngular()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE-Zone-js"><span class="toc-number">4.2.</span> <span class="toc-text">设置 Zone.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NoopZone"><span class="toc-number">4.3.</span> <span class="toc-text">NoopZone</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AC%E8%BD%BD"><span class="toc-number">5.</span> <span class="toc-text">转载</span></a></li></ol>
+  </div>
+
+
+		  </nav>
+		
+	</header>
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      
+      
+      <a class="forkMe" style="position:absolute;z-index:999;top:0;right:0.5em;"
+        href="https://github.com/luckyship/myblog" target="_blank">
+        <img src="/img/forkme.png"
+          class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+      
+      
+<nav id="mobile-nav">
+  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+	<div class="btnctn js-mobile-btnctn">
+  		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
+	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<a href="/">
+					<img src="/img/head.jpg" class="js-avatar">
+				</a>
+			</div>
+			<hgroup>
+			  <h1 class="header-author js-header-author">luckyship</h1>
+			</hgroup>
+			
+			
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			
+			
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/luckyship" title="GitHub"><i class="icon-github"></i></a>
+			        
+						<a class="gitee" target="_blank" href="https://gitee.com/luckyship" title="gitee"><i class="icon-gitee"></i></a>
+			        
+						<a class="blog" target="_blank" href="https://juejin.cn/user/730534951787662/posts" title="blog"><i class="icon-blog"></i></a>
+			        
+						<a class="csdn" target="_blank" href="https://blog.csdn.net/sinat_38319625" title="CSDN"><i class="icon-csdn"></i></a>
+			        
+				</div>
+			</nav>
+
+			<nav class="header-menu js-header-menu">
+				<ul style="width: 70%">
+				
+				
+					<li style="width: 25%"><a href="/">主页</a></li>
+		        
+					<li style="width: 25%"><a href="/archives">归档</a></li>
+		        
+					<li style="width: 25%"><a href="/comment/">留言板</a></li>
+		        
+					<li style="width: 25%"><a href="/website/">知识库</a></li>
+		        
+				</ul>
+			</nav>
+		</header>				
+	</div>
+	<div class="mobile-mask" style="display:none" q-show="isShow"></div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1"
+              class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-2023-06-06-angular-detect-changes" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 class="article-title" itemprop="name">
+      angular中的变化检测-zone.js
+    </h1>
+  
+
+
+  
+   
+<span id="busuanzi_container_page_pv" style="display: none" class="archive-article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+
+<a href="/2023/06/06/2023-06-06-angular-detect-changes/" class="archive-article-date">
+  <!-- <time datetime="2023-06-06T07:58:39.000Z" title="发布时间" itemprop="datePublished"><i class="icon-calendar icon"></i>2023-06-06</time>
+        <time datetime="2025-08-02T05:46:04.181Z" title="最后更新" itemprop="datePublished">
+                <svg t="1614416122145" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="535" width="16" height="16"><path d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z" p-id="536" fill="#999999"></path><path d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z" p-id="537" fill="#999999"></path></svg>
+                2025-08-02</time> -->
+
+  
+  <time datetime="2025-08-02T05:46:04.181Z" title="最后更新" itemprop="datePublished">
+    <svg
+      t="1614416122145"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="535"
+      width="16"
+      height="16"
+    >
+      <path
+        d="M887.786 1021.4h-757.804c-69.761 0-126.276-56.637-126.276-126.397v-758.23c0-69.822 57.419-132.402 127.121-132.402h508.511v63.547h-508.511c-34.85 0-63.968 33.886-63.968 68.854v758.262c0 34.91 28.273 63.212 63.094 63.212h757.835c34.82 0 69.341-29.058 69.341-63.968v-508.512h63.605v508.486c0 69.853-63.242 127.153-132.946 127.153z"
+        p-id="536"
+        fill="#999999"
+      ></path>
+      <path
+        d="M969.708 166.041l-111.61-111.673c-24.682-24.68-64.635-24.68-89.315 0l-491.163 491.497c-9.234 9.23-13.849 20.849-16.143 32.768l-136.716 276.63c-11.434 31.109 13.516 59.050 44.597 44.659l276.51-136.776c11.919-2.355 23.505-6.942 32.676-16.172l491.163-491.558c24.653-24.68 24.653-64.691 0-89.374zM207.56 839.423c-15.541 7.148-29.57-7.755-22.297-22.33l103.345-170.842 89.676 89.706-170.722 103.465zM433.89 702.284c-41.852-41.88-99.755-99.843-111.612-111.73l356.441-356.649 112.426 110.946-357.254 357.434zM902.756 233.086l-66.984 67.046-110.013-113.303 65.388-65.445c12.279-12.312 32.347-12.312 44.626 0l66.986 67.015c12.311 12.402 12.311 32.375 0 44.687z"
+        p-id="537"
+        fill="#999999"
+      ></path>
+    </svg>
+    <span >
+      2023-06-06
+      <span style="font-size: 10px"> (更新于2025-08-02)
+    </span>
+  </time>
+  
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">3.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">13分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <p>Zone 是跨异步任务而持久存在的执行上下文。你可以将其视为 JavaScript VM 中的线程本地存储。本指南介绍了如何使用 Angular 的 的 NgZone 自动检测组件中的更改以更新 HTML。</p>
+<span id="more"></span>
+
+<h1 id="变更检测的基础"><a href="#变更检测的基础" class="headerlink" title="变更检测的基础"></a>变更检测的基础</h1><p>要理解 <code>NgZone</code> 的好处，重要的是要清楚地了解什么是变更检测以及它的工作原理。</p>
+<h2 id="在-Angular-中显示和更新数据"><a href="#在-Angular-中显示和更新数据" class="headerlink" title="在 Angular 中显示和更新数据"></a>在 Angular 中显示和更新数据</h2><p>在 Angular 中，你可以通过把 HTML 模板中的控件绑定到 Angular 组件的属性来显示数据。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// src/app/app.component.ts</span><br><br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">Component</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@angular/core&quot;</span>;<br><br><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&quot;app-root&quot;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">`</span><br><span class="hljs-string">    &lt;h1&gt;&#123;&#123; title &#125;&#125;&lt;/h1&gt;</span><br><span class="hljs-string">    &lt;h2&gt;My favorite hero is: &#123;&#123; myHero &#125;&#125;&lt;/h2&gt;</span><br><span class="hljs-string">  `</span>,<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppComponent</span> &#123;<br>  title = <span class="hljs-string">&quot;Tour of Heroes&quot;</span>;<br>  myHero = <span class="hljs-string">&quot;Windstorm&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>另外，你也可以将 DOM 事件绑定到 Angular 组件中的方法。在此类方法中，你还可以更新 Angular 组件的属性，该属性将更新模板中显示的相应数据。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// src/app/click-me.component.ts</span><br><br><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&quot;app-click-me&quot;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">` &lt;button type=&quot;button&quot; (click)=&quot;onClickMe()&quot;&gt;Click me!&lt;/button&gt;</span><br><span class="hljs-string">    &#123;&#123; clickMessage &#125;&#125;`</span>,<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClickMeComponent</span> &#123;<br>  clickMessage = <span class="hljs-string">&quot;&quot;</span>;<br><br>  <span class="hljs-title function_">onClickMe</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">clickMessage</span> = <span class="hljs-string">&quot;You are my hero!&quot;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在以上两个示例中，组件的代码仅更新组件的属性。但是，HTML 也会自动更新。本指南介绍了 Angular 如何以及何时根据 Angular 组件中的数据渲染 HTML。</p>
+<h2 id="使用普通（Plain）JavaScript-检测更改"><a href="#使用普通（Plain）JavaScript-检测更改" class="headerlink" title="使用普通（Plain）JavaScript 检测更改"></a>使用普通（Plain）JavaScript 检测更改</h2><p>为了阐明如何检测到更改和更新值，请考虑以下用普通 JavaScript 编写的代码。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;dataDiv&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;btn&quot;</span>&gt;</span>updateData<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;canvas&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-keyword">let</span> value = <span class="hljs-string">&quot;initialValue&quot;</span>;</span><br><span class="language-javascript">    <span class="hljs-comment">// initial rendering</span></span><br><span class="language-javascript">    <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-keyword">function</span> <span class="hljs-title function_">renderHTML</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;dataDiv&quot;</span>).<span class="hljs-property">innerText</span> = value;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-keyword">function</span> <span class="hljs-title function_">detectChange</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-keyword">const</span> currentValue = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;dataDiv&quot;</span>).<span class="hljs-property">innerText</span>;</span><br><span class="language-javascript">      <span class="hljs-keyword">if</span> (currentValue !== value) &#123;</span><br><span class="language-javascript">        <span class="hljs-title function_">renderHTML</span>();</span><br><span class="language-javascript">      &#125;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// Example 1: update data inside button click event handler</span></span><br><span class="language-javascript">    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;btn&quot;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function">() =&gt;</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// update value</span></span><br><span class="language-javascript">      value = <span class="hljs-string">&quot;button update value&quot;</span>;</span><br><span class="language-javascript">      <span class="hljs-comment">// call detectChange manually</span></span><br><span class="language-javascript">      <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript">    &#125;);</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// Example 2: HTTP Request</span></span><br><span class="language-javascript">    <span class="hljs-keyword">const</span> xhr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();</span><br><span class="language-javascript">    xhr.<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&quot;load&quot;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// get response from server</span></span><br><span class="language-javascript">      value = <span class="hljs-variable language_">this</span>.<span class="hljs-property">responseText</span>;</span><br><span class="language-javascript">      <span class="hljs-comment">// call detectChange manually</span></span><br><span class="language-javascript">      <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript">    &#125;);</span><br><span class="language-javascript">    xhr.<span class="hljs-title function_">open</span>(<span class="hljs-string">&quot;GET&quot;</span>, serverUrl);</span><br><span class="language-javascript">    xhr.<span class="hljs-title function_">send</span>();</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// Example 3: setTimeout</span></span><br><span class="language-javascript">    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// update value inside setTimeout callback</span></span><br><span class="language-javascript">      value = <span class="hljs-string">&quot;timeout update value&quot;</span>;</span><br><span class="language-javascript">      <span class="hljs-comment">// call detectChange manually</span></span><br><span class="language-javascript">      <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript">    &#125;, <span class="hljs-number">100</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// Example 4: Promise.then</span></span><br><span class="language-javascript">    <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-string">&quot;promise resolved a value&quot;</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function">(<span class="hljs-params">v</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// update value inside Promise thenCallback</span></span><br><span class="language-javascript">      value = v;</span><br><span class="language-javascript">      <span class="hljs-comment">// call detectChange manually</span></span><br><span class="language-javascript">      <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript">    &#125;, <span class="hljs-number">100</span>);</span><br><span class="language-javascript"></span><br><span class="language-javascript">    <span class="hljs-comment">// Example 5: some other asynchronous APIs</span></span><br><span class="language-javascript">    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;canvas&quot;</span>).<span class="hljs-title function_">toBlob</span>(<span class="hljs-function">(<span class="hljs-params">blob</span>) =&gt;</span> &#123;</span><br><span class="language-javascript">      <span class="hljs-comment">// update value when blob data is created from the canvas</span></span><br><span class="language-javascript">      value = <span class="hljs-string">`value updated by canvas, size is <span class="hljs-subst">$&#123;blob.size&#125;</span>`</span>;</span><br><span class="language-javascript">      <span class="hljs-comment">// call detectChange manually</span></span><br><span class="language-javascript">      <span class="hljs-title function_">detectChange</span>();</span><br><span class="language-javascript">    &#125;);</span><br><span class="language-javascript">  </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>更新数据后，需要调用 <code>detectChange()</code> 来检查数据是否已更改。如果数据已更改，则渲染 HTML 以反映更新的数据。</p>
+<p>在 Angular 中，此步骤是不必要的。每当你更新数据时，你的 HTML 都会自动更新。</p>
+<h2 id="应用何时更新-HTML"><a href="#应用何时更新-HTML" class="headerlink" title="应用何时更新 HTML"></a>应用何时更新 HTML</h2><p>要了解变更检测的工作原理，请首先考虑应用程序何时需要更新 HTML。通常，会由于以下原因之一而发生更新：</p>
+<ol>
+<li><p> 组件初始化。比如，当引导 Angular 应用程序时，Angular 会加载引导组件并触发 <a target="_blank" rel="noopener" href="https://angular.cn/api/core/ApplicationRef#tick">ApplicationRef.tick()</a> 来调用变更检测和视图渲染。</p>
+</li>
+<li><p> 事件监听器。DOM 事件侦听器可以更新 Angular 组件中的数据，还可以触发变更检测，如下例所示。</p>
+</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// src/app/click-me.component.ts</span><br><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&quot;app-click-me&quot;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">` &lt;button type=&quot;button&quot; (click)=&quot;onClickMe()&quot;&gt;Click me!&lt;/button&gt;</span><br><span class="hljs-string">    &#123;&#123; clickMessage &#125;&#125;`</span>,<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClickMeComponent</span> &#123;<br>  clickMessage = <span class="hljs-string">&quot;&quot;</span>;<br><br>  <span class="hljs-title function_">onClickMe</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">clickMessage</span> = <span class="hljs-string">&quot;You are my hero!&quot;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>HTTP 数据请求。你还可以通过 HTTP 请求从服务器获取数据。比如：</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&#x27;app-root&#x27;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#123;&#123;data&#125;&#125;&lt;/div&gt;&#x27;</span>;<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppComponent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnInit</span> &#123;<br>  data = <span class="hljs-string">&#x27;initial value&#x27;</span>;<br>  serverUrl = <span class="hljs-string">&#x27;SERVER_URL&#x27;</span>;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">httpClient</span>: <span class="hljs-title class_">HttpClient</span></span>) &#123;&#125;<br><br>  <span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">httpClient</span>.<span class="hljs-title function_">get</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">serverUrl</span>).<span class="hljs-title function_">subscribe</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> &#123;<br>      <span class="hljs-comment">// user does not need to trigger change detection manually</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = response.<span class="hljs-property">data</span>;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>宏任务，比如 <code>setTimeout()</code> 或 <code>setInterval()</code>。你还可以在诸如 <code>setTimeout()</code> <code>macroTask</code> 的回调函数中更新数据。比如：</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&#x27;app-root&#x27;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#123;&#123;data&#125;&#125;&lt;/div&gt;&#x27;</span>;<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppComponent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnInit</span> &#123;<br>  data = <span class="hljs-string">&#x27;initial value&#x27;</span>;<br><br>  <span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-comment">// user does not need to trigger change detection manually</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = <span class="hljs-string">&#x27;value updated&#x27;</span>;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>微任务，比如 <code>Promise.then()</code>。其他异步 API（比如 <code>fetch</code>）会返回 Promise 对象，因此 <code>then()</code> 回调函数也可以更新数据。比如：</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-meta">@Component</span>(&#123;<br>  <span class="hljs-attr">selector</span>: <span class="hljs-string">&#x27;app-root&#x27;</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">&#x27;&lt;div&gt;&#123;&#123;data&#125;&#125;&lt;/div&gt;&#x27;</span>;<br>&#125;)<br><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppComponent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnInit</span> &#123;<br>  data = <span class="hljs-string">&#x27;initial value&#x27;</span>;<br><br>  <span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-title class_">Promise</span>.<span class="hljs-title function_">resolve</span>(<span class="hljs-number">1</span>).<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> &#123;<br>      <span class="hljs-comment">// user does not need to trigger change detection manually</span><br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">data</span> = v;<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>其他异步操作。除了 <code>addEventListener()</code>，<code>setTimeout()</code> 和 <code>Promise.then()</code>，还有其他一些操作可以异步更新数据。比如 <code>WebSocket.onmessage()</code> 和 <code>Canvas.toBlob()</code>。</li>
+</ol>
+<p>前面的列表包含应用程序可能会在其中更改数据的最常见场景。只要 Angular 检测到数据可能已更改，就会运行变更检测。变更检测的结果是 DOM 被这些新数据更新。Angular 会以不同的方式检测变化。对于组件初始化，Angular 调用显式变更检测。对于<a target="_blank" rel="noopener" href="https://developer.mozilla.org/docs/Learn/JavaScript/Asynchronous">异步操作</a>，Angular 会使用 Zone 在数据可能被修改的地方检测变化，并自动运行变更检测。</p>
+<h1 id="Zone-和执行上下文"><a href="#Zone-和执行上下文" class="headerlink" title="Zone 和执行上下文"></a>Zone 和执行上下文</h1><p>Zone 提供了在异步任务之间持久存在的执行上下文。<a target="_blank" rel="noopener" href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/this">执行上下文</a>是一个抽象概念，用于在当前执行的代码中保存有关环境的信息。考虑以下示例：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> callback = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;setTimeout callback context is&quot;</span>, <span class="hljs-variable language_">this</span>);<br>&#125;;<br><br><span class="hljs-keyword">const</span> ctx1 = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;ctx1&quot;</span> &#125;;<br><span class="hljs-keyword">const</span> ctx2 = &#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;ctx2&quot;</span> &#125;;<br><br><span class="hljs-keyword">const</span> func = <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;caller context is&quot;</span>, <span class="hljs-variable language_">this</span>);<br>  <span class="hljs-built_in">setTimeout</span>(callback);<br>&#125;;<br><br>func.<span class="hljs-title function_">apply</span>(ctx1);<br>func.<span class="hljs-title function_">apply</span>(ctx2);<br></code></pre></td></tr></table></figure>
+
+<p><code>setTimeout()</code> 回调中的 <code>this</code> 值可能会有所不同，具体取决于 <code>setTimeout()</code> 的调用时机。因此，你可能会在异步操作中丢失上下文。</p>
+<p>The value of <code>this</code> in the callback of <code>setTimeout()</code> might differ depending on when <code>setTimeout()</code> is called.<br>Thus, you can lose the context in asynchronous operations.</p>
+<p>Zone 提供了不同于 <code>this</code> 的新的 Zone 上下文，该 Zone 上下文在异步操作中保持不变。在下例中，新的 Zone 上下文称为 <code>zoneThis</code>。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts">zone.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-comment">// now you are in a zone</span><br>  <span class="hljs-title function_">expect</span>(zoneThis).<span class="hljs-title function_">toBe</span>(zone);<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// the zoneThis context will be the same zone</span><br>    <span class="hljs-comment">// when the setTimeout is scheduled</span><br>    <span class="hljs-title function_">expect</span>(zoneThis).<span class="hljs-title function_">toBe</span>(zone);<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>新的上下文 <code>zoneThis</code> 可以从 <code>setTimeout()</code> 的回调函数中检索出来，这个上下文和调用 <code>setTimeout()</code> 时的上下文是一样的。要获取此上下文，可以调用 <a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/main/packages/zone.js/lib/zone.ts"><code>Zone.current</code></a>。</p>
+<h1 id="Zone-和异步生命周期钩子"><a href="#Zone-和异步生命周期钩子" class="headerlink" title="Zone 和异步生命周期钩子"></a>Zone 和异步生命周期钩子</h1><p>Zone.js 可以创建在异步操作中持久存在的上下文，并为异步操作提供生命周期钩子。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">const</span> zone = <span class="hljs-title class_">Zone</span>.<span class="hljs-property">current</span>.<span class="hljs-title function_">fork</span>(&#123;<br>  <span class="hljs-attr">name</span>: <span class="hljs-string">&quot;zone&quot;</span>,<br>  <span class="hljs-attr">onScheduleTask</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">delegate, curr, target, task</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;new task is scheduled:&quot;</span>, task.<span class="hljs-property">type</span>, task.<span class="hljs-property">source</span>);<br>    <span class="hljs-keyword">return</span> delegate.<span class="hljs-title function_">scheduleTask</span>(target, task);<br>  &#125;,<br>  <span class="hljs-attr">onInvokeTask</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">delegate, curr, target, task, applyThis, applyArgs</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;task will be invoked:&quot;</span>, task.<span class="hljs-property">type</span>, task.<span class="hljs-property">source</span>);<br>    <span class="hljs-keyword">return</span> delegate.<span class="hljs-title function_">invokeTask</span>(target, task, applyThis, applyArgs);<br>  &#125;,<br>  <span class="hljs-attr">onHasTask</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">delegate, curr, target, hasTaskState</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;task state changed in the zone:&quot;</span>, hasTaskState);<br>    <span class="hljs-keyword">return</span> delegate.<span class="hljs-title function_">hasTask</span>(target, hasTaskState);<br>  &#125;,<br>  <span class="hljs-attr">onInvoke</span>: <span class="hljs-keyword">function</span> (<span class="hljs-params">delegate, curr, target, callback, applyThis, applyArgs</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;the callback will be invoked:&quot;</span>, callback);<br>    <span class="hljs-keyword">return</span> delegate.<span class="hljs-title function_">invoke</span>(target, callback, applyThis, applyArgs);<br>  &#125;,<br>&#125;);<br>zone.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&quot;timeout callback is invoked.&quot;</span>);<br>  &#125;);<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>上面的示例创建了一个具有多个钩子的 Zone。</p>
+<p>当任务状态更改时，就会触发 <code>onXXXTask</code> 钩子。<em>Zone 任务</em>的概念与 JavaScript VM 中任务的概念非常相似：</p>
+<ul>
+<li><p><code>macroTask</code>：比如 <code>setTimeout()</code></p>
+</li>
+<li><p><code>microTask</code>：比如 <code>Promise.then()</code></p>
+</li>
+<li><p><code>eventTask</code>：比如 <code>element.addEventListener()</code><br><code>eventTask</code>: such as <code>element.addEventListener()</code></p>
+</li>
+</ul>
+<p>这些钩子在以下情况下触发：</p>
+<table>
+<thead>
+<tr>
+<th align="center">钩子</th>
+<th align="center">详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">onScheduleTask</td>
+<td align="center">在计划新的异步任务时触发，比如调用 setTimeout() 时。</td>
+</tr>
+<tr>
+<td align="center">onInvokeTask</td>
+<td align="center">在异步任务即将执行时触发，比如 setTimeout() 的回调即将执行时。</td>
+</tr>
+<tr>
+<td align="center">onHasTask</td>
+<td align="center">当 Zone 内的一种任务的状态从稳定变为不稳定或从不稳定变为稳定时触发。状态“稳定”表示该 Zone 内没有任务，而“不稳定”表示在该 Zone 中计划了新任务。</td>
+</tr>
+<tr>
+<td align="center">onInvoke</td>
+<td align="center">将在 Zone 中执行同步函数时触发。</td>
+</tr>
+</tbody></table>
+<p>使用这些钩子，Zone 可以监视 Zone 内所有同步和异步操作的状态。</p>
+<p>上面的示例返回以下输出：</p>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><code class="hljs coffeescript">the callback will be invoked: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<br>  <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;<br>    console.log(<span class="hljs-string">&#x27;timeout callback is invoked.&#x27;</span>);<br>  &#125;);<br>&#125;<br><span class="hljs-keyword">new</span> task <span class="hljs-keyword">is</span> scheduled: macroTask <span class="hljs-built_in">setTimeout</span><br>task state changed <span class="hljs-keyword">in</span> the zone: &#123; microTask: <span class="hljs-literal">false</span>,<br>  macroTask: <span class="hljs-literal">true</span>,<br>  eventTask: <span class="hljs-literal">false</span>,<br>  change: <span class="hljs-string">&#x27;macroTask&#x27;</span> &#125;<br>task will be invoked macroTask: <span class="hljs-built_in">setTimeout</span><br>timeout callback <span class="hljs-keyword">is</span> invoked.<br>task state changed <span class="hljs-keyword">in</span> the zone: &#123; microTask: <span class="hljs-literal">false</span>,<br>  macroTask: <span class="hljs-literal">false</span>,<br>  eventTask: <span class="hljs-literal">false</span>,<br>  change: <span class="hljs-string">&#x27;macroTask&#x27;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>Zone 的所有函数都由一个名为 Zone.js 的库提供。该库通过猴子补丁拦截异步 API 来实现这些特性。 猴子补丁是一种在运行时添加或更改函数的默认行为而不更改源代码的技术。</p>
+<p>Zone 的所有功能均由名为 Zone.js 的库提供。该库通过猴子补丁拦截异步 API 来实现这些功能。猴子补丁是一种在运行时添加或修改函数默认行为而无需更改源代码的技术。</p>
+<h1 id="NgZone"><a href="#NgZone" class="headerlink" title="NgZone"></a>NgZone</h1><p>虽然 Zone.js 可以监视同步和异步操作的所有状态，但 Angular 还提供了一项名为 NgZone 的服务。满足以下条件时，此服务会创建一个名为 <code>angular</code> 的 Zone 来自动触发变更检测。</p>
+<ol>
+<li><p> 当执行同步或异步功能时</p>
+</li>
+<li><p> 已经没有已计划的 <code>microTask</code></p>
+</li>
+</ol>
+<h2 id="NgZone-run-和-runOutsideOfAngular"><a href="#NgZone-run-和-runOutsideOfAngular" class="headerlink" title="NgZone run() 和 runOutsideOfAngular()"></a>NgZone run() 和 runOutsideOfAngular()</h2><p><code>Zone</code> 处理大多数异步 API，比如 <code>setTimeout()</code>、<code>Promise.then()</code> 和 <code>addEventListener()</code>。有关完整列表，请参见 <a target="_blank" rel="noopener" href="https://github.com/angular/angular/blob/main/packages/zone.js/MODULE.md">Zone 模块的文档</a>。在这些异步 API 中，你无需手动触发变更检测。</p>
+<p>有些第三方 API 没有被 Zone 处理。在这种情况下，<code>[NgZone](https://angular.cn/api/core/NgZone)</code> 服务提供了 <a target="_blank" rel="noopener" href="https://angular.cn/api/core/NgZone#run"><code>run()</code></a> 方法，该方法允许你在 <code>angular</code> Zone 中执行函数。此函数以及该函数中的所有异步操作会在正确的时间自动触发变更检测。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AppComponent</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">OnInit</span> &#123;<br>  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> <span class="hljs-attr">ngZone</span>: <span class="hljs-title class_">NgZone</span></span>) &#123;&#125;<br>  <span class="hljs-title function_">ngOnInit</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-comment">// New async API is not handled by Zone, so you need to use ngZone.run()</span><br>    <span class="hljs-comment">// to make the asynchronous operation callback in the Angular zone and</span><br>    <span class="hljs-comment">// trigger change detection automatically.</span><br>    <span class="hljs-title function_">someNewAsyncAPI</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>      <span class="hljs-variable language_">this</span>.<span class="hljs-property">ngZone</span>.<span class="hljs-title function_">run</span>(<span class="hljs-function">() =&gt;</span> &#123;<br>        <span class="hljs-comment">// update the data of the component</span><br>      &#125;);<br>    &#125;);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>默认情况下，所有异步操作都在 Angular Zone 内，这会自动触发变更检测。另一个常见的情况是你不想触发变更检测。在这种情况下，你可以使用另一个 <code>[NgZone](https://angular.cn/api/core/NgZone)</code> 方法：<a target="_blank" rel="noopener" href="https://angular.cn/api/core/NgZone#runoutsideangular"><code>runOutsideAngular()</code></a>。</p>
+<h2 id="设置-Zone-js"><a href="#设置-Zone-js" class="headerlink" title="设置 Zone.js"></a>设置 Zone.js</h2><p>为了使 Zone.js 在 Angular 中可用，你需要导入 zone.js 包。如果使用的是 Angular CLI，则此步骤将自动完成，并且你会在 src/polyfills.ts 中看到以下行：</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">/***************************************************************************************************</span><br><span class="hljs-comment"> * Zone JS is required by default for Angular itself.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;zone.js&quot;</span>; <span class="hljs-comment">// Included with Angular CLI.</span><br></code></pre></td></tr></table></figure>
+
+<p>在导入 <code>zone.js</code> 软件包之前，你可以做如下配置：</p>
+<ul>
+<li><p>禁用一些异步 API 的猴子补丁，以获得更好的性能。比如，你可以禁用 <code>requestAnimationFrame()</code> 的猴子补丁，这样 <code>requestAnimationFrame()</code> 的回调就不会触发变更检测。如果你的应用程序不会在 <code>requestAnimationFrame()</code> 回调中更新任何数据，则这种方式很有用。</p>
+</li>
+<li><p>指定某些 DOM 事件不在 Angular Zone 内运行；比如，为了防止 <code>mousemove</code> 或 <code>scroll</code> 事件来触发变更检测。</p>
+</li>
+</ul>
+<p>还可以更改另外几个设置。要进行这些更改，你需要创建一个 <code>zone-flags.ts</code> 文件，如下所示。</p>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">// disable patching requestAnimationFrame</span><br>(<span class="hljs-variable language_">window</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>).<span class="hljs-property">__Zone_disable_requestAnimationFrame</span> = <span class="hljs-literal">true</span>;<br><br><span class="hljs-comment">// disable patching specified eventNames</span><br>(<span class="hljs-variable language_">window</span> <span class="hljs-keyword">as</span> <span class="hljs-built_in">any</span>).<span class="hljs-property">__zone_symbol__UNPATCHED_EVENTS</span> = [<span class="hljs-string">&quot;scroll&quot;</span>, <span class="hljs-string">&quot;mousemove&quot;</span>];<br></code></pre></td></tr></table></figure>
+
+<p>有关可以配置的内容的更多信息，请参阅<a target="_blank" rel="noopener" href="https://github.com/angular/angular/tree/main/packages/zone.js">Zone.js</a>文档。</p>
+<h2 id="NoopZone"><a href="#NoopZone" class="headerlink" title="NoopZone"></a>NoopZone</h2><p><code>Zone</code> 能帮助 Angular 知道何时要触发变更检测，并使开发人员专注于应用开发。默认情况下，<code>Zone</code> 已加载且无需其他配置即可工作。也不是一定要用 <code>Zone</code> 才能使 Angular 工作。相反，你也可以选择自己触发变更检测。</p>
+<p>要删除 Zone.js，请进行以下更改。</p>
+<ol>
+<li>从 polyfills.ts 中移除对 zone.js 的导入</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-comment">/***************************************************************************************************</span><br><span class="hljs-comment"> * Zone JS is required by default for Angular itself.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">// import &#x27;zone.js&#x27;;  // Included with Angular CLI.</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在 src/main.ts 中使用 noop Zone 引导 Angular：</li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="code"><pre><code class="hljs ts"><span class="hljs-title function_">platformBrowserDynamic</span>()<br>  .<span class="hljs-title function_">bootstrapModule</span>(<span class="hljs-title class_">AppModule</span>, &#123; <span class="hljs-attr">ngZone</span>: <span class="hljs-string">&quot;noop&quot;</span> &#125;)<br>  .<span class="hljs-title function_">catch</span>(<span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err));<br></code></pre></td></tr></table></figure>
+
+<h1 id="转载"><a href="#转载" class="headerlink" title="转载"></a>转载</h1><p><a target="_blank" rel="noopener" href="https://angular.cn/guide/zone#ngzone">ngZone</a></p>
+
+    
+
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          luckyship
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://luckyship.github.io/2023/06/06/2023-06-06-angular-detect-changes/" title="angular中的变化检测-zone.js" target="_blank">https://luckyship.github.io/2023/06/06/2023-06-06-angular-detect-changes/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">javascript</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">angular</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://luckyship.github.io/2023/06/06/2023-06-06-angular-detect-changes/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2023/06/14/2023-06-14-github-gitee-blog/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          github、gitee自动部署hexo博客
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/06/05/2023-06-05-iconfont/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">什么是iconfont</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+  <section id="comments" style="margin:10px;padding:10px;background:#fff;">
+    <div id="vcomment" class="comment"></div>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src="/js/valine.js" async></script>
+<script async>
+  var notify = 'true' == true ? true : false;
+  var verify = 'false' == true ? true : false;
+  window.onload = function () {
+    new Valine({
+      el: '.comment',
+      notify: notify,
+      verify: verify,
+      app_id: '3d3mgdb7guWJsXLE6mWY3Cyn-gzGzoHsz',
+      app_key: 'fstd3ABXC89jc5VDSe6ANGV6',
+      placeholder: 'Just go go',
+      avatar: 'mm',
+    });
+  };
+</script>
+
+  </section>
+
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2020-2025 <a href="https://luckyship.github.io/" target="_blank">luckyship</a>
+    	</div>
+      	<div class="footer-right">
+			
+			
+      		GitHub:<a href="https://github.com/JoeyBling/hexo-theme-yilia-plus" target="_blank">hexo-theme-yilia-plus</a> by Litten
+      	</div>
+    </div>
+  </div>
+
+  
+	<script async src="/lib/busuanzi.pure.js"></script>
+	
+  
+  
+	
+	<span id="busuanzi_container_site_pv" style="display:none">
+		本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	        <span class="post-meta-divider" >|</span>
+	</span>
+  	<span id="busuanzi_container_site_uv" style='display:none'>
+  		本站访客数<span id="busuanzi_value_site_uv"></span>人
+  	</span>
+  
+</footer>
+
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		toc_hide_index: true,
+		root: "/",
+		innerArchive: true,
+		showTags: true
+	}
+</script>
+
+
+
+
+<!--  -->
+
+<script>
+  /* 标签页标题切换 */
+  var originTitle = document.title;
+  var titleTime;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      document.title = "(つェ⊂) 我藏好了哦~ " + originTitle;
+      clearTimeout(titleTime);
+    } else {
+      document.title = "(*´∇｀*) 被你发现啦~ " + originTitle;
+      titleTime = setTimeout(function () {
+        document.title = originTitle;
+      }, 2000);
+    }
+  });
+</script>
+
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-nav header-menu">
+    
+    
+      
+      
+      
+    
+      
+      
+      
+    
+    
+
+    <ul style="width: 70%">
+    
+    
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'innerArchive')"><a href="javascript:void(0)" q-class="active:innerArchive">搜索</a></li>
+      
+        
+      
+      <li style="width: 50%" q-on="click: openSlider(e, 'aboutme')"><a href="javascript:void(0)" q-class="active:aboutme">关于我</a></li>
+      
+        
+    </ul>
+  </div>
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mongo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">ruby</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">dataTable</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">web</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">linux</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">network</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">base</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">rails</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">kubernetes</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">centos</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">html</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">debian</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">nodejs</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">jquery</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">es6</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">npm</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">video</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">nginx</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">+ vue</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angular</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">sass</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">less</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">angualr</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">typescript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">react</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">regexp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">vscode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">regex</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">review</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">tool</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">flutter</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">unicode</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">sql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">postgresql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">vite</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">go</a>
+              </li>
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、请确保node版本大于6.2<br/>2、在博客根目录（注意不是yilia-plus根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            3、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: false
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+            <a q-attr="href:path|urlformat">
+              <p class="search-content" q-show="matchContent.val">
+                <span q-text="matchContent.pre"></span><span class="red" q-text="matchContent.val"></span><span q-text="matchContent.next"></span>
+              </p>
+            </a>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+        
+          
+  	  		<div class="aboutme-wrap" id="aboutme">前端攻城狮<br>记录分享自己工作、学习中学到的知识</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+
+  
+  
+<script
+  type="text/javascript"
+  src="/plugins/activate-power-mode/activate-power-mode.js"
+></script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    POWERMODE.colorful = true; // make power mode colorful
+    POWERMODE.shake = false; // turn off shake
+    document.body.addEventListener('input', POWERMODE);
+  });
+</script>
+
+
+  
+  <!-- <script async type="text/javascript" size="90" alpha="0.2" zIndex="0" src="/plugins/ribbon.js/ribbon.min.js"></script> -->
+  
+  
+  
+</body>
+
+</html>
