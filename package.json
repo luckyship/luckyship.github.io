@@ -5,7 +5,7 @@
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
-    "deploy": "hexo clean && hexo generate && node ./self_script/init.js && hexo deploy",
+    "deploy": "hexo clean && hexo generate  && hexo deploy",
     "gitee": "hexo clean && hexo generate && hexo deploy && node self_script/gitee-build.js",
     "server": "hexo server"
   },
