@@ -1,0 +1,55 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Keywords" content="冯芸霄,张圣晨,fengyunxiao,zhangshengchen">
+    <meta name="description" content="张圣晨,冯芸霄,fengyunxiao,zhangshengchen">
+    <title>我们的画展</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/demo.css">
+  </head>
+  <body>
+      <div class="container" style="cursor: default;">
+          <div id="ipresenter" style="position: absolute; transform-origin: 0% 0%; transition: all 3s cubic-bezier(0.42, 0, 0.58, 1) 1500ms; transform-style: preserve-3d; perspective: 1000px; top: 50%; left: 50%; transform: scale(1);">
+              
+              
+              
+              
+          <div id="content" style="position: absolute; transform-origin: 0% 0%; transition: all 3s cubic-bezier(0.42, 0, 0.58, 1) 0ms; transform-style: preserve-3d; perspective: 1000px; top: 50%; left: 50%; transform: rotateZ(0deg) rotateY(0deg) rotateX(-180deg) translate3d(-4500px, 0px, 0px);">
+            <div class="step" data-x="0" data-y="0" data-thumbnail="photos/p5.jpg" step="1" style="position: absolute; transform: translate(-50%, -50%) translate3d(0px, 0px, 0px) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1); transform-style: preserve-3d; opacity: 0.4;">
+                  <img src="photos/p1.jpg">
+              </div><div class="step" data-x="1500" data-y="0" data-rotatex="180" data-easing="easeInOutQuint" data-thumbnail="photos/p6.jpg" step="2" style="position: absolute; transform: translate(-50%, -50%) translate3d(1500px, 0px, 0px) rotateX(180deg) rotateY(0deg) rotateZ(0deg) scale(1); transform-style: preserve-3d; opacity: 0.4;">
+                  <img src="photos/p2.jpg">
+              </div><div class="step" data-x="3000" data-y="0" data-rotatey="180" data-thumbnail="photos/p7.jpg" step="3" style="position: absolute; transform: translate(-50%, -50%) translate3d(3000px, 0px, 0px) rotateX(0deg) rotateY(180deg) rotateZ(0deg) scale(1); transform-style: preserve-3d; opacity: 0.4;">
+                  <img src="photos/p3.jpg">
+              </div><div class="step active" data-x="4500" data-y="0" data-rotatex="180" data-thumbnail="photos/p8.jpg" step="4" style="position: absolute; transform: translate(-50%, -50%) translate3d(4500px, 0px, 0px) rotateX(180deg) rotateY(0deg) rotateZ(0deg) scale(1); transform-style: preserve-3d; opacity: 0.943386;">
+                  <img src="photos/p4.jpg">
+              </div></div></div>
+      <canvas id="ipresenter-timer" width="80" height="80" class="play" title="Pause" style="cursor: pointer; z-index: 1000; position: absolute; opacity: 0.777405; display: block; top: 10px; right: 10px;"><div></div></canvas><div class="ipresenter-controlNav" style="opacity: 0.6;"><a class="ipresenter-controlPrevNav" title="Previous">Previous</a><div class="ipresenter-items"><ul><li><a class="ipresenter-control" rel="1">1</a><div class="ipresenter-tooltip">
+        <div><img src="photos/p11.jpg"></div></div></li><li><a class="ipresenter-control" rel="2">2</a><div class="ipresenter-tooltip">
+        <div><img src="photos/p12.jpg"></div></div></li><li><a class="ipresenter-control" rel="3">3</a><div class="ipresenter-tooltip">
+        <div><img src="photos/p10.jpg"></div></div></li><li><a class="ipresenter-control active" rel="4">4</a><div class="ipresenter-tooltip">
+        <div><img src="photos/p9.jpg"></div></div></li></ul></div><a class="ipresenter-controlNextNav" title="Next">Next</a></div></div>
+    <script src="js/jquery.js"></script>
+    <script src="js/ipresenter.packed.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#ipresenter').iPresenter({
+          animSpeed: 3000,
+          pauseTime: 2000,
+          timer: '360Bar',
+          timerDiameter: 80,
+          timerStroke: 5,
+          timerPadding: 5,
+          timerColor: '#000',
+          timerBg: '#FFF',
+          timerOpacity: 0.8,
+          directionNav: false,
+          controlNav: true
+        });
+      });
+    </script>
+  
+  
+  </body></html>
